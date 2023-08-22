@@ -1,0 +1,8 @@
+* {
+    box-sizing: border-box;
+}
+
+.apexcharts-legend-text {
+    padding-left: 15px !important;
+    margin-left: -10px !important;
+}

@@ -1,0 +1,1 @@
+export default function waitFor(ms, callback) { setTimeout(callback, ms * 1000) }

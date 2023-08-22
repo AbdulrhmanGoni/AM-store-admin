@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "noImplicitAny": false,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/app/layout.ts",
+    "src/components/SalseChart.js",
+    "src/components/OrdersStatisticsChart.tsx",
+    "src/components/CircleChart.tsx",
+    "src/components/EarningsChart.tsx",
+    "src/app/layout.tsx",
+    "src/app/products-management/components/ProductsWiewerTable.tsx"
+, "src/functions/cookiesGetter.js", "src/queries/requestHeaders.js"  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
