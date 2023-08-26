@@ -1,5 +1,5 @@
 import { GridColDef, GridValueGetterParams as GVGP } from '@mui/x-data-grid';
-import { numbersDecorator } from 'goni-functions';
+import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { Rating } from '@mui/material';
 import Image from 'next/image';
 
@@ -7,9 +7,8 @@ type n = number
 type s = string
 type b = boolean
 
-function numberField(params: GVGP, field: string, floats?: number): string {
-    let value = params.row[field]?.toFixed(floats ?? 2)
-    return numbersDecorator(value ?? 0)
+function numberField(params: GVGP, field: string, floats?: number): string | number {
+    return nDecorator(params.row[field]?.toFixed(floats ?? 2) ?? 0)
 }
 const ProductImage = ({ src }) => {
     return <Image width={80} height={80} src={src} alt='product img' style={{ width: "100%", height: "97%" }} />

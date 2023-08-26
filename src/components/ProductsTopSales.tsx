@@ -1,17 +1,26 @@
-import { productData } from '@/types/dataTypes'
 import {
     Alert, Chip, List,
     ListItem, Typography,
-    alpha, useTheme, Box, capitalize
+    alpha, useTheme
 } from '@mui/material'
 import { TrendingUp } from '@mui/icons-material'
 import LoadingGrayBar from './LoadinGrayBar'
 import { useQuery } from '@tanstack/react-query'
 import CustomListItem, { DisplyProductDetails } from './CustomListItem'
-import { numbersDecorator } from 'goni-functions'
+import { nDecorator } from '@abdulrhmangoni/am-store-library'
 import useStatisticsQueries from '@/hooks/useStatisticsQueries'
 import useProductsDisplayer from '@/hooks/useProductsDisplayer'
 
+interface productData {
+    _id: string,
+    title: string,
+    description: string,
+    images: string[],
+    series: string,
+    price: number,
+    sold: number,
+    category: string,
+}
 
 export function LoadingState() {
     const { palette: { primary } } = useTheme();
@@ -35,7 +44,9 @@ export default function ProductsTopSales() {
 
     return (
         <>
-            <Typography variant="h6" sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>Top Sales <TrendingUp color="primary" /></Typography>
+            <Typography variant="h6" sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: 1, mb: 1 }}>
+                Top Sales <TrendingUp color="primary" />
+            </Typography>
             <List sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 1, overflowY: "auto", pt: 0 }}>
                 {
                     isLoading ? [1, 2, 3].map(index => <LoadingState key={index} />) :
@@ -49,7 +60,7 @@ export default function ProductsTopSales() {
                                         subTitle={product.series}
                                         avatar={product.images?.[0]}
                                         avatarSx={{ borderRadius: "2px" }}
-                                        onRightElement={<Chip label={`Sold: ${numbersDecorator(product.sold)}`} />}
+                                        onRightElement={<Chip label={`Sold: ${nDecorator(product.sold)}`} />}
                                         descriptionBox={
                                             <DisplyProductDetails
                                                 description={product.description}

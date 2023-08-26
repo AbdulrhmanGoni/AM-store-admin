@@ -1,7 +1,7 @@
 import Chart from "react-apexcharts";
 import { useTheme } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { numbersDecorator } from "goni-functions";
+import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import moment from "moment";
 import useStatisticsQueries from "@/hooks/useStatisticsQueries";
 import ApexchartsContainer from "./ApexchartsContainer";
@@ -57,7 +57,7 @@ export default function OrdersStatisticsChart() {
         },
         tooltip: {
             x: { formatter: (month: string) => moment().month(month).format("MMMM") },
-            y: { formatter: (val: number) => numbersDecorator(val) },
+            y: { formatter: (val: number) => nDecorator(val) },
         }
     }
 
@@ -69,7 +69,7 @@ export default function OrdersStatisticsChart() {
     ]
 
     return (
-        <ApexchartsContainer title="Total orders per months">
+        <ApexchartsContainer title="Total orders every month">
             {/* @ts-ignore */}
             <Chart options={options} series={series} type="bar" height={250} />
         </ApexchartsContainer>

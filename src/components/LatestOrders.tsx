@@ -1,7 +1,7 @@
 import { order } from '@/types/dataTypes'
 import { Alert, Box, Chip, LinearProgress, List, Typography } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
-import { timeAgo } from 'goni-functions'
+import { timeAgo } from "@abdulrhmangoni/am-store-library";
 import { LoadingState } from './ProductsTopSales'
 import CustomListItem from './CustomListItem'
 import SmallTable from './SmallTable'
@@ -42,7 +42,7 @@ function OrdersItem(props: { order: order }) {
 }
 
 export default function LatestOrders() {
-    
+
     const { get_latestOrders } = useStatisticsQueries()
     const { data, isLoading, isError } = useQuery({
         queryKey: ["latest-orders"],
@@ -51,7 +51,7 @@ export default function LatestOrders() {
 
     return (
         <>
-            <Typography sx={{ mb: 1 }} variant="h6">Latest Orders</Typography>
+            <Typography sx={{ mb: 1, display: "flex", justifyContent: "flex-start" }} variant="h6">Latest Orders</Typography>
             <List sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 1, overflowY: "auto", pt: 0 }}>
                 {
                     isLoading ? [1, 2, 3].map(index => <LoadingState key={index} />) :

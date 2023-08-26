@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": [
       "dom",
       "dom.iterable",
@@ -11,6 +11,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -34,15 +35,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "src/app/layout.ts",
-    "src/components/SalseChart.js",
-    "src/components/OrdersStatisticsChart.tsx",
-    "src/components/CircleChart.tsx",
-    "src/components/EarningsChart.tsx",
-    "src/app/layout.tsx",
-    "src/app/products-management/components/ProductsWiewerTable.tsx"
-, "src/functions/cookiesGetter.js", "src/queries/requestHeaders.js"  ],
+    ".next/types/**/*.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

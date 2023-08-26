@@ -1,4 +1,3 @@
-import { ChairAlt } from "@mui/icons-material";
 import { Typography, Box } from "@mui/material"
 import LoadingGrayBar from "./LoadinGrayBar";
 

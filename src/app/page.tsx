@@ -11,7 +11,6 @@ import AverageOrders from "@/components/AverageOrders";
 import AverageEarnings from "@/components/AverageEarnings";
 import CategoriesEarningsPercentages from "@/components/CategoriesEarningsPercentages";
 
-
 const paperStyle = {
   display: "flex",
   alignItems: "center",
@@ -19,31 +18,31 @@ const paperStyle = {
   flexDirection: "column",
   p: 1, height: "315px"
 }
-const boxStyle = {
-  width: "100%"
-}
+const boxSx = { width: "100%" }
 
 export default function AdminOverview() {
+
   const lgDevice = useMediaQuery("(min-width: 1560px)")
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
       <Grid container spacing={{ xs: 1, md: 2 }}>
-        <Grid item xs={12} sm={12} md={6} lg={lgDevice? 3 : 6}>
+        <Grid item xs={12} sm={12} md={6} lg={lgDevice ? 3 : 6}>
           <Paper sx={{ ...paperStyle, height: "200px" }}>
             <SalesGrowth />
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={12} md={6} lg={lgDevice? 3 : 6}>
+        <Grid item xs={12} sm={12} md={6} lg={lgDevice ? 3 : 6}>
           <Paper sx={{ ...paperStyle, height: "200px" }}>
             <AverageOrders />
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={12} md={6} lg={lgDevice? 3 : 6}>
+        <Grid item xs={12} sm={12} md={6} lg={lgDevice ? 3 : 6}>
           <Paper sx={{ ...paperStyle, height: "200px" }}>
             <AverageEarnings />
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={12} md={6} lg={lgDevice? 3 : 6}>
+        <Grid item xs={12} sm={12} md={6} lg={lgDevice ? 3 : 6}>
           <Paper sx={{ ...paperStyle, height: "200px" }}>
             <CategoriesEarningsPercentages />
           </Paper>
@@ -51,38 +50,38 @@ export default function AdminOverview() {
       </Grid>
       <Grid container spacing={{ xs: 1, md: 2 }}>
         <Grid item xs={12} sm={12} md={6} lg={4}>
-          <Box sx={boxStyle}>
+          <Box sx={boxSx}>
             <Paper sx={paperStyle}>
               <EarningsChart />
             </Paper>
           </Box>
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={4}>
-          <Box sx={boxStyle}>
+          <Box sx={boxSx}>
             <Paper sx={paperStyle}>
               <OrdersStatisticsChart />
             </Paper>
           </Box>
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={4}>
-          <Box sx={boxStyle}>
+          <Box sx={boxSx}>
             <Paper sx={paperStyle}>
               <CategoriesCharts />
             </Paper>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={12} md={6} lg={4}>
+        <Grid item xs={12} sm={12} md={6} lg={lgDevice ? 4 : 6}>
           <Paper sx={{ ...paperStyle, justifyContent: "flex-start" }}>
             <LatestOrders />
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={12} md={6} lg={4}>
+        <Grid item xs={12} sm={12} md={6} lg={lgDevice ? 4 : 6}>
           <Paper sx={{ ...paperStyle, justifyContent: "flex-start" }}>
             <ProductsTopSales />
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={12} md={6} lg={4}>
-          <Box sx={boxStyle}>
+        <Grid item xs={12} sm={12} md={6} lg={lgDevice ? 4 : 6}>
+          <Box sx={boxSx}>
             <Paper sx={{ ...paperStyle, justifyContent: "flex-start" }}>
               <ProductsTopEarnings />
             </Paper>

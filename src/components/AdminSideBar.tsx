@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { testingImage3 } from '@/CONSTANT/testingImage';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -46,7 +45,7 @@ export default function AdminSideBar({ isOpen, close }: { isOpen: boolean, close
         <Drawer elevation={1}
             anchor='left'
             open={isOpen}
-            sx={{ width: 240, position: "relative" }}
+            sx={{ width: 265, position: "relative" }}
             aria-label="Admin Tools Bar"
         >
             <IconButton onClick={close} sx={{ position: "absolute", right: 2, top: 2 }}><Close /></IconButton>
@@ -68,7 +67,7 @@ export default function AdminSideBar({ isOpen, close }: { isOpen: boolean, close
                             sx={{
                                 bgcolor: isCurr ? "primary.main" : null,
                                 color: isCurr ? "white" : null,
-                                width: '240px',
+                                width: '265px',
                             }}
                             key={target} disablePadding>
                             <Link href={target} as={target} style={linksStyle} onClick={close}>

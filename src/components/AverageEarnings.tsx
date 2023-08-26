@@ -1,9 +1,9 @@
 import CustomChartBox from "./CustomChartBox";
 import useStatisticsQueries from "@/hooks/useStatisticsQueries";
 import SvgIcon from "@/components/SvgIcon";
-import { averageEarningsIcon } from "@/images/svgIconsAsString";
+import { averageEarningsIcon } from "./svgIconsAsString";
 import { useQuery } from "@tanstack/react-query";
-import { numbersDecorator } from "goni-functions";
+import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { SmalLine } from "./SmallChart";
 
 export default function AverageEarnings() {
@@ -20,7 +20,7 @@ export default function AverageEarnings() {
     return (
         <CustomChartBox
             title="Average earnings"
-            mainValue={`$${numbersDecorator(total?.toFixed(2))}`}
+            mainValue={`$${nDecorator(total?.toFixed(2))}`}
             error={isError}
             smallChart={<SmalLine data={earnings} tooltipIsMony />}
             loading={isLoading}

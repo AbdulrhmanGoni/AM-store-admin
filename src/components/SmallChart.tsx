@@ -1,6 +1,6 @@
 import { Box, useTheme } from '@mui/material';
 import Chart from "react-apexcharts";
-import { numbersDecorator } from "goni-functions";
+import { nDecorator } from "@abdulrhmangoni/am-store-library";
 
 type SmallChartProps = {
     data?: any[],
@@ -27,7 +27,7 @@ const useChartOptions = (tooltipIsMony?: boolean, colors?: string[]) => {
             marker: { show: false },
             x: { show: false },
             y: {
-                formatter: (val: number) => tooltipIsMony ? "$" + numbersDecorator(val.toFixed(2)) : val,
+                formatter: (val: number) => tooltipIsMony ? "$" + nDecorator(val.toFixed(2)) : val,
                 title: { formatter: () => "" }
             }
         }

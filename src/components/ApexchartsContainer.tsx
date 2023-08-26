@@ -13,7 +13,7 @@ export default function ApexchartsContainer({ children, title, sx }: props) {
             "& svg": { backgroundColor: "transparent !important" },
             width: "100%", ...sx
         }}>
-            {title && <Typography sx={{ display: "flex", justifyContent: "center" }} variant="h6">{title}</Typography>}
+            {title && <Typography sx={{ display: "flex", pl:"6px" }} variant="h6">{title}</Typography>}
             {children}
         </Box>
     )

@@ -1,6 +1,6 @@
 import CustomChartBox from "./CustomChartBox";
 import SvgIcon from "@/components/SvgIcon";
-import { averageOrdersIcon } from "@/images/svgIconsAsString";
+import { averageOrdersIcon } from "./svgIconsAsString";
 import useStatisticsQueries from "@/hooks/useStatisticsQueries";
 import { useQuery } from "@tanstack/react-query";
 import { SmalBar } from "./SmallChart";

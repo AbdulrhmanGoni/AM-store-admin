@@ -1,12 +1,13 @@
 import CustomChartBox from "./CustomChartBox";
 import useStatisticsQueries from "@/hooks/useStatisticsQueries";
 import SvgIcon from "@/components/SvgIcon";
-import { growthIcon } from "@/images/svgIconsAsString";
+import { growthIcon } from "./svgIconsAsString";
 import { useQuery } from "@tanstack/react-query";
-import { numbersDecorator } from "goni-functions";
 import moment from "moment";
 import { NorthEast, SouthEast } from "@mui/icons-material";
 import { SmalLine } from "./SmallChart";
+import { nDecorator } from "@abdulrhmangoni/am-store-library";
+
 
 function countGrowthRete(pastValue: number = 1, currentValue: number = 1) {
     return (currentValue - pastValue) / pastValue
@@ -39,7 +40,7 @@ export default function SalesGrowth() {
             mainValueEndIcon={growthRete < 0 ? <SouthEast /> : <NorthEast />}
             error={isError}
             chartDescription={{
-                title: `$${numbersDecorator(lastMonthEarnings?.totalEarnings.toFixed(2))}`,
+                title: `$${nDecorator(lastMonthEarnings?.totalEarnings.toFixed(2))}`,
                 subTitle: "Last month",
                 severity: "default"
             }}

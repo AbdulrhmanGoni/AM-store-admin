@@ -2,7 +2,7 @@ import { useTheme } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import Chart from "react-apexcharts";
-import { numbersDecorator } from "goni-functions";
+import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import useStatisticsQueries from "@/hooks/useStatisticsQueries";
 import ApexchartsContainer from "./ApexchartsContainer";
 
@@ -51,7 +51,7 @@ export default function CategoriesCharts() {
             },
             y: {
                 formatter: function (val) {
-                    return "$" + numbersDecorator(val)
+                    return "$" + nDecorator(val)
                 }
             },
         },

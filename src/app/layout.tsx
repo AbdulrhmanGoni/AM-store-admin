@@ -12,6 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import { useCookies } from 'react-cookie';
 import useAdminLogIn from "@/hooks/useAdminLogIn";
 import LogInForm from "@/components/LogInForm";
+import { ErrorThrower } from "@abdulrhmangoni/am-store-library";
 
 
 export const ThemeContext = createContext<any>(null);
@@ -22,7 +23,7 @@ const queryClient = new QueryClient();
 export default function Dashboard({ children }) {
 
   const [mode, setMode] = useState<string>(useCookies()[0].theme ?? "dark");
-  const { adminData, setAdminData, isLoading, isError, isLogged, isOut } = useAdminLogIn();
+  const { adminData, setAdminData, isLoading, isError, isNetworkError, isLogged, isOut } = useAdminLogIn();
   const theme = themeHandeler(mode ?? "dark");
 
   const htmlStyle = {
@@ -55,7 +56,19 @@ export default function Dashboard({ children }) {
                           <ToastContainer limit={4} position="bottom-left" theme="colored" />
                         </Box>
                         : isOut ? <LogInForm />
-                          : isError ? <></> : <></>
+                          : isNetworkError ? <ErrorThrower
+                            title="Network Error"
+                            customIllustrate={"/images/no-network-error.png"}
+                            message="There is problem in your network, please check your internet"
+                            withRefreshButton fullPage
+                          />
+                            : isError ? <ErrorThrower
+                              title="Unexpected Error"
+                              customIllustrate={"/images/unexpected-error.png"}
+                              message="There is unexpected happends, may its in your network or you dont have the access to this application"
+                              fullPage
+                            />
+                              : null
                   }
                 </Box>
               </Box>

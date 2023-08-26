@@ -9,6 +9,7 @@ import ToolBar from './ProducsTableToolbar';
 import Footer from './ProducsTableFooter';
 import { useState, useEffect } from 'react';
 import useNotifications from '@/hooks/useNotifications';
+import { ErrorThrower } from '@abdulrhmangoni/am-store-library';
 
 
 
@@ -107,9 +108,14 @@ export default function ProductsWiewerTable() {
                 localeText={{ noRowsLabel: tablesMassages, noResultsOverlayLabel: 'No products found.' }}
                 slotProps={{ toolbar: { quickFilterProps: { debounceMs: 500 } } }}
                 slots={{
-                    toolbar: () => (<ToolBar />),
-                    footer: () => (<Footer delelteFun={deleteProducs} selectedRows={selectedRows} />),
-                    // noRowsOverlay: () => <Avatar>No</Avatar>,
+                    toolbar: () => <ToolBar />,
+                    footer: () => <Footer delelteFun={deleteProducs} selectedRows={selectedRows} />,
+                    noRowsOverlay: () => <ErrorThrower
+                        title='No Products'
+                        message='There is error hapends when products fetching'
+                        disableHeight
+                        customIllustrate={"/images/empty.png"}
+                    />,
                     loadingOverlay: LinearProgress,
                 }}
             />

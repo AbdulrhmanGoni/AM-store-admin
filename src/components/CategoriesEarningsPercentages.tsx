@@ -1,11 +1,11 @@
 import CustomChartBox from "./CustomChartBox";
 import useStatisticsQueries from "@/hooks/useStatisticsQueries";
 import SvgIcon from "@/components/SvgIcon";
-import { categoriesEarningsIcon } from "@/images/svgIconsAsString";
+import { categoriesEarningsIcon } from "./svgIconsAsString";
 import { useQuery } from "@tanstack/react-query";
 import randomColorsArr from '@/CONSTANT/randomColorsArr';
 import { Box, Typography, capitalize } from "@mui/material";
-import { numbersDecorator } from "goni-functions";
+import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { SmalDonut } from "./SmallChart";
 
 export default function CategoriesEarningsPercentages() {
@@ -44,7 +44,7 @@ export default function CategoriesEarningsPercentages() {
             smallChart={<SmalDonut data={series?.map((cat) => cat.value)} tooltipIsMony height={85} colors={chartColors} />}
             loading={isLoading}
             titleIcon={<SvgIcon svgElementAsString={categoriesEarningsIcon} />}
-            chartDescription={{ title: `$${numbersDecorator(total)}`, subTitle: "Total" }}
+            chartDescription={{ title: `$${nDecorator(total)}`, subTitle: "Total" }}
         />
     )
 }
