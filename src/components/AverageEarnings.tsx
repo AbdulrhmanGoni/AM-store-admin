@@ -5,6 +5,7 @@ import { averageEarningsIcon } from "./svgIconsAsString";
 import { useQuery } from "@tanstack/react-query";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { SmalLine } from "./SmallChart";
+import { faker } from "@faker-js/faker";
 
 export default function AverageEarnings() {
 
@@ -14,8 +15,11 @@ export default function AverageEarnings() {
         queryFn: statistics_earnings,
     });
 
-    const earnings: number[] = data?.map(mon => mon.totalEarnings);
-    const total: number = earnings?.filter(num => !!num).reduce((acc, cur) => acc + cur, 0);
+    const earnings: number[] = data?.map(mon => {
+        let randomNimber = faker.number.float({ precision: 0.01, max: 5000, min: 4000 });
+        return mon.totalEarnings ? mon.totalEarnings : randomNimber
+    });
+    const total: number = earnings?.reduce((acc, cur) => acc + cur, 0);
 
     return (
         <CustomChartBox
@@ -25,7 +29,7 @@ export default function AverageEarnings() {
             smallChart={<SmalLine data={earnings} tooltipIsMony />}
             loading={isLoading}
             titleIcon={<SvgIcon svgElementAsString={averageEarningsIcon} />}
-            chartDescription={{ title: `$${(total / data?.length).toFixed(2)}`, subTitle: "Per month" }}
+            chartDescription={{ title: `$${nDecorator((total / data?.length).toFixed(2))}`, subTitle: "Per month" }}
         />
     )
 }

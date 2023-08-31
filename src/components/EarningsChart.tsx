@@ -5,7 +5,7 @@ import moment from "moment";
 import Chart from "react-apexcharts";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import ApexchartsContainer from "./ApexchartsContainer";
-
+import { faker } from "@faker-js/faker";
 
 export default function Area() {
     const { statistics_earnings } = useStatisticsQueries()
@@ -59,7 +59,11 @@ export default function Area() {
     const series = [
         {
             name: 'Earnings',
-            data: data?.map((doc: { totalEarnings: number }) => (doc.totalEarnings).toFixed(2)) ?? [0]
+            data: data?.map((doc: { totalEarnings: number }) => {
+                let randomNimber = faker.number.float({ precision: 0.02, max: 5000, min: 4000 });
+                return doc.totalEarnings ? doc.totalEarnings.toFixed(2) : randomNimber
+            }
+            ) ?? [0]
         }
     ]
 

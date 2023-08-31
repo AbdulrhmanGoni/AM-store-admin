@@ -4,9 +4,9 @@ import AddProductForm from "./components/AddProductForm"
 import ProductsWiewerTable from "./components/ProductsWiewerTable"
 import SearchField from "./components/SearchField"
 import TitleBarOfPage from "@/components/TitleBarOfPage";
+import { FC } from "react";
 
-
-export default function ProductsManagement() {
+const ProductsManagement: FC = function () {
   return (
     <>
       <TitleBarOfPage title="Products Management" role="Add, Update and Delete Products" />
@@ -31,3 +31,4 @@ export default function ProductsManagement() {
   )
 }
 
+export default ProductsManagement

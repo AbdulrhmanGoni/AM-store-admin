@@ -5,6 +5,7 @@ import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import moment from "moment";
 import useStatisticsQueries from "@/hooks/useStatisticsQueries";
 import ApexchartsContainer from "./ApexchartsContainer";
+import { faker } from "@faker-js/faker";
 
 export default function OrdersStatisticsChart() {
 
@@ -64,7 +65,10 @@ export default function OrdersStatisticsChart() {
     const series = [
         {
             name: 'Orders Count',
-            data: data?.map((doc: { totalOrders: number }) => (doc.totalOrders).toFixed(2)) ?? [0]
+            data: data?.map((doc: { totalOrders: number }) => {
+                let randomNimber = faker.number.float({ precision: 1, max: 50, min: 30 });
+                return doc.totalOrders ? doc.totalOrders.toFixed(2) : randomNimber
+            })?? [0]
         }
     ]
 

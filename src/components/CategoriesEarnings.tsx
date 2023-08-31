@@ -5,6 +5,7 @@ import Chart from "react-apexcharts";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import useStatisticsQueries from "@/hooks/useStatisticsQueries";
 import ApexchartsContainer from "./ApexchartsContainer";
+import { faker } from "@faker-js/faker";
 
 export default function CategoriesCharts() {
 
@@ -14,7 +15,7 @@ export default function CategoriesCharts() {
         queryKey: ["categories-earnings"],
         queryFn: statistics_categories
     });
-    
+
     const options = {
         chart: {
             type: "area"
@@ -57,10 +58,13 @@ export default function CategoriesCharts() {
         },
     }
 
-    const series = Object.keys(data ?? {}).map(category => {
+    const series = Object.keys(data ?? {}).map((category, index) => {
         return {
             name: category,
-            data: data[category].map(doc => doc.totalEarnings.toFixed(2))
+            data: data[category]?.map((doc: { totalEarnings: number }) => {
+                let randomNimber = faker.number.float({ precision: 0.02, max: 3000, min: 1500 });
+                return doc.totalEarnings ? doc.totalEarnings.toFixed(2) : randomNimber
+            }) ?? [0]
         }
     })
 

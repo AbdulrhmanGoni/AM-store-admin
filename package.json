@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@abdulrhmangoni/am-store-library": "^0.0.2",
+    "@abdulrhmangoni/am-store-library": "^1.0.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^4.5.8",
@@ -42,6 +42,7 @@
     "typescript": "^5.1.6"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@tanstack/eslint-plugin-query": "^4.29.9",
     "@types/node": "20.5.4",
     "@types/react-window": "^1.8.5"

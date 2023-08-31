@@ -7,10 +7,10 @@ export default function useStatisticsQueries() {
 
     const path = (get: string, limit?: number): string => `${host}statistics/?get=${get}&limit=${limit ?? 3}`
 
-    async function get_products_topSales(limit) {
+    async function get_products_topSales(limit?: number) {
         return (await api.get(path("products-top-sales", limit))).data;
     }
-    async function get_products_topEarnings(limit) {
+    async function get_products_topEarnings(limit?: number) {
         return (await api.get(path("products-top-earnings", limit))).data;
     }
     async function statistics_categories() {
@@ -22,10 +22,10 @@ export default function useStatisticsQueries() {
     async function statistics_orders() {
         return (await api.get(path("statistics-history&return=totalOrders,date"))).data;
     }
-    async function get_latestOrders(limit) {
+    async function get_latestOrders(limit?: number) {
         return (await api.get(path("orders-get-latest", limit))).data;
     }
-    async function getProductsOfOrder(productsIds) {
+    async function getProductsOfOrder(productsIds: string[]) {
         return (await api.post(`${host}products?custom=title`, { productsIds, withCount: true, withPrice: true })).data
     }
 

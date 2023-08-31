@@ -14,7 +14,6 @@ import useAdminLogIn from "@/hooks/useAdminLogIn";
 import LogInForm from "@/components/LogInForm";
 import { ErrorThrower } from "@abdulrhmangoni/am-store-library";
 
-
 export const ThemeContext = createContext<any>(null);
 export const AdminDataContext = createContext<any>(null);
 
@@ -58,13 +57,13 @@ export default function Dashboard({ children }) {
                         : isOut ? <LogInForm />
                           : isNetworkError ? <ErrorThrower
                             title="Network Error"
-                            customIllustrate={"/images/no-network-error.png"}
+                            illustratorType="network"
                             message="There is problem in your network, please check your internet"
                             withRefreshButton fullPage
                           />
                             : isError ? <ErrorThrower
                               title="Unexpected Error"
-                              customIllustrate={"/images/unexpected-error.png"}
+                              illustratorType="unexpected"
                               message="There is unexpected happends, may its in your network or you dont have the access to this application"
                               fullPage
                             />
