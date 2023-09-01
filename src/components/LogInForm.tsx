@@ -26,7 +26,7 @@ export default function LogInForm() {
 
     function complateLog({ accessToken, adminData }) {
         let maxAge = 3600 * 24 * 20;
-        setCookies("access-token", accessToken, { maxAge })
+        setCookies("admin-access-token", accessToken, { maxAge })
         setCookies("adminId", adminData._id, { maxAge })
         setAdminData(adminData);
         router.refresh()
