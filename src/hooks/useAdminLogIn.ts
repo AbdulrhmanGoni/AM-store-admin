@@ -17,7 +17,7 @@ export default function useAdminLogIn() {
     const [cookie] = useCookies();
 
     useEffect(() => {
-        if (!!cookie["access-token"] && !!cookie["adminId"]) {
+        if (!!cookie["admin-access-token"] && !!cookie["adminId"]) {
             setIsLoading(true);
             api.get(`${host}admin-log-in/${cookie.adminId}`)
                 .then(({ data }) => {

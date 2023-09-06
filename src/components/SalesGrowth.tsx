@@ -20,12 +20,13 @@ export default function SalesGrowth() {
         queryFn: statistics_earnings,
     });
 
-    const currentMonth = moment().format("MMM");
-    const lastMonth = moment().month(moment().month() - 1).format("MMM");
-    const dates = data?.filter(mon => mon.date.match(new RegExp(`(${currentMonth}|${lastMonth})`)));
+    const currentMonth = moment().month();
+    const lastMonth = moment().month(currentMonth - 1).format("MMM");
+    const beforeLastMonth = moment().month(currentMonth - 2).format("MMM");
+    const dates = data?.filter(mon => mon.date.match(new RegExp(`(${beforeLastMonth}|${lastMonth})`)));
     const lastMonthEarnings = dates?.find((month) => month.date.match(new RegExp(lastMonth)));
-    const currentMonthEarnings = dates?.find((month) => month.date.match(new RegExp(currentMonth)));
-    const growthRete = countGrowthRete(lastMonthEarnings?.totalEarnings, currentMonthEarnings?.totalEarnings);
+    const beforeLastMonthEarnings = dates?.find((month) => month.date.match(new RegExp(beforeLastMonth)));
+    const growthRete = countGrowthRete(beforeLastMonthEarnings?.totalEarnings, lastMonthEarnings?.totalEarnings);
     const chartData = dates?.map(mon => mon.totalEarnings);
 
 
@@ -36,7 +37,7 @@ export default function SalesGrowth() {
             loading={isLoading}
             smallChart={<SmalLine data={chartData} tooltipIsMony />}
             mainValue={`${(growthRete * 100).toFixed(2)}%`}
-            mainValueColor="error"
+            mainValueColor={growthRete < 0 ? "error" : "success"}
             mainValueEndIcon={growthRete < 0 ? <SouthEast /> : <NorthEast />}
             error={isError}
             chartDescription={{

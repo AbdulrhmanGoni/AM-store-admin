@@ -41,7 +41,7 @@ export default function Dashboard({ children }) {
           <ThemeProvider theme={theme}>
             <QueryClientProvider client={queryClient}>
               <Box component="html" lang="en" sx={htmlStyle}>
-                <Box component="body" sx={{ bgcolor: "background.default" }}>
+                <Box component="body" sx={{ bgcolor: theme.palette.background.default }}>
                   {
                     isLoading ? <Box sx={loadingCircle}><CircularProgress /></Box>
                       : isLogged ?
@@ -52,7 +52,6 @@ export default function Dashboard({ children }) {
                               {children}
                             </Box>
                           </Box>
-                          <ToastContainer limit={4} position="bottom-left" theme="colored" />
                         </Box>
                         : isOut ? <LogInForm />
                           : isNetworkError ? <ErrorThrower
@@ -69,6 +68,7 @@ export default function Dashboard({ children }) {
                             />
                               : null
                   }
+                  <ToastContainer limit={4} position="bottom-left" theme="colored" />
                 </Box>
               </Box>
             </QueryClientProvider>

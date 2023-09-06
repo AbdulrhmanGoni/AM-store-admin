@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { CopyAll } from '@mui/icons-material';
-import copy from '@/functions/copy';
 import { Box, Table, TableBody, TableCell, TableHead, TableRow, Chip, Tooltip } from '@mui/material';
 
 interface SmallTableProps {
@@ -15,7 +14,7 @@ export default function SmallTable({ theProducts }: { theProducts: SmallTablePro
     const [copiedTooltip, setCopiedTooltip] = useState<string>("");
 
     function onCopy(text: string) {
-        copy(text);
+        navigator.clipboard.writeText(text);
         setCopiedTooltip(text + " copied");
     }
 

@@ -1,5 +1,5 @@
 import { useTheme } from '@mui/material';
-import { toast } from 'react-toastify';
+import { toast, ToastOptions } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 
@@ -16,11 +16,11 @@ export default function useNotifications() {
 
     const { palette: { mode } } = useTheme();
 
-    function message(message: string, type: typeMessage) {
+    function message(message: string, type: typeMessage, options?: ToastOptions) {
         toast(message, {
             pauseOnHover: true,
             pauseOnFocusLoss: true,
-            type, theme: mode
+            type, ...options
         })
     }
 

@@ -1,61 +1,24 @@
-import { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import {
+    Avatar, Button, CssBaseline,
+    TextField, Grid, Box,
+    Typography, Container
+} from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { useCookies } from 'react-cookie';
-import useApiRequest from '@/hooks/useApiRequest';
-import host from '@/CONSTANT/API_hostName';
-import useAdminData from '@/hooks/useAdminData';
-import { useRouter } from 'next/navigation'
+import useLogInLogic from '@/hooks/useLogInLogic';
+import { useGoogleAuth } from '@abdulrhmangoni/am-store-library';
 
 
 export default function LogInForm() {
-
-    const { api } = useApiRequest();
-    const router = useRouter();
-
-    const [_, setCookies] = useCookies();
-    const [thereError, setErrorState] = useState(false);
-    const [, setAdminData] = useAdminData();
-
-    function complateLog({ accessToken, adminData }) {
-        let maxAge = 3600 * 24 * 20;
-        setCookies("admin-access-token", accessToken, { maxAge })
-        setCookies("adminId", adminData._id, { maxAge })
-        setAdminData(adminData);
-        router.refresh()
-    }
-
-    function submit(event) {
-        event.preventDefault();
-        const data = new FormData(event?.currentTarget);
-        const adminEmail = data.get('email');
-        const adminPassword = data.get('password');
-        api.post(`${host}admin-log-in`, { adminEmail, adminPassword })
-            .then(({ data }) => { !!data && complateLog(data) })
-            .catch(() => { setErrorState(true) }).finally(() => { })
-    }
-
-    const InputContainer = ({ children }) => {
-        return (
-            <Grid item xs={12} sx={{ "& fieldset": { borderColor: thereError ? "red !important" : "white" } }}>
-                {children}
-            </Grid>
-        )
-    }
+    const { AuthButton } = useGoogleAuth()
+    const {
+        logInFailed,
+        handleSubmit,
+        logInWithGoogle
+    } = useLogInLogic();
 
     return (
         <Box sx={containerStyle}>
-            <Container
-                className='customForm'
-                component="main"
-                maxWidth="xs">
+            <Container className='customForm' maxWidth="xs">
                 <CssBaseline />
                 <Box
                     sx={{
@@ -64,23 +27,19 @@ export default function LogInForm() {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Log In
-                    </Typography>
-                    <Box component="form" onSubmit={submit} sx={{ mt: 3 }}>
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}><LockOutlinedIcon /></Avatar>
+                    <Typography component="h1" variant="h5">Log In</Typography>
+                    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
-                            <InputContainer>
+                            <Grid item xs={12} sx={sxTexFieldOutline(!logInFailed.state)}>
                                 <TextField
                                     fullWidth
                                     name="email"
                                     id="email"
                                     label="Email Address"
                                 />
-                            </InputContainer>
-                            <InputContainer>
+                            </Grid>
+                            <Grid item xs={12} sx={sxTexFieldOutline(!logInFailed.state)}>
                                 <TextField
                                     fullWidth
                                     name="password"
@@ -88,11 +47,14 @@ export default function LogInForm() {
                                     type="password"
                                     id="password"
                                 />
-                            </InputContainer>
+                            </Grid>
                             <Grid item>
-                                {thereError && <Typography style={{ color: "red" }}>
-                                    There Are Issue in Email Or password, Try Again With More verify
-                                </Typography>}
+                                {
+                                    !logInFailed.state &&
+                                    <ErrorMessageTag
+                                        message={logInFailed.message}
+                                    />
+                                }
                             </Grid>
                         </Grid>
                         <Button
@@ -111,17 +73,35 @@ export default function LogInForm() {
                             </Typography>
                         </Grid>
                     </Grid>
+                    <Grid container justifyContent="flex-end">
+                        <AuthButton
+                            text='Log in with Google'
+                            onSuccess={logInWithGoogle}
+                        />
+                    </Grid>
                 </Box>
             </Container>
         </Box>
     );
 }
 
+export function ErrorMessageTag({ message }: { message: string }) {
+    return (
+        <Typography sx={{ fontSize: "0.87rem", color: "red", mt: "5px" }}>{message}</Typography>
+    )
+}
+
+const sxTexFieldOutline = (condition: boolean) => {
+    return {
+        "& fieldset": {
+            borderColor: condition ? "red !important" : "white"
+        }
+    }
+}
 
 const containerStyle = {
     display: "flex",
     alignItems: "center",
-    // backgroundImage: "",
     width: "100%",
     minHeight: "100vh",
     color: "white",

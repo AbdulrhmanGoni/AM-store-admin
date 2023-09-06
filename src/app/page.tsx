@@ -79,19 +79,19 @@ export default function AdminOverview() {
         </Grid>
       </Grid>
       <Grid container spacing={{ xs: 1, md: 2 }}>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={6} lg={lgDevice ? 4 : 6}>
           <Paper sx={{ ...paperStyle, justifyContent: "flex-start" }}>
             <ProductsTopSales />
           </Paper>
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={6} lg={lgDevice ? 4 : 6}>
           <Box sx={boxSx}>
             <Paper sx={{ ...paperStyle, justifyContent: "flex-start" }}>
               <ProductsTopEarnings />
             </Paper>
           </Box>
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={6} lg={lgDevice ? 4 : 6}>
           <Paper sx={{ ...paperStyle, justifyContent: "flex-start" }}>
             <LatestOrders />
           </Paper>
