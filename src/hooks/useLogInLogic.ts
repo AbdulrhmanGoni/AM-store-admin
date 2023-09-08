@@ -35,7 +35,7 @@ export default function useLogInLogic() {
                 !!data && complateLog(data)
                 if (data === false) {
                     message("Your email registred by another signing up method", "warning")
-                } else {
+                } else if (data === null) {
                     message("You didn't have registered with us before", "error")
                 }
             })
@@ -51,10 +51,14 @@ export default function useLogInLogic() {
         api.post(`${host}admin-log-in`, { adminEmail, adminPassword })
             .then(({ data }) => {
                 !!data && complateLog(data)
-                !data && setFailed({
-                    state: false,
-                    message: "There is issue in email or password, Try again with more verify"
-                })
+                if (data === false) {
+                    message("Your email registred by another signing up method", "warning")
+                } else {
+                    !data && setFailed({
+                        state: false,
+                        message: "There is issue in email or password, Try again with more verify"
+                    })
+                }
             })
             .catch(() => { })
             .finally(() => { })

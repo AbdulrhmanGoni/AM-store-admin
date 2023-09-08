@@ -22,7 +22,12 @@ const queryClient = new QueryClient();
 export default function Dashboard({ children }) {
 
   const [mode, setMode] = useState<string>(useCookies()[0].theme ?? "dark");
-  const { adminData, setAdminData, isLoading, isError, isNetworkError, isLogged, isOut } = useAdminLogIn();
+  const {
+    adminData, setAdminData,
+    isLoading, isError,
+    isNetworkError, isLogged,
+    isOut, isServerError
+  } = useAdminLogIn();
   const theme = themeHandeler(mode ?? "dark");
 
   const htmlStyle = {
@@ -60,13 +65,19 @@ export default function Dashboard({ children }) {
                             message="There is problem in your network, please check your internet"
                             withRefreshButton fullPage
                           />
-                            : isError ? <ErrorThrower
-                              title="Unexpected Error"
-                              illustratorType="unexpected"
-                              message="There is unexpected happends, may its in your network or you dont have the access to this application"
+                            : isServerError ? <ErrorThrower
+                              title="Server Error"
+                              illustratorType="server"
+                              message="There is unexpected error happends in our server"
                               fullPage
                             />
-                              : null
+                              : isError ? <ErrorThrower
+                                title="Unexpected Error"
+                                illustratorType="unexpected"
+                                message="There is unexpected happends, may its in your network or you dont have the access to this application"
+                                fullPage
+                              />
+                                : null
                   }
                   <ToastContainer limit={4} position="bottom-left" theme="colored" />
                 </Box>

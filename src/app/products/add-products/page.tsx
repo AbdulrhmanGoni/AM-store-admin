@@ -1,7 +1,7 @@
 "use client"
 import {
     Add, AddPhotoAlternate,
-    AllInbox, AttachMoney, Bolt, Class,
+    AllInbox, AttachMoney, Class,
     Description, LiveTv, Subtitles
 } from '@mui/icons-material'
 import {
@@ -18,6 +18,7 @@ import useFormValidationState from '../hooks/useFormValidationState';
 import UPLOAD_IMAGE_API from '../CONSTANTS/UPLOAD_IMAGE_API';
 import useNotifications from '@/hooks/useNotifications';
 import axios from 'axios';
+
 
 export const catagoriesInfo = [
     { index: 1, name: "figures" },
@@ -69,12 +70,12 @@ export default function AddProductForm() {
 
     const iconsStyle = { color: 'primary.main', mr: 1, my: 0.5 };
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [selectCategory, setSelectedCategory] = useState("none");
     const {
         titleState, priceState, seriesState, descriptionState,
         amountState, categoryState, imageState, formValidation
     } = useFormValidationState();
+    const [isLoading, setIsLoading] = useState(false);
+    const [selectCategory, setSelectedCategory] = useState("none");
     const { bySteps } = useNotifications();
     const { addNewProducts } = useAsyncActions()
 

@@ -1,6 +1,6 @@
 import isImagePath from "@/functions/isImage";
 import { useState } from "react";
-import { catagoriesInfo } from "../components/AddProductForm";
+import { catagoriesInfo } from "../add-products/page";
 import getFormData from "../functions/getFormData";
 import { submetEvent } from "@/types/dataTypes";
 

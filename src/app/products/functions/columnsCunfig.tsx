@@ -14,7 +14,7 @@ const ProductImage = ({ src }) => {
     return <Image width={80} height={80} src={src} alt='product img' style={{ width: "100%", height: "97%" }} />
 }
 const rowProps = (field: s, headerName: s, width: n, sortable: b, editable: b, isNumber: b, moreProps?: any) => {
-    const floats: number = !!["sold", "amount"][field] ? 0 : 2
+    const floats: number = ["sold", "amount"].includes(field) ? 0 : 2;
     return {
         field, headerName: headerName, width, sortable,
         editable, ...moreProps, align: "left", headerAlign: "left",

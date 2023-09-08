@@ -51,8 +51,12 @@ export default function AdminOverview() {
       </Grid>
       <Grid container spacing={{ xs: 1, md: 2 }}>
         <Grid item xs={12} sm={12} md={6} lg={6}>
-          <Box sx={boxSx}>
-            <Paper sx={{ ...paperStyle, justifyContent: "space-between" }}>
+          <Box sx={{ ...boxSx, display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 }, height: "315px" }}>
+            <Paper sx={{ flexBasis: "33.3333%" }}>
+            </Paper>
+            <Paper sx={{ flexBasis: "33.3333%" }}>
+            </Paper>
+            <Paper sx={{ flexBasis: "33.3333%" }}>
             </Paper>
           </Box>
         </Grid>

@@ -17,7 +17,7 @@ export default function AverageOrders() {
 
     const dataChart: number[] = data?.map((doc: { totalOrder: number }) => {
         let randomNimber = faker.number.float({ precision: 1, max: 50, min: 30 });
-        return doc.totalOrder ? doc.totalOrder.toFixed(2) : randomNimber
+        return !!doc.totalOrder ? doc.totalOrder : randomNimber
     })
     const total: number = dataChart?.reduce((acc, cur) => acc + cur, 0);
 
