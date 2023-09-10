@@ -1,6 +1,6 @@
 "use client"
 import { Grid, Card } from "@mui/material";
-import ProductsWiewerTable from "../components/ProductsWiewerTable"
+import ProductsViewerTable from "../components/ProductsViewerTable"
 import SearchField from "../components/SearchField"
 import TitleBarOfPage from "@/components/TitleBarOfPage";
 import { FC } from "react";
@@ -17,7 +17,7 @@ const ProductsManagement: FC = function () {
         </Grid>
         <Grid item xs={12}>
           <Card sx={{ p: 2 }}>
-            <ProductsWiewerTable />
+            <ProductsViewerTable />
           </Card>
         </Grid>
       </Grid>

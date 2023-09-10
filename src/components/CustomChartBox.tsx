@@ -55,7 +55,7 @@ export default function CustomChartBox({
                     </Typography>}
                 </ItemDisplay>
                 <ItemDisplay w={85} h={25}>
-                    <Typography>{actionSec ?? "Do somthing"}</Typography>
+                    <Typography>{actionSec ?? "View more"}</Typography>
                 </ItemDisplay>
             </Box>
             <Box sx={{ ...containerChildrenStyle, alignItems: "flex-end" }}>

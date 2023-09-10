@@ -68,14 +68,14 @@ export default function OrdersStatisticsChart() {
             data: data?.map((doc: { totalOrders: number }) => {
                 let randomNimber = faker.number.float({ precision: 1, max: 50, min: 30 });
                 return doc.totalOrders ? doc.totalOrders.toFixed(2) : randomNimber
-            })?? [0]
+            }) ?? [0]
         }
     ]
 
     return (
         <ApexchartsContainer title="Total orders every month">
             {/* @ts-ignore */}
-            <Chart options={options} series={series} type="bar" height={250} />
+            <Chart options={options} series={series} type="bar" height={400 - 15 - 32} />
         </ApexchartsContainer>
     )
 } 

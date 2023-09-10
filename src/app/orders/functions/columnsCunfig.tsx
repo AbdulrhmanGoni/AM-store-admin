@@ -1,4 +1,4 @@
-import { GridColDef, GridRenderCellParams, GridValueGetterParams as GVGP } from '@mui/x-data-grid';
+import { GridColDef, GridValueGetterParams as GVGP, GridRenderCellParams } from '@mui/x-data-grid';
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { Rating } from '@mui/material';
 import Image from 'next/image';

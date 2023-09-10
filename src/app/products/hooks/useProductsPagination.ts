@@ -16,7 +16,7 @@ function useGetProducts() {
 
 
 
-export default function usePagination({ productsLength }) {
+export default function useProductsPagination({ productsLength }) {
 
     const { getProducts } = useGetProducts();
 

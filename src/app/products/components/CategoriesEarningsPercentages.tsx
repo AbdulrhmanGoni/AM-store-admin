@@ -1,12 +1,12 @@
-import CustomChartBox from "./CustomChartBox";
+import CustomChartBox from "@/components/CustomChartBox";
 import useStatisticsQueries from "@/hooks/useStatisticsQueries";
 import SvgIcon from "@/components/SvgIcon";
-import { categoriesEarningsIcon } from "./svgIconsAsString";
+import { categoriesEarningsIcon } from "@/components/svgIconsAsString";
 import { useQuery } from "@tanstack/react-query";
 import randomColorsArr from '@/CONSTANT/randomColorsArr';
 import { Box, Typography, capitalize } from "@mui/material";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
-import { SmalDonut } from "./SmallChart";
+import { SmalDonut } from "@/components/SmallChart";
 
 export default function CategoriesEarningsPercentages() {
 

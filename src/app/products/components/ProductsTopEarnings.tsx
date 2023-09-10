@@ -1,8 +1,8 @@
 import { Alert, Chip, List, Typography } from '@mui/material'
 import { useQuery } from '@tanstack/react-query';
 import { AttachMoney } from '@mui/icons-material';
-import { LoadingState } from './ProductsTopSales';
-import CustomListItem, { DisplyProductDetails } from './CustomListItem';
+import { ListTitle, LoadingState } from './ProductsTopSales';
+import CustomListItem, { DisplyProductDetails } from '@/components/CustomListItem';
 import { nDecorator } from '@abdulrhmangoni/am-store-library'
 import useStatisticsQueries from '@/hooks/useStatisticsQueries';
 import useProductsDisplayer from '@/hooks/useProductsDisplayer';
@@ -29,9 +29,11 @@ export default function ProductsTopEarnings() {
 
     return (
         <>
-            <Typography variant="h6" sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: 1, mb: 1 }}>
-                Top Earnings <AttachMoney color="primary" />
-            </Typography>
+            <ListTitle
+                title='Top Earnings'
+                subTitle='The top products that achieve earnings'
+                icon={<AttachMoney />}
+            />
             <List sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 1, overflowY: "auto", pt: 0 }}>
                 {
                     isLoading ? [1, 2, 3].map(index => <LoadingState key={index} />) :

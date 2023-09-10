@@ -1,6 +1,7 @@
 import {
     AddBusiness,
     AnalyticsOutlined,
+    AnalyticsSharp,
     DiscountOutlined,
     Email, Groups, Inbox, Store
 } from "@mui/icons-material";
@@ -30,6 +31,11 @@ const drawerLinks: LinkProps[] = [
                 target: "products-management",
                 text: " Products Management",
                 icon: <Store />
+            },
+            {
+                target: "statistics",
+                text: "Statistics",
+                icon: <AnalyticsSharp />
             },
             {
                 target: "add-products",

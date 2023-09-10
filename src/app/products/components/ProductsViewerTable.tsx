@@ -4,7 +4,7 @@ import { DataGrid, GridCellParams, GridPaginationModel, GridRowParams, GridRowSe
 import columns from '../functions/columnsCunfig';
 import useGetApi from '@/hooks/useGetApi';
 import useMutateApi from '@/hooks/useMutateApi';
-import usePagination from '../hooks/usePagination';
+import useProductsPagination from '../hooks/useProductsPagination';
 import ToolBar from './ProducsTableToolbar';
 import Footer from './ProducsTableFooter';
 import { useState, useEffect } from 'react';
@@ -12,8 +12,7 @@ import useNotifications from '@/hooks/useNotifications';
 import { ErrorThrower } from '@abdulrhmangoni/am-store-library';
 
 
-
-export default function ProductsWiewerTable() {
+export default function ProductsViewerTable() {
 
     const paddingSpace = useMediaQuery("(min-width: 900px)") ? 67 : 51;
 
@@ -32,7 +31,7 @@ export default function ProductsWiewerTable() {
         paginationModel,
         setPaginationModel,
         isLoading,
-    } = usePagination({ productsLength })
+    } = useProductsPagination({ productsLength })
 
     function deleteProducs() {
         setGoingToDelete(selectedRows)
@@ -114,7 +113,7 @@ export default function ProductsWiewerTable() {
                         title='No Products'
                         message='There is error hapends when products fetching'
                         disableHeight
-                        customIllustrate={"/images/empty.png"}
+                        illustratorType="empty"
                     />,
                     loadingOverlay: LinearProgress,
                 }}

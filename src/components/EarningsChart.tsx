@@ -70,7 +70,7 @@ export default function Area() {
     return (
         <ApexchartsContainer title="Earnings">
             {/* @ts-ignore */}
-            <Chart options={options} series={series} type="area" height={250} />
+            <Chart options={options} series={series} type="area" height={400 - 15 - 32} />
         </ApexchartsContainer>
     )
 }

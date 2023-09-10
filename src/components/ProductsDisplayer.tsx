@@ -5,6 +5,7 @@ import useApiRequest from "@/hooks/useApiRequest"
 import { productData } from "@/types/dataTypes"
 import { Close, Delete } from "@mui/icons-material"
 import LoadingGrayBar, { widthAndHeightType as wh } from "./LoadinGrayBar"
+import { ActionAlert, nDecorator } from "@abdulrhmangoni/am-store-library"
 
 
 export default function ProductsDisplayer({ id, close, palette: { background, text, primary } }) {
@@ -95,7 +96,11 @@ export default function ProductsDisplayer({ id, close, palette: { background, te
                     <ItemDisplayer lh={20} lw={300}
                         item={
                             <Typography key="ear" variant="subtitle1">
-                                The products achieves ${earnings?.toFixed(2)} of earnings
+                                {
+                                    !!earnings ?
+                                        `This product achieves $${nDecorator(earnings?.toFixed(2))} of earnings`
+                                        : "This product has not been sold before"
+                                }
                             </Typography>
                         }
                     />
@@ -111,19 +116,20 @@ export default function ProductsDisplayer({ id, close, palette: { background, te
                         }
                     />
                     <ItemDisplayer lh={25} lw={250}
-                        item={
-                            <Typography key="ser" variant="subtitle1">Series: {series}</Typography>
-                        }
+                        item={<Typography key="ser" variant="subtitle1">Series: {series}</Typography>}
                     />
                     <ItemDisplayer lh={100}
-                        item={
-                            <Typography key="des" variant="body1">{description}</Typography>
-                        }
+                        item={<Typography key="des" variant="body1">{description}</Typography>}
                     />
                     <ItemDisplayer lh={60}
                         item={
                             <Box key="act" sx={{ display: "flex", alignItems: "center", mt: 1 }}>
-                                <Button color="error" variant="contained" size="small" startIcon={<Delete />} >Delete</Button>
+                                <ActionAlert
+                                    action={() => { }}
+                                    title={"You are going to delete the product"}
+                                    message={"Make sure if you continue, You will not be able to undo this process after that"}                                >
+                                    <Button color="error" variant="contained" size="small" startIcon={<Delete />} >Delete</Button>
+                                </ActionAlert>
                             </Box>
                         }
                     />
