@@ -1,16 +1,16 @@
 import Image from 'next/image'
-import { Box, Paper, Typography } from '@mui/material'
+import { Avatar, Box, Paper, Typography } from '@mui/material'
 
 export default function TitleBarOfPage({ title, role }) {
     return (
         <Paper sx={{
-            display: "flex",
+            display: "flex", gap: 2,
             p: "16px 24px", mb: 2,
             justifyContent: "space-between",
             alignItems: "center",
             overflow: "hidden",
             position: "relative",
-            
+            flexFlow: "row wrap"
         }}>
             <Box>
                 <Typography
@@ -20,10 +20,10 @@ export default function TitleBarOfPage({ title, role }) {
                 </Typography>
                 <Typography variant='body1'>{role}</Typography>
             </Box>
-            <img
+            <Avatar
                 alt='bg'
                 src="/images/blue-moon.jpg"
-                style={{ width: "250px", height: "100%" }}
+                sx={{ width: "250px", height: "100%", borderRadius: 0 }}
             />
         </Paper>
     )

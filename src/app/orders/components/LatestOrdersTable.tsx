@@ -1,39 +1,35 @@
 "use client"
 import { Box, useMediaQuery } from '@mui/material';
-import { 
-    DataGrid, 
-    GridRowParams, 
-    GridRowSelectionModel, 
-    useGridApiRef 
+import {
+    DataGrid,
+    useGridApiRef
 } from '@mui/x-data-grid';
 import columns from '../functions/columnsCunfig';
-import { useState } from 'react';
 import { ErrorThrower } from '@abdulrhmangoni/am-store-library';
 import useOrdersInfinateScroll from '../hook/useOrdersInfinateScroll';
 
 
-export default function ProductsViewerTable() {
+export default function LatestOrdersTable() {
 
-    const paddingSpace = useMediaQuery("(min-width: 900px)") ? 67 : 51;
+    const paddingSpace = useMediaQuery("(min-width: 900px)") ? 35 : 19;
 
     const apiRef = useGridApiRef();
 
     const {
         orders,
-        isLoading,
+        isLoading
     } = useOrdersInfinateScroll();
 
     return (
         <Box sx={{ width: `calc(100vw - ${paddingSpace}px)` }}>
-            {/* <DataGrid
+            <DataGrid
                 sx={{ height: "814px" }}
                 apiRef={apiRef}
                 getRowId={(row) => { return row._id }}
-                rows={orders}
+                rows={orders || []}
                 columns={columns}
                 loading={isLoading}
                 density='comfortable'
-                checkboxSelection
                 disableColumnFilter
                 hideFooterSelectedRowCount
                 hideFooterPagination
@@ -47,7 +43,7 @@ export default function ProductsViewerTable() {
                         illustratorType="empty"
                     />
                 }}
-            /> */}
+            />
         </Box>
     );
 }

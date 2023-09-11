@@ -46,7 +46,12 @@ export default function Dashboard({ children }) {
           <ThemeProvider theme={theme}>
             <QueryClientProvider client={queryClient}>
               <Box component="html" lang="en" sx={htmlStyle}>
-                <Box component="body" sx={{ bgcolor: theme.palette.background.default }}>
+                <Box
+                  component="body"
+                  sx={{
+                    bgcolor: theme.palette.background.default,
+                    color: theme.palette.text.primary
+                  }}>
                   {
                     isLoading ? <Box sx={loadingCircle}><CircularProgress /></Box>
                       : isLogged ?

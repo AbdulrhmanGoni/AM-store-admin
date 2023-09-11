@@ -1,21 +1,14 @@
 import { useTheme } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import Chart from "react-apexcharts";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
-import useStatisticsQueries from "@/hooks/useStatisticsQueries";
 import ApexchartsContainer from "@/components/ApexchartsContainer";
 import { faker } from "@faker-js/faker";
 import randomColorsArr from "@/CONSTANT/randomColorsArr";
 
-export default function CategoriesCharts() {
+export default function CategoriesCharts({data}) {
 
     const { palette: { mode } } = useTheme();
-    const { statistics_categories } = useStatisticsQueries()
-    const { data } = useQuery({
-        queryKey: ["categories-earnings"],
-        queryFn: statistics_categories
-    });
 
     const options = {
         chart: { type: "area" },

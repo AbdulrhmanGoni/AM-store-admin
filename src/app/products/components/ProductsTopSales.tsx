@@ -3,7 +3,7 @@ import {
     ListItem, Typography,
     alpha, useTheme, Box
 } from '@mui/material'
-import { TrendingUp } from '@mui/icons-material'
+import { Star } from '@mui/icons-material'
 import LoadingGrayBar from '@/components/LoadinGrayBar'
 import { useQuery } from '@tanstack/react-query'
 import CustomListItem, { DisplyProductDetails } from '@/components/CustomListItem'
@@ -37,28 +37,29 @@ type ListTitleProps = {
     title: string,
     subTitle: string,
     color?: string
-    icon?: any
+    icon: any
 }
 export function ListTitle({ title, subTitle, color, icon }: ListTitleProps) {
     const theColor = color || randomColorsArr[0];
     return (
-        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: 1.5, width: "100%", mb: 1.5 }}>
-            <Box
-                component="div"
-                className='flex-center'
-                sx={{
-                    p: "5px",
-                    border: `solid 1px ${theColor}`,
-                    borderRadius: "5px",
-                    bgcolor: alpha(theColor, .5)
-                }}
-            >
-                {icon ?? <TrendingUp sx={{ fill: "white" }} />}
-            </Box>
-            <Box>
+        <Box sx={{ width: "100%", mb: 1.5, ml: 1.25 }}>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: 1 }}>
                 <Typography variant="h6">{title}</Typography>
-                <Typography variant="body2">{subTitle}</Typography>
+                <Box
+                    component="div"
+                    className='flex-center'
+                    sx={{
+                        p: "2px",
+                        border: `solid 1px ${theColor}`,
+                        borderRadius: "5px",
+                        bgcolor: alpha(theColor, .5),
+                        "& svg": { width: "0.8em", height: "0.8em" }
+                    }}
+                >
+                    {icon}
+                </Box>
             </Box>
+            <Typography variant="body2">{subTitle}</Typography>
         </Box>
     )
 }
@@ -76,9 +77,9 @@ export default function ProductsTopSales() {
     return (
         <>
             <ListTitle
-                title="Top selling"
+                title="Top Selling"
                 subTitle="The top products that sold"
-                icon={<TrendingUp />}
+                icon={<Star />}
             />
             <List sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 1, overflowY: "auto", pt: 0 }}>
                 {

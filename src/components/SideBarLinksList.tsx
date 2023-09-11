@@ -1,8 +1,7 @@
 import {
-    Collapse,
+    Collapse, useTheme,
     List, ListItem, ListItemButton,
     ListItemIcon, ListItemText, alpha,
-    useTheme
 } from '@mui/material';
 import { useState, useEffect } from "react";
 import sideBarLinks, { LinkProps } from './SideBarLinks';
@@ -88,7 +87,7 @@ export default function SideBarLinksList({ close }: { close: () => void }) {
     useEffect(() => { setCurrentPath(pathname) }, [])
 
     return (
-        <List sx={{ display: "flex", flexDirection: "column", gap: "4px" }} disablePadding>
+        <List sx={{ display: "flex", flexDirection: "column" }} disablePadding>
             {sideBarLinks.map(({ target, text, icon, nestedLinks }) => {
                 const
                     openChildren = isCurrentPath(target, currentPath),

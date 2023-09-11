@@ -1,20 +1,12 @@
 import CustomChartBox from "@/components/CustomChartBox";
-import useStatisticsQueries from "@/hooks/useStatisticsQueries";
 import SvgIcon from "@/components/SvgIcon";
 import { categoriesEarningsIcon } from "@/components/svgIconsAsString";
-import { useQuery } from "@tanstack/react-query";
 import randomColorsArr from '@/CONSTANT/randomColorsArr';
 import { Box, Typography, capitalize } from "@mui/material";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { SmalDonut } from "@/components/SmallChart";
 
-export default function CategoriesEarningsPercentages() {
-
-    const { statistics_categories } = useStatisticsQueries();
-    const { data, isError, isLoading } = useQuery({
-        queryKey: ["categories-earnings"],
-        queryFn: statistics_categories
-    });
+export default function CategoriesEarningsPercentages({ data, isError, isLoading }) {
 
     const categories = Object.keys(data ?? {})
     const series = categories.map((category, index) => {

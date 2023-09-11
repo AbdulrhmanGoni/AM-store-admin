@@ -1,9 +1,9 @@
-import CustomChartBox from "./CustomChartBox";
+import CustomChartBox from "../../../components/CustomChartBox";
 import SvgIcon from "@/components/SvgIcon";
-import { averageOrdersIcon } from "./svgIconsAsString";
+import { averageOrdersIcon } from "../../../components/svgIconsAsString";
 import useStatisticsQueries from "@/hooks/useStatisticsQueries";
 import { useQuery } from "@tanstack/react-query";
-import { SmalBar } from "./SmallChart";
+import { SmalBar } from "../../../components/SmallChart";
 import { faker } from "@faker-js/faker";
 
 

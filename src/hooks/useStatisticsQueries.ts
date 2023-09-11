@@ -13,18 +13,13 @@ export default function useStatisticsQueries() {
     async function get_products_topEarnings(limit?: number) {
         return (await api.get(path("products-top-earnings", limit))).data;
     }
-    async function statistics_categories() {
-        return (await api.get(path("categories-earnings&return=totalEarnings,date,category"))).data;
-    }
     async function statistics_earnings() {
         return (await api.get(path("statistics-history&return=totalEarnings,date"))).data;
     }
     async function statistics_orders() {
         return (await api.get(path("statistics-history&return=totalOrders,date"))).data;
     }
-    async function get_latestOrders(limit?: number) {
-        return (await api.get(path("orders-get-latest", limit))).data;
-    }
+
     async function getProductsOfOrder(productsIds: string[]) {
         return (await api.post(`${host}products?custom=title`, { productsIds, withCount: true, withPrice: true })).data
     }
@@ -32,10 +27,8 @@ export default function useStatisticsQueries() {
     return {
         get_products_topSales,
         get_products_topEarnings,
-        statistics_categories,
         statistics_earnings,
         statistics_orders,
-        get_latestOrders,
         getProductsOfOrder
     }
 }

@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import moment from "moment";
 import useStatisticsQueries from "@/hooks/useStatisticsQueries";
-import ApexchartsContainer from "./ApexchartsContainer";
+import ApexchartsContainer from "../../../components/ApexchartsContainer";
 import { faker } from "@faker-js/faker";
 
 export default function OrdersStatisticsChart() {
