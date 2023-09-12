@@ -12,7 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import { useCookies } from 'react-cookie';
 import useAdminLogIn from "@/hooks/useAdminLogIn";
 import LogInForm from "@/components/LogInForm";
-import { ErrorThrower, LoadingCircle } from "@abdulrhmangoni/am-store-library";
+import { ErrorThrower, LoadingCircle, LoadingPage } from "@abdulrhmangoni/am-store-library";
 
 export const ThemeContext = createContext<any>(null);
 export const AdminDataContext = createContext<any>(null);
@@ -53,7 +53,7 @@ export default function Dashboard({ children }) {
                     color: theme.palette.text.primary
                   }}>
                   {
-                    isLoading ? <LoadingCircle darkBg />
+                    isLoading ? <LoadingPage />
                       : isLogged ?
                         <Box component="main" id="app" sx={{ display: "flex", minHeight: "100vh" }}>
                           <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
@@ -94,13 +94,4 @@ export default function Dashboard({ children }) {
       </ThemeContext.Provider>
     </SnackbarProvider>
   )
-}
-
-const loadingCircle = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  width: "100vw",
-  height: "100vh",
-  backgroundColor: "#00000080"
 }
