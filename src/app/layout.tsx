@@ -3,7 +3,7 @@ import "normalize.css/normalize.css";
 import "../global.css";
 import 'react-toastify/dist/ReactToastify.css';
 import AdminAppBar from "@/components/AdminBar";
-import { Box, ThemeProvider, CircularProgress } from "@mui/material";
+import { Box, ThemeProvider } from "@mui/material";
 import { createContext, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SnackbarProvider } from "notistack";
@@ -12,7 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import { useCookies } from 'react-cookie';
 import useAdminLogIn from "@/hooks/useAdminLogIn";
 import LogInForm from "@/components/LogInForm";
-import { ErrorThrower } from "@abdulrhmangoni/am-store-library";
+import { ErrorThrower, LoadingCircle } from "@abdulrhmangoni/am-store-library";
 
 export const ThemeContext = createContext<any>(null);
 export const AdminDataContext = createContext<any>(null);
@@ -53,7 +53,7 @@ export default function Dashboard({ children }) {
                     color: theme.palette.text.primary
                   }}>
                   {
-                    isLoading ? <Box sx={loadingCircle}><CircularProgress /></Box>
+                    isLoading ? <LoadingCircle darkBg />
                       : isLogged ?
                         <Box component="main" id="app" sx={{ display: "flex", minHeight: "100vh" }}>
                           <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
@@ -84,6 +84,7 @@ export default function Dashboard({ children }) {
                               />
                                 : null
                   }
+                  <LoadingCircle staticCircle darkBg />
                   <ToastContainer limit={4} position="bottom-left" theme="colored" />
                 </Box>
               </Box>

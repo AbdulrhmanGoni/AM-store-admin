@@ -22,7 +22,7 @@ export default function ProductsViewerTable() {
     const [tablesMassages, setTablesMassages] = useState<string>("No products");
 
     const { bySteps, promised } = useNotifications();
-    const { data: productsLength, isError } = useGetApi({ key: ["products-length"], path: "products/pagination/length" });
+    const { data: productsLength, isError } = useGetApi({ key: ["products-length"], path: "products/length" });
     const { mutateAsync: updateProduct } = useMutateApi({ key: ["edit-product"], path: "admin/products?type=update-product" });
     const { mutateAsync: deleteProduct } = useMutateApi({ key: ["delete-product"], path: "admin/products" });
 

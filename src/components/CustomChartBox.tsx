@@ -12,7 +12,6 @@ interface chartBoxProps {
     mainValueEndIcon?: any,
     smallChart: any,
     chartDescription?: { title: strOrnum, subTitle: strOrnum, severity?: string, titleEndIcon?: any },
-    actionSec?: any,
     loading?: boolean,
     error?: boolean,
 }
@@ -20,17 +19,17 @@ interface chartBoxProps {
 const containerStyle = {
     display: "flex", p: "10px 8px",
     boxSizing: "border-box",
+    flexDirection: "column",
     width: "100%", height: "100%",
-    justifyContent: "space-between"
+    justifyContent: "space-around"
 }
 const containerChildrenStyle = {
-    display: "flex",
-    flexDirection: "column",
+    display: "flex", gap: 1,
     justifyContent: "space-between"
 }
 
 export default function CustomChartBox({
-    title, mainValue, titleIcon, actionSec,
+    title, mainValue, titleIcon,
     smallChart, chartDescription, error,
     mainValueColor, loading,
     mainValueEndIcon, customMainValue
@@ -47,20 +46,15 @@ export default function CustomChartBox({
                     <ItemDisplay w={35} h={35}>{titleIcon}</ItemDisplay>
                     <ItemDisplay w={140} h={35}><Typography variant="h6">{title}</Typography></ItemDisplay>
                 </Box>
+                <ItemDisplay w={140} h={65}>{smallChart}</ItemDisplay>
+            </Box>
+            <Box sx={{ ...containerChildrenStyle, alignItems: "flex-end" }}>
                 <ItemDisplay w={150} h={47}>
                     {customMainValue ?? <Typography
                         sx={{ display: "flex", alignItems: "center", gap: "2px", fontSize: "1.7rem" }}
                         color={`${mainValueColor ?? "none"}.main`}>
                         {mainValue} {mainValueEndIcon}
                     </Typography>}
-                </ItemDisplay>
-                <ItemDisplay w={85} h={25}>
-                    <Typography>{actionSec ?? "View more"}</Typography>
-                </ItemDisplay>
-            </Box>
-            <Box sx={{ ...containerChildrenStyle, alignItems: "flex-end" }}>
-                <ItemDisplay w={140} h={65}>
-                    {smallChart}
                 </ItemDisplay>
                 <ItemDisplay w={130} h={55}>
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
@@ -78,11 +72,4 @@ export default function CustomChartBox({
             </Box>
         </Box >
     )
-}
-
-const currencyStyle = {
-    transform: "translate(-3px, -9px)",
-    position: "relative",
-    display: "inline-block",
-    fontSize: "20px"
 }

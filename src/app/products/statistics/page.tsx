@@ -1,12 +1,16 @@
 "use client"
-import { Box, Grid, Paper, alpha, Typography } from "@mui/material";
+import { Box, Grid, Paper, alpha, Typography, Skeleton } from "@mui/material";
 import CategoriesCharts from "../components/CategoriesEarnings";
 import CategoriesEarningsPercentages from "../components/CategoriesEarningsPercentages";
 import ProductsTopSales from "../components/ProductsTopSales";
 import ProductsTopEarnings from "../components/ProductsTopEarnings";
 import useGetApi from "@/hooks/useGetApi";
 import randomColorsArr from "@/CONSTANT/randomColorsArr";
-import { DirtyLens, SportsCricketRounded } from "@mui/icons-material";
+import { Inbox } from "@mui/icons-material";
+import Icon from "@/components/SvgIcon";
+import { productsIcon } from "@/components/svgIconsAsString";
+import { nDecorator } from "@abdulrhmangoni/am-store-library";
+import LoadingGrayBar from "@/components/LoadinGrayBar";
 
 const paperStyle = {
     display: "flex",
@@ -19,12 +23,11 @@ const paperStyle = {
 export default function ProductsStatistics() {
 
     const requestPath = 'statistics/?get=categories-earnings&return=totalEarnings,date,category'
-    const {
-        data, isError, isLoading
-    } = useGetApi({
-        key: ["categories-statistics", "page"],
+    const { data, isError, isLoading } = useGetApi({
+        key: ["categories-statistics"],
         path: requestPath
     })
+    const { data: productsCount } = useGetApi({ key: ["products-count"], path: "products/length" })
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
@@ -52,16 +55,18 @@ export default function ProductsStatistics() {
                             height: { xs: "200px", sm: "100px", md: "200px" }
                         }}>
                             <DisplayInfo
+                                isLoading={isLoading}
                                 title="Products"
-                                body="32"
+                                body={productsCount}
                                 color={randomColorsArr[3]}
-                                icon={<DirtyLens />}
+                                icon={<Icon svgElementAsString={productsIcon} />}
                             />
                             <DisplayInfo
+                                isLoading={isLoading}
                                 title="In Stock"
-                                body="15K"
+                                body={nDecorator(5432)}
                                 color={randomColorsArr[2]}
-                                icon={<SportsCricketRounded />}
+                                icon={<Inbox />}
                             />
                         </Box>
                     </Box>
@@ -79,7 +84,14 @@ export default function ProductsStatistics() {
     )
 }
 
-function DisplayInfo({ color, title, body, icon }) {
+type DisplayInfoType = {
+    color: string,
+    title: string,
+    body: string | number,
+    icon: any,
+    isLoading?: boolean
+}
+function DisplayInfo({ color, title, body, icon, isLoading }: DisplayInfoType) {
     return (
         <Paper sx={{
             display: "flex",
@@ -95,14 +107,24 @@ function DisplayInfo({ color, title, body, icon }) {
                     p: "13px", borderRadius: "5px",
                     border: `solid 1px ${color}`,
                     bgcolor: alpha(color, .5),
-                    "& svg": { fill: "white", width: "1.2em", height: "1.2em" }
+                    "& svg": { fill: "white !important", width: "1.2em", height: "1.2em" }
                 }}
             >
-                {icon}
+                {isLoading ? <LoadingGrayBar type="rou" h={35} w={35} /> : icon}
             </Box>
             <Box>
-                <Typography variant="h6">{title}</Typography>
-                <Typography variant="h5">{body}</Typography>
+                {
+                    isLoading ?
+                        <>
+                            <LoadingGrayBar sx={{ mb: 1 }} type="rou" h={25} w={100} />
+                            <LoadingGrayBar type="rou" h={30} w={100} />
+                        </>
+                        :
+                        <>
+                            <Typography variant="h6">{title}</Typography>
+                            <Typography variant="h5">{body}</Typography>
+                        </>
+                }
             </Box>
         </Paper>
     )

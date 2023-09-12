@@ -1,7 +1,8 @@
 import { GridColDef, GridValueGetterParams as GVGP, GridRenderCellParams } from '@mui/x-data-grid';
-import { nDecorator } from "@abdulrhmangoni/am-store-library";
-import { Avatar, Chip, Typography } from '@mui/material';
+import { nDecorator, timeAgo } from "@abdulrhmangoni/am-store-library";
+import { Avatar, Box, Chip, Tooltip, Typography } from '@mui/material';
 import SimplePopper from '@/components/SimplePopper';
+import { CopyAll } from '@mui/icons-material';
 
 type n = number
 type s = string
@@ -24,45 +25,52 @@ function renderImageCell(params: GridRenderCellParams) {
 function renderStateCell(params: GridRenderCellParams) {
     return <Chip sx={{ color: "white" }} label={params.row.state} variant="filled" color="success" />
 }
-function renderCopyCell(params: GridRenderCellParams) {
+function renderIdCell(params: GridRenderCellParams) {
     return (
-        <SimplePopper thePopper='Copied id'>
-            <Chip
-                clickable
-                onClick={() => { navigator.clipboard.write(params.row._id) }}
-                sx={{ color: "white" }}
-                label="Copy ID"
-                variant="filled"
-                color="primary"
-            />
-        </SimplePopper>
+        <Box sx={{ display: "flex", alignItems: "center", gap: .5 }}>
+            <SimplePopper thePopper={params.row._id}>
+                <CopyAll />
+            </SimplePopper>
+            <Typography variant='body2'>{params.row._id}</Typography>
+        </Box>
     )
 }
 function renderProductsCell(params: GridRenderCellParams) {
     let count = params.row.products.length
-    return <Typography>{count === 1 ? "One product" : count + " Products"}</Typography>
+    return <Typography variant='body2'>{count === 1 ? "One product" : count + " Products"}</Typography>
 }
 function renderTotalCell(params: GridRenderCellParams) {
     let total = params.row.totalPrice.after
-    return <Typography>${(nDecorator(total))}</Typography>
+    return <Typography variant='body2'>${(nDecorator(total))}</Typography>
 }
 function renderDeleviryCell(params: GridRenderCellParams) {
     let { value } = params.row.deliveryPrice
-    return <Typography>{value === "Free" ? "Free" : "$" + value}</Typography>
+    return <Typography variant='body2'>{value === "Free" ? "Free" : "$" + value}</Typography>
 }
 function renderUserEmailCell(params: GridRenderCellParams) {
-    return params.row.userData.userEmail
+    return <Typography variant='body2'>{params.row.userData.userEmail}</Typography>
+}
+function renderDateCell(params: GridRenderCellParams) {
+    let date = params.row.createdAt;
+    return (
+        <Tooltip title={date}>
+            <Box>
+                <Typography variant='body2'>{timeAgo(date)}</Typography>
+                <Typography variant='body2'>{date.slice(0, 19)}</Typography>
+            </Box>
+        </Tooltip>
+    )
 }
 
 const columns: GridColDef[] = [
-    rowProps('userAvatar', 'User', 75, false, false, false, { renderCell: renderImageCell }),
+    rowProps('createdAt', 'Date', 170, false, false, false, { renderCell: renderDateCell }),
     rowProps('totalPrice', 'Total', 110, false, false, false, { renderCell: renderTotalCell }),
-    rowProps('userEmail', 'User Email', 200, false, false, false, { renderCell: renderUserEmailCell }),
-    rowProps('_id', 'Order ID', 130, false, false, false, { renderCell: renderCopyCell }),
-    rowProps('products', 'Products', 110, false, false, false, { renderCell: renderProductsCell }),
-    rowProps('deliveryPrice', 'Delivery Price', 130, false, false, false, { renderCell: renderDeleviryCell }),
     rowProps('state', 'State', 130, false, false, false, { renderCell: renderStateCell }),
-    rowProps('createdAt', 'Date', 170, false, false, false),
+    rowProps('products', 'Products', 110, false, false, false, { renderCell: renderProductsCell }),
+    rowProps('_id', 'Order ID', 130, false, false, false, { renderCell: renderIdCell }),
+    rowProps('userAvatar', 'User', 65, false, false, false, { renderCell: renderImageCell }),
+    rowProps('userEmail', 'User Email', 240, false, false, false, { renderCell: renderUserEmailCell }),
+    rowProps('deliveryPrice', 'Delivery Price', 130, false, false, false, { renderCell: renderDeleviryCell }),
     rowProps('deliveryDate', 'Delivery Date', 170, false, false, false),
 ];
 

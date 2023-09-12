@@ -36,7 +36,7 @@ export default function CategoriesEarningsPercentages({ data, isError, isLoading
             smallChart={<SmalDonut data={series?.map((cat) => cat.value)} tooltipIsMony height={85} colors={chartColors} />}
             loading={isLoading}
             titleIcon={<SvgIcon svgElementAsString={categoriesEarningsIcon} />}
-            chartDescription={{ title: `$${nDecorator(total)}`, subTitle: "Total" }}
+            chartDescription={{ title: `$${nDecorator(total.toFixed(2))}`, subTitle: "Total" }}
         />
     )
 }

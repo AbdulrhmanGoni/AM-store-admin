@@ -12,7 +12,6 @@ import useOrdersInfinateScroll from '../hook/useOrdersInfinateScroll';
 export default function LatestOrdersTable() {
 
     const paddingSpace = useMediaQuery("(min-width: 900px)") ? 35 : 19;
-
     const apiRef = useGridApiRef();
 
     const {
