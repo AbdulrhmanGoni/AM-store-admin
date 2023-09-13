@@ -13,7 +13,8 @@ export default function Icon({ svgElementAsString, width = 35, height = 35, colo
 
     return (
         <Box sx={{
-            "& > svg": { width, height, fill: color ?? main },
+            "& > svg": { width, height },
+            "& :is(svg, g, path)": { fill: color ?? main },
             display: "flex",
             alignItems: "center",
             justifyContent: "center"

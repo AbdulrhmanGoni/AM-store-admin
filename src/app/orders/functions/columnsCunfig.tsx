@@ -1,6 +1,6 @@
 import { GridColDef, GridValueGetterParams as GVGP, GridRenderCellParams } from '@mui/x-data-grid';
 import { nDecorator, timeAgo } from "@abdulrhmangoni/am-store-library";
-import { Avatar, Box, Chip, Tooltip, Typography } from '@mui/material';
+import { Avatar, Box, Chip, Tooltip, Typography, IconButton } from '@mui/material';
 import SimplePopper from '@/components/SimplePopper';
 import { CopyAll } from '@mui/icons-material';
 
@@ -26,12 +26,18 @@ function renderStateCell(params: GridRenderCellParams) {
     return <Chip sx={{ color: "white" }} label={params.row.state} variant="filled" color="success" />
 }
 function renderIdCell(params: GridRenderCellParams) {
+    const id = params.row._id
     return (
         <Box sx={{ display: "flex", alignItems: "center", gap: .5 }}>
-            <SimplePopper thePopper={params.row._id}>
-                <CopyAll />
+            <SimplePopper
+                thePopper={id}
+                onClick={() => { console.log(id); navigator.clipboard.writeText(id) }}
+            >
+                <IconButton>
+                    <CopyAll sx={{ cursor: "copy" }} />
+                </IconButton>
             </SimplePopper>
-            <Typography variant='body2'>{params.row._id}</Typography>
+            <Typography variant='body2'>{id}</Typography>
         </Box>
     )
 }

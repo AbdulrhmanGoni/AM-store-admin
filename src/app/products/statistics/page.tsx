@@ -11,6 +11,7 @@ import Icon from "@/components/SvgIcon";
 import { productsIcon } from "@/components/svgIconsAsString";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import LoadingGrayBar from "@/components/LoadinGrayBar";
+import SmallIconBox from "@/components/SmallIconBox";
 
 const paperStyle = {
     display: "flex",
@@ -86,11 +87,12 @@ export default function ProductsStatistics() {
 
 type DisplayInfoType = {
     color: string,
-    title: string,
-    body: string | number,
     icon: any,
     isLoading?: boolean
+    title: string,
+    body: string | number,
 }
+
 function DisplayInfo({ color, title, body, icon, isLoading }: DisplayInfoType) {
     return (
         <Paper sx={{
@@ -100,18 +102,9 @@ function DisplayInfo({ color, title, body, icon, isLoading }: DisplayInfoType) {
             flexBasis: "100%",
             gap: 2, p: "0px 16px"
         }}>
-            <Box
-                component="div"
-                className='flex-center'
-                sx={{
-                    p: "13px", borderRadius: "5px",
-                    border: `solid 1px ${color}`,
-                    bgcolor: alpha(color, .5),
-                    "& svg": { fill: "white !important", width: "1.2em", height: "1.2em" }
-                }}
-            >
-                {isLoading ? <LoadingGrayBar type="rou" h={35} w={35} /> : icon}
-            </Box>
+            <SmallIconBox icon={icon} color={color}>
+                {isLoading ? <LoadingGrayBar type="rou" h={35} w={35} /> : undefined}
+            </SmallIconBox>
             <Box>
                 {
                     isLoading ?
