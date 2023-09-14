@@ -11,9 +11,11 @@ export default function CategoriesEarningsPercentages({ data, isError, isLoading
     const categories = Object.keys(data ?? {})
     const series = categories.map((category, index) => {
         return {
-            value: data[category].reduce((acc, curr) => acc + +curr.totalEarnings.toFixed(2), 0),
             categoryName: category,
-            color: randomColorsArr[index]
+            color: randomColorsArr[index],
+            value: data[category].reduce((acc: number, curr: { totalEarnings: number }) => {
+                return acc + +curr.totalEarnings.toFixed(2)
+            }, 0),
         }
     })
     const total = series?.reduce((acc, curr) => acc + curr.value, 0);
@@ -31,7 +33,7 @@ export default function CategoriesEarningsPercentages({ data, isError, isLoading
     return (
         <CustomChartBox
             title="Categories Earnings"
-            customMainValue={<Box sx={{ display: "flex", flexDirection: "column" }}>{legends}</Box>}
+            customMainValue={<Box sx={legendsContainer}>{legends}</Box>}
             error={isError}
             smallChart={<SmalDonut data={series?.map((cat) => cat.value)} tooltipIsMony height={85} colors={chartColors} />}
             loading={isLoading}
@@ -39,6 +41,14 @@ export default function CategoriesEarningsPercentages({ data, isError, isLoading
             chartDescription={{ title: `$${nDecorator(total.toFixed(2))}`, subTitle: "Total" }}
         />
     )
+}
+
+const legendsContainer = {
+    display: "flex",
+    flexDirection: "column",
+    height: "70px",
+    overflow: "auto",
+    pr: 1
 }
 
 const legendsMark = (bgcolor: string) => {

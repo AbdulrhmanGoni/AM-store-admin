@@ -16,10 +16,6 @@ export default function useStatisticsQueries() {
     async function statistics_earnings() {
         return (await api.get(path("statistics-history&return=totalEarnings,date"))).data;
     }
-    async function statistics_orders() {
-        return (await api.get(path("statistics-history&return=totalOrders,date"))).data;
-    }
-
     async function getProductsOfOrder(productsIds: string[]) {
         return (await api.post(`${host}products?custom=title`, { productsIds, withCount: true, withPrice: true })).data
     }
@@ -28,7 +24,6 @@ export default function useStatisticsQueries() {
         get_products_topSales,
         get_products_topEarnings,
         statistics_earnings,
-        statistics_orders,
         getProductsOfOrder
     }
 }

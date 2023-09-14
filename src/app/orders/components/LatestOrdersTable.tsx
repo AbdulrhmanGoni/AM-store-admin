@@ -1,9 +1,6 @@
 "use client"
-import { Box, useMediaQuery } from '@mui/material';
-import {
-    DataGrid,
-    useGridApiRef
-} from '@mui/x-data-grid';
+import { Paper, useMediaQuery, LinearProgress } from '@mui/material';
+import { DataGrid, useGridApiRef } from '@mui/x-data-grid';
 import columns from '../functions/columnsCunfig';
 import { ErrorThrower } from '@abdulrhmangoni/am-store-library';
 import useOrdersInfinateScroll from '../hook/useOrdersInfinateScroll';
@@ -20,7 +17,7 @@ export default function LatestOrdersTable() {
     } = useOrdersInfinateScroll();
 
     return (
-        <Box sx={{ width: `calc(100vw - ${paddingSpace}px)` }}>
+        <Paper sx={{ width: `calc(100vw - ${paddingSpace}px)` }}>
             <DataGrid
                 sx={{ height: "814px" }}
                 apiRef={apiRef}
@@ -40,9 +37,10 @@ export default function LatestOrdersTable() {
                         message='There is error hapends when orders fetching'
                         disableHeight
                         illustratorType="empty"
-                    />
+                    />,
+                    loadingOverlay: LinearProgress
                 }}
             />
-        </Box>
+        </Paper>
     );
 }
