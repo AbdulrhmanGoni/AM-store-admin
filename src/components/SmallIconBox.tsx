@@ -7,28 +7,27 @@ type SmallIconBoxProps = {
     children?: any,
     boxStyle?: CSSProperties
     svgIconStyle?: CSSProperties
+    svgIconSize?: number
 }
 
 export default function SmallIconBox(props: SmallIconBoxProps) {
     const { palette: { primary } } = useTheme()
-    let { color = primary.main, icon, boxStyle, svgIconStyle, children } = props;
+    let { color = primary.main, icon, boxStyle, svgIconStyle, children, svgIconSize } = props;
     return (
         <Box
             component="div"
             className='flex-center'
             sx={{
-                p: "13px", borderRadius: "5px",
+                borderRadius: "5px",
                 border: `solid 1px ${color}`,
                 bgcolor: alpha(color, .5),
-                ...boxStyle,
+                p: "13px", ...boxStyle,
                 "& svg": {
-                    width: "1.2em",
-                    height: "1.2em",
+                    width: `${svgIconSize ?? 35}px !important`,
+                    height: `${svgIconSize ?? 35}px !important`,
                     ...svgIconStyle
                 },
-                "& :is(svg, g, path)": {
-                    fill: "white !important"
-                }
+                "& :is(svg, g, path)": { fill: "white !important" }
             }}
         >
             {children ? children : icon}

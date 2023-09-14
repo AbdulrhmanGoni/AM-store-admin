@@ -6,6 +6,10 @@ import Chart from "react-apexcharts";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import ApexchartsContainer from "./ApexchartsContainer";
 import { faker } from "@faker-js/faker";
+import { ApexOptions } from "apexcharts";
+import { Money } from "@mui/icons-material";
+import ChartTitle from "./ChartTitle";
+
 
 export default function Area() {
     const { statistics_earnings } = useStatisticsQueries()
@@ -15,12 +19,11 @@ export default function Area() {
         queryFn: statistics_earnings
     });
 
-    const options = {
+    const options: ApexOptions = {
         chart: { type: "area" },
         dataLabels: { enabled: false },
         stroke: { curve: 'smooth' },
         xaxis: {
-            type: 'Monthly Profits',
             categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Oug', 'Sep', 'Oct', "Des", "Nov"]
         },
         yaxis: {
@@ -41,9 +44,7 @@ export default function Area() {
                     return moment().month(confg.w.globals.categoryLabels[index - 1]).format("MMMM")
                 },
             },
-            y: {
-                formatter: (val: number) => "$" + nDecorator(val)
-            }
+            y: { formatter: (value: number, obj: string) => { obj = "$" + nDecorator(value); return obj } }
         },
         noData: {
             text: "No data fetched yet",
@@ -68,9 +69,9 @@ export default function Area() {
     ]
 
     return (
-        <ApexchartsContainer title="Earnings">
-            {/* @ts-ignore */}
-            <Chart options={options} series={series} type="area" height={400 - 15 - 32} />
+        <ApexchartsContainer>
+            <ChartTitle title="Monthly Earnings" icon={<Money />} />
+            <Chart options={options} series={series} type="area" height={337} />
         </ApexchartsContainer>
     )
 }

@@ -9,16 +9,17 @@ type iconComponentProps = {
 
 export default function Icon({ svgElementAsString, width = 35, height = 35, color }: iconComponentProps) {
 
-    const { palette: { primary: { main } } } = useTheme()
+    const { palette: { primary: { main } } } = useTheme();
 
     return (
-        <Box sx={{
-            "& > svg": { width, height },
-            "& :is(svg, g, path)": { fill: color ?? main },
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center"
-        }}
+        <Box
+            sx={{
+                "& > svg": { width, height },
+                "& :is(svg, g, path)": { fill: color ?? main },
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+            }}
             dangerouslySetInnerHTML={{ __html: svgElementAsString }}
         />
     )

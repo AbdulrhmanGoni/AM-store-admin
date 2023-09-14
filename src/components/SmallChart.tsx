@@ -4,8 +4,8 @@ import { nDecorator } from "@abdulrhmangoni/am-store-library";
 
 type SmallChartProps = {
     data?: any[],
-    height?: number,
-    width?: number,
+    height?: number | string,
+    width?: number | string,
     tooltipIsMony?: boolean,
     colors?: string[]
 }

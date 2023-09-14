@@ -1,5 +1,5 @@
 "use client"
-import { Box, Grid, Paper, alpha, Typography, Skeleton } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 import CategoriesCharts from "../components/CategoriesEarnings";
 import CategoriesEarningsPercentages from "../components/CategoriesEarningsPercentages";
 import ProductsTopSales from "../components/ProductsTopSales";
@@ -13,29 +13,22 @@ import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import LoadingGrayBar from "@/components/LoadinGrayBar";
 import SmallIconBox from "@/components/SmallIconBox";
 
-const paperStyle = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-    p: 1
-}
 
 export default function ProductsStatistics() {
 
     const requestPath = 'statistics/?get=categories-earnings&return=totalEarnings,date,category'
+    const { data: productsCount } = useGetApi({ key: ["products-count"], path: "products/length" })
     const { data, isError, isLoading } = useGetApi({
         key: ["categories-statistics"],
         path: requestPath
     })
-    const { data: productsCount } = useGetApi({ key: ["products-count"], path: "products/length" })
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
             <Grid container spacing={{ xs: 1, md: 2 }}>
                 <Grid item xs={12} md={6.5} lg={8}>
                     <Box sx={{ width: "100%" }}>
-                        <Paper sx={paperStyle}>
+                        <Paper sx={{ p: 1 }}>
                             <CategoriesCharts data={data} />
                         </Paper>
                     </Box>
@@ -45,8 +38,8 @@ export default function ProductsStatistics() {
                         <Paper sx={{ p: 1, height: "200px" }}>
                             <CategoriesEarningsPercentages
                                 data={data}
-                                isError={isError}
                                 isLoading={isLoading}
+                                isError={isError}
                             />
                         </Paper>
                         <Box sx={{
@@ -75,10 +68,14 @@ export default function ProductsStatistics() {
             </Grid>
             <Grid container spacing={{ xs: 1, md: 2 }}>
                 <Grid item xs={12} md={6}>
-                    <Paper sx={paperStyle}><ProductsTopSales /></Paper>
+                    <Paper sx={{ p: 1 }}>
+                        <ProductsTopSales />
+                    </Paper>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <Paper sx={paperStyle}><ProductsTopEarnings /></Paper>
+                    <Paper sx={{ p: 1 }}>
+                        <ProductsTopEarnings />
+                    </Paper>
                 </Grid>
             </Grid>
         </Box>
@@ -102,7 +99,11 @@ function DisplayInfo({ color, title, body, icon, isLoading }: DisplayInfoType) {
             flexBasis: "100%",
             gap: 2, p: "0px 16px"
         }}>
-            <SmallIconBox icon={icon} color={color}>
+            <SmallIconBox
+                icon={icon}
+                color={color}
+                svgIconSize={30}
+            >
                 {isLoading ? <LoadingGrayBar type="rou" h={35} w={35} /> : undefined}
             </SmallIconBox>
             <Box>

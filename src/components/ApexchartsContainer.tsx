@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { CSSProperties } from "@mui/material/styles/createMixins";
 
 type props = {
@@ -7,13 +7,12 @@ type props = {
     sx?: CSSProperties
 }
 
-export default function ApexchartsContainer({ children, title, sx }: props) {
+export default function ApexchartsContainer({ children, sx }: props) {
     return (
         <Box component="div" sx={{
+            width: "100%", ...sx,
             "& svg": { backgroundColor: "transparent !important" },
-            width: "100%", ...sx
         }}>
-            {title && <Typography sx={{ display: "flex", pl:"6px" }} variant="h6">{title}</Typography>}
             {children}
         </Box>
     )

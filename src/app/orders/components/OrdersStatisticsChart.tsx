@@ -1,23 +1,24 @@
-import Chart from "react-apexcharts";
-import { useTheme } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
-import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import moment from "moment";
-import useStatisticsQueries from "@/hooks/useStatisticsQueries";
-import ApexchartsContainer from "../../../components/ApexchartsContainer";
-import { faker } from "@faker-js/faker";
+import Chart from "react-apexcharts";
+import ApexchartsContainer from "@/components/ApexchartsContainer";
+import { useTheme } from "@mui/material";
+import { nDecorator } from "@abdulrhmangoni/am-store-library";
+import { ApexOptions } from "apexcharts";
+import Icon from "@/components/SvgIcon";
+import { totalIcon } from "@/components/svgIconsAsString";
+import ChartTitle from "@/components/ChartTitle";
 
-export default function OrdersStatisticsChart() {
-
-    const { statistics_orders } = useStatisticsQueries();
+type OrdersStatisticsChartProps = {
+    data: any,
+    totalOrders?: number,
+    isLoading?: boolean,
+    isError?: boolean
+}
+export default function OrdersStatisticsChart({ data }: OrdersStatisticsChartProps) {
 
     const { palette: { mode, primary } } = useTheme();
-    const { data } = useQuery({
-        queryKey: ["orders-statistics"],
-        queryFn: statistics_orders
-    });
 
-    const options = {
+    const options: ApexOptions = {
         chart: {
             type: 'bar'
         },
@@ -25,7 +26,7 @@ export default function OrdersStatisticsChart() {
             bar: {
                 horizontal: false,
                 columnWidth: '65%',
-                endingShape: 'rounded'
+                // endingShape: 'rounded'
             },
         },
         dataLabels: {
@@ -57,25 +58,19 @@ export default function OrdersStatisticsChart() {
             }
         },
         tooltip: {
-            x: { formatter: (month: string) => moment().month(month).format("MMMM") },
-            y: { formatter: (val: number) => nDecorator(val) },
+            x: { formatter: (month: number) => moment().month(month).format("MMMM") },
+            y: {
+                formatter: (value, obj) => { obj = nDecorator(value); return obj }
+            },
         }
     }
 
-    const series = [
-        {
-            name: 'Orders Count',
-            data: data?.map((doc: { totalOrders: number }) => {
-                let randomNimber = faker.number.float({ precision: 1, max: 50, min: 30 });
-                return doc.totalOrders ? doc.totalOrders.toFixed(2) : randomNimber
-            }) ?? [0]
-        }
-    ]
+    const series = [{ name: 'Orders Count', data }]
 
     return (
-        <ApexchartsContainer title="Total orders every month">
-            {/* @ts-ignore */}
-            <Chart options={options} series={series} type="bar" height={400 - 15 - 32} />
+        <ApexchartsContainer>
+            <ChartTitle title="Monthly Orders" icon={<Icon svgElementAsString={totalIcon} />} />
+            <Chart options={options} series={series} type="bar" height={337} />
         </ApexchartsContainer>
     )
 } 

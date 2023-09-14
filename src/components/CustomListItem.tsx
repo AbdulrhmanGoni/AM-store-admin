@@ -2,7 +2,7 @@ import { ExpandMore } from "@mui/icons-material";
 import {
     Accordion, AccordionDetails, AccordionSummary,
     Avatar, Box, Button, Chip, ListItem,
-    Typography, alpha, capitalize, useTheme
+    Typography, capitalize, useTheme
 } from "@mui/material";
 import { CSSProperties } from "@mui/material/styles/createTypography";
 
@@ -22,11 +22,17 @@ export default function CustomListItem(props: {
 }) {
 
     const { title, avatar, id, subTitle, descriptionBox, onRightElement, actionButton, note } = props;
-    const { palette: { primary } } = useTheme();
 
     return (
         <ListItem sx={{ p: 0, borderRadius: 1 }} >
-            <Accordion sx={{ bgcolor: alpha(primary.main, .3), width: "100%" }}>
+            <Accordion
+                sx={{ 
+                    bgcolor: "background.default", 
+                    width: "100%",
+                    backgroundImage: "none"
+                }}
+                
+            >
                 <AccordionSummary
                     expandIcon={<ExpandMore />}
                     id={id}

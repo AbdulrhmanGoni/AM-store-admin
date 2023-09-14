@@ -5,17 +5,20 @@ import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import ApexchartsContainer from "@/components/ApexchartsContainer";
 import { faker } from "@faker-js/faker";
 import randomColorsArr from "@/CONSTANT/randomColorsArr";
+import { ApexOptions } from "apexcharts";
+import ChartTitle from "@/components/ChartTitle";
+import { productsIcon } from "@/components/svgIconsAsString";
+import Icon from "@/components/SvgIcon";
 
-export default function CategoriesCharts({data}) {
+export default function CategoriesCharts({ data }) {
 
     const { palette: { mode } } = useTheme();
 
-    const options = {
+    const options: ApexOptions = {
         chart: { type: "area" },
         dataLabels: { enabled: false },
         stroke: { curve: 'smooth' },
         xaxis: {
-            type: 'Monthly Profits',
             categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Oug', 'Sep', 'Oct', "Des", "Nov"]
         },
         yaxis: { title: { text: 'Dolars ($)' } },
@@ -23,15 +26,11 @@ export default function CategoriesCharts({data}) {
         fill: { type: "image" },
         tooltip: {
             x: {
-                formatter: (index: number, v) => {
-                    return moment().month(v.w.globals.categoryLabels[index - 1]).format("MMMM")
+                formatter: (index: number, config: { w: { globals: { categoryLabels: (string | number)[]; }; }; }) => {
+                    return moment().month(config.w.globals.categoryLabels[index - 1]).format("MMMM")
                 },
             },
-            y: {
-                formatter: function (val: number | string) {
-                    return "$" + nDecorator(val)
-                }
-            },
+            y: { formatter: (value: number, obj: string) => { obj = "$" + nDecorator(value); return obj } }
         },
     }
 
@@ -47,9 +46,9 @@ export default function CategoriesCharts({data}) {
     })
 
     return (
-        <ApexchartsContainer title="Categories profits">
-            {/* @ts-ignore */}
-            <Chart options={options} series={series} type="area" height={400 - 15 - 32} />
+        <ApexchartsContainer>
+            <ChartTitle title="Categories Earnings" icon={<Icon svgElementAsString={productsIcon} />} />
+            <Chart options={options} series={series} type="area" height={337} />
         </ApexchartsContainer>
     )
 }
