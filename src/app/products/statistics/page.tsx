@@ -1,6 +1,6 @@
 "use client"
 import { Box, Grid, Paper, Typography } from "@mui/material";
-import CategoriesCharts from "../components/CategoriesEarnings";
+import CategoriesEarnings from "../components/CategoriesEarnings";
 import CategoriesEarningsPercentages from "../components/CategoriesEarningsPercentages";
 import ProductsTopSales from "../components/ProductsTopSales";
 import ProductsTopEarnings from "../components/ProductsTopEarnings";
@@ -12,15 +12,30 @@ import { productsIcon } from "@/components/svgIconsAsString";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import LoadingGrayBar from "@/components/LoadinGrayBar";
 import SmallIconBox from "@/components/SmallIconBox";
+import { faker } from "@faker-js/faker";
 
 
 export default function ProductsStatistics() {
 
-    const requestPath = 'statistics/?get=categories-earnings&return=totalEarnings,date,category'
+    const requestPath = 'statistics/?get=categories-statistics&return=totalEarnings,date,category'
     const { data: productsCount } = useGetApi({ key: ["products-count"], path: "products/length" })
     const { data, isError, isLoading } = useGetApi({
         key: ["categories-statistics"],
         path: requestPath
+    })
+
+    let total: number = 0;
+    const series = Object.keys(data ?? {}).map((category, index) => {
+        return {
+            name: category,
+            color: randomColorsArr[index],
+            data: data[category]?.map((doc: { totalEarnings: number }) => {
+                let randomNumber = faker.number.float({ precision: 0.02, max: 3000, min: 1500 });
+                let totalEarnings = doc.totalEarnings ? doc.totalEarnings : randomNumber;
+                total += totalEarnings;
+                return +totalEarnings.toFixed(2);
+            }) ?? [0]
+        }
     })
 
     return (
@@ -29,7 +44,7 @@ export default function ProductsStatistics() {
                 <Grid item xs={12} md={6.5} lg={8}>
                     <Box sx={{ width: "100%" }}>
                         <Paper sx={{ p: 1 }}>
-                            <CategoriesCharts data={data} />
+                            <CategoriesEarnings data={series} />
                         </Paper>
                     </Box>
                 </Grid>
@@ -37,7 +52,8 @@ export default function ProductsStatistics() {
                     <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
                         <Paper sx={{ p: 1, height: "200px" }}>
                             <CategoriesEarningsPercentages
-                                data={data}
+                                data={series}
+                                totalEarnings={total}
                                 isLoading={isLoading}
                                 isError={isError}
                             />

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Close } from '@mui/icons-material';
 import {
     Avatar, Divider,
-    Box, Typography,
+    Paper, Typography,
     Drawer, IconButton
 } from '@mui/material';
 import useAdminData from '@/hooks/useAdminData';
@@ -36,7 +36,7 @@ export default function AdminSideBar({ isOpen, close }: { isOpen: boolean, close
             }}
         >
             <IconButton onClick={close} sx={{ position: "absolute", right: 2, top: 2 }}><Close /></IconButton>
-            <Box sx={{
+            <Paper sx={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -44,7 +44,7 @@ export default function AdminSideBar({ isOpen, close }: { isOpen: boolean, close
             }}>
                 <Avatar src={adminData?.avatar} sx={{ width: "60px", height: "60px" }} />
                 <Typography sx={{ display: { sm: "block", xs: "none" } }}>{adminData?.adminName}</Typography>
-            </Box>
+            </Paper>
             <Divider sx={{ bgcolor: "text.primary" }} />
             <SideBarLinksList close={close} />
         </Drawer>
