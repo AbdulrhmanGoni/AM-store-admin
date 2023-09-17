@@ -22,7 +22,7 @@ export default function useAdminLogIn() {
         api.get(`${host}admin-log-in/${cookie.adminId}`)
             .then(({ data }) => {
                 setAdminData(data);
-                setIsLogged(true)
+                setIsLogged(true);
                 isNetworkError && setIsNetworkError(false);
                 isError && setIsError(false)
             })
@@ -41,7 +41,7 @@ export default function useAdminLogIn() {
     return {
         adminData, setAdminData,
         isError, isNetworkError,
-        isLoading, isLogged, isOut,
-        isServerError
+        isLoading, isLogged,
+        isOut, isServerError
     }
 }

@@ -1,47 +1,53 @@
 import CustomChartBox from "./CustomChartBox";
-import useStatisticsQueries from "@/hooks/useStatisticsQueries";
 import SvgIcon from "@/components/SvgIcon";
 import { growthIcon } from "./svgIconsAsString";
-import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import { NorthEast, SouthEast } from "@mui/icons-material";
 import { SmalLine } from "./SmallChart";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 
+type SalesGrowthProps = {
+    data: any,
+    isError: boolean,
+    isLoading: boolean
+}
+
+export type dataProps = {
+    month: string,
+    totalEarnings: number
+}
 
 function countGrowthRete(pastValue: number = 1, currentValue: number = 1) {
     return (currentValue - pastValue) / pastValue
 }
 
-export default function SalesGrowth() {
-    const { statistics_earnings } = useStatisticsQueries();
-    const { data, isError, isLoading } = useQuery({
-        queryKey: ["earnings-statistics"],
-        queryFn: statistics_earnings,
-    });
+export default function SalesGrowth({ data, isError, isLoading }: SalesGrowthProps) {
 
     const currentMonth = moment().month();
     const lastMonth = moment().month(currentMonth - 1).format("MMM");
     const beforeLastMonth = moment().month(currentMonth - 2).format("MMM");
-    const dates = data?.filter(mon => mon.date.match(new RegExp(`(${beforeLastMonth}|${lastMonth})`)));
-    const lastMonthEarnings = dates?.find((month) => month.date.match(new RegExp(lastMonth)));
-    const beforeLastMonthEarnings = dates?.find((month) => month.date.match(new RegExp(beforeLastMonth)));
-    const growthRete = countGrowthRete(beforeLastMonthEarnings?.totalEarnings, lastMonthEarnings?.totalEarnings);
-    const chartData = dates?.map(mon => mon.totalEarnings);
+    let lastMonthEarnings = 0;
+    let beforeLastMonthEarnings = 0;
 
+    data?.forEach(({ month, totalEarnings }: dataProps) => {
+        lastMonthEarnings += month === lastMonth ? totalEarnings : 0;
+        beforeLastMonthEarnings += month === beforeLastMonth ? totalEarnings : 0;
+    });
+
+    const growthRete = countGrowthRete(beforeLastMonthEarnings, lastMonthEarnings);
 
     return (
         <CustomChartBox
             title="Sales growth"
             titleIcon={<SvgIcon svgElementAsString={growthIcon} />}
             loading={isLoading}
-            smallChart={<SmalLine data={chartData} tooltipIsMony />}
+            smallChart={<SmalLine data={[beforeLastMonthEarnings, lastMonthEarnings]} tooltipIsMony />}
             mainValue={`${(growthRete * 100).toFixed(2)}%`}
             mainValueColor={growthRete < 0 ? "error" : "success"}
             mainValueEndIcon={growthRete < 0 ? <SouthEast /> : <NorthEast />}
             error={isError}
             chartDescription={{
-                title: `$${nDecorator(lastMonthEarnings?.totalEarnings.toFixed(2))}`,
+                title: `$${nDecorator(lastMonthEarnings.toFixed(2))}`,
                 subTitle: "Last month",
                 severity: "default"
             }}

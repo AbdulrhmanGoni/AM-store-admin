@@ -17,7 +17,7 @@ import { faker } from "@faker-js/faker";
 
 export default function ProductsStatistics() {
 
-    const requestPath = 'statistics/?get=categories-statistics&return=totalEarnings,date,category'
+    const requestPath = 'statistics/?get=categories-statistics'
     const { data: productsCount } = useGetApi({ key: ["products-count"], path: "products/length" })
     const { data, isError, isLoading } = useGetApi({
         key: ["categories-statistics"],

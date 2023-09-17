@@ -1,21 +1,20 @@
 import CustomChartBox from "./CustomChartBox";
-import useStatisticsQueries from "@/hooks/useStatisticsQueries";
 import SvgIcon from "@/components/SvgIcon";
 import { averageEarningsIcon } from "./svgIconsAsString";
-import { useQuery } from "@tanstack/react-query";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { SmalLine } from "./SmallChart";
 import { faker } from "@faker-js/faker";
+import { dataProps } from "./SalesGrowth";
 
-export default function AverageEarnings() {
+type AverageEarningsProps = {
+    data: any,
+    isError: boolean,
+    isLoading: boolean
+}
 
-    const { statistics_earnings } = useStatisticsQueries();
-    const { data, isError, isLoading } = useQuery({
-        queryKey: ["earnings-statistics"],
-        queryFn: statistics_earnings,
-    });
+export default function AverageEarnings({ data, isError, isLoading }: AverageEarningsProps) {
 
-    const earnings: number[] = data?.map(mon => {
+    const earnings: number[] = data?.map((mon: dataProps) => {
         let randomNimber = faker.number.float({ precision: 0.01, max: 5000, min: 4000 });
         return mon.totalEarnings ? mon.totalEarnings : randomNimber
     });
@@ -23,7 +22,7 @@ export default function AverageEarnings() {
 
     return (
         <CustomChartBox
-            title="Average earnings"
+            title="Average Earnings"
             mainValue={`$${nDecorator(total?.toFixed(2))}`}
             error={isError}
             smallChart={<SmalLine data={earnings} tooltipIsMony />}

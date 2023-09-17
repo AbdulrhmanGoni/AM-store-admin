@@ -1,33 +1,50 @@
 "use client"
-import { Box, Grid, Paper, useMediaQuery } from "@mui/material";
+import { Box, Grid, Paper } from "@mui/material";
 import EarningsChart from "@/components/EarningsChart";
 import SalesGrowth from "@/components/SalesGrowth";
 import AverageEarnings from "@/components/AverageEarnings";
+import useGetApi from "@/hooks/useGetApi";
 
 
+const boxSx = { width: "100%" }
 const paperStyle = {
-  display: "flex",
+  display: "flex", p: 1,
   alignItems: "center",
   justifyContent: "center",
   flexDirection: "column",
-  p: 1
 }
-const boxSx = { width: "100%" }
 
-export default function AdminOverview() {
+export default function SalesStatistics() {
 
-  const lgDevice = useMediaQuery("(min-width: 1560px)");
+  const path = "statistics/?get=monthly-statistics";
+  const { data, isError, isLoading } = useGetApi({ key: ["statistics-earnings"], path });
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
       <Grid container spacing={{ xs: 1, md: 2 }}>
         <Grid item xs={12} md={6.5} lg={8}>
-          <Box sx={boxSx}><Paper sx={paperStyle}><EarningsChart /></Paper></Box>
+          <Box sx={boxSx}>
+            <Paper sx={paperStyle}>
+              <EarningsChart data={data} />
+            </Paper>
+          </Box>
         </Grid>
         <Grid item xs={12} md={5.5} lg={4}>
           <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
-            <Paper sx={{ p: 1, height: "200px" }}><SalesGrowth /></Paper>
-            <Paper sx={{ p: 1, height: "200px" }}><AverageEarnings /></Paper>
+            <Paper sx={{ p: 1, height: "200px" }}>
+              <SalesGrowth
+                data={data}
+                isError={isError}
+                isLoading={isLoading}
+              />
+            </Paper>
+            <Paper sx={{ p: 1, height: "200px" }}>
+              <AverageEarnings
+                data={data}
+                isError={isError}
+                isLoading={isLoading}
+              />
+            </Paper>
           </Box>
         </Grid>
       </Grid>

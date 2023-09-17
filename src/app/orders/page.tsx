@@ -20,15 +20,15 @@ const paperStyle = {
     p: 1
 }
 
-const ProductsManagement: FC = function () {
+const OrdersManagement: FC = function () {
 
-    const path = "statistics/?get=statistics-history&return=totalOrders,date";
+    const path = "statistics/?get=monthly-statistics";
     const { data, isLoading, isError } = useGetApi({ path, key: ["orders-statistics"] });
 
     let totalOrders: number = 0;
-    const dataChart: number[] = data?.map((doc: { totalOrder: number }) => {
+    const dataChart: number[] = data?.map((doc: { totalOrders: number }) => {
         let randomNimber = faker.number.float({ precision: 1, max: 50, min: 30 });
-        let orders = !!doc.totalOrder ? doc.totalOrder : randomNimber
+        let orders = !!doc.totalOrders ? doc.totalOrders : randomNimber
         totalOrders += orders;
         return orders
     }) ?? [0]
@@ -99,4 +99,4 @@ const ProductsManagement: FC = function () {
     )
 }
 
-export default ProductsManagement
+export default OrdersManagement

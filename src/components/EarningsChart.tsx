@@ -1,6 +1,4 @@
-import useStatisticsQueries from "@/hooks/useStatisticsQueries";
 import { useTheme } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import Chart from "react-apexcharts";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
@@ -9,26 +7,19 @@ import { faker } from "@faker-js/faker";
 import { ApexOptions } from "apexcharts";
 import { Money } from "@mui/icons-material";
 import ChartTitle from "./ChartTitle";
+import { dataProps } from "./SalesGrowth";
 
+type EarningsChartProps = { data: any }
 
-export default function Area() {
-    const { statistics_earnings } = useStatisticsQueries()
+export default function EarningsChart({ data }: EarningsChartProps) {
+
     const { palette: { mode, primary } } = useTheme();
-    const { data } = useQuery({
-        queryKey: ["earnings-statistics"],
-        queryFn: statistics_earnings
-    });
-
     const options: ApexOptions = {
         chart: { type: "area" },
         dataLabels: { enabled: false },
         stroke: { curve: 'smooth' },
-        xaxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Oug', 'Sep', 'Oct', "Des", "Nov"]
-        },
-        yaxis: {
-            title: { text: 'Dolars ($)' }
-        },
+        xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Oug', 'Sep', 'Oct', "Des", "Nov"] },
+        yaxis: { title: { text: 'Dolars ($)' } },
         theme: {
             mode,
             monochrome: {
@@ -60,11 +51,10 @@ export default function Area() {
     const series = [
         {
             name: 'Earnings',
-            data: data?.map((doc: { totalEarnings: number }) => {
+            data: data?.map((doc: dataProps) => {
                 let randomNimber = faker.number.float({ precision: 0.02, max: 5000, min: 4000 });
                 return doc.totalEarnings ? doc.totalEarnings.toFixed(2) : randomNimber
-            }
-            ) ?? [0]
+            }) ?? [0]
         }
     ]
 
@@ -75,6 +65,3 @@ export default function Area() {
         </ApexchartsContainer>
     )
 }
-
-
-
