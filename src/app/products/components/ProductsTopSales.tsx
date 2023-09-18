@@ -1,18 +1,10 @@
 import { Chip } from '@mui/material'
 import { Star } from '@mui/icons-material'
-import { useQuery } from '@tanstack/react-query'
 import { nDecorator } from '@abdulrhmangoni/am-store-library'
-import useStatisticsQueries from '@/hooks/useStatisticsQueries'
-import { ListTitle, ProductsListDisplayer } from './ProductsListComponents'
+import { ListTitle, ProductsListDisplayer, RecieverProps } from './ProductsListComponents'
 
 
-export default function ProductsTopSales() {
-
-    const { get_products_topSales } = useStatisticsQueries();
-    const { data, isLoading, isError } = useQuery({
-        queryKey: ["top-sales"],
-        queryFn: () => get_products_topSales(5)
-    })
+export default function ProductsTopSales({ data, isLoading, isError }: RecieverProps) {
 
     return (
         <>

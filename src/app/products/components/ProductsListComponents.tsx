@@ -8,7 +8,7 @@ import randomColorsArr from '@/CONSTANT/randomColorsArr'
 import useProductsDisplayer from '@/hooks/useProductsDisplayer'
 import CustomListItem, { DisplyProductDetails } from '@/components/CustomListItem'
 
-interface productData {
+export interface productData {
     _id: string,
     title: string,
     description: string,
@@ -19,10 +19,12 @@ interface productData {
     earnings: number,
     category: string,
 }
-type ProductsListDisplayerProps = {
+export interface RecieverProps {
     data: productData[]
     isLoading?: boolean
     isError?: boolean,
+}
+interface ProductsListDisplayerProps extends RecieverProps {
     onRightElement: (product: productData) => any
 }
 type ListTitleProps = {

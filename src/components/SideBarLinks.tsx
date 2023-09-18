@@ -32,7 +32,7 @@ const drawerLinks: LinkProps[] = [
     {
         target: "/products",
         text: "Products",
-        icon: <Icon svgElementAsString={productsIcon} width={22} color="white" />,
+        icon: <Icon svgElementAsString={productsIcon} width={22} />,
         nestedLinks: [
             {
                 target: "products-management",
@@ -40,7 +40,7 @@ const drawerLinks: LinkProps[] = [
                 icon: <Store />
             },
             {
-                target: "statistics",
+                target: "statistics-page",
                 text: "Statistics",
                 icon: <AnalyticsSharp />
             },

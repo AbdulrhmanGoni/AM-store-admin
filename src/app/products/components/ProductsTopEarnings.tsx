@@ -1,17 +1,9 @@
 import { Chip } from '@mui/material'
-import { useQuery } from '@tanstack/react-query';
 import { AttachMoney } from '@mui/icons-material';
 import { nDecorator } from '@abdulrhmangoni/am-store-library'
-import useStatisticsQueries from '@/hooks/useStatisticsQueries';
-import { ListTitle, ProductsListDisplayer } from './ProductsListComponents';
+import { ListTitle, ProductsListDisplayer, RecieverProps } from './ProductsListComponents';
 
-export default function ProductsTopEarnings() {
-
-    const { get_products_topEarnings } = useStatisticsQueries();
-    const { data, isLoading, isError } = useQuery({
-        queryKey: ["top-earnings"],
-        queryFn: () => get_products_topEarnings(5)
-    })
+export default function ProductsTopEarnings({ data, isLoading, isError }: RecieverProps) {
 
     return (
         <>

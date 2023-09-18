@@ -17,11 +17,22 @@ import { faker } from "@faker-js/faker";
 
 export default function ProductsStatistics() {
 
-    const requestPath = 'statistics/?get=categories-statistics'
-    const { data: productsCount } = useGetApi({ key: ["products-count"], path: "products/length" })
+    const requestPath = 'statistics/?get=categories-statistics';
+    const { data: productsCount } = useGetApi({
+        key: ["products-count"],
+        path: "products/length"
+    })
+    const { data: productsInStock } = useGetApi({
+        key: ["products-in-stock"],
+        path: "products/in-stock"
+    })
     const { data, isError, isLoading } = useGetApi({
         key: ["categories-statistics"],
         path: requestPath
+    })
+    const { data: topProducts, isLoading: topProductsLoading, isError: topProductsError } = useGetApi({
+        key: ["top-products"],
+        path: "statistics/?get=top-products&limit=5"
     })
 
     let total: number = 0;
@@ -37,6 +48,7 @@ export default function ProductsStatistics() {
             }) ?? [0]
         }
     })
+    let inStock: number = productsInStock?.reduce((total: number, cat: { inStock: number; }) => cat.inStock + total, 0);
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
@@ -74,7 +86,7 @@ export default function ProductsStatistics() {
                             <DisplayInfo
                                 isLoading={isLoading}
                                 title="In Stock"
-                                body={nDecorator(5432)}
+                                body={nDecorator(inStock)}
                                 color={randomColorsArr[2]}
                                 icon={<Inbox />}
                             />
@@ -85,12 +97,20 @@ export default function ProductsStatistics() {
             <Grid container spacing={{ xs: 1, md: 2 }}>
                 <Grid item xs={12} md={6}>
                     <Paper sx={{ p: 1 }}>
-                        <ProductsTopSales />
+                        <ProductsTopSales
+                            isLoading={topProductsLoading}
+                            isError={topProductsError}
+                            data={topProducts?.topSales}
+                        />
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <Paper sx={{ p: 1 }}>
-                        <ProductsTopEarnings />
+                        <ProductsTopEarnings
+                            isLoading={topProductsLoading}
+                            isError={topProductsError}
+                            data={topProducts?.topEarnings}
+                        />
                     </Paper>
                 </Grid>
             </Grid>

@@ -26,24 +26,27 @@ function LinkItem({ target, icon, text, close, onClick, isParent, isChild, child
 
     const pathname = usePathname();
     const { push } = useRouter();
-    const { palette: { primary } } = useTheme();
+    const { palette: { primary: { main }, mode, background: { paper }, text: { primary: txt } } } = useTheme();
 
     function whenClick() {
         onClick?.();
-        if (!isParent) {
-            push(target);
-            close?.()
-        }
+        if (!isParent) { push(target); close?.() }
     }
 
     const isCurr = isCurrentPath(target, pathname)
+    let innerLinkColor = isCurr ? "#fff" : txt;
+    let linkBg = isCurr ? `${main}` : paper;
     const itemSx = {
-        color: isCurr ? "white" : null,
-        fill: isCurr ? "white" : null,
-        bgcolor: isCurr ? "primary.main" : null,
-        "&:hover": { bgcolor: alpha(primary.main, .5) },
-        borderBottom: "solid 1px rgb(255 255 255 / 10%)",
-        borderRadius: 1
+        color: innerLinkColor,
+        bgcolor: linkBg,
+        "&:hover": { bgcolor: isCurr ? undefined : alpha(main, .25) },
+        borderBottom: "solid 1px",
+        borderBottomColor: alpha(innerLinkColor, .2),
+        borderRadius: 1,
+        "& :is(svg, g, path)": {
+            fill: innerLinkColor + '!important',
+            color: innerLinkColor + '!important',
+        }
     }
 
     const listItemDot = isChild ? {
@@ -65,7 +68,7 @@ function LinkItem({ target, icon, text, close, onClick, isParent, isChild, child
                 sx={{
                     width: 300,
                     pl: isChild ? 4 : "",
-                    ...listItemDot
+                    ...listItemDot,
                 }}
             >
                 <ListItemButton sx={itemSx} onClick={whenClick}>
@@ -87,7 +90,7 @@ export default function SideBarLinksList({ close }: { close: () => void }) {
     useEffect(() => { setCurrentPath(pathname) }, [])
 
     return (
-        <List sx={{ display: "flex", flexDirection: "column" }} disablePadding>
+        <List sx={listStyle} disablePadding>
             {sideBarLinks.map(({ target, text, icon, nestedLinks }) => {
                 const
                     openChildren = isCurrentPath(target, currentPath),
@@ -111,7 +114,7 @@ export default function SideBarLinksList({ close }: { close: () => void }) {
                         {
                             !!nestedLinks &&
                             <Collapse in={openChildren} timeout="auto" unmountOnExit>
-                                <List sx={{ gap: "4px" }} disablePadding>
+                                <List sx={listStyle} disablePadding>
                                     {nestedLinks?.map(link => {
                                         return (
                                             <LinkItem
@@ -133,3 +136,5 @@ export default function SideBarLinksList({ close }: { close: () => void }) {
         </List>
     )
 }
+
+const listStyle = { display: "flex", flexDirection: "column", gap: .5 }
