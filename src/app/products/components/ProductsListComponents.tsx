@@ -7,6 +7,7 @@ import LoadingGrayBar from '@/components/LoadinGrayBar'
 import randomColorsArr from '@/CONSTANT/randomColorsArr'
 import useProductsDisplayer from '@/hooks/useProductsDisplayer'
 import CustomListItem, { DisplyProductDetails } from '@/components/CustomListItem'
+import SmallIconBox from '@/components/SmallIconBox'
 
 export interface productData {
     _id: string,
@@ -76,27 +77,19 @@ export function ProductsListDisplayer({ data, isError, isLoading, onRightElement
     )
 }
 export function ListTitle({ title, subTitle, color, icon }: ListTitleProps) {
-    const theColor = color || randomColorsArr[0];
     return (
         <Box sx={{ width: "100%", p: "0px 10px 10px" }}>
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: 1 }}>
                 <Typography variant="h6">{title}</Typography>
-                <Box
-                    component="div"
-                    className='flex-center'
-                    sx={{
-                        p: "2px",
-                        border: `solid 1px ${theColor}`,
-                        borderRadius: "5px",
-                        bgcolor: alpha(theColor, .5),
-                        "& svg": { width: "0.8em", height: "0.8em" }
-                    }}
-                >
-                    {icon}
-                </Box>
+                <SmallIconBox
+                    icon={icon}
+                    color={color}
+                    svgIconSize={20}
+                    boxStyle={{ p: "2px" }}
+                />
             </Box>
             <Typography variant="body2">{subTitle}</Typography>
-        </Box>
+        </Box >
     )
 }
 export function LoadingState() {

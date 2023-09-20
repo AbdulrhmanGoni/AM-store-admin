@@ -20,13 +20,13 @@ export default function OrdersStatisticsChart({ data }: OrdersStatisticsChartPro
 
     const options: ApexOptions = {
         chart: {
-            type: 'bar'
+            type: 'bar',
+            stacked: true
         },
         plotOptions: {
             bar: {
                 horizontal: false,
                 columnWidth: '65%',
-                // endingShape: 'rounded'
             },
         },
         dataLabels: {
@@ -65,7 +65,10 @@ export default function OrdersStatisticsChart({ data }: OrdersStatisticsChartPro
         }
     }
 
-    const series = [{ name: 'Orders Count', data }]
+    const series = [
+        { name: 'Orders Count', data },
+        { name: 'Orders canceled', data }
+    ]
 
     return (
         <ApexchartsContainer>

@@ -46,8 +46,8 @@ function renderProductsCell(params: GridRenderCellParams) {
     return <Typography variant='body2'>{count === 1 ? "One product" : count + " Products"}</Typography>
 }
 function renderTotalCell(params: GridRenderCellParams) {
-    let total = params.row.totalPrice.after
-    return <Typography variant='body2'>${(nDecorator(total))}</Typography>
+    let total: number = params.row.totalPrice.after
+    return <Typography variant='body2'>${(nDecorator(total.toFixed(2)))}</Typography>
 }
 function renderDeleviryCell(params: GridRenderCellParams) {
     let { value } = params.row.deliveryPrice

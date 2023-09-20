@@ -40,8 +40,7 @@ function LinkItem({ target, icon, text, close, onClick, isParent, isChild, child
         color: innerLinkColor,
         bgcolor: linkBg,
         "&:hover": { bgcolor: isCurr ? undefined : alpha(main, .25) },
-        borderBottom: "solid 1px",
-        borderBottomColor: alpha(innerLinkColor, .2),
+        borderBottom: `solid 1px ${alpha(innerLinkColor, .2)}`,
         borderRadius: 1,
         "& :is(svg, g, path)": {
             fill: innerLinkColor + '!important',

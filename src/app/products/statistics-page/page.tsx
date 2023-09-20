@@ -13,6 +13,8 @@ import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import LoadingGrayBar from "@/components/LoadinGrayBar";
 import SmallIconBox from "@/components/SmallIconBox";
 import { faker } from "@faker-js/faker";
+import TopSerieses from "../components/TopSerieses";
+import TopCategories from "../components/TopCategories";
 
 
 export default function ProductsStatistics() {
@@ -33,6 +35,10 @@ export default function ProductsStatistics() {
     const { data: topProducts, isLoading: topProductsLoading, isError: topProductsError } = useGetApi({
         key: ["top-products"],
         path: "statistics/?get=top-products&limit=5"
+    })
+    const { data: topSerieses, isLoading: topSeriesesLoading, isError: topSeriesessError } = useGetApi({
+        key: ["top-serieses"],
+        path: "statistics/?get=top-serieses&limit=5"
     })
 
     let total: number = 0;
@@ -111,6 +117,28 @@ export default function ProductsStatistics() {
                             isError={topProductsError}
                             data={topProducts?.topEarnings}
                         />
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                    <Paper sx={{ p: 1 }}>
+                        <TopSerieses
+                            isLoading={topSeriesesLoading}
+                            data={topSerieses?.topSold}
+                        />
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                    <Paper sx={{ p: 1 }}>
+                        <TopSerieses
+                            isLoading={topSeriesesLoading}
+                            data={topSerieses?.topEarnings}
+                            isMoney
+                        />
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                    <Paper sx={{ p: 1 }}>
+                        <TopCategories />
                     </Paper>
                 </Grid>
             </Grid>

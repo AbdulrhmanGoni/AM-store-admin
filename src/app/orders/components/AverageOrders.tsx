@@ -33,7 +33,7 @@ export default function AverageOrders({ data, isLoading, isError, totalOrders }:
             loading={isLoading}
             error={isError}
             titleIcon={<SvgIcon svgElementAsString={averageOrdersIcon} />}
-            chartDescription={{ title: totalOrders, subTitle: "Total" }}
+            chartDescription={{ title: totalOrders, subTitle: "Total This Year" }}
         />
     )
 }

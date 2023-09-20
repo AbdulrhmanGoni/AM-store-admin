@@ -19,7 +19,7 @@ export default function LatestOrdersTable() {
     return (
         <Paper sx={{ width: `calc(100vw - ${paddingSpace}px)` }}>
             <DataGrid
-                sx={{ height: "814px" }}
+                sx={{ height: "796px" }}
                 apiRef={apiRef}
                 getRowId={(row) => { return row._id }}
                 rows={orders || []}
