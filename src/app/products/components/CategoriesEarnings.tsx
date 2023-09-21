@@ -7,8 +7,9 @@ import { ApexOptions } from "apexcharts";
 import ChartTitle from "@/components/ChartTitle";
 import { productsIcon } from "@/components/svgIconsAsString";
 import Icon from "@/components/SvgIcon";
+import { chartCategory } from "./CategoriesEarningsPercentages";
 
-export default function CategoriesEarnings({ data }) {
+export default function CategoriesEarnings({ data }: { data: chartCategory[] }) {
 
     const { palette: { mode } } = useTheme();
     const options: ApexOptions = {

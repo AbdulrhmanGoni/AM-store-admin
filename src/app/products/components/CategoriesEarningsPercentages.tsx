@@ -5,20 +5,21 @@ import { categoriesEarningsIcon } from "@/components/svgIconsAsString";
 import { Box, Typography, capitalize } from "@mui/material";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { SmalDonut } from "@/components/SmallChart";
+import { PromiseState } from "@/types/interfaces";
 
 type data = { color: string, name: string }
-interface category extends data { data: number[] }
+export interface chartCategory extends data { data: number[] }
 interface series extends data { total: number }
 
-type CategoriesEarningsPercentages = {
-    data: category[],
+interface CategoriesEarningsPercentages extends PromiseState {
+    data: chartCategory[],
     isError: boolean,
     isLoading: boolean,
     totalEarnings: number
 }
 export default function CategoriesEarningsPercentages({ data, isError, isLoading, totalEarnings }: CategoriesEarningsPercentages) {
 
-    const series: series[] = data.map(({ name, color, data }: category) => {
+    const series: series[] = data.map(({ name, color, data }: chartCategory) => {
         return {
             name, color,
             total: data?.reduce((acc: number, curr: number) => acc + curr) ?? 0,
@@ -51,7 +52,7 @@ export default function CategoriesEarningsPercentages({ data, isError, isLoading
             }
             loading={isLoading}
             titleIcon={<SvgIcon svgElementAsString={categoriesEarningsIcon} />}
-            chartDescription={{ title: `$${nDecorator(totalEarnings.toFixed(2))}`, subTitle: "Total" }}
+            chartDescription={{ title: `$${nDecorator(totalEarnings.toFixed(2))}`, subTitle: "This Year" }}
         />
     )
 }

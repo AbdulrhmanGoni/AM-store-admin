@@ -4,57 +4,34 @@ import CategoriesEarnings from "../components/CategoriesEarnings";
 import CategoriesEarningsPercentages from "../components/CategoriesEarningsPercentages";
 import ProductsTopSales from "../components/ProductsTopSales";
 import ProductsTopEarnings from "../components/ProductsTopEarnings";
-import useGetApi from "@/hooks/useGetApi";
 import randomColorsArr from "@/CONSTANT/randomColorsArr";
-import { Inbox } from "@mui/icons-material";
 import Icon from "@/components/SvgIcon";
-import { productsIcon } from "@/components/svgIconsAsString";
+import { productsIcon, inStockIcon } from "@/components/svgIconsAsString";
+import { stockIcon } from "@/components/stockIcon";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import LoadingGrayBar from "@/components/LoadinGrayBar";
 import SmallIconBox from "@/components/SmallIconBox";
-import { faker } from "@faker-js/faker";
 import TopSerieses from "../components/TopSerieses";
 import TopCategories from "../components/TopCategories";
+import useProductsStatisticsContent from "../hooks/useProductsStatisticsContent";
 
 
 export default function ProductsStatistics() {
 
-    const requestPath = 'statistics/?get=categories-statistics';
-    const { data: productsCount } = useGetApi({
-        key: ["products-count"],
-        path: "products/length"
-    })
-    const { data: productsInStock } = useGetApi({
-        key: ["products-in-stock"],
-        path: "products/in-stock"
-    })
-    const { data, isError, isLoading } = useGetApi({
-        key: ["categories-statistics"],
-        path: requestPath
-    })
-    const { data: topProducts, isLoading: topProductsLoading, isError: topProductsError } = useGetApi({
-        key: ["top-products"],
-        path: "statistics/?get=top-products&limit=5"
-    })
-    const { data: topSerieses, isLoading: topSeriesesLoading, isError: topSeriesessError } = useGetApi({
-        key: ["top-serieses"],
-        path: "statistics/?get=top-serieses&limit=5"
-    })
-
-    let total: number = 0;
-    const series = Object.keys(data ?? {}).map((category, index) => {
-        return {
-            name: category,
-            color: randomColorsArr[index],
-            data: data[category]?.map((doc: { totalEarnings: number }) => {
-                let randomNumber = faker.number.float({ precision: 0.02, max: 3000, min: 1500 });
-                let totalEarnings = doc.totalEarnings ? doc.totalEarnings : randomNumber;
-                total += totalEarnings;
-                return +totalEarnings.toFixed(2);
-            }) ?? [0]
-        }
-    })
-    let inStock: number = productsInStock?.reduce((total: number, cat: { inStock: number; }) => cat.inStock + total, 0);
+    const {
+        earningsChartData,
+        chartLoading,
+        chartError,
+        totalEarnings,
+        productsTotals,
+        productsStatisticsLoading,
+        topSerieses,
+        topSeriesesLoading,
+        productsSoldChartData,
+        topProducts,
+        topProductsLoading,
+        topProductsError,
+    } = useProductsStatisticsContent();
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
@@ -62,7 +39,7 @@ export default function ProductsStatistics() {
                 <Grid item xs={12} md={6.5} lg={8}>
                     <Box sx={{ width: "100%" }}>
                         <Paper sx={{ p: 1 }}>
-                            <CategoriesEarnings data={series} />
+                            <CategoriesEarnings data={earningsChartData} />
                         </Paper>
                     </Box>
                 </Grid>
@@ -70,10 +47,10 @@ export default function ProductsStatistics() {
                     <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
                         <Paper sx={{ p: 1, height: "200px" }}>
                             <CategoriesEarningsPercentages
-                                data={series}
-                                totalEarnings={total}
-                                isLoading={isLoading}
-                                isError={isError}
+                                data={earningsChartData}
+                                totalEarnings={totalEarnings}
+                                isLoading={chartLoading}
+                                isError={chartError}
                             />
                         </Paper>
                         <Box sx={{
@@ -83,18 +60,20 @@ export default function ProductsStatistics() {
                             height: { xs: "200px", sm: "100px", md: "200px" }
                         }}>
                             <DisplayInfo
-                                isLoading={isLoading}
+                                isLoading={productsStatisticsLoading}
                                 title="Products"
-                                body={productsCount}
+                                body={productsTotals?.totalProducts}
                                 color={randomColorsArr[3]}
-                                icon={<Icon svgElementAsString={productsIcon} />}
+                                icon={<Icon svgElementAsString={stockIcon} />}
+                                disableIconColor
                             />
                             <DisplayInfo
-                                isLoading={isLoading}
+                                isLoading={productsStatisticsLoading}
                                 title="In Stock"
-                                body={nDecorator(inStock)}
+                                body={nDecorator(String(productsTotals?.totalInStock))}
                                 color={randomColorsArr[2]}
-                                icon={<Inbox />}
+                                icon={<Icon svgElementAsString={inStockIcon} />}
+                                disableIconColor
                             />
                         </Box>
                     </Box>
@@ -119,8 +98,15 @@ export default function ProductsStatistics() {
                         />
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={8} lg={4}>
                     <Paper sx={{ p: 1 }}>
+                        <TopCategories
+                            data={productsSoldChartData}
+                        />
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                    <Paper sx={{ p: 1, height: "100%" }}>
                         <TopSerieses
                             isLoading={topSeriesesLoading}
                             data={topSerieses?.topSold}
@@ -128,17 +114,12 @@ export default function ProductsStatistics() {
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                    <Paper sx={{ p: 1 }}>
+                    <Paper sx={{ p: 1, height: "100%" }}>
                         <TopSerieses
                             isLoading={topSeriesesLoading}
                             data={topSerieses?.topEarnings}
                             isMoney
                         />
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <Paper sx={{ p: 1 }}>
-                        <TopCategories />
                     </Paper>
                 </Grid>
             </Grid>
@@ -149,12 +130,13 @@ export default function ProductsStatistics() {
 type DisplayInfoType = {
     color: string,
     icon: any,
-    isLoading?: boolean
+    isLoading?: boolean,
+    disableIconColor?: boolean,
     title: string,
-    body: string | number,
+    body?: string | number
 }
 
-function DisplayInfo({ color, title, body, icon, isLoading }: DisplayInfoType) {
+function DisplayInfo({ color, title, body, icon, isLoading, disableIconColor = false }: DisplayInfoType) {
     return (
         <Paper sx={{
             display: "flex",
@@ -166,6 +148,7 @@ function DisplayInfo({ color, title, body, icon, isLoading }: DisplayInfoType) {
             <SmallIconBox
                 icon={icon}
                 color={color}
+                disableIconColor={disableIconColor}
                 svgIconSize={30}
             >
                 {isLoading ? <LoadingGrayBar type="rou" h={35} w={35} /> : undefined}

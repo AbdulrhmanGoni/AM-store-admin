@@ -4,5 +4,10 @@ interface submetEvent {
     currentTarget: HTMLFormElement | undefined
 }
 
+interface PromiseState {
+    isError?: boolean,
+    isLoading?: boolean,
+}
 
-export type { submetEvent }
+
+export type { submetEvent, PromiseState }

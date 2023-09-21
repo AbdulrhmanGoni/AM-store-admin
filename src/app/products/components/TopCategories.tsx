@@ -6,32 +6,37 @@ import { ApexOptions } from "apexcharts";
 import Icon from "@/components/SvgIcon";
 import { totalIcon } from "@/components/svgIconsAsString";
 import ChartTitle from "@/components/ChartTitle";
+import { PromiseState } from "@/types/interfaces";
 
-export default function TopCategories() {
+
+export type TopCategoriesCartData = {
+    categories: string[],
+    values: number[]
+}
+
+interface TopCategoriesCartProps extends PromiseState {
+    data: {
+        categories: string[],
+        values: number[]
+    }
+}
+
+export default function TopCategoriesCart({ data: { categories, values } }: TopCategoriesCartProps) {
 
     const { palette: { mode, primary } } = useTheme();
 
     const options: ApexOptions = {
         chart: { type: 'bar' },
-        plotOptions: {
-            bar: {
-                borderRadius: 4,
-                horizontal: true,
-            }
-        },
+        plotOptions: { bar: { borderRadius: 4, horizontal: true } },
         colors: [primary.main],
         theme: { mode },
         dataLabels: { enabled: false },
-        xaxis: { categories: ['Clothes', 'Figures', 'Panels'] },
-        yaxis: { labels: { style: { fontSize: "14px" } } }
+        xaxis: { categories: categories ?? ['Clothes', 'Figures', 'Panels'] },
+        yaxis: { labels: { style: { fontSize: "14px" } } },
+        tooltip: { y: { formatter: (value: number, obj: string) => { obj = `${nDecorator(value)}`; return obj } } }
     };
 
-    const series = [
-        {
-            name: "Products Sold",
-            data: [400, 430, 448],
-        }
-    ]
+    const series = [{ name: "Products Sold", data: values ?? [400, 430, 448] }]
 
     return (
         <ApexchartsContainer>
