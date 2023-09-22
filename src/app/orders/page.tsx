@@ -10,6 +10,8 @@ import Icon from "@/components/SvgIcon";
 import useGetApi from "@/hooks/useGetApi";
 import { faker } from "@faker-js/faker";
 import randomColorsArr from "@/CONSTANT/randomColorsArr";
+import DisplayInfoBox from "@/components/DisplayInfoBox";
+import { nDecorator } from "@abdulrhmangoni/am-store-library";
 
 const boxSx = { width: "100%" }
 const paperStyle = {
@@ -62,26 +64,14 @@ const OrdersManagement: FC = function () {
                             />
                         </Paper>
                         <Box sx={{ display: "flex", gap: { xs: 1, md: 2 }, height: "200px" }}>
-                            <Paper sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                flexDirection: "column",
-                                textAlign: "center",
-                                flexBasis: "50%",
-                                gap: 1.5, p: 1
-                            }}>
-                                <SmallIconBox
-                                    svgIconSize={30}
-                                    color={randomColorsArr[0]}
-                                    boxStyle={{ p: 1, }}
-                                    icon={<Icon svgElementAsString={totalIcon} />}
-                                />
-                                <Box>
-                                    <Typography variant="h6">Total Orders</Typography>
-                                    <Typography variant="h5">{totalOrders}</Typography>
-                                </Box>
-                            </Paper>
+                            <DisplayInfoBox
+                                title="Total Orders"
+                                type="columnly"
+                                body={nDecorator(totalOrders)}
+                                icon={<Icon svgElementAsString={totalIcon} />}
+                                color={randomColorsArr[0]}
+                                BoxStyle={{ flexBasis: "50%" }}
+                            />
                             <Paper sx={{ flexBasis: "50%" }}></Paper>
                         </Box>
                     </Box>
@@ -89,7 +79,7 @@ const OrdersManagement: FC = function () {
                 <Grid item xs={12} md={6.5} lg={8}>
                     <Box sx={boxSx}>
                         <Paper sx={paperStyle}>
-                            <OrdersStatisticsChart data={dataChart}/>
+                            <OrdersStatisticsChart data={dataChart} />
                         </Paper>
                     </Box>
                 </Grid>

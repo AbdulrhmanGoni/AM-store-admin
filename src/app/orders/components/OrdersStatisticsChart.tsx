@@ -19,35 +19,22 @@ export default function OrdersStatisticsChart({ data }: OrdersStatisticsChartPro
     const { palette: { mode, primary } } = useTheme();
 
     const options: ApexOptions = {
-        chart: {
-            type: 'bar',
-            stacked: true
-        },
+        chart: { type: 'bar', stacked: true },
         plotOptions: {
             bar: {
                 horizontal: false,
                 columnWidth: '65%',
             },
         },
-        dataLabels: {
-            enabled: false
-        },
+        dataLabels: { enabled: false },
         stroke: {
             show: true,
             width: 2,
             colors: ['transparent']
         },
-        xaxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Oug', 'Sep', 'Oct', "Des", "Nov"]
-        },
-        yaxis: {
-            title: {
-                text: 'Orders'
-            }
-        },
-        fill: {
-            opacity: 1
-        },
+        xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Oug', 'Sep', 'Oct', "Des", "Nov"] },
+        yaxis: { title: { text: 'Orders' } },
+        fill: { opacity: 1 },
         theme: {
             mode,
             monochrome: {
@@ -66,8 +53,8 @@ export default function OrdersStatisticsChart({ data }: OrdersStatisticsChartPro
     }
 
     const series = [
-        { name: 'Orders Count', data },
-        { name: 'Orders canceled', data }
+        { name: 'Complated Orders', data, color: "#00c853" },
+        { name: 'Orders canceled', data, color: "#c80000" }
     ]
 
     return (

@@ -1,0 +1,68 @@
+import { Box, Paper, Typography } from '@mui/material'
+import React from 'react'
+import SmallIconBox from './SmallIconBox'
+import { CSSProperties } from '@mui/material/styles/createMixins'
+import LoadingGrayBar from './LoadinGrayBar'
+import { PromiseState } from '@/types/interfaces'
+
+interface DisplayInfoBoxProps extends PromiseState {
+    title: string
+    icon: any,
+    body: string | number,
+    color: string,
+    BoxStyle?: CSSProperties,
+    type: "columnly" | "horizontally",
+    disableIconColor?: boolean,
+}
+
+export default function DisplayInfoBox(props: DisplayInfoBoxProps) {
+    let {
+        title, body, icon, color, BoxStyle,
+        disableIconColor, isLoading, type
+    } = props;
+
+    const columnly: CSSProperties = {
+        justifyContent: "center",
+        flexDirection: "column",
+        textAlign: "center",
+        gap: 1.5, p: 1,
+    }
+
+    const styleOfType = type === "columnly" ? columnly : { gap: 2, p: "0px 16px" }
+
+    return (
+        <Paper
+            sx={{
+                display: "flex",
+                alignItems: "center",
+                ...styleOfType,
+                ...BoxStyle
+            }}
+        >
+            <SmallIconBox
+                svgIconSize={30}
+                color={color}
+                disableIconColor={disableIconColor}
+                boxStyle={{ p: 1 }}
+            >
+                {isLoading ? <LoadingGrayBar type="rou" h={35} w={35} /> : icon}
+            </SmallIconBox>
+            <Box>
+                {
+                    isLoading ?
+                        <>
+                            <LoadingGrayBar sx={{ mb: 1 }} type="rou" h={25} w={100} />
+                            <LoadingGrayBar type="rou" h={30} w={100} />
+                        </>
+                        :
+                        <>
+                            <Typography variant="h6">{title}</Typography>
+                            <Typography variant="h5">{body}</Typography>
+                        </>
+                }
+            </Box>
+        </Paper>
+    )
+}
+
+

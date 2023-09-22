@@ -4,10 +4,11 @@ type iconComponentProps = {
     svgElementAsString: string,
     width?: number,
     height?: number,
-    color?: string
+    color?: string,
+    disableIconColor?: boolean
 }
 
-export default function Icon({ svgElementAsString, width = 35, height = 35, color }: iconComponentProps) {
+export default function Icon({ svgElementAsString, disableIconColor, width = 35, height = 35, color }: iconComponentProps) {
 
     const { palette: { primary: { main } } } = useTheme();
 
@@ -15,7 +16,7 @@ export default function Icon({ svgElementAsString, width = 35, height = 35, colo
         <Box
             sx={{
                 "& > svg": { width, height },
-                "& :is(svg, g, path)": { fill: color ?? main },
+                "& :is(svg, g, path)": { fill: disableIconColor ? undefined : color ?? main },
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center"

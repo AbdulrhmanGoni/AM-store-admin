@@ -9,9 +9,10 @@ type ChartTitleProps = {
     titleSize?: string,
     svgIconSize?: number
     containerStyle?: CSSProperties
+    disableIconColor?: boolean
 }
 
-export default function ChartTitle({ icon, title, svgIconSize, titleSize, containerStyle }: ChartTitleProps) {
+export default function ChartTitle({ icon, title, svgIconSize, titleSize, containerStyle, disableIconColor }: ChartTitleProps) {
     return (
         <Box sx={{
             display: "flex",
@@ -22,6 +23,7 @@ export default function ChartTitle({ icon, title, svgIconSize, titleSize, contai
             <SmallIconBox
                 svgIconSize={svgIconSize ?? 20}
                 boxStyle={{ p: .5 }}
+                disableIconColor={disableIconColor}
                 icon={icon}
             />
             <Typography

@@ -5,7 +5,7 @@ import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import ApexchartsContainer from "@/components/ApexchartsContainer";
 import { ApexOptions } from "apexcharts";
 import ChartTitle from "@/components/ChartTitle";
-import { productsIcon } from "@/components/svgIconsAsString";
+import { lineChartIcon } from "@/components/lineChartIcon";
 import Icon from "@/components/SvgIcon";
 import { chartCategory } from "./CategoriesEarningsPercentages";
 
@@ -16,9 +16,7 @@ export default function CategoriesEarnings({ data }: { data: chartCategory[] }) 
         chart: { type: "area" },
         dataLabels: { enabled: false },
         stroke: { curve: 'smooth' },
-        xaxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Oug', 'Sep', 'Oct', "Des", "Nov"]
-        },
+        xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Oug', 'Sep', 'Oct', "Des", "Nov"] },
         yaxis: { title: { text: 'Dolars ($)' } },
         theme: { mode },
         fill: { type: "image" },
@@ -34,7 +32,11 @@ export default function CategoriesEarnings({ data }: { data: chartCategory[] }) 
 
     return (
         <ApexchartsContainer>
-            <ChartTitle title="Categories Earnings" icon={<Icon svgElementAsString={productsIcon} />} />
+            <ChartTitle
+                title="Categories Earnings"
+                disableIconColor
+                icon={<Icon disableIconColor svgElementAsString={lineChartIcon} />}
+            />
             <Chart options={options} series={data} type="area" height={337} />
         </ApexchartsContainer>
     )

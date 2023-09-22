@@ -1,8 +1,6 @@
 import randomColorsArr from "@/CONSTANT/randomColorsArr";
 import useGetApi from "@/hooks/useGetApi";
 import { faker } from "@faker-js/faker";
-import { chartCategory } from "../components/CategoriesEarningsPercentages";
-import { TopCategoriesCartData } from "../components/TopCategories";
 import { useMemo } from "react";
 
 type MonthProps = {
@@ -29,34 +27,30 @@ export default function useProductsStatisticsContent() {
         return prepareProductsStatistics(productsStatistics)
     }, [productsStatistics])
 
+    const topCategoriesData = useMemo(() => {
+        return prepareTopCategoriesData(productsStatistics)
+    }, [productsStatistics])
+
 
     let total: number = 0;
-    let earningsChartData: chartCategory[] = [];
-    let productsSoldChartData: TopCategoriesCartData = { categories: [], values: [] };
-
-    Object.keys(categoriesStatistics ?? {}).forEach((category, index) => {
-        let thisCatsold: number = 0;
-        earningsChartData.push({
+    const earningsChartData = Object.keys(categoriesStatistics ?? {}).map((category, index) => {
+        return {
             name: category,
             color: randomColorsArr[index],
             data: categoriesStatistics[category]?.map((month: MonthProps) => {
                 let randomEarnings = faker.number.float({ precision: 0.02, max: 3000, min: 1500 });
-                let randomSold = faker.number.float({ precision: 1, max: 20, min: 15 });
-                thisCatsold += month.productsSold ? month.productsSold : randomSold;
                 let totalEarnings = month.totalEarnings ? month.totalEarnings : randomEarnings;
                 total += totalEarnings;
                 return +totalEarnings.toFixed(2);
             }) ?? [0]
-        })
-        productsSoldChartData.values.push(thisCatsold)
-        productsSoldChartData.categories.push(category)
+        }
     })
 
     return {
         earningsChartData,
         chartLoading,
         chartError,
-        productsSoldChartData,
+        topCategoriesData,
         totalEarnings: total,
         productsTotals,
         productsStatisticsLoading,
@@ -77,6 +71,7 @@ interface ProductsStatisticsResponse {
     totalEarnings: number
     _id: string
 }
+
 function prepareProductsStatistics(response?: ProductsStatisticsResponse[]) {
     const productsStatistics = response?.reduce((acc, curr) => {
         acc.productsCount += curr.productsCount
@@ -84,12 +79,24 @@ function prepareProductsStatistics(response?: ProductsStatisticsResponse[]) {
         acc.productsSold += curr.productsSold
         acc.totalEarnings += curr.totalEarnings
         return acc
-    })
+    }, { productsCount: 0, inStock: 0, productsSold: 0, totalEarnings: 0 })
 
     return {
         totalProducts: productsStatistics?.productsCount,
         totalInStock: productsStatistics?.inStock,
         totalProductsSold: productsStatistics?.productsSold,
-        totalProductsEarnings: productsStatistics?.totalEarnings
+        totalProductsEarnings: productsStatistics?.totalEarnings,
+        categoriesCount: response?.length
     }
+}
+function prepareTopCategoriesData(response?: ProductsStatisticsResponse[]) {
+    let
+        categories: string[] = [],
+        values: number[] = []
+    response?.forEach((cat) => {
+        categories.push(cat._id)
+        values.push(cat.productsSold)
+    })
+
+    return { categories, values }
 }

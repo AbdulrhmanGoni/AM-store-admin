@@ -45,7 +45,7 @@ export default function TopCategoriesCart({ data: { categories, values } }: TopC
                 containerStyle={{ pb: "0px" }}
                 icon={<Icon svgElementAsString={totalIcon} />}
             />
-            <Chart options={options} series={series} type="bar" height={200} />
+            <Chart options={options} series={series} type="bar" height={160} />
         </ApexchartsContainer>
     )
 } 
