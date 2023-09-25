@@ -1,8 +1,7 @@
-import isImagePath from "@/functions/isImage";
+
 import { useState } from "react";
-import { catagoriesInfo } from "../add-products/page";
-import getFormData from "../functions/getFormData";
-import { submetEvent } from "@/types/dataTypes";
+import CATEGORIES from "@/CONSTANT/CATEGORIES";
+import getFormData, { ProductformData } from "../functions/getFormData";
 
 export default function useFormValidationState() {
 
@@ -27,26 +26,21 @@ export default function useFormValidationState() {
         }
     }
 
-    function formValidation(event: submetEvent): boolean {
-        const { title, price, series, category, image, amount, description } = getFormData(event);
+    function formValidation(formData: FormData): ProductformData | false {
+        const data = getFormData(formData)
+        const { title, price, series, category, files, amount, description } = data;
         const
-            isValidTitle = Checker("title", title.length > 6),
-            isValidPrice = Checker("price", (price > 0)),
-            isValidSeries = Checker("series", series.length > 1),
-            isValidCategory = Checker("category", catagoriesInfo.some(cat => cat.name === category)),
-            isValidImage = Checker("images", isImagePath(image?.name, image?.type)),
-            isValidAmount = Checker("amount", amount > 0),
-            isValidDescription = Checker("description", description.length > 10)
+            validTitle = Checker("title", title.length > 6),
+            validPrice = Checker("price", (price > 0)),
+            validSeries = Checker("series", series.length > 1),
+            validCategory = Checker("category", CATEGORIES.some(cat => cat === category)),
+            validImage = Checker("images", !!files.length),
+            validAmount = Checker("amount", amount > 0),
+            validDescription = Checker("description", description.length > 10)
 
-        return (
-            isValidTitle &&
-            isValidPrice &&
-            isValidSeries &&
-            isValidCategory &&
-            isValidImage &&
-            isValidAmount &&
-            isValidDescription
-        )
+        if (validTitle && validPrice && validSeries && validCategory && validImage && validAmount && validDescription) {
+            return data
+        } else return false
     }
 
     return {

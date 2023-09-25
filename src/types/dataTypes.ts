@@ -9,8 +9,8 @@ interface productData {
     price: number,
     series: string,
     category: string,
-    image?: File,
-    images?: string[],
+    files?: (FormDataEntryValue | null)[],
+    images: string[],
     amount: number,
     description: string,
     sold?: number,
@@ -87,12 +87,12 @@ type submetEvent = {
 
 
 export type {
-    user,
+    // user,
     productData,
     submetEvent,
-    order,
-    ratingProduct,
-    comment,
-    paymentMethodCard,
-    location
+    // order,
+    // ratingProduct,
+    // comment,
+    // paymentMethodCard,
+    // location
 }

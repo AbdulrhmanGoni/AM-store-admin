@@ -1,16 +1,26 @@
-import { productData, submetEvent } from "@/types/dataTypes";
+import isAnImage from "@/functions/isAnImage";
 
-export default function getFormData(event: submetEvent): productData {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const [title, price, series, category, image, amount, description]: any = [
-        data.get('title'),
-        Number(data.get('price')),
-        data.get('series'),
-        data.get('category'),
-        data.get('image'),
-        Number(data.get('amount')),
-        data.get('description'),
-    ];
-    return { title, price, series, category, image, amount, description };
+export interface ProductformData {
+    title: string;
+    price: number,
+    series: string,
+    category: string,
+    files: (FormDataEntryValue | null)[],
+    amount: number,
+    description: string
+}
+
+export default function getFormData(formData: FormData): ProductformData {
+
+    let files = [formData.get('image1'), formData.get('image2'), formData.get('image3'), formData.get('image4')]
+
+    return {
+        title: String(formData.get('title')),
+        price: Number(formData.get('price')),
+        files: files.filter((file) => isAnImage(file)),
+        series: String(formData.get('series')),
+        category: String(formData.get('category')),
+        amount: Number(formData.get('amount')),
+        description: String(formData.get('description'))
+    };
 }
