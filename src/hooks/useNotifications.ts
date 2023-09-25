@@ -3,12 +3,17 @@ import { toast, ToastOptions } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 
-type typeMessage = 'info' | 'success' | 'warning' | 'error' | 'default'
+export type typeMessage = 'info' | 'success' | 'warning' | 'error' | 'default'
 type promiseFunc = Promise<any>
 interface promiseParams {
     loadingMsg: string,
     successgMsg: string,
     errorMsg: string,
+}
+export type updateTostProps = (type: typeMessage, message: string) => void
+type byStepsType = {
+    update: updateTostProps,
+    close: () => void,
 }
 
 
@@ -35,7 +40,7 @@ export default function useNotifications() {
         )
     }
 
-    const bySteps = (startLoadingMessage: string) => {
+    const bySteps = (startLoadingMessage: string): byStepsType => {
         const toastId = toast.loading(startLoadingMessage, { type: "info" })
         return {
             update(type: typeMessage, message: string) {
