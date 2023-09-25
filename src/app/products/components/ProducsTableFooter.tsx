@@ -1,5 +1,5 @@
 import useProductsDisplayer from "@/hooks/useProductsDisplayer";
-import { Delete, ReadMore } from "@mui/icons-material";
+import { Delete, Edit, ReadMore } from "@mui/icons-material";
 import { Box, Button } from "@mui/material";
 import { GridFooter } from "@mui/x-data-grid";
 import { ActionAlert } from '@abdulrhmangoni/am-store-library';
@@ -29,7 +29,7 @@ export default function Footer({ delelteFun, selectedRows }) {
                         variant="contained"
                         color='error'
                         size='small'
-                        disabled
+                    // disabled
                     >
                         Delete
                     </Button>
@@ -37,14 +37,24 @@ export default function Footer({ delelteFun, selectedRows }) {
             }
             {
                 rowsCount === 1 &&
-                <Button
-                    startIcon={<ReadMore />}
-                    variant="contained"
-                    size='small'
-                    onClick={() => display(selectedRows[0])}
-                >
-                    Veiw
-                </Button>
+                <>
+                    <Button
+                        endIcon={<ReadMore />}
+                        variant="contained"
+                        size='small'
+                        onClick={() => display(selectedRows[0])}
+                    >
+                        Veiw
+                    </Button>
+                    <Button
+                        endIcon={<Edit />}
+                        variant="contained"
+                        size='small'
+                        onClick={() => display(selectedRows[0])}
+                    >
+                        Edit
+                    </Button>
+                </>
             }
             <GridFooter style={{ flexGrow: 1, borderTop: "none" }} />
         </Box>

@@ -29,13 +29,18 @@ export default function Dashboard({ children }) {
     isOut, isServerError
   } = useAdminLogIn();
   const theme = themeHandeler(mode ?? "dark");
+  const { palette: { primary, background, text } } = theme
 
   const htmlStyle = {
     "& *::-webkit-scrollbar-thumb": { bgcolor: "primary.main" },
     "& *::-webkit-scrollbar": { bgcolor: "white", width: "3px", height: "6px" },
+    "& input:autofill": {
+      boxShadow: `0 0 0 100px ${background.default} inset !important`,
+      WebkitTextFillColor: `${text.primary} !important`
+    },
     ":root": {
-      "--toastify-color-info": theme.palette.primary.main,
-      "--toastify-color-dark": theme.palette.background.default
+      "--toastify-color-info": primary.main,
+      "--toastify-color-dark": background.default
     }
   }
 
@@ -49,8 +54,8 @@ export default function Dashboard({ children }) {
                 <Box
                   component="body"
                   sx={{
-                    bgcolor: theme.palette.background.default,
-                    color: theme.palette.text.primary
+                    bgcolor: background.default,
+                    color: text.primary
                   }}>
                   {
                     isLoading ? <LoadingPage />

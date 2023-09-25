@@ -13,6 +13,7 @@ const paperStyle = {
   justifyContent: "center",
   flexDirection: "column",
 }
+export const pageSpaces = { xs: 1, md: 2 }
 
 export default function SalesStatistics() {
 
@@ -20,8 +21,8 @@ export default function SalesStatistics() {
   const { data, isError, isLoading } = useGetApi({ key: ["statistics-earnings"], path });
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
-      <Grid container spacing={{ xs: 1, md: 2 }}>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
+      <Grid container spacing={pageSpaces}>
         <Grid item xs={12} md={6.5} lg={8}>
           <Box sx={boxSx}>
             <Paper sx={paperStyle}>
@@ -30,7 +31,7 @@ export default function SalesStatistics() {
           </Box>
         </Grid>
         <Grid item xs={12} md={5.5} lg={4}>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
             <Paper sx={{ p: 1, height: "200px" }}>
               <SalesGrowth
                 data={data}

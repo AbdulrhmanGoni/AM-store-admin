@@ -1,7 +1,7 @@
 import { Box, CircularProgress, IconButton, TextField } from '@mui/material'
 import SearchResultRenderer from "./SearchResultRenderer"
 import { useState, useEffect } from 'react';
-import useAsyncActions from '../hooks/useAsyncActions';
+import useAsyncActions from '../hooks/useProductsActions';
 import { Close } from '@mui/icons-material';
 
 export type searchResponse = { _id: string, title: string }

@@ -12,6 +12,7 @@ import { faker } from "@faker-js/faker";
 import randomColorsArr from "@/CONSTANT/randomColorsArr";
 import DisplayInfoBox from "@/components/DisplayInfoBox";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
+import { pageSpaces } from "../page";
 
 const boxSx = { width: "100%" }
 const paperStyle = {
@@ -36,7 +37,7 @@ const OrdersManagement: FC = function () {
     }) ?? [0]
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }} >
+        <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }} >
             <Box>
                 <Typography
                     variant='h5'
@@ -52,9 +53,9 @@ const OrdersManagement: FC = function () {
                     View statistics, View latest orders, Search for orders
                 </Typography>
             </Box>
-            <Grid container spacing={{ xs: 1, md: 2 }}>
+            <Grid container spacing={pageSpaces}>
                 <Grid item xs={12} md={5.5} lg={4}>
-                    <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
                         <Paper sx={{ height: "200px", p: 1 }}>
                             <AverageOrders
                                 data={dataChart}
@@ -63,7 +64,7 @@ const OrdersManagement: FC = function () {
                                 isError={isError}
                             />
                         </Paper>
-                        <Box sx={{ display: "flex", gap: { xs: 1, md: 2 }, height: "200px" }}>
+                        <Box sx={{ display: "flex", gap: pageSpaces, height: "200px" }}>
                             <DisplayInfoBox
                                 title="Total Orders"
                                 type="columnly"

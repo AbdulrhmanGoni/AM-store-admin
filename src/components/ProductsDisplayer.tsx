@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
-import { Card, Typography, Box, IconButton, Rating, Button, Avatar } from "@mui/material"
+import { Card, Typography, Box, IconButton, Rating, Button } from "@mui/material"
 import { host_admin } from "@/CONSTANT/API_hostName"
 import useApiRequest from "@/hooks/useApiRequest"
 import { productData } from "@/types/dataTypes"
-import { Close, Delete } from "@mui/icons-material"
+import { Close, Delete, Edit } from "@mui/icons-material"
 import LoadingGrayBar, { widthAndHeightType as wh } from "./LoadinGrayBar"
 import { ActionAlert, nDecorator } from "@abdulrhmangoni/am-store-library"
+import ProductImagesDisplayer from "@/app/products/components/ProductImagesDisplayer"
 
 
 export default function ProductsDisplayer({ id, close, palette: { background, text, primary } }) {
@@ -15,6 +16,10 @@ export default function ProductsDisplayer({ id, close, palette: { background, te
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
     const [cardsOpacity, setCardsOpacity] = useState<number>(0);
+
+    async function deleteProduct(productId: string) {
+        return (await api.delete(`${host_admin}products/${productId}`, { data: productId })).data
+    }
 
     function fetchProduct() {
         setIsLoading(true)
@@ -28,59 +33,20 @@ export default function ProductsDisplayer({ id, close, palette: { background, te
     useEffect(() => { setCardsOpacity(1) }, [id]);
 
     function ItemDisplayer({ item, lw, lh }: { item: any, lw?: wh, lh: wh }) {
-        return (<>
-            {
-                isLoading ? <LoadingGrayBar w={lw ?? "100%"} h={lh} type="rou" sx={{ bgcolor: "rgb(0 0 0 / 20%)" }} />
-                    : isError ? null
-                        : [item]
-            }
-        </>)
+        return isLoading ? <LoadingGrayBar w={lw ?? "100%"} h={lh} type="rou" sx={{ bgcolor: "rgb(0 0 0 / 20%)" }} />
+            : isError ? null : [item]
     }
 
-    function ImagesDisplayer({ images }) {
-
-        const [current, setCurrent] = useState<string>(images?.[0]);
-
-        return (
-            <Box sx={{ display: "flex", flexBasis: "50%", flexDirection: "column", gap: 1 }}>
-                <ItemDisplayer lh={350}
-                    item={
-                        <Avatar
-                            key="img" alt="product's image" src={current ?? ""}
-                            sx={{ width: "100%", height: "350px", borderRadius: 0, "& > img": { objectFit: "fill" } }}
-                        />
-                    }
-                />
-                <ItemDisplayer lh={45}
-                    item={
-                        <Box key="bar" sx={{ display: "flex", gap: 1, justifyContent: "center" }}>
-                            {
-                                images?.map((url: string, i: number) =>
-                                    <Avatar
-                                        key={"img-" + i} src={url ?? ""}
-                                        sx={{
-                                            borderRadius: 1,
-                                            border: "solid 2px", objectFit: "fill",
-                                            borderColor: url === current ? primary.main : text.primary
-                                        }}
-                                        onClick={() => { setCurrent(url) }}>
-                                        A
-                                    </Avatar>
-                                )
-                            }
-                        </Box>
-                    }
-                />
-            </Box>
-        )
-    }
-
-    const { title, price, description, series, images, sold, earnings } = product ?? {}
+    const { title, price, description, series, images, sold, earnings, _id } = product ?? {}
 
     return (
         <Box sx={containerStyle}>
             <Card sx={{ ...cardStyle, bgcolor: background.paper, color: text.primary, opacity: cardsOpacity }}>
-                <ImagesDisplayer images={images} />
+                <ProductImagesDisplayer
+                    isLoading={isLoading}
+                    isError={isLoading}
+                    images={images}
+                />
                 <Box sx={infoSectionStyle}>
                     <ItemDisplayer lh={40}
                         item={<Typography key="tit" variant="h6">{title}</Typography>}
@@ -123,22 +89,28 @@ export default function ProductsDisplayer({ id, close, palette: { background, te
                     />
                     <ItemDisplayer lh={60}
                         item={
-                            <Box key="act" sx={{ display: "flex", alignItems: "center", mt: 1 }}>
+                            <Box key="act" sx={{ display: "flex", alignItems: "center", mt: 1, gap: 1 }}>
                                 <ActionAlert
-                                    action={() => { }}
+                                    action={() => { _id ? deleteProduct(_id) : null }}
                                     title={"You are going to delete the product"}
                                     message={"Make sure if you continue, You will not be able to undo this process after that"}                                >
                                     <Button color="error" variant="contained" size="small" startIcon={<Delete />} >Delete</Button>
                                 </ActionAlert>
+                                <Button
+                                    color="info"
+                                    variant="contained"
+                                    size="small"
+                                    endIcon={<Edit />}
+                                    // onClick={}
+                                >
+                                    Edit
+                                </Button>
                             </Box>
                         }
                     />
                 </Box>
                 <IconButton
-                    onClick={() => {
-                        setCardsOpacity(0);
-                        close();
-                    }}
+                    onClick={() => { setCardsOpacity(0); close(); }}
                     sx={closeIconStyle}
                 >
                     <Close sx={{ color: text.primary }} />
@@ -168,7 +140,7 @@ const cardStyle = {
 }
 const closeIconStyle = {
     position: "absolute",
-    top: 5, right: 5
+    top: 0, right: 0
 }
 const infoSectionStyle = {
     display: "flex",
