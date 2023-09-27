@@ -86,7 +86,7 @@ export default function AddProductForm() {
                             label="Category"
                             error={categoryState}
                             errorMsg='You have to select category of product'
-                            selectBox
+                            isSelectBox
                             Icon={Class}
                         />
                     </Grid>

@@ -11,14 +11,12 @@ export default function ProductImagesDisplayer({ images, isLoading, isError }: I
     const { palette: { primary, text } } = useTheme();
     const [current, setCurrent] = useState<string | undefined>(images?.[0]);
 
-    useEffect(() => {
-        setCurrent(images?.[0])
-    }, [images])
+    useEffect(() => { setCurrent(images?.[0]) }, [images])
 
     return (
         <Box sx={{ display: "flex", flexBasis: "50%", flexDirection: "column", gap: 1 }}>
             {
-                isLoading ? <LoadingGrayBar w={"100%"} h={350} type="rou" sx={{ bgcolor: "rgb(0 0 0 / 20%)" }} />
+                isLoading ? <LoadingGrayBar width={"100%"} height={350} type="rou" sx={{ bgcolor: "rgb(0 0 0 / 20%)" }} />
                     : isError ? <ErrorThrower
                         title='Filed To load images'
                         hideAlertMsg
@@ -31,7 +29,7 @@ export default function ProductImagesDisplayer({ images, isLoading, isError }: I
                         />
             }
             {
-                isLoading ? <LoadingGrayBar w={"100%"} h={45} type="rou" sx={{ bgcolor: "rgb(0 0 0 / 20%)" }} />
+                isLoading ? <LoadingGrayBar width={"100%"} height={45} type="rou" sx={{ bgcolor: "rgb(0 0 0 / 20%)" }} />
                     : isError ? null
                         : <Box key="bar" sx={{ display: "flex", gap: 1, justifyContent: "center" }}>
                             {

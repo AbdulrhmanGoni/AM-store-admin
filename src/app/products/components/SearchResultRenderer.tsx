@@ -2,17 +2,27 @@ import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
-import { searchResponse } from './SearchField';
-import { ReadMore } from '@mui/icons-material';
+import { SearchFieldProps, searchResponse } from './SearchField';
 import { Typography } from '@mui/material';
-import useProductsDisplayer from '@/hooks/useProductsDisplayer';
 
+interface SearchResultRendererProps extends SearchFieldProps {
+    products: searchResponse[],
+    searchText: string,
+    actionWithProductId: (id: string) => void
+}
 
-export default function VirtualizedList({ products, searchText }: { products: searchResponse[], searchText: string }) {
+export default function SearchResultRenderer(props: SearchResultRendererProps) {
 
-    const { display } = useProductsDisplayer();
+    const { products, searchText, actionWithProductId, itemIcon } = props
 
-    const mark = (text?: string) => <Box sx={{ bgcolor: "primary.main", color: "text.primary" }} component="mark">{text ?? ""}</Box>
+    const mark = (text?: string) => (
+        <Box
+            component="mark"
+            sx={{ bgcolor: "primary.main", color: "text.primary" }}
+        >
+            {text ?? ""}
+        </Box>
+    )
     function renderRow(props: ListChildComponentProps) {
         const { index, style } = props;
         let
@@ -26,7 +36,7 @@ export default function VirtualizedList({ products, searchText }: { products: se
 
         return (
             <ListItem style={style} key={id} component="div" disablePadding>
-                <ListItemButton onClick={() => display(id)} sx={{ justifyContent: "space-between", }}>
+                <ListItemButton onClick={() => actionWithProductId(id)} sx={{ justifyContent: "space-between", }}>
                     <Typography component="p">
                         {
                             splitedText.map((str, index) =>
@@ -36,13 +46,14 @@ export default function VirtualizedList({ products, searchText }: { products: se
                             )
                         }
                     </Typography>
-                    <ReadMore />
+                    {itemIcon}
                 </ListItemButton>
             </ListItem>
         );
     }
 
-    const itemSize = 46,
+    const
+        itemSize = 46,
         itemsCount = products.length,
         listHeight = itemsCount > 6 ? 280 : itemsCount * itemSize;
 

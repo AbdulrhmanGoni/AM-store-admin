@@ -1,11 +1,15 @@
 import { Skeleton, SkeletonPropsVariantOverrides } from "@mui/material";
 import { SxProps } from "@mui/material/styles";
 
-export type widthAndHeightType = number | string
 export type variant = "rou" | "cir" | "rec" | "tex"
-export type LoadingGrayBarProps = { type: variant, sx?: SxProps, w?: widthAndHeightType, h: widthAndHeightType }
+export type LoadingGrayBarProps = { 
+    type: variant, 
+    sx?: SxProps, 
+    width?: number | string, 
+    height: number | string 
+}
 
-export default function LoadingGrayBar({ type, w, h, sx }: LoadingGrayBarProps) {
+export default function LoadingGrayBar({ type, width, height, sx }: LoadingGrayBarProps) {
 
     const variant: SkeletonPropsVariantOverrides = {
         rou: "rounded",
@@ -15,6 +19,6 @@ export default function LoadingGrayBar({ type, w, h, sx }: LoadingGrayBarProps) 
     }
 
     return (
-        <Skeleton variant={variant[type]} sx={{ width: w, height: h, ...sx }} />
+        <Skeleton variant={variant[type]} sx={{ width, height, ...sx }} />
     )
 }

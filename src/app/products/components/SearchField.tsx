@@ -2,13 +2,19 @@ import { Box, CircularProgress, IconButton, TextField } from '@mui/material'
 import SearchResultRenderer from "./SearchResultRenderer"
 import { useState, useEffect } from 'react';
 import useAsyncActions from '../hooks/useProductsActions';
-import { Close } from '@mui/icons-material';
+import { Close, WarningRounded } from '@mui/icons-material';
+import { JSX } from 'react';
 
-export type searchResponse = { _id: string, title: string }
 
-export default function SearchField() {
+export interface searchResponse { _id: string, title: string }
+export interface SearchFieldProps {
+    actionWithProductId: (id: string) => void,
+    itemIcon: JSX.Element
+}
 
-    const { searchForProducts } = useAsyncActions()
+export default function SearchField({ actionWithProductId, itemIcon }: SearchFieldProps) {
+
+    const { searchForProducts } = useAsyncActions();
 
     const [searchInput, setSearchInput] = useState<string>("");
     const [keySearch, setKeySearch] = useState<string>("");
@@ -24,12 +30,7 @@ export default function SearchField() {
             .catch(() => { setIsError(false) })
     }
 
-    function clearSearchField(): void {
-        setSearchInput("")
-        setKeySearch("")
-        setProducts([])
-        // let searchProductsField: HTMLInputElement | null = document.querySelector(".searchProductsField")
-    }
+    function clearSearchField() { setSearchInput(""); setKeySearch(""); setProducts([]); }
 
     function filterProducts(productsList: searchResponse[]): searchResponse[] {
         return productsList.filter(product => product.title.match(new RegExp(searchInput, "i")))
@@ -56,11 +57,21 @@ export default function SearchField() {
             />
             {
                 isLoading ?
-                    <CircularProgress size={20} sx={rightIconStyle} />
-                    : !!searchInput ?
-                        <IconButton sx={{ position: "absolute", right: 5, top: "13%" }} onClick={clearSearchField}><Close /></IconButton> : null
+                    <CircularProgress size={20} sx={rightIconStyle} /> :
+                    isError ?
+                        <WarningRounded sx={rightIconStyle} /> :
+                        !!searchInput ?
+                            <IconButton sx={{ position: "absolute", right: 5, top: "13%" }} onClick={clearSearchField}><Close /></IconButton> : null
             }
-            {(!!products.length && !!searchInput) && <SearchResultRenderer products={filterProducts(products)} searchText={searchInput} />}
+            {
+                (!!products.length && !!searchInput) &&
+                <SearchResultRenderer
+                    actionWithProductId={actionWithProductId}
+                    products={filterProducts(products)}
+                    searchText={searchInput}
+                    itemIcon={itemIcon}
+                />
+            }
         </Box>
     )
 }

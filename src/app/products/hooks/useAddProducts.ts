@@ -34,16 +34,16 @@ export default function useAddProducts() {
 
     function handleSubmit(event: submetEvent): void {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const validForm = formValidation(formData)
-        if (validForm !== false) {
+        const theForm = new FormData(event.currentTarget);
+        const formData = formValidation(theForm)
+        if (formData) {
             setIsLoading(true);
             const { update } = bySteps("Uploading product's images...");
-            uploadImages(validForm.files)
+            uploadImages(formData.files)
                 .then((imagesList) => {
                     if (imagesList) {
                         let theProduct: productData = {
-                            ...validForm,
+                            ...formData,
                             images: imagesList!,
                             files: undefined
                         }

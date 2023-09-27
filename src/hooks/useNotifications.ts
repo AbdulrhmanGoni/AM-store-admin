@@ -1,4 +1,3 @@
-import { useTheme } from '@mui/material';
 import { toast, ToastOptions } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
@@ -11,15 +10,15 @@ interface promiseParams {
     errorMsg: string,
 }
 export type updateTostProps = (type: typeMessage, message: string) => void
+export type updateLoadingTostProps = (message: string) => void
 type byStepsType = {
     update: updateTostProps,
+    updateLoading: updateLoadingTostProps,
     close: () => void,
 }
 
 
 export default function useNotifications() {
-
-    const { palette: { mode } } = useTheme();
 
     function message(message: string, type: typeMessage, options?: ToastOptions) {
         toast(message, {
@@ -45,6 +44,9 @@ export default function useNotifications() {
         return {
             update(type: typeMessage, message: string) {
                 toast.update(toastId, { render: message, isLoading: false, type, autoClose: 5000 })
+            },
+            updateLoading(message: string) {
+                toast.update(toastId, { render: message, isLoading: true, type: "info", autoClose: false })
             },
             close() { toast.dismiss(toastId) }
         }

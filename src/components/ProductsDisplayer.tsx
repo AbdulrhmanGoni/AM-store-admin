@@ -4,38 +4,31 @@ import { host_admin } from "@/CONSTANT/API_hostName"
 import useApiRequest from "@/hooks/useApiRequest"
 import { productData } from "@/types/dataTypes"
 import { Close, Delete, Edit } from "@mui/icons-material"
-import LoadingGrayBar, { widthAndHeightType as wh } from "./LoadinGrayBar"
 import { ActionAlert, nDecorator } from "@abdulrhmangoni/am-store-library"
 import ProductImagesDisplayer from "@/app/products/components/ProductImagesDisplayer"
+import useProductsActions from "../app/products/hooks/useProductsActions"
+import ItemDisplayer from "./DisplayerItemWithLoadingState"
 
 
-export default function ProductsDisplayer({ id, close, palette: { background, text, primary } }) {
+export default function ProductsDisplayer({ id, close, palette: { background, text } }) {
 
     const { api } = useApiRequest();
+    const { getProduct, deleteProduct } = useProductsActions();
     const [product, setProduct] = useState<productData>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
     const [cardsOpacity, setCardsOpacity] = useState<number>(0);
 
-    async function deleteProduct(productId: string) {
-        return (await api.delete(`${host_admin}products/${productId}`, { data: productId })).data
-    }
-
-    function fetchProduct() {
+    function fetchProduct(productId: string) {
         setIsLoading(true)
-        api.get(`${host_admin}products/${id}`)
-            .then(({ data }) => { setProduct(data) })
+        getProduct(productId)
+            .then((data) => { setProduct(data) })
             .catch(() => { setIsError(true) })
             .finally(() => { setIsLoading(false) })
     }
 
-    useEffect(fetchProduct, [id]);
+    useEffect(() => { !product && fetchProduct(id) }, [id]);
     useEffect(() => { setCardsOpacity(1) }, [id]);
-
-    function ItemDisplayer({ item, lw, lh }: { item: any, lw?: wh, lh: wh }) {
-        return isLoading ? <LoadingGrayBar w={lw ?? "100%"} h={lh} type="rou" sx={{ bgcolor: "rgb(0 0 0 / 20%)" }} />
-            : isError ? null : [item]
-    }
 
     const { title, price, description, series, images, sold, earnings, _id } = product ?? {}
 
@@ -48,10 +41,10 @@ export default function ProductsDisplayer({ id, close, palette: { background, te
                     images={images}
                 />
                 <Box sx={infoSectionStyle}>
-                    <ItemDisplayer lh={40}
+                    <ItemDisplayer isLoading={isLoading} height={40}
                         item={<Typography key="tit" variant="h6">{title}</Typography>}
                     />
-                    <ItemDisplayer lh={20} lw={200}
+                    <ItemDisplayer isLoading={isLoading} height={20} width={200}
                         item={
                             <Box key="pri-sol" sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                                 <Typography variant="subtitle1">Price: ${price?.toFixed(2)}</Typography>
@@ -59,7 +52,7 @@ export default function ProductsDisplayer({ id, close, palette: { background, te
                             </Box>
                         }
                     />
-                    <ItemDisplayer lh={20} lw={300}
+                    <ItemDisplayer isLoading={isLoading} height={20} width={300}
                         item={
                             <Typography key="ear" variant="subtitle1">
                                 {
@@ -70,7 +63,7 @@ export default function ProductsDisplayer({ id, close, palette: { background, te
                             </Typography>
                         }
                     />
-                    <ItemDisplayer lh={20} lw={170}
+                    <ItemDisplayer isLoading={isLoading} height={20} width={170}
                         item={
                             <Box key="rat" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                                 <Rating
@@ -81,13 +74,13 @@ export default function ProductsDisplayer({ id, close, palette: { background, te
                             </Box>
                         }
                     />
-                    <ItemDisplayer lh={25} lw={250}
+                    <ItemDisplayer isLoading={isLoading} height={25} width={250}
                         item={<Typography key="ser" variant="subtitle1">Series: {series}</Typography>}
                     />
-                    <ItemDisplayer lh={100}
+                    <ItemDisplayer isLoading={isLoading} height={100}
                         item={<Typography key="des" variant="body1">{description}</Typography>}
                     />
-                    <ItemDisplayer lh={60}
+                    <ItemDisplayer isLoading={isLoading} height={60}
                         item={
                             <Box key="act" sx={{ display: "flex", alignItems: "center", mt: 1, gap: 1 }}>
                                 <ActionAlert
@@ -101,7 +94,7 @@ export default function ProductsDisplayer({ id, close, palette: { background, te
                                     variant="contained"
                                     size="small"
                                     endIcon={<Edit />}
-                                    // onClick={}
+                                    // onClick={async () => { close(); push(`products/edit-product/${_id}`) }}
                                 >
                                     Edit
                                 </Button>

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import CATEGORIES from "@/CONSTANT/CATEGORIES";
 import getFormData, { ProductformData } from "../functions/getFormData";
