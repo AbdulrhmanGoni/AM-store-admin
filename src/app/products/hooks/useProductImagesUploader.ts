@@ -8,24 +8,31 @@ export default function useProductImagesUploader() {
     const { message } = useNotifications();
     const { palette: { mode: theme } } = useTheme();
 
-    async function uploadImages(files: (FormDataEntryValue | null)[]) {
-        let uploadedImagesList: string[] = [];
-        for (let i = 0; i < files.length; i++) {
-            let theFile = files[i] as File
-            const payload = new FormData();
-            payload.append("file", theFile);
-            payload.append("upload_preset", UPLOAD_PRESET);
-            await axios.post(UPLOAD_IMAGE_API, payload)
-                .then((res) => res.data)
-                .then((data) => {
-                    const imageUrl = data.url ?? data.secure_url;
-                    imageUrl && uploadedImagesList.push(imageUrl);
-                })
-                .catch(() => {
-                    message(`Uploading the image '${theFile.name}' failed!`, "error", { theme })
-                })
-        }
-        return !!uploadedImagesList.length ? uploadedImagesList : false
+    async function uploadImages(files?: (FormDataEntryValue | null)[]) {
+        if (files) {
+            let uploadedImagesList: string[] = [];
+            for (let i = 0; i < files.length; i++) {
+                if (files[i] instanceof File) {
+                    let theFile = files[i] as File
+                    const payload = new FormData();
+                    payload.append("file", theFile);
+                    payload.append("upload_preset", UPLOAD_PRESET);
+                    await axios.post(UPLOAD_IMAGE_API, payload)
+                        .then((res) => res.data)
+                        .then((data) => {
+                            const imageUrl = data.url ?? data.secure_url;
+                            imageUrl && uploadedImagesList.push(imageUrl);
+                        })
+                        .catch(() => {
+                            message(`Uploading the image '${theFile.name}' failed!`, "error", { theme })
+                        })
+                } else if (typeof files[i] === "string") {
+                    uploadedImagesList.push(files[i] as string)
+                }
+            }
+            return !!uploadedImagesList.length ? uploadedImagesList : undefined
+        } else return
     }
+
     return { uploadImages }
 }

@@ -1,23 +1,25 @@
-import CATEGORIES from "@/CONSTANT/CATEGORIES";
-import { pageSpaces } from "@/app/page";
-import { AddPhotoAlternateOutlined, ChangeCircleOutlined, HideImageOutlined } from "@mui/icons-material";
 import {
     Box, TextField, Typography,
     FormControl, Select, InputLabel,
     MenuItem, SelectChangeEvent,
-    SvgIconTypeMap, alpha, useTheme
+    SvgIconTypeMap, alpha, useTheme, Avatar
 } from "@mui/material";
+import CATEGORIES from "@/CONSTANT/CATEGORIES";
+import { pageSpaces } from "@/app/page";
+import { PromiseState } from "@/types/interfaces";
+import { AddPhotoAlternateOutlined, ChangeCircleOutlined, HideImageOutlined } from "@mui/icons-material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { CSSProperties } from "@mui/material/styles/createMixins";
-import Image from "next/image";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-
+import DisplayerItemWithLoadingState from '@/components/DisplayerItemWithLoadingState';
 
 type FieldProps = {
     label?: string,
     name: string,
     type?: string,
     error?: boolean,
+    defaultValue?: string,
+    disabled?: boolean
 }
 
 type TextFieldProps = {
@@ -28,7 +30,7 @@ type TextFieldProps = {
     TextFieldSx?: CSSProperties,
     placeholder?: string,
     minRows?: number,
-    selectBox?: boolean
+    isSelectBox?: boolean
 }
 
 
@@ -41,27 +43,31 @@ export function CustomTextField(props: TextFieldProps & FieldProps) {
         label, name, type, Icon,
         error, errorMsg, placeholder,
         sx, TextFieldSx, multiline,
-        minRows, selectBox
+        minRows, isSelectBox, disabled,
+        defaultValue
     } = props;
     return (
         <>
             <Box sx={{ display: 'flex', alignItems: 'flex-end', ...sx }}>
                 {
-                    selectBox ?
+                    isSelectBox ?
                         <SelectBox
                             name={name}
                             label={label}
                             error={error}
+                            defaultValue={defaultValue}
                             type={type}
                         />
                         :
                         <TextField sx={TextFieldSx}
                             fullWidth
+                            defaultValue={defaultValue}
                             multiline={multiline}
                             error={!error}
                             minRows={minRows}
                             type={type}
                             name={name}
+                            disabled={disabled}
                             label={label}
                             placeholder={placeholder}
                             variant="outlined"
@@ -76,9 +82,9 @@ export function CustomTextField(props: TextFieldProps & FieldProps) {
     )
 }
 
-function SelectBox({ error, name, label }: FieldProps) {
+function SelectBox({ error, name, label, disabled, defaultValue }: FieldProps) {
 
-    const [selectCategory, setSelectedCategory] = useState<string>("none");
+    const [selectCategory, setSelectedCategory] = useState<string>(defaultValue ?? "none");
     const handleSlectCategory = (event: SelectChangeEvent) => {
         setSelectedCategory(event.target.value);
     }
@@ -87,6 +93,7 @@ function SelectBox({ error, name, label }: FieldProps) {
         <FormControl
             variant="outlined"
             fullWidth
+            disabled={disabled}
             error={!error}
         >
             <InputLabel>Category</InputLabel>
@@ -95,6 +102,7 @@ function SelectBox({ error, name, label }: FieldProps) {
                 value={selectCategory}
                 onChange={handleSlectCategory}
                 label={label}
+                disabled={disabled}
             >
                 <MenuItem value={"none"}>None</MenuItem>
                 {CATEGORIES.map(cat => <MenuItem key={cat} value={cat}>{cat}</MenuItem>)}
@@ -103,9 +111,12 @@ function SelectBox({ error, name, label }: FieldProps) {
     )
 }
 
-type ImageInputProps = { readyImage?: string }
-
-export function ImagesInputs({ error, clearInputs }: { error: boolean, clearInputs?: boolean }) {
+interface ImagesInputsProps extends PromiseState {
+    error: boolean,
+    clearInputs?: boolean,
+    defaultValue?: string[]
+}
+export function ImagesInputs({ error, clearInputs, defaultValue, isLoading }: ImagesInputsProps) {
 
     return (
         <Box sx={{
@@ -116,22 +127,40 @@ export function ImagesInputs({ error, clearInputs }: { error: boolean, clearInpu
             "& > *": { width: "100%", flexBasis: "50%", display: "flex", gap: pageSpaces }
         }}>
             <Box>
-                <AddImageInput clear={clearInputs} name='image1' error={error} />
-                <AddImageInput clear={clearInputs} name='image2' error={error} />
+                <DisplayerItemWithLoadingState
+                    height={120}
+                    isLoading={isLoading}
+                    item={<ImageInput defaultValue={defaultValue?.[0]} clear={clearInputs} name='image1' error={error} />}
+                />
+                <DisplayerItemWithLoadingState
+                    height={120}
+                    isLoading={isLoading}
+                    item={<ImageInput defaultValue={defaultValue?.[1]} clear={clearInputs} name='image2' error={error} />}
+                />
             </Box>
             <Box>
-                <AddImageInput clear={clearInputs} name='image3' error={error} />
-                <AddImageInput clear={clearInputs} name='image4' error={error} />
+                <DisplayerItemWithLoadingState
+                    height={120}
+                    isLoading={isLoading}
+                    item={<ImageInput defaultValue={defaultValue?.[2]} clear={clearInputs} name='image3' error={error} />}
+                />
+                <DisplayerItemWithLoadingState
+                    height={120}
+                    isLoading={isLoading}
+                    item={<ImageInput defaultValue={defaultValue?.[3]} clear={clearInputs} name='image4' error={error} />}
+                />
             </Box>
         </Box>
     )
 }
-export function AddImageInput(props: FieldProps & ImageInputProps & { clear?: boolean }) {
 
-    let { name, error, readyImage, label, clear } = props
+function ImageInput(props: FieldProps & { clear?: boolean }) {
 
-    const [imageSrc, setImageSrc] = useState<string | null>(readyImage ?? null);
+    let { name, error, label, clear, disabled, defaultValue } = props;
     const { palette: { text } } = useTheme();
+
+    const [readyUrl, setReadyUrl] = useState<string | undefined>(defaultValue);
+    const [imageSrc, setImageSrc] = useState<string>();
     const inputRef = useRef<HTMLInputElement>();
 
     function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
@@ -139,20 +168,20 @@ export function AddImageInput(props: FieldProps & ImageInputProps & { clear?: bo
             const reader = new FileReader();
             reader.readAsDataURL(event.target.files![0])
             reader.onload = () => { setImageSrc(String(reader.result)) }
-        } catch (error) {
-            setImageSrc(null)
-        }
+        } catch (error) { }
     }
-
+    function openInput() {
+        readyUrl && setReadyUrl(undefined)
+        setTimeout(() => { !disabled && inputRef.current?.click() }, 1)
+    }
     function clearInput() {
         if (inputRef.current) { inputRef.current.value = "" }
-        setImageSrc(null);
+        setImageSrc(undefined);
+        readyUrl && setReadyUrl(undefined);
     }
 
-    useEffect(() => { 
-        clear && clearInput() 
-        console.log(clear)
-    }, [clear])
+    useEffect(() => { clear && clearInput() }, [clear])
+    useEffect(() => { defaultValue && setReadyUrl(defaultValue) }, [defaultValue])
 
     const
         border = {
@@ -168,14 +197,18 @@ export function AddImageInput(props: FieldProps & ImageInputProps & { clear?: bo
             zIndex: 1
         },
         AddIconStyle = { width: "35px", height: "35px" },
-        imageStyle: CSSProperties = { ...center, zIndex: 2 },
+        imageStyle: CSSProperties = {
+            ...center,
+            borderRadius: 0,
+            zIndex: 2
+        },
         imageContainerStyle: CSSProperties = {
             position: "relative",
             height: "120px!important",
             width: "100%"
         },
         labelStyle: CSSProperties = {
-            cursor: "pointer",
+            cursor: disabled ? "not-allowed" : "pointer",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -196,33 +229,33 @@ export function AddImageInput(props: FieldProps & ImageInputProps & { clear?: bo
     return (
         <Box sx={imageContainerStyle}>
             <TextField
-                type="file"
+                type={readyUrl ? "text" : "file"}
                 name={name}
                 inputRef={inputRef}
+                defaultValue={defaultValue}
                 sx={{ display: "none" }}
                 id={name}
                 label={label}
                 onChange={handleFileChange}
             />
             <Box
-                onClick={() => { inputRef.current?.click() }}
+                onClick={openInput}
                 sx={labelStyle}
             >
                 <Typography>Add an image</Typography>
                 <AddPhotoAlternateOutlined sx={AddIconStyle} />
             </Box>
             {
-                imageSrc &&
+                (imageSrc || readyUrl) &&
                 <>
-                    <Image
-                        style={imageStyle}
-                        src={imageSrc ?? "/"}
-                        width={0}
-                        height={0}
-                        alt={name ?? "product image"}
+                    <Avatar
+                        sx={imageStyle}
+                        src={readyUrl ?? imageSrc}
+                        alt={name}
+                        imgProps={{ sx: { objectFit: "contain" } }}
                     />
                     <ChangeCircleOutlined
-                        onClick={() => { inputRef.current?.click() }}
+                        onClick={openInput}
                         sx={floatingIconStyle}
                     />
                     <HideImageOutlined

@@ -3,6 +3,7 @@ import {
     AnalyticsOutlined,
     AnalyticsSharp,
     DiscountOutlined,
+    EditAttributes,
     Email, Groups, Inbox, Store
 } from "@mui/icons-material";
 import Icon from "./SvgIcon";
@@ -48,7 +49,12 @@ const drawerLinks: LinkProps[] = [
                 target: "add-products",
                 text: "Add Products",
                 icon: <AddBusiness />
-            }
+            },
+            {
+                target: "edit-product",
+                text: "Edit Product",
+                icon: <EditAttributes />
+            },
         ]
     },
     {

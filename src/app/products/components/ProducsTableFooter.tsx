@@ -3,11 +3,13 @@ import { Delete, Edit, ReadMore } from "@mui/icons-material";
 import { Box, Button } from "@mui/material";
 import { GridFooter } from "@mui/x-data-grid";
 import { ActionAlert } from '@abdulrhmangoni/am-store-library';
+import { useRouter } from "next/navigation";
 
 
 export default function Footer({ delelteFun, selectedRows }) {
 
     const { display } = useProductsDisplayer();
+    const { push } = useRouter();
     const rowsCount = selectedRows.length;
 
     const warningMessage = `
@@ -50,7 +52,7 @@ export default function Footer({ delelteFun, selectedRows }) {
                         endIcon={<Edit />}
                         variant="contained"
                         size='small'
-                        onClick={() => display(selectedRows[0])}
+                        onClick={() => push(`/products/edit-product/${selectedRows[0]}`)}
                     >
                         Edit
                     </Button>
