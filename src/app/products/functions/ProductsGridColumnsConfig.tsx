@@ -16,7 +16,7 @@ const ProductImage = ({ src }) => {
 const rowProps = (field: s, headerName: s, width: n, sortable: b, editable: b, isNumber: b, moreProps?: any) => {
     const floats: number = ["sold", "amount"].includes(field) ? 0 : 2;
     return {
-        field, headerName: headerName, width, sortable,
+        field, headerName, width, sortable,
         editable, ...moreProps, align: "left", headerAlign: "left",
         valueGetter: isNumber ? (params: GVGP) => numberField(params, field, floats) : undefined,
     }

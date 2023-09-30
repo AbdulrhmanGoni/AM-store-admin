@@ -25,8 +25,9 @@ const paperStyle = {
 
 const OrdersManagement: FC = function () {
 
-    const path = "statistics/?get=monthly-statistics";
-    const { data, isLoading, isError } = useGetApi({ path, key: ["orders-statistics"] });
+    let query = "monthly-statistics"
+    const path = `statistics/?get=${query}`;
+    const { data, isError, isLoading } = useGetApi({ key: [query], path });
 
     let totalOrders: number = 0;
     const dataChart: number[] = data?.map((doc: { totalOrders: number }) => {
@@ -56,14 +57,6 @@ const OrdersManagement: FC = function () {
             <Grid container spacing={pageSpaces}>
                 <Grid item xs={12} md={5.5} lg={4}>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
-                        <Paper sx={{ height: "200px", p: 1 }}>
-                            <AverageOrders
-                                data={dataChart}
-                                totalOrders={totalOrders}
-                                isLoading={isLoading}
-                                isError={isError}
-                            />
-                        </Paper>
                         <Box sx={{ display: "flex", gap: pageSpaces, height: "200px" }}>
                             <DisplayInfoBox
                                 title="Total Orders"
@@ -75,6 +68,14 @@ const OrdersManagement: FC = function () {
                             />
                             <Paper sx={{ flexBasis: "50%" }}></Paper>
                         </Box>
+                        <Paper sx={{ height: "200px", p: 1 }}>
+                            <AverageOrders
+                                data={dataChart}
+                                totalOrders={totalOrders}
+                                isLoading={isLoading}
+                                isError={isError}
+                            />
+                        </Paper>
                     </Box>
                 </Grid>
                 <Grid item xs={12} md={6.5} lg={8}>

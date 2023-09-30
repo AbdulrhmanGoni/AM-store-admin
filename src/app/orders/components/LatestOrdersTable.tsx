@@ -1,7 +1,7 @@
 "use client"
 import { Paper, useMediaQuery, LinearProgress } from '@mui/material';
 import { DataGrid, useGridApiRef } from '@mui/x-data-grid';
-import columns from '../functions/columnsCunfig';
+import columns from '../functions/OrdersGridColumnsConfig';
 import { ErrorThrower } from '@abdulrhmangoni/am-store-library';
 import useOrdersInfinateScroll from '../hook/useOrdersInfinateScroll';
 

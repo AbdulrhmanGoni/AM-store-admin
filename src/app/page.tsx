@@ -17,8 +17,9 @@ export const pageSpaces = { xs: 1, md: 2 }
 
 export default function SalesStatistics() {
 
-  const path = "statistics/?get=monthly-statistics";
-  const { data, isError, isLoading } = useGetApi({ key: ["statistics-earnings"], path });
+  let query = "monthly-statistics"
+  const path = `statistics/?get=${query}`;
+  const { data, isError, isLoading } = useGetApi({ key: [query], path });
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>

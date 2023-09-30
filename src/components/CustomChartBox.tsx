@@ -36,7 +36,7 @@ export default function CustomChartBox({
 }: chartBoxProps) {
 
     function ItemDisplay({ children, w, h }) {
-        return loading ? <LoadingGrayBar type="rou" w={w} h={h}></LoadingGrayBar> : error ? <></> : children
+        return loading ? <LoadingGrayBar type="rou" width={w} height={h}></LoadingGrayBar> : error ? <></> : children
     }
 
     return (

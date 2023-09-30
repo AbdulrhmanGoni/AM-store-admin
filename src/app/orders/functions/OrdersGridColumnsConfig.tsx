@@ -9,9 +9,9 @@ type s = string
 type b = boolean
 
 const rowProps = (field: s, headerName: s, width: n, sortable: b, editable: b, isNumber: b, moreProps?: any) => {
-    const floats: number = ["productsCount"].includes(field) ? 0 : 2;
+    const floats: number = ["products"].includes(field) ? 0 : 2;
     return {
-        field, headerName: headerName, width, sortable,
+        field, headerName, width, sortable,
         editable, ...moreProps, align: "left", headerAlign: "left",
         valueGetter: isNumber ? (params: GVGP) => numberField(params, field, floats) : undefined,
     }
@@ -72,7 +72,7 @@ const columns: GridColDef[] = [
     rowProps('createdAt', 'Date', 170, false, false, false, { renderCell: renderDateCell }),
     rowProps('totalPrice', 'Total', 110, false, false, false, { renderCell: renderTotalCell }),
     rowProps('state', 'State', 130, false, false, false, { renderCell: renderStateCell }),
-    rowProps('products', 'Products', 110, false, false, false, { renderCell: renderProductsCell }),
+    rowProps('products', 'Products', 110, false, false, true, { renderCell: renderProductsCell }),
     rowProps('_id', 'Order ID', 130, false, false, false, { renderCell: renderIdCell }),
     rowProps('userAvatar', 'User', 65, false, false, false, { renderCell: renderImageCell }),
     rowProps('userEmail', 'User Email', 240, false, false, false, { renderCell: renderUserEmailCell }),

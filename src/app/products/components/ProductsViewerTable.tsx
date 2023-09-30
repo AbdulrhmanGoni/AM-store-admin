@@ -1,7 +1,7 @@
 "use client"
 import { Box, LinearProgress, useMediaQuery } from '@mui/material';
 import { DataGrid, GridPaginationModel, GridRowParams } from '@mui/x-data-grid';
-import columns from '../functions/columnsCunfig';
+import columns from '../functions/ProductsGridColumnsConfig';
 import ToolBar from './ProducsTableToolbar';
 import Footer from './ProducsTableFooter';
 import { ErrorThrower } from '@abdulrhmangoni/am-store-library';

@@ -19,7 +19,6 @@ function useGetProducts() {
 export default function useProductsPagination({ productsLength }) {
 
     const { getProducts } = useGetProducts();
-
     const [products, setProducts] = useState<any[]>([]);
     const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 20 });
     const [loadedPages, setLoadedPages] = useState<number[]>([]);
