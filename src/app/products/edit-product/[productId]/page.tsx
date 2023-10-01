@@ -3,20 +3,19 @@ import {
     LiveTv, Subtitles,
     AllInbox, AttachMoney, Class, Save,
 } from '@mui/icons-material'
+import { useRef } from 'react';
 import { Box, Typography, Grid, Paper } from '@mui/material'
 import { LoadingButton } from '@mui/lab';
 import { CustomTextField, ErrorMessage, ImagesInputs } from '../../components/ProductsFormComponents';
 import useUpdateProduct from '../../hooks/useUpdateProduct';
 import { pageSpaces } from '@/app/page';
-import DisplayerItemWithLoadingState from '@/components/DisplayerItemWithLoadingState';
 import { useParams } from 'next/navigation'
-import { ActionAlert, ErrorThrower } from '@abdulrhmangoni/am-store-library';
-import { useRef } from 'react';
+import { ActionAlert, ElementWithLoadingState, ErrorThrower } from '@abdulrhmangoni/am-store-library';
 
 export default function EditProductForm() {
 
     const { productId } = useParams();
-    const formRef = useRef<HTMLFormElement | null>(null)
+    const formRef = useRef<HTMLFormElement | null>(null);
 
     const {
         theProduct,
@@ -52,14 +51,14 @@ export default function EditProductForm() {
                     gap: 2
                 }}
             >
-                <DisplayerItemWithLoadingState height={30} width={150} isLoading={isLoading}
-                    item={<Typography sx={{ p: "0px 4px", pb: pageSpaces }} variant='h5'>Edit Product</Typography>}
+                <ElementWithLoadingState height={30} width={150} isLoading={isLoading}
+                    element={<Typography sx={{ p: "0px 4px", pb: pageSpaces }} variant='h5'>Edit Product</Typography>}
                 />
                 <Grid container spacing={pageSpaces}>
                     <Grid item xs={12} md={6}>
-                        <DisplayerItemWithLoadingState
+                        <ElementWithLoadingState
                             height={55} isLoading={isLoading}
-                            item={
+                            element={
                                 <CustomTextField name="title"
                                     defaultValue={theProduct?.title}
                                     error={titleState}
@@ -77,9 +76,9 @@ export default function EditProductForm() {
                             "&>*": { flexBasis: "50%" }
                         }}>
                         <Box>
-                            <DisplayerItemWithLoadingState
+                            <ElementWithLoadingState
                                 height={55} isLoading={isLoading}
-                                item={
+                                element={
                                     <CustomTextField name="price"
                                         label="Price"
                                         error={priceState}
@@ -91,9 +90,9 @@ export default function EditProductForm() {
                             />
                         </Box>
                         <Box>
-                            <DisplayerItemWithLoadingState
+                            <ElementWithLoadingState
                                 height={55} isLoading={isLoading}
-                                item={
+                                element={
                                     <CustomTextField name="amount"
                                         error={amountState}
                                         errorMsg="amount of this product should be positive number"
@@ -115,9 +114,9 @@ export default function EditProductForm() {
                         <ErrorMessage error={!imageState && "You should add one image at least"} />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <DisplayerItemWithLoadingState
+                        <ElementWithLoadingState
                             height={55} isLoading={isLoading}
-                            item={
+                            element={
                                 <CustomTextField name="series"
                                     error={seriesState}
                                     defaultValue={theProduct?.series}
@@ -129,9 +128,9 @@ export default function EditProductForm() {
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <DisplayerItemWithLoadingState
+                        <ElementWithLoadingState
                             height={55} isLoading={isLoading}
-                            item={
+                            element={
                                 <CustomTextField name="category"
                                     label="Category"
                                     defaultValue={theProduct?.category}
@@ -144,9 +143,9 @@ export default function EditProductForm() {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <DisplayerItemWithLoadingState
+                        <ElementWithLoadingState
                             height={125} isLoading={isLoading}
-                            item={
+                            element={
                                 <CustomTextField name="description"
                                     sx={{ alignItems: 'flex-start' }}
                                     error={descriptionState}
@@ -161,11 +160,11 @@ export default function EditProductForm() {
                     </Grid>
                 </Grid>
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                    <DisplayerItemWithLoadingState
+                    <ElementWithLoadingState
                         height={30}
                         width={150}
                         isLoading={isLoading}
-                        item={
+                        element={
                             <ActionAlert
                                 action={submit}
                                 title='Changes on the product'

@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
 import { Card, Typography, Box, IconButton, Rating, Button } from "@mui/material"
-import useApiRequest from "@/hooks/useApiRequest"
 import { productData } from "@/types/dataTypes"
 import { Close, Delete, Edit } from "@mui/icons-material"
-import { ActionAlert, nDecorator } from "@abdulrhmangoni/am-store-library"
-import ProductImagesDisplayer from "@/app/products/components/ProductImagesDisplayer"
+import { 
+    ActionAlert, 
+    ElementWithLoadingState, 
+    ProductImagesDisplayer, 
+    nDecorator 
+} from "@abdulrhmangoni/am-store-library"
 import useProductsActions from "../app/products/hooks/useProductsActions"
-import ItemDisplayer from "./DisplayerItemWithLoadingState"
 
 
 export default function ProductsDisplayer({ id, close, palette: { background, text } }) {
@@ -39,19 +41,19 @@ export default function ProductsDisplayer({ id, close, palette: { background, te
                     images={images}
                 />
                 <Box sx={infoSectionStyle}>
-                    <ItemDisplayer isLoading={isLoading} height={40}
-                        item={<Typography key="tit" variant="h6">{title}</Typography>}
+                    <ElementWithLoadingState isLoading={isLoading} height={40}
+                        element={<Typography key="tit" variant="h6">{title}</Typography>}
                     />
-                    <ItemDisplayer isLoading={isLoading} height={20} width={200}
-                        item={
+                    <ElementWithLoadingState isLoading={isLoading} height={20} width={200}
+                        element={
                             <Box key="pri-sol" sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                                 <Typography variant="subtitle1">Price: ${price?.toFixed(2)}</Typography>
                                 <Typography variant="subtitle1">Sold: {sold}</Typography>
                             </Box>
                         }
                     />
-                    <ItemDisplayer isLoading={isLoading} height={20} width={300}
-                        item={
+                    <ElementWithLoadingState isLoading={isLoading} height={20} width={300}
+                        element={
                             <Typography key="ear" variant="subtitle1">
                                 {
                                     !!earnings ?
@@ -61,8 +63,8 @@ export default function ProductsDisplayer({ id, close, palette: { background, te
                             </Typography>
                         }
                     />
-                    <ItemDisplayer isLoading={isLoading} height={20} width={170}
-                        item={
+                    <ElementWithLoadingState isLoading={isLoading} height={20} width={170}
+                        element={
                             <Box key="rat" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                                 <Rating
                                     value={3} precision={.5} readOnly
@@ -72,14 +74,14 @@ export default function ProductsDisplayer({ id, close, palette: { background, te
                             </Box>
                         }
                     />
-                    <ItemDisplayer isLoading={isLoading} height={25} width={250}
-                        item={<Typography key="ser" variant="subtitle1">Series: {series}</Typography>}
+                    <ElementWithLoadingState isLoading={isLoading} height={25} width={250}
+                        element={<Typography key="ser" variant="subtitle1">Series: {series}</Typography>}
                     />
-                    <ItemDisplayer isLoading={isLoading} height={100}
-                        item={<Typography key="des" variant="body1">{description}</Typography>}
+                    <ElementWithLoadingState isLoading={isLoading} height={100}
+                        element={<Typography key="des" variant="body1">{description}</Typography>}
                     />
-                    <ItemDisplayer isLoading={isLoading} height={60}
-                        item={
+                    <ElementWithLoadingState isLoading={isLoading} height={60}
+                        element={
                             <Box key="act" sx={{ display: "flex", alignItems: "center", mt: 1, gap: 1 }}>
                                 <ActionAlert
                                     action={() => { _id ? deleteProduct(_id) : null }}

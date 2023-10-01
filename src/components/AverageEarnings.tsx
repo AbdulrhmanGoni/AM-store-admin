@@ -24,9 +24,9 @@ export default function AverageEarnings({ data, isError, isLoading }: AverageEar
         <CustomChartBox
             title="Average Earnings"
             mainValue={`$${nDecorator(total?.toFixed(2))}`}
-            error={isError}
+            isLoading={isLoading}
+            isError={isError}
             smallChart={<SmalLine data={earnings} tooltipIsMony />}
-            loading={isLoading}
             titleIcon={<SvgIcon svgElementAsString={averageEarningsIcon} />}
             chartDescription={{ title: `$${nDecorator((total / data?.length).toFixed(2))}`, subTitle: "Per month" }}
         />

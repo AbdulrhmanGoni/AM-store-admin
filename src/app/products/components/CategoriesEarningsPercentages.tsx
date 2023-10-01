@@ -42,7 +42,8 @@ export default function CategoriesEarningsPercentages({ data, isError, isLoading
         <CustomChartBox
             title="Categories Earnings"
             customMainValue={<Box sx={legendsContainer}>{legends}</Box>}
-            error={isError}
+            isLoading={isLoading}
+            isError={isError}
             smallChart={
                 <SmalDonut
                     data={series.map((cat: series) => cat.total)}
@@ -51,7 +52,6 @@ export default function CategoriesEarningsPercentages({ data, isError, isLoading
                     colors={chartColors}
                 />
             }
-            loading={isLoading}
             titleIcon={<SvgIcon svgElementAsString={categoriesEarningsIcon} />}
             chartDescription={{ title: `$${nDecorator(totalEarnings.toFixed(2))}`, subTitle: "This Year" }}
         />

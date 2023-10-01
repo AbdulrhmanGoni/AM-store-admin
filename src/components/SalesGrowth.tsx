@@ -5,14 +5,11 @@ import moment from "moment";
 import { NorthEast, SouthEast } from "@mui/icons-material";
 import { SmalLine } from "./SmallChart";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
+import { PromiseState } from "@/types/interfaces";
 
-type SalesGrowthProps = {
-    data: any,
-    isError: boolean,
-    isLoading: boolean
-}
+interface SalesGrowthProps extends PromiseState { data: any }
 
-export type dataProps = {
+export interface dataProps {
     month: string,
     totalEarnings: number
 }
@@ -40,12 +37,12 @@ export default function SalesGrowth({ data, isError, isLoading }: SalesGrowthPro
         <CustomChartBox
             title="Sales growth"
             titleIcon={<SvgIcon svgElementAsString={growthIcon} />}
-            loading={isLoading}
+            isLoading={isLoading}
+            isError={isError}
             smallChart={<SmalLine data={[beforeLastMonthEarnings, lastMonthEarnings]} tooltipIsMony />}
             mainValue={`${(growthRete * 100).toFixed(2)}%`}
             mainValueColor={growthRete < 0 ? "error" : "success"}
             mainValueEndIcon={growthRete < 0 ? <SouthEast /> : <NorthEast />}
-            error={isError}
             chartDescription={{
                 title: `$${nDecorator(lastMonthEarnings.toFixed(2))}`,
                 subTitle: "Last month",

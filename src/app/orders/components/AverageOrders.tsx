@@ -30,8 +30,8 @@ export default function AverageOrders({ data, isLoading, isError, totalOrders }:
                     <Typography variant="body1">Per month</Typography>
                 </Box>
             }
-            loading={isLoading}
-            error={isError}
+            isLoading={isLoading}
+            isError={isError}
             titleIcon={<SvgIcon svgElementAsString={averageOrdersIcon} />}
             chartDescription={{ title: totalOrders, subTitle: "Total This Year" }}
         />
