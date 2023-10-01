@@ -1,5 +1,5 @@
 import { Typography, Box } from "@mui/material"
-import LoadingGrayBar from "./LoadinGrayBar";
+import LoadingGrayBar from "./LoadingGrayBar";
 
 type strOrnum = string | number
 

@@ -1,4 +1,4 @@
-import { GridColDef, GridValueGetterParams as GVGP, GridRenderCellParams } from '@mui/x-data-grid';
+import { GridColDef, GridValueGetterParams as GVGP, GridRenderCellParams, GridComparatorFn } from '@mui/x-data-grid';
 import { nDecorator, timeAgo } from "@abdulrhmangoni/am-store-library";
 import { Avatar, Box, Chip, Tooltip, Typography, IconButton } from '@mui/material';
 import SimplePopper from '@/components/SimplePopper';
@@ -13,7 +13,7 @@ const rowProps = (field: s, headerName: s, width: n, sortable: b, editable: b, i
     return {
         field, headerName, width, sortable,
         editable, ...moreProps, align: "left", headerAlign: "left",
-        valueGetter: isNumber ? (params: GVGP) => numberField(params, field, floats) : undefined,
+        valueGetter: isNumber ? (params: GVGP) => numberField(params, field, floats) : undefined
     }
 }
 function numberField(params: GVGP, field: string, floats?: number): string | number {
@@ -51,7 +51,12 @@ function renderTotalCell(params: GridRenderCellParams) {
 }
 function renderDeleviryCell(params: GridRenderCellParams) {
     let { value } = params.row.deliveryPrice
-    return <Typography variant='body2'>{value === "Free" ? "Free" : "$" + value}</Typography>
+    let renderValue = value === "Free" ? "Free" : "$" + value
+    return <Typography
+        sx={{ color: value === "Free" ? "success.main" : undefined }}
+        variant='body2'>
+        {renderValue}
+    </Typography>
 }
 function renderUserEmailCell(params: GridRenderCellParams) {
     return <Typography variant='body2'>{params.row.userData.userEmail}</Typography>
@@ -72,7 +77,7 @@ const columns: GridColDef[] = [
     rowProps('createdAt', 'Date', 170, false, false, false, { renderCell: renderDateCell }),
     rowProps('totalPrice', 'Total', 110, false, false, false, { renderCell: renderTotalCell }),
     rowProps('state', 'State', 130, false, false, false, { renderCell: renderStateCell }),
-    rowProps('products', 'Products', 110, false, false, true, { renderCell: renderProductsCell }),
+    rowProps('products', 'Products', 110, false, false, false, { renderCell: renderProductsCell }),
     rowProps('_id', 'Order ID', 130, false, false, false, { renderCell: renderIdCell }),
     rowProps('userAvatar', 'User', 65, false, false, false, { renderCell: renderImageCell }),
     rowProps('userEmail', 'User Email', 240, false, false, false, { renderCell: renderUserEmailCell }),

@@ -22,7 +22,7 @@ export default function UsersPage() {
                 <Typography>View users information and statistics</Typography>
             </Box>
             <Box sx={{ display: "flex", gap: pageSpaces }}>
-                <Paper sx={{ width: { xs: "auto", sm: 510 } }}>
+                <Paper sx={{ width: { xs: "auto", md: "fit-content" } }}>
                     <DataGrid
                         sx={{ height: "796px" }}
                         apiRef={tableRef}
@@ -46,10 +46,10 @@ export default function UsersPage() {
                         }}
                     />
                 </Paper>
-                <Grid container spacing={pageSpaces}>
-                    <Grid item sm={6}><Paper sx={{ width: "100%", height: "300px" }}></Paper></Grid>
-                    <Grid item sm={6}><Paper sx={{ width: "100%", height: "300px" }}></Paper></Grid>
-                </Grid>
+                <Box sx={{ display: "flex", gap: pageSpaces }}>
+                    <Paper sx={{ width: "100%", height: "300px" }}></Paper>
+                    <Paper sx={{ width: "100%", height: "300px" }}></Paper>
+                </Box>
             </Box>
         </Box>
     )

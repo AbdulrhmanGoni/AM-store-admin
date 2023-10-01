@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { Card, Typography, Box, IconButton, Rating, Button } from "@mui/material"
-import { host_admin } from "@/CONSTANT/API_hostName"
 import useApiRequest from "@/hooks/useApiRequest"
 import { productData } from "@/types/dataTypes"
 import { Close, Delete, Edit } from "@mui/icons-material"
@@ -12,7 +11,6 @@ import ItemDisplayer from "./DisplayerItemWithLoadingState"
 
 export default function ProductsDisplayer({ id, close, palette: { background, text } }) {
 
-    const { api } = useApiRequest();
     const { getProduct, deleteProduct } = useProductsActions();
     const [product, setProduct] = useState<productData>();
     const [isLoading, setIsLoading] = useState<boolean>(false);

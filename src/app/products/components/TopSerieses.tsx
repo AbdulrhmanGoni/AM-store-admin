@@ -1,4 +1,4 @@
-import LoadingGrayBar from '@/components/LoadinGrayBar'
+import LoadingGrayBar from '@/components/LoadingGrayBar'
 import SmallIconBox from '@/components/SmallIconBox'
 import Icon from '@/components/SvgIcon'
 import { nDecorator } from '@abdulrhmangoni/am-store-library'

@@ -1,5 +1,5 @@
 import { PromiseState } from "@/types/interfaces";
-import LoadingGrayBar from "./LoadinGrayBar";
+import LoadingGrayBar from "./LoadingGrayBar";
 
 interface DisplayerItemWithLoadingStateProps extends PromiseState {
     item: JSX.Element,

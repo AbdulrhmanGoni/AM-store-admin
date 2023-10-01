@@ -1,4 +1,4 @@
-import LoadingGrayBar from '@/components/LoadinGrayBar';
+import LoadingGrayBar from '@/components/LoadingGrayBar';
 import { PromiseState } from '@/types/interfaces';
 import { ErrorThrower } from '@abdulrhmangoni/am-store-library';
 import { Avatar, Box, useTheme } from '@mui/material';

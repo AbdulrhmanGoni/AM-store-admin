@@ -6,6 +6,7 @@ import { Box, Typography, capitalize } from "@mui/material";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { SmalDonut } from "@/components/SmallChart";
 import { PromiseState } from "@/types/interfaces";
+import calculatePercentage from "@/functions/calculatePercentage";
 
 type data = { color: string, name: string }
 export interface chartCategory extends data { data: number[] }
@@ -27,12 +28,12 @@ export default function CategoriesEarningsPercentages({ data, isError, isLoading
     })
 
     const chartColors: string[] = series?.map((cat: series) => cat.color);
-    const legends: JSX.Element[] = series?.map((cat: series) => {
+    const legends: JSX.Element[] = series?.map(({color, name, total}: series) => {
         return (
-            <Box key={cat.name} sx={{ display: "flex", alignItems: "center", gap: "6px", "& > p": { fontSize: "15px" } }}>
-                <Typography sx={legendsMark(cat.color)}></Typography>
-                <Typography>{capitalize(cat.name)}</Typography>
-                <Typography>{((cat.total / totalEarnings) * 100).toFixed(2)}%</Typography>
+            <Box key={name} sx={{ display: "flex", alignItems: "center", gap: "6px", "& > p": { fontSize: "15px" } }}>
+                <Typography sx={legendsMark(color)}></Typography>
+                <Typography>{capitalize(name)}</Typography>
+                <Typography>{calculatePercentage(total, totalEarnings)}%</Typography>
             </Box>
         )
     })

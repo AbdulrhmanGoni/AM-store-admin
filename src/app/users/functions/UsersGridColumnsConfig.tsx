@@ -23,10 +23,10 @@ function renderImageCell(params: GridRenderCellParams) {
 }
 
 const columns: GridColDef[] = [
-    rowProps('avatar', 'Avatar', 60, false, false, { renderCell: renderImageCell }),
+    rowProps('avatar', 'Avatar', 65, false, false, { renderCell: renderImageCell }),
     rowProps('userName', 'User Name', 170, false, false),
     rowProps('userEmail', 'User Email', 180, false, false),
-    rowProps('userOrders', 'User Orders', 90, true, false)
+    rowProps('userOrders', 'Orders', 70, true, false)
 ];
 
 export default columns 

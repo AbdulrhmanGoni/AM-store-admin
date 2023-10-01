@@ -2,7 +2,7 @@ import { Box, Paper, Typography } from '@mui/material'
 import React from 'react'
 import SmallIconBox from './SmallIconBox'
 import { CSSProperties } from '@mui/material/styles/createMixins'
-import LoadingGrayBar from './LoadinGrayBar'
+import LoadingGrayBar from './LoadingGrayBar'
 import { PromiseState } from '@/types/interfaces'
 
 interface DisplayInfoBoxProps extends PromiseState {

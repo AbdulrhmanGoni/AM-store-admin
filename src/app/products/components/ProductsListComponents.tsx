@@ -3,7 +3,7 @@ import {
     ListItem, Typography,
     alpha, useTheme, Box
 } from '@mui/material'
-import LoadingGrayBar from '@/components/LoadinGrayBar'
+import LoadingGrayBar from '@/components/LoadingGrayBar'
 import randomColorsArr from '@/CONSTANT/randomColorsArr'
 import useProductsDisplayer from '@/hooks/useProductsDisplayer'
 import CustomListItem, { DisplyProductDetails } from '@/components/CustomListItem'
