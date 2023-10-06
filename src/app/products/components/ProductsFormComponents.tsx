@@ -1,3 +1,4 @@
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import {
     Box, TextField, Typography,
     FormControl, Select, InputLabel,
@@ -10,8 +11,7 @@ import { PromiseState } from "@/types/interfaces";
 import { AddPhotoAlternateOutlined, ChangeCircleOutlined, HideImageOutlined } from "@mui/icons-material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { CSSProperties } from "@mui/material/styles/createMixins";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import DisplayerItemWithLoadingState from '@/components/DisplayerItemWithLoadingState';
+import { ElementWithLoadingState } from '@abdulrhmangoni/am-store-library';
 
 type FieldProps = {
     label?: string,
@@ -127,27 +127,27 @@ export function ImagesInputs({ error, clearInputs, defaultValue, isLoading }: Im
             "& > *": { width: "100%", flexBasis: "50%", display: "flex", gap: pageSpaces }
         }}>
             <Box>
-                <DisplayerItemWithLoadingState
+                <ElementWithLoadingState
                     height={120}
                     isLoading={isLoading}
-                    item={<ImageInput defaultValue={defaultValue?.[0]} clear={clearInputs} name='image1' error={error} />}
+                    element={<ImageInput defaultValue={defaultValue?.[0]} clear={clearInputs} name='image1' error={error} />}
                 />
-                <DisplayerItemWithLoadingState
+                <ElementWithLoadingState
                     height={120}
                     isLoading={isLoading}
-                    item={<ImageInput defaultValue={defaultValue?.[1]} clear={clearInputs} name='image2' error={error} />}
+                    element={<ImageInput defaultValue={defaultValue?.[1]} clear={clearInputs} name='image2' error={error} />}
                 />
             </Box>
             <Box>
-                <DisplayerItemWithLoadingState
+                <ElementWithLoadingState
                     height={120}
                     isLoading={isLoading}
-                    item={<ImageInput defaultValue={defaultValue?.[2]} clear={clearInputs} name='image3' error={error} />}
+                    element={<ImageInput defaultValue={defaultValue?.[2]} clear={clearInputs} name='image3' error={error} />}
                 />
-                <DisplayerItemWithLoadingState
+                <ElementWithLoadingState
                     height={120}
                     isLoading={isLoading}
-                    item={<ImageInput defaultValue={defaultValue?.[3]} clear={clearInputs} name='image4' error={error} />}
+                    element={<ImageInput defaultValue={defaultValue?.[3]} clear={clearInputs} name='image4' error={error} />}
                 />
             </Box>
         </Box>
