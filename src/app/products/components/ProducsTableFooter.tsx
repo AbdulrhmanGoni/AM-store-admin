@@ -52,6 +52,8 @@ export default function Footer({ delelteFun, selectedRows }) {
                         endIcon={<Edit />}
                         variant="contained"
                         size='small'
+                        color="info"
+                        sx={{ color: "white" }}
                         onClick={() => push(`/products/edit-product/${selectedRows[0]}`)}
                     >
                         Edit

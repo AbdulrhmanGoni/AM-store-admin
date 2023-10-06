@@ -6,7 +6,7 @@ export default function useApiRequest() {
 
     const headers = {
         'access-token': useCookies()[0]["admin-access-token"],
-        'token-id': useCookies()[0]["token-id"],
+        'token-id': useCookies()[0]["adminId"],
         'Content-Type': 'application/json',
     }
 

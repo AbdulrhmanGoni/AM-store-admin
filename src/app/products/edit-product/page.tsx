@@ -18,7 +18,7 @@ export default function EditProductPage() {
             </Typography>
             <SearchField
                 actionWithProductId={(id) => push(`products/edit-product/${id}`)}
-                itemIcon={<Edit />}
+                endItemIcon={<Edit />}
             />
         </Paper>
     )

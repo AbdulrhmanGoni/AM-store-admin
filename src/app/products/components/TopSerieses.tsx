@@ -1,9 +1,6 @@
-import LoadingGrayBar from '@/components/LoadingGrayBar'
-import SmallIconBox from '@/components/SmallIconBox'
-import Icon from '@/components/SvgIcon'
 import { nDecorator } from '@abdulrhmangoni/am-store-library'
 import { Tv } from '@mui/icons-material'
-import { Box, Chip, Divider, List, ListItem, ListItemText, Typography, alpha } from '@mui/material'
+import { Box, Chip, Divider, List, ListItem, ListItemText, Skeleton, Typography, alpha } from '@mui/material'
 import React from 'react'
 
 type TopSeriesesProps = {
@@ -40,7 +37,7 @@ export default function TopSerieses({ data, isLoading, isError, isMoney }: DataR
                 {
                     dataArray.map(({ _id: series, value }: TopSeriesesProps, index: number) => {
                         return isLoading ?
-                            <LoadingGrayBar key={index} type="rou" w={"100%"} h={32} />
+                            <Skeleton key={index} variant="rounded" width="100%" height={32} />
                             :
                             <ListItem
                                 sx={{ pr: "6px" }}

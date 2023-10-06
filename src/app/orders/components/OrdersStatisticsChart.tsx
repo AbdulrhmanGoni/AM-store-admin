@@ -5,7 +5,7 @@ import { useTheme } from "@mui/material";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { ApexOptions } from "apexcharts";
 import Icon from "@/components/SvgIcon";
-import { totalIcon } from "@/components/svgIconsAsString";
+import { averageOrdersIcon } from "@/components/svgIconsAsString";
 import ChartTitle from "@/components/ChartTitle";
 
 type OrdersStatisticsChartProps = {
@@ -53,14 +53,13 @@ export default function OrdersStatisticsChart({ data }: OrdersStatisticsChartPro
     }
 
     const series = [
-        { name: 'Complated Orders', data, color: "#00c853" },
-        { name: 'Orders canceled', data, color: "#c80000" }
+        { name: 'Complated Orders', data }
     ]
 
     return (
         <ApexchartsContainer>
-            <ChartTitle title="Monthly Orders" icon={<Icon svgElementAsString={totalIcon} />} />
-            <Chart options={options} series={series} type="bar" height={337} />
+            <ChartTitle title="Monthly Orders" icon={<Icon svgElementAsString={averageOrdersIcon} />} />
+            <Chart options={options} series={series} type="bar" height={285} />
         </ApexchartsContainer>
     )
 } 

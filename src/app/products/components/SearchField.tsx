@@ -1,75 +1,139 @@
-import { Box, CircularProgress, IconButton, TextField } from '@mui/material'
+import { useState, JSX, useEffect } from 'react';
+import { Box, CircularProgress, IconButton, IconButtonProps, TextField } from '@mui/material'
 import SearchResultRenderer from "./SearchResultRenderer"
-import { useState, useEffect } from 'react';
-import useAsyncActions from '../hooks/useProductsActions';
-import { Close, WarningRounded } from '@mui/icons-material';
-import { JSX } from 'react';
+import { Close, Replay } from '@mui/icons-material';
+import host from '@/CONSTANT/API_hostName';
 
 
 export interface searchResponse { _id: string, title: string }
 export interface SearchFieldProps {
     actionWithProductId: (id: string) => void,
-    itemIcon: JSX.Element
+    endItemIcon: JSX.Element,
+    defaultValue?: string,
+    fieldSize?: "small" | "medium",
+    disableResultsList?: boolean
 }
 
-export default function SearchField({ actionWithProductId, itemIcon }: SearchFieldProps) {
-
-    const { searchForProducts } = useAsyncActions();
+export default function SearchField({ actionWithProductId, endItemIcon, defaultValue, disableResultsList, fieldSize }: SearchFieldProps) {
 
     const [searchInput, setSearchInput] = useState<string>("");
-    const [keySearch, setKeySearch] = useState<string>("");
-    const [products, setProducts] = useState<searchResponse[]>([]);
+    const [searchKey, setSearchKey] = useState<string>("");
+    const [products, setProducts] = useState<searchResponse[]>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
+    const [ableResultsList, setAbleResultsList] = useState<boolean>(true);
 
-    function getProducts() {
-        setIsLoading(true);
-        searchForProducts(`${searchInput}&returnType=title`)
-            .then((data) => { setProducts(data) })
-            .finally(() => { setIsLoading(false) })
-            .catch(() => { setIsError(false) })
+    function clearSearchField() {
+        setSearchInput("");
+        setSearchKey("");
+        setProducts(undefined);
     }
 
-    function clearSearchField() { setSearchInput(""); setKeySearch(""); setProducts([]); }
+    function onChange(value: string) {
+        value[0] !== searchKey && setSearchKey(value[0])
+        !value && clearSearchField()
+        setSearchInput(value)
+    }
+
+    function fetchProducts(searchKey: string) {
+        setIsLoading(true);
+        fetch(`${host}products?title=${searchKey}&returnType=title`)
+            .then((res) => {
+                if (res.status == 200) return res.json();
+                else if (res.status == 404) return [];
+                else return null;
+            })
+            .then((data) => {
+                if (data) {
+                    setProducts(data)
+                    isError && setIsError(false);
+                } else setIsError(true)
+            })
+            .catch(() => { setIsError(true) })
+            .finally(() => { setIsLoading(false) })
+    }
 
     function filterProducts(productsList: searchResponse[]): searchResponse[] {
-        return productsList.filter(product => product.title.match(new RegExp(searchInput, "i")))
+        let regExp = searchInput.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1")
+        return productsList.filter(product => product.title.match(new RegExp(regExp, "ig")))
+    }
+
+    const rightIconStyle = { position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)" }
+    const iconSize = fieldSize === "small" ? { width: "0.85em", height: "0.85em" } : {}
+    const iconsProps: IconButtonProps = {
+        sx: {
+            display: isError || !!searchInput ? "flex" : "none",
+            ...rightIconStyle,
+            right: 4
+        },
+        size: fieldSize
     }
 
     useEffect(() => {
-        if (searchInput.length === 1) {
-            if (keySearch !== searchInput) {
-                setKeySearch(searchInput);
-                getProducts();
-            }
+        if (!(ableResultsList && !disableResultsList)) {
+            setAbleResultsList(!disableResultsList)
         }
-    }, [searchInput])
+    }, [disableResultsList])
 
-    const rightIconStyle = { position: "absolute", right: 12, top: "32%" }
+    useEffect(() => {
+        if (!disableResultsList) {
+            searchKey && fetchProducts(searchKey)
+        }
+    }, [searchKey, disableResultsList])
+
+    useEffect(() => {
+        if (defaultValue) {
+            setSearchKey(defaultValue[0])
+            setSearchInput(defaultValue)
+        }
+    }, [defaultValue])
 
     return (
         <Box sx={{ display: "flex", gap: 1, position: "relative", width: "100%" }}>
             <TextField
-                onChange={({ target }) => { setSearchInput(target.value) }}
-                fullWidth label="Search for product"
+                onChange={({ target }) => { onChange(target.value) }}
+                inputProps={{ sx: { pr: "40px" } }}
+                label="Search for product"
                 id='searchProductsField'
                 value={searchInput}
+                error={isError}
+                size={fieldSize}
+                fullWidth
+                onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.code === "Enter") {
+                        let input = event.target as HTMLInputElement
+                        console.log(input.value)
+                    }
+                }}
             />
             {
                 isLoading ?
-                    <CircularProgress size={20} sx={rightIconStyle} /> :
-                    isError ?
-                        <WarningRounded sx={rightIconStyle} /> :
-                        !!searchInput ?
-                            <IconButton sx={{ position: "absolute", right: 5, top: "13%" }} onClick={clearSearchField}><Close /></IconButton> : null
+                    <Box sx={{ display: "flex", ...rightIconStyle }}>
+                        <CircularProgress color={!isError ? "primary" : "error"} size={20} />
+                    </Box>
+                    : isError ?
+                        <IconButton
+                            onClick={() => { fetchProducts(searchKey) }}
+                            {...iconsProps}
+                        >
+                            <Replay sx={iconSize} color="error" />
+                        </IconButton>
+                        : !!searchInput ?
+                            <IconButton
+                                onClick={() => { clearSearchField() }}
+                                {...iconsProps}
+                            >
+                                <Close sx={iconSize} />
+                            </IconButton>
+                            : null
             }
             {
-                (!!products.length && !!searchInput) &&
+                (ableResultsList && products && !isLoading && !!searchInput) &&
                 <SearchResultRenderer
                     actionWithProductId={actionWithProductId}
                     products={filterProducts(products)}
                     searchText={searchInput}
-                    itemIcon={itemIcon}
+                    endItemIcon={endItemIcon}
                 />
             }
         </Box>

@@ -1,8 +1,7 @@
-import { Box, Paper, Typography } from '@mui/material'
+import { Box, Paper, Skeleton, Typography } from '@mui/material'
 import React from 'react'
 import SmallIconBox from './SmallIconBox'
 import { CSSProperties } from '@mui/material/styles/createMixins'
-import LoadingGrayBar from './LoadingGrayBar'
 import { PromiseState } from '@/types/interfaces'
 
 interface DisplayInfoBoxProps extends PromiseState {
@@ -45,14 +44,14 @@ export default function DisplayInfoBox(props: DisplayInfoBoxProps) {
                 disableIconColor={disableIconColor}
                 boxStyle={{ p: 1 }}
             >
-                {isLoading ? <LoadingGrayBar type="rou" h={35} w={35} /> : icon}
+                {isLoading ? <Skeleton variant="rounded" height={35} width={35} /> : icon}
             </SmallIconBox>
             <Box>
                 {
                     isLoading ?
                         <>
-                            <LoadingGrayBar sx={{ mb: 1 }} type="rou" h={25} w={100} />
-                            <LoadingGrayBar type="rou" h={30} w={100} />
+                            <Skeleton variant="rounded" sx={{ mb: 1 }} height={25} width={100} />
+                            <Skeleton variant="rounded" height={30} width={100} />
                         </>
                         :
                         <>

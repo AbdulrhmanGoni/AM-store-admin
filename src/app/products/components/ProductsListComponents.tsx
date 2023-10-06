@@ -1,10 +1,8 @@
 import {
     Alert, List,
     ListItem, Typography,
-    alpha, useTheme, Box
+    alpha, useTheme, Box, Skeleton
 } from '@mui/material'
-import LoadingGrayBar from '@/components/LoadingGrayBar'
-import randomColorsArr from '@/CONSTANT/randomColorsArr'
 import useProductsDisplayer from '@/hooks/useProductsDisplayer'
 import CustomListItem, { DisplyProductDetails } from '@/components/CustomListItem'
 import SmallIconBox from '@/components/SmallIconBox'
@@ -96,8 +94,8 @@ export function LoadingState() {
     const { palette: { primary } } = useTheme();
     return (
         <ListItem sx={{ display: "flex", gap: 1, bgcolor: alpha(primary.main, .3), borderRadius: 1 }}>
-            <LoadingGrayBar type="rou" w={50} h={50} />
-            <LoadingGrayBar type="rou" w="100%" h={50} />
+            <Skeleton variant="rounded" width={50} height={50} />
+            <Skeleton variant="rounded" width="100%" height={50} />
         </ListItem>
     )
 }

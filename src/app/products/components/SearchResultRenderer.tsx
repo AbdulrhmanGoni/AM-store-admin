@@ -1,9 +1,8 @@
 import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import { SearchFieldProps, searchResponse } from './SearchField';
-import { Typography } from '@mui/material';
+import { List, Typography } from '@mui/material';
 
 interface SearchResultRendererProps extends SearchFieldProps {
     products: searchResponse[],
@@ -13,7 +12,7 @@ interface SearchResultRendererProps extends SearchFieldProps {
 
 export default function SearchResultRenderer(props: SearchResultRendererProps) {
 
-    const { products, searchText, actionWithProductId, itemIcon } = props
+    const { products, searchText, actionWithProductId, endItemIcon } = props
 
     const mark = (text?: string) => (
         <Box
@@ -23,39 +22,8 @@ export default function SearchResultRenderer(props: SearchResultRendererProps) {
             {text ?? ""}
         </Box>
     )
-    function renderRow(props: ListChildComponentProps) {
-        const { index, style } = props;
-        let
-            title = products[index].title,
-            regExp = new RegExp(searchText, "ig"),
-            id = products[index]._id
 
-        const
-            matched = title.match(regExp),
-            splitedText = title.split(regExp);
-
-        return (
-            <ListItem style={style} key={id} component="div" disablePadding>
-                <ListItemButton onClick={() => actionWithProductId(id)} sx={{ justifyContent: "space-between", }}>
-                    <Typography component="p">
-                        {
-                            splitedText.map((str, index) =>
-                                <Typography component="span" key={str + index}>
-                                    {str}{index !== splitedText.length - 1 && mark(matched?.[index])}
-                                </Typography>
-                            )
-                        }
-                    </Typography>
-                    {itemIcon}
-                </ListItemButton>
-            </ListItem>
-        );
-    }
-
-    const
-        itemSize = 46,
-        itemsCount = products.length,
-        listHeight = itemsCount > 6 ? 280 : itemsCount * itemSize;
+    const listHeight = products.length > 6 ? 240 : products.length ? products.length * 40 : 40;
 
     return (
         <Box
@@ -66,15 +34,41 @@ export default function SearchResultRenderer(props: SearchResultRendererProps) {
                 left: 0, top: "100%", zIndex: 100
             }}
         >
-            <FixedSizeList
-                width="100%"
-                height={listHeight}
-                itemSize={itemSize}
-                itemCount={itemsCount}
-                overscanCount={4}
-            >
-                {renderRow}
-            </FixedSizeList>
+            <List disablePadding sx={{
+                width: "100%",
+                height: listHeight,
+                overflow: "auto"
+            }}>
+                {
+                    !!products.length ?
+                        products.map(({ _id, title }) => {
+                            let regExp = new RegExp(searchText.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1"), "ig");
+                            const
+                                matched = title.match(regExp),
+                                splitedText = title.split(regExp);
+
+                            return (
+                                <ListItem key={_id} component="div" disablePadding>
+                                    <ListItemButton onClick={() => actionWithProductId(_id)} sx={{ justifyContent: "space-between" }}>
+                                        <Typography component="p">
+                                            {splitedText.map((str, index) =>
+                                                <Typography component="span" key={str + index}>
+                                                    {str}{index !== splitedText.length - 1 && mark(matched?.[index])}
+                                                </Typography>
+                                            )}
+                                        </Typography>
+                                        {endItemIcon}
+                                    </ListItemButton>
+                                </ListItem>
+                            )
+                        }) :
+                        <ListItem key="No Search" component="div" disablePadding>
+                            <ListItemButton>
+                                <Typography component="p">No Search Result</Typography>
+                            </ListItemButton>
+                        </ListItem>
+                }
+            </List>
         </Box>
     );
 }
