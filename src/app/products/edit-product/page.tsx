@@ -1,8 +1,8 @@
 "use client"
 import { Paper, Typography } from '@mui/material'
-import SearchField from '../components/SearchField'
 import { useRouter } from 'next/navigation'
 import { Edit } from '@mui/icons-material'
+import { SearchForProductsField } from '@abdulrhmangoni/am-store-library'
 
 export default function EditProductPage() {
 
@@ -16,7 +16,7 @@ export default function EditProductPage() {
                 sx={{ p: "0px 0px 16px 13px", fontSize: "1.1rem" }}>
                 Search for a product and edit it
             </Typography>
-            <SearchField
+            <SearchForProductsField
                 actionWithProductId={(id) => push(`products/edit-product/${id}`)}
                 endItemIcon={<Edit />}
             />

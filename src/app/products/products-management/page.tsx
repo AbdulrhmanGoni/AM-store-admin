@@ -2,10 +2,10 @@
 import { FC } from "react";
 import { Grid, Card } from "@mui/material";
 import ProductsViewerTable from "../components/ProductsViewerTable"
-import SearchField from "../components/SearchField"
 import TitleBarOfPage from "@/components/TitleBarOfPage";
 import useProductsDisplayer from '@/hooks/useProductsDisplayer';
 import { ReadMore } from "@mui/icons-material";
+import { SearchForProductsField } from "@abdulrhmangoni/am-store-library";
 
 const ProductsManagement: FC = function () {
 
@@ -17,7 +17,7 @@ const ProductsManagement: FC = function () {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Card sx={{ p: 2, overflow: "visible" }}>
-            <SearchField
+            <SearchForProductsField
               actionWithProductId={(id) => display(id)}
               endItemIcon={<ReadMore />}
             />
