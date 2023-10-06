@@ -1,5 +1,5 @@
 "use client"
-import { Box, Grid, Paper } from "@mui/material";
+import { Box, Grid, Paper, useMediaQuery } from "@mui/material";
 import CategoriesEarnings from "../components/CategoriesEarnings";
 import CategoriesEarningsPercentages from "../components/CategoriesEarningsPercentages";
 import ProductsTopSales from "../components/ProductsTopSales";
@@ -17,6 +17,7 @@ import DisplayInfoBox from "@/components/DisplayInfoBox";
 
 export default function ProductsStatistics() {
 
+    const media = useMediaQuery('(min-width:1200px)')
     const {
         earningsChartData,
         chartLoading,
@@ -32,20 +33,58 @@ export default function ProductsStatistics() {
         topProductsError,
     } = useProductsStatisticsContent();
 
+    const infoBoxStyle = { flexBasis: "50%", p: 2 }
+
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
             <Grid container spacing={{ xs: 1, md: 2 }}>
-                <Grid item xs={12} md={6.5} lg={4}>
-                    <Paper sx={{ p: 1, height: "200px" }}>
-                        <CategoriesEarningsPercentages
-                            data={earningsChartData}
-                            totalEarnings={totalEarnings}
-                            isLoading={chartLoading}
-                            isError={chartError}
+                <Grid item xs={12} md={6}>
+                    <Box sx={{ display: "flex", gap: { xs: 1, md: 2 } }}>
+                        <DisplayInfoBox
+                            type={media ? "horizontally" : "columnly"}
+                            isLoading={productsStatisticsLoading}
+                            title="Products"
+                            body={nDecorator(String(productsTotals?.totalProducts))}
+                            color={randomColorsArr[3]}
+                            icon={<Icon svgElementAsString={stockIcon} />}
+                            disableIconColor
+                            BoxStyle={infoBoxStyle}
                         />
-                    </Paper>
+                        <DisplayInfoBox
+                            type={media ? "horizontally" : "columnly"}
+                            isLoading={productsStatisticsLoading}
+                            title="Categories"
+                            body={nDecorator(String(productsTotals?.categoriesCount))}
+                            color={randomColorsArr[1]}
+                            icon={<Icon svgElementAsString={categoriesIcon} />}
+                            BoxStyle={infoBoxStyle}
+                        />
+                    </Box>
                 </Grid>
-                <Grid item xs={12} md={5.5} lg={4}></Grid>
+                <Grid item xs={12} md={6}>
+                    <Box sx={{ display: "flex", gap: { xs: 1, md: 2 } }}>
+                        <DisplayInfoBox
+                            type={media ? "horizontally" : "columnly"}
+                            isLoading={productsStatisticsLoading}
+                            title="Products Sold"
+                            body={nDecorator(String(productsTotals?.totalProductsSold))}
+                            color={randomColorsArr[0]}
+                            icon={<Icon svgElementAsString={stockIcon} />}
+                            disableIconColor
+                            BoxStyle={infoBoxStyle}
+                        />
+                        <DisplayInfoBox
+                            type={media ? "horizontally" : "columnly"}
+                            isLoading={productsStatisticsLoading}
+                            title="In Stock"
+                            body={nDecorator(String(productsTotals?.totalInStock))}
+                            color={randomColorsArr[2]}
+                            icon={<Icon svgElementAsString={inStockIcon} />}
+                            disableIconColor
+                            BoxStyle={infoBoxStyle}
+                        />
+                    </Box>
+                </Grid>
             </Grid>
             <Grid container spacing={{ xs: 1, md: 2 }}>
                 <Grid item xs={12} md={6.5} lg={8}>
@@ -56,59 +95,14 @@ export default function ProductsStatistics() {
                     </Box>
                 </Grid>
                 <Grid item xs={12} md={5.5} lg={4}>
-                    <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
-                        <Box sx={{
-                            display: "flex",
-                            gap: { xs: 1, md: 2 },
-                            height: "200px"
-                        }}>
-                            <DisplayInfoBox
-                                type="columnly"
-                                isLoading={productsStatisticsLoading}
-                                title="Products"
-                                body={nDecorator(String(productsTotals?.totalProducts))}
-                                color={randomColorsArr[3]}
-                                icon={<Icon svgElementAsString={stockIcon} />}
-                                disableIconColor
-                                BoxStyle={{ flexBasis: "50%" }}
-                            />
-                            <DisplayInfoBox
-                                type="columnly"
-                                isLoading={productsStatisticsLoading}
-                                title="Categories"
-                                body={nDecorator(String(productsTotals?.categoriesCount))}
-                                color={randomColorsArr[1]}
-                                icon={<Icon svgElementAsString={categoriesIcon} />}
-                                BoxStyle={{ flexBasis: "50%" }}
-                            />
-                        </Box>
-                        <Box sx={{
-                            display: "flex",
-                            gap: { xs: 1, md: 2 },
-                            height: "200px"
-                        }}>
-                            <DisplayInfoBox
-                                type="columnly"
-                                isLoading={productsStatisticsLoading}
-                                title="Products Sold"
-                                body={nDecorator(String(productsTotals?.totalProductsSold))}
-                                color={randomColorsArr[0]}
-                                icon={<Icon svgElementAsString={stockIcon} />}
-                                disableIconColor
-                                BoxStyle={{ flexBasis: "50%" }}
-                            />
-                            <DisplayInfoBox
-                                type="columnly"
-                                isLoading={productsStatisticsLoading}
-                                title="In Stock"
-                                body={nDecorator(String(productsTotals?.totalInStock))}
-                                color={randomColorsArr[2]}
-                                icon={<Icon svgElementAsString={inStockIcon} />}
-                                disableIconColor
-                                BoxStyle={{ flexBasis: "50%" }}
-                            />
-                        </Box>
-                    </Box>
+                    <Paper sx={{ p: 1, height: "200px" }}>
+                        <CategoriesEarningsPercentages
+                            data={earningsChartData}
+                            totalEarnings={totalEarnings}
+                            isLoading={chartLoading}
+                            isError={chartError}
+                        />
+                    </Paper>
                 </Grid>
             </Grid>
             <Grid container spacing={{ xs: 1, md: 2 }}>
@@ -158,47 +152,3 @@ export default function ProductsStatistics() {
         </Box>
     )
 }
-
-// type DisplayInfoType = {
-//     color: string,
-//     icon: any,
-//     isLoading?: boolean,
-//     disableIconColor?: boolean,
-//     title: string,
-//     body?: string | number
-// }
-
-// function DisplayInfo({ color, title, body, icon, isLoading, disableIconColor = false }: DisplayInfoType) {
-//     return (
-//         <Paper sx={{
-//             display: "flex",
-//             alignItems: "center",
-//             justifyContent: "flex-start",
-//             flexBasis: "100%",
-//             gap: 2, p: "0px 16px"
-//         }}>
-//             <SmallIconBox
-//                 icon={icon}
-//                 color={color}
-//                 disableIconColor={disableIconColor}
-//                 svgIconSize={30}
-//             >
-//                 {isLoading ? <LoadingGrayBar type="rou" h={35} w={35} /> : undefined}
-//             </SmallIconBox>
-//             <Box>
-//                 {
-//                     isLoading ?
-//                         <>
-//                             <LoadingGrayBar sx={{ mb: 1 }} type="rou" h={25} w={100} />
-//                             <LoadingGrayBar type="rou" h={30} w={100} />
-//                         </>
-//                         :
-//                         <>
-//                             <Typography variant="h6">{title}</Typography>
-//                             <Typography variant="h5">{body}</Typography>
-//                         </>
-//                 }
-//             </Box>
-//         </Paper>
-//     )
-// }

@@ -13,12 +13,19 @@ function numberField(params: GVGP, field: string, floats?: number): string | num
 const ProductImage = ({ src }) => {
     return <Image width={80} height={80} src={src} alt='product img' style={{ width: "100%", height: "97%" }} />
 }
-const rowProps = (field: s, headerName: s, width: n, sortable: b, editable: b, isNumber: b, moreProps?: any) => {
+const rowProps = (field: s, headerName: s, width: n, sortable: b, editable: b, isNumber: b, moreProps?: any): GridColDef => {
     const floats: number = ["sold", "amount"].includes(field) ? 0 : 2;
     return {
-        field, headerName, width, sortable,
-        editable, ...moreProps, align: "left", headerAlign: "left",
-        valueGetter: isNumber ? (params: GVGP) => numberField(params, field, floats) : undefined,
+        field,
+        headerName,
+        width,
+        sortable,
+        editable,
+        align: "left",
+        headerAlign: "left",
+        ...moreProps,
+
+        valueGetter: isNumber ? (params: GVGP) => numberField(params, field, floats) : undefined
     }
 }
 function renderRateCell(params: GridRenderCellParams) {
@@ -39,8 +46,8 @@ const columns: GridColDef[] = [
     rowProps('rate', 'Rate', 160, true, false, false, { renderCell: renderRateCell }),
     rowProps('sold', 'Sold', 80, true, false, true),
     rowProps('amount', 'Quantity', 80, true, false, true),
-    rowProps('earnings', 'Earnings', 130, true, false, true),
-    rowProps('description', 'Description', 360, false, true, false),
+    rowProps('earnings', 'Earnings ($)', 130, true, false, true),
+    rowProps('description', 'Description', 360, false, true, false, { flex: 1 }),
 ];
 
 export default columns 
