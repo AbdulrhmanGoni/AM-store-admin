@@ -28,12 +28,12 @@ export default function CategoriesEarningsPercentages({ data, isError, isLoading
     })
 
     const chartColors: string[] = series?.map((cat: series) => cat.color);
-    const legends: JSX.Element[] = series?.map(({color, name, total}: series) => {
+    const legends: JSX.Element[] = series?.map(({ color, name, total: categoryEarnings }: series) => {
         return (
             <Box key={name} sx={{ display: "flex", alignItems: "center", gap: "6px", "& > p": { fontSize: "15px" } }}>
                 <Typography sx={legendsMark(color)}></Typography>
                 <Typography>{capitalize(name)}</Typography>
-                <Typography>{calculatePercentage(total, totalEarnings)}%</Typography>
+                <Typography>{calculatePercentage(totalEarnings, categoryEarnings)}%</Typography>
             </Box>
         )
     })

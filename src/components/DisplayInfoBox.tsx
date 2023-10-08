@@ -8,6 +8,7 @@ interface DisplayInfoBoxProps extends PromiseState {
     title: string
     icon: any,
     body: string | number,
+    bodyColor?: string,
     color: string,
     BoxStyle?: CSSProperties,
     type: "columnly" | "horizontally",
@@ -17,7 +18,8 @@ interface DisplayInfoBoxProps extends PromiseState {
 export default function DisplayInfoBox(props: DisplayInfoBoxProps) {
     let {
         title, body, icon, color, BoxStyle,
-        disableIconColor, isLoading, type
+        disableIconColor, isLoading, type,
+        bodyColor
     } = props;
 
     const columnly: CSSProperties = {
@@ -56,7 +58,7 @@ export default function DisplayInfoBox(props: DisplayInfoBoxProps) {
                         :
                         <>
                             <Typography variant="h6">{title}</Typography>
-                            <Typography variant="h5">{body}</Typography>
+                            <Typography color={bodyColor} variant="h5">{body}</Typography>
                         </>
                 }
             </Box>

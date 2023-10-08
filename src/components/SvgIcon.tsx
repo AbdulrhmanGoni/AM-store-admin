@@ -8,7 +8,7 @@ type iconComponentProps = {
     disableIconColor?: boolean
 }
 
-export default function Icon({ svgElementAsString, disableIconColor, width = 35, height = 35, color }: iconComponentProps) {
+export default function SvgIcon({ svgElementAsString, disableIconColor, width = 35, height = 35, color }: iconComponentProps) {
 
     const { palette: { primary: { main } } } = useTheme();
 

@@ -28,9 +28,11 @@ function LinkItem({ target, icon, text, close, onClick, isParent, isChild, child
     const { push } = useRouter();
     const { palette: { primary: { main }, mode, background: { paper }, text: { primary: txt } } } = useTheme();
 
-    function whenClick() {
+    function whenClick(event) {
+        event.preventDefault()
         onClick?.();
         if (!isParent) { push(target); close?.() }
+        return false
     }
 
     const isCurr = isCurrentPath(target, pathname)
@@ -63,14 +65,15 @@ function LinkItem({ target, icon, text, close, onClick, isParent, isChild, child
 
     return (
         <>
-            <ListItem disablePadding
+            <ListItem
+                disablePadding
                 sx={{
                     width: 300,
                     pl: isChild ? 4 : "",
                     ...listItemDot,
                 }}
             >
-                <ListItemButton sx={itemSx} onClick={whenClick}>
+                <ListItemButton href={target} LinkComponent={"a"} sx={itemSx} onClick={whenClick}>
                     <ListItemIcon sx={{ minWidth: "33px" }}>{icon}</ListItemIcon>
                     <ListItemText primary={text} />
                     {endIcon}

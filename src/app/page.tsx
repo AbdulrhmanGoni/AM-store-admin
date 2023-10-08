@@ -1,9 +1,18 @@
 "use client"
 import { Box, Grid, Paper } from "@mui/material";
 import EarningsChart from "@/components/EarningsChart";
-import SalesGrowth from "@/components/SalesGrowth";
-import AverageEarnings from "@/components/AverageEarnings";
+import SalesGrowth, { dataProps } from "@/components/SalesGrowth";
 import useGetApi from "@/hooks/useGetApi";
+import SvgIcon from "@/components/SvgIcon";
+import MonthlyTarget from "@/components/MonthlyTarget";
+import CardInfoWithChart from "@/components/CardInfoWithChart";
+import { nDecorator } from "@abdulrhmangoni/am-store-library";
+import { faker } from "@faker-js/faker";
+import { SmalLine } from "@/components/SmallChart";
+import { averageOrdersIcon } from "@/components/svgIconsAsString";
+import DisplayInfoBox from "@/components/DisplayInfoBox";
+import { Money } from "@mui/icons-material";
+import randomColorsArr from "@/CONSTANT/randomColorsArr";
 
 
 const boxSx = { width: "100%" }
@@ -21,33 +30,55 @@ export default function SalesStatistics() {
   const path = `statistics/?get=${query}`;
   const { data, isError, isLoading } = useGetApi({ key: [query], path });
 
+  const monthlyEarnings: number[] = data?.map((mon: dataProps) => {
+    let randomNimber = faker.number.float({ precision: 0.01, max: 5000, min: 4000 });
+    return mon.totalEarnings ? mon.totalEarnings : randomNimber
+  });
+  const totalEarnings: number = monthlyEarnings?.reduce((acc, cur) => acc + cur, 0);
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
       <Grid container spacing={pageSpaces}>
-        <Grid item xs={12} md={6.5} lg={8}>
+        <Grid item xs={12} md={4.5}>
+          <MonthlyTarget title="Monthly Target" target={5000} value={4000} />
+        </Grid>
+        <Grid item xs={12} sm={7.5} md={4.5}>
+          <Paper sx={{ p: 1, height: "200px" }}>
+            <SalesGrowth
+              data={data}
+              isError={isError}
+              isLoading={isLoading}
+            />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={4.5} md={3}>
+          <DisplayInfoBox
+            type="columnly"
+            title="Total Earnings"
+            body={`$${nDecorator(totalEarnings?.toFixed(2))}`}
+            bodyColor="success.main"
+            icon={<Money />}
+            color={randomColorsArr[1]}
+            BoxStyle={{ height: "100%", p: 2 }}
+          />
+        </Grid>
+      </Grid>
+      <Grid container spacing={pageSpaces}>
+        <Grid item xs={12} sm={7.5} lg={8}>
           <Box sx={boxSx}>
             <Paper sx={paperStyle}>
               <EarningsChart data={data} />
             </Paper>
           </Box>
         </Grid>
-        <Grid item xs={12} md={5.5} lg={4}>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
-            <Paper sx={{ p: 1, height: "200px" }}>
-              <SalesGrowth
-                data={data}
-                isError={isError}
-                isLoading={isLoading}
-              />
-            </Paper>
-            <Paper sx={{ p: 1, height: "200px" }}>
-              <AverageEarnings
-                data={data}
-                isError={isError}
-                isLoading={isLoading}
-              />
-            </Paper>
-          </Box>
+        <Grid item xs={12} sm={4.5} lg={4}>
+          <CardInfoWithChart
+            theChart={<SmalLine width={200} data={monthlyEarnings} tooltipIsMony />}
+            icon={<SvgIcon svgElementAsString={averageOrdersIcon} />}
+            title="Average Earnings"
+            description="per month"
+            mainValue={`$${nDecorator((totalEarnings / data?.length).toFixed(2))}`}
+          />
         </Grid>
       </Grid>
     </Box>

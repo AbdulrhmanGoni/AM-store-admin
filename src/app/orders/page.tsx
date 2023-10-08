@@ -2,16 +2,14 @@
 import { FC } from "react";
 import { Grid, Box, Typography, Paper } from "@mui/material";
 import LatestOrdersTable from "./components/LatestOrdersTable"
-import AverageOrders from "./components/AverageOrders";
+import CardInfoWithChart from "@/components/CardInfoWithChart";
+import { SmalBar } from "@/components/SmallChart";
 import OrdersStatisticsChart from "./components/OrdersStatisticsChart";
-import { orderIcon, totalIcon } from "@/components/svgIconsAsString";
+import { averageOrdersIcon, orderIcon } from "@/components/svgIconsAsString";
 import SmallIconBox from "@/components/SmallIconBox";
-import Icon from "@/components/SvgIcon";
+import SvgIcon from "@/components/SvgIcon";
 import useGetApi from "@/hooks/useGetApi";
 import { faker } from "@faker-js/faker";
-import randomColorsArr from "@/CONSTANT/randomColorsArr";
-import DisplayInfoBox from "@/components/DisplayInfoBox";
-import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { pageSpaces } from "../page";
 
 const boxSx = { width: "100%" }
@@ -45,7 +43,7 @@ const OrdersManagement: FC = function () {
                     sx={{ mb: 1, position: "relative", display: "flex", alignItems: "center", gap: 1.5 }}>
                     Orders Management
                     <SmallIconBox
-                        icon={<Icon svgElementAsString={orderIcon} />}
+                        icon={<SvgIcon svgElementAsString={orderIcon} />}
                         svgIconSize={25}
                         boxStyle={{ p: .3 }}
                     />
@@ -56,26 +54,22 @@ const OrdersManagement: FC = function () {
             </Box>
             <Grid container spacing={pageSpaces}>
                 <Grid item xs={12} md={5.5} lg={4}>
-                    <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
-                        <Box sx={{ display: "flex", gap: pageSpaces, height: "200px" }}>
-                            <DisplayInfoBox
-                                title="Total Orders"
-                                type="columnly"
-                                body={nDecorator(totalOrders)}
-                                icon={<Icon svgElementAsString={totalIcon} />}
-                                color={randomColorsArr[0]}
-                                BoxStyle={{ flexBasis: "50%" }}
-                            />
-                            <Paper sx={{ flexBasis: "50%" }}></Paper>
-                        </Box>
-                        <Paper sx={{ height: "200px", p: 1 }}>
-                            <AverageOrders
-                                data={dataChart}
-                                totalOrders={totalOrders}
-                                isLoading={isLoading}
-                                isError={isError}
-                            />
-                        </Paper>
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces, height: "100%" }}>
+                        <CardInfoWithChart
+                            theChart={<SmalBar data={dataChart} />}
+                            icon={<SvgIcon svgElementAsString={averageOrdersIcon} />}
+                            title="Avarage Orders"
+                            mainValue={`${Math.floor(totalOrders / dataChart?.length)} Orders`}
+                            description="per month"
+                        />
+                        {/* <DisplayInfoBox
+                            title="Total Orders"
+                            type="horizontally"
+                            body={nDecorator(totalOrders)}
+                            icon={<SvgIcon svgElementAsString={totalIcon} />}
+                            color={randomColorsArr[0]}
+                            BoxStyle={{ width: "100%", p: 1.5 }}
+                        /> */}
                     </Box>
                 </Grid>
                 <Grid item xs={12} md={6.5} lg={8}>

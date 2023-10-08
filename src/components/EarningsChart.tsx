@@ -61,7 +61,7 @@ export default function EarningsChart({ data }: EarningsChartProps) {
     return (
         <ApexchartsContainer>
             <ChartTitle title="Monthly Earnings" icon={<Money />} />
-            <Chart options={options} series={series} type="area" height={337} />
+            <Chart options={options} series={series} type="area" height={285} />
         </ApexchartsContainer>
     )
 }

@@ -7,7 +7,7 @@ import {
     Email, Groups, Inbox, Store
 } from "@mui/icons-material";
 import Icon from "./SvgIcon";
-import { productsIcon, salesGrowthIcon } from "./svgIconsAsString";
+import { productsIcon } from "./svgIconsAsString";
 
 
 export interface LinkProps {
@@ -21,14 +21,7 @@ const drawerLinks: LinkProps[] = [
     {
         target: "/",
         text: "Dashboard",
-        icon: <AnalyticsOutlined />,
-        // nestedLinks: [
-        //     {
-        //         target: "sales-analysis",
-        //         text: "Sales Analysis",
-        //         icon: <Icon svgElementAsString={salesGrowthIcon} width={22} color="white" />
-        //     },
-        // ]
+        icon: <AnalyticsOutlined />
     },
     {
         target: "/products",
@@ -56,11 +49,6 @@ const drawerLinks: LinkProps[] = [
                 icon: <EditAttributes />
             },
         ]
-    },
-    {
-        target: "/discounts",
-        text: "Discounts",
-        icon: <DiscountOutlined />
     },
     {
         target: "/orders",
