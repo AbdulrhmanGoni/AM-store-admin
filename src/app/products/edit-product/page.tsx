@@ -3,6 +3,7 @@ import { Paper, Typography } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { Edit } from '@mui/icons-material'
 import { SearchForProductsField } from '@abdulrhmangoni/am-store-library'
+import host from '@/CONSTANT/API_hostName'
 
 export default function EditProductPage() {
 
@@ -19,6 +20,7 @@ export default function EditProductPage() {
             <SearchForProductsField
                 actionWithProductId={(id) => push(`products/edit-product/${id}`)}
                 endItemIcon={<Edit />}
+                dominName={host}
             />
         </Paper>
     )

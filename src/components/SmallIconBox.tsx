@@ -2,7 +2,7 @@ import { PromiseState } from '@/types/interfaces';
 import { Box, useTheme } from '@mui/material'
 import { CSSProperties } from '@mui/material/styles/createMixins'
 
-interface SmallIconBoxProps extends PromiseState {
+interface SmallIconBoxProps {
     color?: string,
     icon?: any,
     children?: any,
@@ -17,7 +17,7 @@ export default function SmallIconBox(props: SmallIconBoxProps) {
     let { 
         color = primary.main, icon, boxStyle, 
         svgIconStyle, children, svgIconSize, 
-        disableIconColor, isLoading
+        disableIconColor
     } = props;
     return (
         <Box

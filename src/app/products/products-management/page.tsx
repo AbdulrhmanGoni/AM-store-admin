@@ -2,10 +2,12 @@
 import { FC } from "react";
 import { Grid, Card } from "@mui/material";
 import ProductsViewerTable from "../components/ProductsViewerTable"
-import TitleBarOfPage from "@/components/TitleBarOfPage";
+import PageTitle from "@/components/PageTitle";
 import useProductsDisplayer from '@/hooks/useProductsDisplayer';
 import { ReadMore } from "@mui/icons-material";
 import { SearchForProductsField } from "@abdulrhmangoni/am-store-library";
+import SvgIcon from "@/components/SvgIcon";
+import { productsManagementIcon } from "@/components/svgIconsAsString";
 
 const ProductsManagement: FC = function () {
 
@@ -13,7 +15,11 @@ const ProductsManagement: FC = function () {
 
   return (
     <>
-      <TitleBarOfPage title="Products Management" role="Add, Update and Delete Products" />
+      <PageTitle
+        title="Products Management"
+        descreption="Add, Update and Delete Products"
+        icon={<SvgIcon svgElementAsString={productsManagementIcon} />}
+      />
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Card sx={{ p: 2, overflow: "visible" }}>

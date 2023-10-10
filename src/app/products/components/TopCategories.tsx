@@ -18,10 +18,11 @@ interface TopCategoriesCartProps extends PromiseState {
     data: {
         categories: string[],
         values: number[]
-    }
+    },
+    height?: number
 }
 
-export default function TopCategoriesCart({ data: { categories, values } }: TopCategoriesCartProps) {
+export default function TopCategories({ data: { categories, values }, height }: TopCategoriesCartProps) {
 
     const { palette: { mode, primary } } = useTheme();
 
@@ -31,12 +32,12 @@ export default function TopCategoriesCart({ data: { categories, values } }: TopC
         colors: [primary.main],
         theme: { mode },
         dataLabels: { enabled: false },
-        xaxis: { categories: categories ?? ['Clothes', 'Figures', 'Panels'] },
+        xaxis: { categories },
         yaxis: { labels: { style: { fontSize: "14px" } } },
         tooltip: { y: { formatter: (value: number, obj: string) => { obj = `${nDecorator(value)}`; return obj } } }
     };
 
-    const series = [{ name: "Products Sold", data: values ?? [400, 430, 448] }]
+    const series = [{ name: "Products Sold", data: values }]
 
     return (
         <ApexchartsContainer>
@@ -45,7 +46,7 @@ export default function TopCategoriesCart({ data: { categories, values } }: TopC
                 containerStyle={{ pb: "0px" }}
                 icon={<Icon svgElementAsString={totalIcon} />}
             />
-            <Chart options={options} series={series} type="bar" height={160} />
+            <Chart options={options} series={series} type="bar" height={height} />
         </ApexchartsContainer>
     )
 } 

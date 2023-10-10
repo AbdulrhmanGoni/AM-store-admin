@@ -1,8 +1,8 @@
 "use client"
+import React from "react";
 import { Box, Grid, Paper } from "@mui/material";
 import EarningsChart from "@/components/EarningsChart";
 import SalesGrowth, { dataProps } from "@/components/SalesGrowth";
-import useGetApi from "@/hooks/useGetApi";
 import SvgIcon from "@/components/SvgIcon";
 import MonthlyTarget from "@/components/MonthlyTarget";
 import CardInfoWithChart from "@/components/CardInfoWithChart";
@@ -13,6 +13,7 @@ import { averageOrdersIcon } from "@/components/svgIconsAsString";
 import DisplayInfoBox from "@/components/DisplayInfoBox";
 import { Money } from "@mui/icons-material";
 import randomColorsArr from "@/CONSTANT/randomColorsArr";
+import useMonthlyStatistics from "@/hooks/useMonthlyStatistics";
 
 
 const boxSx = { width: "100%" }
@@ -26,14 +27,12 @@ export const pageSpaces = { xs: 1, md: 2 }
 
 export default function SalesStatistics() {
 
-  let query = "monthly-statistics"
-  const path = `statistics/?get=${query}`;
-  const { data, isError, isLoading } = useGetApi({ key: [query], path });
+  const { data, isLoading, isError } = useMonthlyStatistics()
 
   const monthlyEarnings: number[] = data?.map((mon: dataProps) => {
     let randomNimber = faker.number.float({ precision: 0.01, max: 5000, min: 4000 });
     return mon.totalEarnings ? mon.totalEarnings : randomNimber
-  });
+  }) ?? [0];
   const totalEarnings: number = monthlyEarnings?.reduce((acc, cur) => acc + cur, 0);
 
   return (
@@ -77,7 +76,7 @@ export default function SalesStatistics() {
             icon={<SvgIcon svgElementAsString={averageOrdersIcon} />}
             title="Average Earnings"
             description="per month"
-            mainValue={`$${nDecorator((totalEarnings / data?.length).toFixed(2))}`}
+            mainValue={data ? `$${nDecorator((totalEarnings / (data.length)).toFixed(2))}` : ""}
           />
         </Grid>
       </Grid>

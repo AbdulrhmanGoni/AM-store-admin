@@ -37,7 +37,7 @@ export default function CategoriesEarnings({ data }: { data: chartCategory[] }) 
                 disableIconColor
                 icon={<Icon disableIconColor svgElementAsString={lineChartIcon} />}
             />
-            <Chart options={options} series={data} type="area" height={337} />
+            <Chart options={options} series={data} type="area" height={280} />
         </ApexchartsContainer>
     )
 }

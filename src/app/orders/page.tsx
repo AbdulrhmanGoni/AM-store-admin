@@ -8,9 +8,9 @@ import OrdersStatisticsChart from "./components/OrdersStatisticsChart";
 import { averageOrdersIcon, orderIcon } from "@/components/svgIconsAsString";
 import SmallIconBox from "@/components/SmallIconBox";
 import SvgIcon from "@/components/SvgIcon";
-import useGetApi from "@/hooks/useGetApi";
 import { faker } from "@faker-js/faker";
 import { pageSpaces } from "../page";
+import useMonthlyStatistics from "@/hooks/useMonthlyStatistics";
 
 const boxSx = { width: "100%" }
 const paperStyle = {
@@ -23,9 +23,7 @@ const paperStyle = {
 
 const OrdersManagement: FC = function () {
 
-    let query = "monthly-statistics"
-    const path = `statistics/?get=${query}`;
-    const { data, isError, isLoading } = useGetApi({ key: [query], path });
+    const { data, isError, isLoading } = useMonthlyStatistics();
 
     let totalOrders: number = 0;
     const dataChart: number[] = data?.map((doc: { totalOrders: number }) => {
@@ -45,6 +43,8 @@ const OrdersManagement: FC = function () {
                     <SmallIconBox
                         icon={<SvgIcon svgElementAsString={orderIcon} />}
                         svgIconSize={25}
+                        isLoading={isLoading}
+                        isError={isError}
                         boxStyle={{ p: .3 }}
                     />
                 </Typography>

@@ -1,18 +1,21 @@
 "use client"
-import { Box, Grid, Paper, useMediaQuery } from "@mui/material";
+import { Box, Grid, Paper, Typography, useMediaQuery } from "@mui/material";
 import CategoriesEarnings from "../components/CategoriesEarnings";
 import CategoriesEarningsPercentages from "../components/CategoriesEarningsPercentages";
 import ProductsTopSales from "../components/ProductsTopSales";
 import ProductsTopEarnings from "../components/ProductsTopEarnings";
 import randomColorsArr from "@/CONSTANT/randomColorsArr";
 import Icon from "@/components/SvgIcon";
-import { categoriesIcon, inStockIcon } from "@/components/svgIconsAsString";
+import { categoriesIcon, inStockIcon, orderIcon } from "@/components/svgIconsAsString";
 import { stockIcon } from "@/components/stockIcon";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import TopSerieses from "../components/TopSerieses";
 import TopCategories from "../components/TopCategories";
 import useProductsStatisticsContent from "../hooks/useProductsStatisticsContent";
 import DisplayInfoBox from "@/components/DisplayInfoBox";
+import SmallIconBox from "@/components/SmallIconBox";
+import SvgIcon from "@/components/SvgIcon";
+import PageTitle from "@/components/PageTitle";
 
 
 export default function ProductsStatistics() {
@@ -34,9 +37,14 @@ export default function ProductsStatistics() {
     } = useProductsStatisticsContent();
 
     const infoBoxStyle = { flexBasis: "50%", p: 2 }
-
+    // console.log(topSerieses?.seriesesCount[0].count)
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
+            <PageTitle
+                title="Products Statistics"
+                descreption="View statistics and information of products & categories & serieses"
+                icon={<SvgIcon svgElementAsString={orderIcon} />}
+            />
             <Grid container spacing={{ xs: 1, md: 2 }}>
                 <Grid item xs={12} md={6}>
                     <Box sx={{ display: "flex", gap: { xs: 1, md: 2 } }}>
@@ -88,20 +96,13 @@ export default function ProductsStatistics() {
             </Grid>
             <Grid container spacing={{ xs: 1, md: 2 }}>
                 <Grid item xs={12} md={6.5} lg={8}>
-                    <Box sx={{ width: "100%" }}>
-                        <Paper sx={{ p: 1 }}>
-                            <CategoriesEarnings data={earningsChartData} />
-                        </Paper>
-                    </Box>
+                    <Paper sx={{ height: "100%", p: 1 }}>
+                        <CategoriesEarnings data={earningsChartData} />
+                    </Paper>
                 </Grid>
                 <Grid item xs={12} md={5.5} lg={4}>
-                    <Paper sx={{ p: 1, height: "200px" }}>
-                        <CategoriesEarningsPercentages
-                            data={earningsChartData}
-                            totalEarnings={totalEarnings}
-                            isLoading={chartLoading}
-                            isError={chartError}
-                        />
+                    <Paper sx={{ p: 1, height: "100%", }}>
+                        <TopCategories data={topCategoriesData} height={280} />
                     </Paper>
                 </Grid>
             </Grid>
@@ -124,15 +125,20 @@ export default function ProductsStatistics() {
                         />
                     </Paper>
                 </Grid>
+            </Grid>
+            <Grid container spacing={{ xs: 1, md: 2 }}>
                 <Grid item xs={12} md={8} lg={4}>
-                    <Paper sx={{ p: 1 }}>
-                        <TopCategories
-                            data={topCategoriesData}
+                    <Paper sx={{ p: 1, height: "100%" }}>
+                        <CategoriesEarningsPercentages
+                            data={earningsChartData}
+                            totalEarnings={totalEarnings}
+                            isLoading={chartLoading}
+                            isError={chartError}
                         />
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                    <Paper sx={{ p: 1, height: "100%" }}>
+                    <Paper sx={{ p: 1 }}>
                         <TopSerieses
                             isLoading={topSeriesesLoading}
                             data={topSerieses?.topSold}
@@ -140,7 +146,7 @@ export default function ProductsStatistics() {
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                    <Paper sx={{ p: 1, height: "100%" }}>
+                    <Paper sx={{ p: 1 }}>
                         <TopSerieses
                             isLoading={topSeriesesLoading}
                             data={topSerieses?.topEarnings}
