@@ -12,9 +12,9 @@ export default function useMutateApi(props: params) {
 
     async function theFunc({ method, body }: funParams) {
         if (method === "delete") {
-            return (await api.delete(`${host}${path}`, { data: body })).data
+            return (await api.delete(`${host}/${path}`, { data: body })).data
         } else {
-            return (await api[method ?? "post"](`${host}${path}`, body)).data
+            return (await api[method ?? "post"](`${host}/${path}`, body)).data
         }
     }
 

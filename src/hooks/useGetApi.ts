@@ -11,7 +11,7 @@ interface params {
 export default function useGetApi(props: params) {
     const { api } = useApiRequest();
     const { key, path, moreProps } = props;
-    async function theFunc() { return (await api.get(`${host}${path}`)).data }
+    async function theFunc() { return (await api.get(`${host}/${path}`)).data }
     return useQuery({
         queryKey: key,
         queryFn: theFunc,

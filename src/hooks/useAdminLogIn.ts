@@ -19,7 +19,7 @@ export default function useAdminLogIn() {
 
     useEffect(() => {
         setIsLoading(true);
-        api.get(`${host}admin-log-in/${cookie.adminId}`)
+        api.get(`${host}/admin-log-in/${cookie.adminId}`)
             .then(({ data }) => {
                 setAdminData(data);
                 setIsLogged(true);

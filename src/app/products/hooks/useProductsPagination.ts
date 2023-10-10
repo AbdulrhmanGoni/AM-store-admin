@@ -8,7 +8,7 @@ function useGetProducts() {
     async function getProducts({ pageSize, page }) {
         let returnType = "_rate,_comments,_updatedAt,_createdAt"
         let query = `pageSize=${pageSize}&page=${++page}&returnType=${returnType}`
-        try { return (await api.get(`${host}products/pagination?${query}`)).data }
+        try { return (await api.get(`${host}/products/pagination?${query}`)).data }
         catch { return null }
     }
     return { getProducts }

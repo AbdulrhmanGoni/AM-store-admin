@@ -39,7 +39,7 @@ export default function useLogInLogic() {
 
     function apiRequest(path: requestPath, body: requestBody, feedback: requestFeedback) {
         loadingControl(true)
-        api.post(`${host}admin-log-in/${path}`, body)
+        api.post(`${host}/admin-log-in/${path}`, body)
             .then(({ data }) => { if (!!data) complateLog(data); else feedback(data) })
             .catch(() => { message("Unexpected error happened !", "error") })
             .finally(() => { loadingControl(false) })
