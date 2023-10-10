@@ -27,7 +27,7 @@ export const pageSpaces = { xs: 1, md: 2 }
 
 export default function SalesStatistics() {
 
-  const { data, isLoading, isError } = useMonthlyStatistics()
+  const { data, isLoading, isError } = useMonthlyStatistics();
 
   const monthlyEarnings: number[] = data?.map((mon: dataProps) => {
     let randomNimber = faker.number.float({ precision: 0.01, max: 5000, min: 4000 });
@@ -72,6 +72,7 @@ export default function SalesStatistics() {
         </Grid>
         <Grid item xs={12} sm={4.5} lg={4}>
           <CardInfoWithChart
+            isLoading={isLoading}
             theChart={<SmalLine width={200} data={monthlyEarnings} tooltipIsMony />}
             icon={<SvgIcon svgElementAsString={averageOrdersIcon} />}
             title="Average Earnings"

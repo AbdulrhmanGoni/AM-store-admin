@@ -1,16 +1,16 @@
 "use client"
 import { FC } from "react";
-import { Grid, Box, Typography, Paper } from "@mui/material";
+import { Grid, Box, Paper } from "@mui/material";
 import LatestOrdersTable from "./components/LatestOrdersTable"
 import CardInfoWithChart from "@/components/CardInfoWithChart";
 import { SmalBar } from "@/components/SmallChart";
 import OrdersStatisticsChart from "./components/OrdersStatisticsChart";
 import { averageOrdersIcon, orderIcon } from "@/components/svgIconsAsString";
-import SmallIconBox from "@/components/SmallIconBox";
 import SvgIcon from "@/components/SvgIcon";
 import { faker } from "@faker-js/faker";
 import { pageSpaces } from "../page";
 import useMonthlyStatistics from "@/hooks/useMonthlyStatistics";
+import PageTitle from "@/components/PageTitle";
 
 const boxSx = { width: "100%" }
 const paperStyle = {
@@ -34,29 +34,18 @@ const OrdersManagement: FC = function () {
     }) ?? [0]
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }} >
-            <Box>
-                <Typography
-                    variant='h5'
-                    sx={{ mb: 1, position: "relative", display: "flex", alignItems: "center", gap: 1.5 }}>
-                    Orders Management
-                    <SmallIconBox
-                        icon={<SvgIcon svgElementAsString={orderIcon} />}
-                        svgIconSize={25}
-                        isLoading={isLoading}
-                        isError={isError}
-                        boxStyle={{ p: .3 }}
-                    />
-                </Typography>
-                <Typography variant='body1'>
-                    View statistics, View latest orders, Search for orders
-                </Typography>
-            </Box>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
+            <PageTitle
+                title="Orders Management"
+                descreption="View statistics, View latest orders, Search for orders"
+                icon={<SvgIcon svgElementAsString={orderIcon} />}
+            />
             <Grid container spacing={pageSpaces}>
                 <Grid item xs={12} md={5.5} lg={4}>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces, height: "100%" }}>
                         <CardInfoWithChart
-                            theChart={<SmalBar data={dataChart} />}
+                            isLoading={isLoading}
+                            theChart={<SmalBar data={dataChart} width={170} />}
                             icon={<SvgIcon svgElementAsString={averageOrdersIcon} />}
                             title="Avarage Orders"
                             mainValue={`${Math.floor(totalOrders / dataChart?.length)} Orders`}
