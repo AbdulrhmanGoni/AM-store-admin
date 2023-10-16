@@ -4,10 +4,10 @@ import SmallIconBox from './SmallIconBox'
 
 interface PageTitleProps {
     title: string,
-    descreption: string,
+    description: string,
     icon?: JSX.Element
 }
-export default function PageTitle({ title, descreption, icon }: PageTitleProps) {
+export default function PageTitle({ title, description, icon }: PageTitleProps) {
     return (
         <Box>
             <Typography
@@ -20,8 +20,8 @@ export default function PageTitle({ title, descreption, icon }: PageTitleProps) 
                     boxStyle={{ p: .3 }}
                 />
             </Typography>
-            <Typography variant='subtitle1' fontSize="1.1rem">
-                {descreption}
+            <Typography variant='body1'>
+                {description}
             </Typography>
         </Box>
     )

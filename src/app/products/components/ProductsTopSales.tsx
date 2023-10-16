@@ -18,7 +18,7 @@ export default function ProductsTopSales({ data, isLoading, isError }: RecieverP
                 isLoading={isLoading}
                 isError={isError}
                 onRightElement={(product: { sold: string | number }) => {
-                    return <Chip label={`Sold: ${nDecorator(product.sold)}`} />
+                    return <Chip sx={{ borderRadius: 1 }} label={`Sold: ${nDecorator(product.sold)}`} />
                 }}
             />
         </>

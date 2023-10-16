@@ -12,7 +12,7 @@ type SmallChartProps = {
 
 const Container = ({ children }) => {
     return (
-        <Box sx={{ "& svg": { backgroundColor: "transparent !important" } }}>
+        <Box sx={{ "& svg": { backgroundColor: "transparent !important"} }}>
             {children}
         </Box>
     )

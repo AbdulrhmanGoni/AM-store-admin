@@ -17,7 +17,7 @@ export default function ProductsTopEarnings({ data, isLoading, isError }: Reciev
                 isLoading={isLoading}
                 isError={isError}
                 onRightElement={(product: { earnings: number }) => {
-                    return <Chip label={`$${nDecorator(product.earnings?.toFixed(2))}`} />
+                    return <Chip sx={{ borderRadius: 1 }} label={`$${nDecorator(product.earnings?.toFixed(2))}`} />
                 }}
             />
         </>

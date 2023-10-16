@@ -37,7 +37,7 @@ const OrdersManagement: FC = function () {
         <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
             <PageTitle
                 title="Orders Management"
-                descreption="View statistics, View latest orders, Search for orders"
+                description="View statistics, View latest orders, Search for orders"
                 icon={<SvgIcon svgElementAsString={orderIcon} />}
             />
             <Grid container spacing={pageSpaces}>

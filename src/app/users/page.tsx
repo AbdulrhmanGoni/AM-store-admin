@@ -1,10 +1,12 @@
 "use client"
-import { Box, Grid, Paper, Typography } from '@mui/material'
+import { Box, Paper } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid';
 import useUsersPageData from './hooks/useUsersPageData';
 import columns from './functions/UsersGridColumnsConfig';
 import { ErrorThrower } from '@abdulrhmangoni/am-store-library';
 import { pageSpaces } from '../page';
+import PageTitle from '@/components/PageTitle';
+import { Groups } from '@mui/icons-material';
 
 
 export default function UsersPage() {
@@ -17,10 +19,11 @@ export default function UsersPage() {
 
     return (
         <Box>
-            <Box sx={{ mb: 2 }}>
-                <Typography variant='h5'>Users Management</Typography>
-                <Typography>View users information and statistics</Typography>
-            </Box>
+            <PageTitle
+                title='Users Management'
+                description='View users information and statistics'
+                icon={<Groups />}
+            />
             <Box sx={{ display: "flex", gap: pageSpaces }}>
                 <Paper sx={{ width: { xs: "auto", md: "fit-content" } }}>
                     <DataGrid
@@ -50,7 +53,7 @@ export default function UsersPage() {
                     <Paper sx={{ width: "100%", height: "300px" }}></Paper>
                     <Paper sx={{ width: "100%", height: "300px" }}></Paper>
                 </Box>
-            </Box>
+                P</Box>
         </Box>
     )
 }

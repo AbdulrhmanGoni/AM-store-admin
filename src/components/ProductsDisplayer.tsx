@@ -65,7 +65,7 @@ export default function ProductsDisplayer({ id, close, bgColor, textColor }) {
                             images={images}
                         />
                         <Box sx={infoSectionStyle}>
-                            <ElementWithLoadingState isLoading={isLoading} height={40}
+                            <ElementWithLoadingState isLoading={isLoading} height={40} width={300}
                                 element={<Typography key="tit" variant="h6">{title}</Typography>}
                             />
                             <ElementWithLoadingState isLoading={isLoading} height={20} width={200}
