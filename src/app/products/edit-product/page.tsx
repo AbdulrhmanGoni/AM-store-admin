@@ -20,7 +20,7 @@ export default function EditProductPage() {
             <SearchForProductsField
                 actionWithProductId={(id) => push(`products/edit-product/${id}`)}
                 endItemIcon={<Edit />}
-                dominName={host}
+                hostName={host}
             />
         </Paper>
     )

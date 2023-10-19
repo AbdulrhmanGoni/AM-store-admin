@@ -25,7 +25,7 @@ const ProductsManagement: FC = function () {
         <Grid item xs={12}>
           <Card sx={{ p: 2, overflow: "visible" }}>
             <SearchForProductsField
-              dominName={`${host}/`}
+              hostName={host}
               actionWithProductId={(id) => display(id)}
               endItemIcon={<ReadMore />}
             />
