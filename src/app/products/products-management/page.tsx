@@ -17,7 +17,7 @@ const ProductsManagement: FC = function () {
     <>
       <PageTitle
         title="Products Management"
-        descreption="Add, Update and Delete Products"
+        description="Add, Update and Delete Products"
         icon={<SvgIcon svgElementAsString={productsManagementIcon} />}
       />
       <Grid container spacing={2}>

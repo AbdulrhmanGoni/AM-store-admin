@@ -1,21 +1,20 @@
-import { nDecorator } from '@abdulrhmangoni/am-store-library'
-import { Tv } from '@mui/icons-material'
-import { Box, Chip, Divider, List, ListItem, ListItemText, Skeleton, Typography, alpha } from '@mui/material'
-import React from 'react'
+import { JSX } from 'react'
+import { PromiseState, nDecorator } from '@abdulrhmangoni/am-store-library'
+import { Box, Chip, Divider, List, ListItem, ListItemText, Skeleton, Typography } from '@mui/material'
 
-type TopSeriesesProps = {
-    _id: string,
+type TopSeriesesData = {
+    series: string,
     value: number
 }
 
-type DataReceiverProps = {
-    data: TopSeriesesProps[] | any,
-    isLoading?: boolean,
-    isError?: boolean,
+interface TopSeriesesProps extends PromiseState {
+    data: TopSeriesesData[],
+    title: string,
+    icon: JSX.Element,
     isMoney?: boolean
 }
 
-export default function TopSerieses({ data, isLoading, isError, isMoney }: DataReceiverProps) {
+export default function TopSerieses({ data, isLoading, title, icon, isMoney }: TopSeriesesProps) {
     let
         rankingColors = ["#AF9500", "#c0c0c0", "#6A3805"],
         dataArray = data ?? [{}, {}, {}, {}, {}],
@@ -23,8 +22,9 @@ export default function TopSerieses({ data, isLoading, isError, isMoney }: DataR
 
     return (
         <>
-            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <Typography>Top Serieses</Typography> <Tv />
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                {icon}
+                <Typography variant="h6" >{title}</Typography>
             </Box>
             <Divider sx={{ width: "100%", mt: 1 }} />
             <List
@@ -32,10 +32,10 @@ export default function TopSerieses({ data, isLoading, isError, isMoney }: DataR
                 sx={{
                     overflow: "auto",
                     height: "calc(100% - 32px)",
-                    gap: .5
+                    gap: isLoading ? 1 : .5
                 }}>
                 {
-                    dataArray.map(({ _id: series, value }: TopSeriesesProps, index: number) => {
+                    dataArray.map(({ series, value }: TopSeriesesData, index: number) => {
                         return isLoading ?
                             <Skeleton key={index} variant="rounded" width="100%" height={32} />
                             :
@@ -48,7 +48,7 @@ export default function TopSerieses({ data, isLoading, isError, isMoney }: DataR
                                 <Chip
                                     size='small'
                                     variant="outlined"
-                                    sx={{ bgcolor: rankingColors[index] }}
+                                    sx={{ bgcolor: rankingColors[index], borderRadius: 1 }}
                                     label={money + nDecorator(value.toFixed(isMoney ? 2 : 0))}
                                 />
                             </ListItem>

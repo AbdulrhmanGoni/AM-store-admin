@@ -1,5 +1,5 @@
 "use client"
-import { Box, Grid, Paper, Typography, useMediaQuery } from "@mui/material";
+import { Box, Grid, Paper, useMediaQuery } from "@mui/material";
 import CategoriesEarnings from "../components/CategoriesEarnings";
 import CategoriesEarningsPercentages from "../components/CategoriesEarningsPercentages";
 import ProductsTopSales from "../components/ProductsTopSales";
@@ -13,9 +13,10 @@ import TopSerieses from "../components/TopSerieses";
 import TopCategories from "../components/TopCategories";
 import useProductsStatisticsContent from "../hooks/useProductsStatisticsContent";
 import DisplayInfoBox from "@/components/DisplayInfoBox";
-import SmallIconBox from "@/components/SmallIconBox";
 import SvgIcon from "@/components/SvgIcon";
 import PageTitle from "@/components/PageTitle";
+import { rankingIconMedal } from '@/components/rankingIconMedal'
+import { rankingIconCup } from '@/components/rankingIconCup'
 
 
 export default function ProductsStatistics() {
@@ -42,7 +43,7 @@ export default function ProductsStatistics() {
         <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
             <PageTitle
                 title="Products Statistics"
-                descreption="View statistics and information of products & categories & serieses"
+                description="View statistics and information of products & categories & serieses"
                 icon={<SvgIcon svgElementAsString={orderIcon} />}
             />
             <Grid container spacing={{ xs: 1, md: 2 }}>
@@ -53,7 +54,7 @@ export default function ProductsStatistics() {
                             isLoading={productsStatisticsLoading}
                             title="Products"
                             body={nDecorator(String(productsTotals?.totalProducts))}
-                            color={randomColorsArr[3]}
+                            color={randomColorsArr[0]}
                             icon={<Icon svgElementAsString={stockIcon} />}
                             disableIconColor
                             BoxStyle={infoBoxStyle}
@@ -76,7 +77,7 @@ export default function ProductsStatistics() {
                             isLoading={productsStatisticsLoading}
                             title="Products Sold"
                             body={nDecorator(String(productsTotals?.totalProductsSold))}
-                            color={randomColorsArr[0]}
+                            color={randomColorsArr[2]}
                             icon={<Icon svgElementAsString={stockIcon} />}
                             disableIconColor
                             BoxStyle={infoBoxStyle}
@@ -86,7 +87,7 @@ export default function ProductsStatistics() {
                             isLoading={productsStatisticsLoading}
                             title="In Stock"
                             body={nDecorator(String(productsTotals?.totalInStock))}
-                            color={randomColorsArr[2]}
+                            color={randomColorsArr[3]}
                             icon={<Icon svgElementAsString={inStockIcon} />}
                             disableIconColor
                             BoxStyle={infoBoxStyle}
@@ -127,6 +128,27 @@ export default function ProductsStatistics() {
                 </Grid>
             </Grid>
             <Grid container spacing={{ xs: 1, md: 2 }}>
+                <Grid item xs={12} sm={6} lg={4}>
+                    <Paper sx={{ p: 1 }}>
+                        <TopSerieses
+                            title="Best Selling"
+                            icon={<SvgIcon svgElementAsString={rankingIconCup} width={30} height={30} />}
+                            isLoading={topSeriesesLoading}
+                            data={topSerieses?.topEarnings}
+                            isMoney
+                        />
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} sm={6} lg={4}>
+                    <Paper sx={{ p: 1 }}>
+                        <TopSerieses
+                            title="Top Selling"
+                            icon={<SvgIcon svgElementAsString={rankingIconMedal} width={30} height={30} />}
+                            isLoading={topSeriesesLoading}
+                            data={topSerieses?.topSold}
+                        />
+                    </Paper>
+                </Grid>
                 <Grid item xs={12} md={8} lg={4}>
                     <Paper sx={{ p: 1, height: "100%" }}>
                         <CategoriesEarningsPercentages
@@ -134,23 +156,6 @@ export default function ProductsStatistics() {
                             totalEarnings={totalEarnings}
                             isLoading={chartLoading}
                             isError={chartError}
-                        />
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <Paper sx={{ p: 1 }}>
-                        <TopSerieses
-                            isLoading={topSeriesesLoading}
-                            data={topSerieses?.topSold}
-                        />
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <Paper sx={{ p: 1 }}>
-                        <TopSerieses
-                            isLoading={topSeriesesLoading}
-                            data={topSerieses?.topEarnings}
-                            isMoney
                         />
                     </Paper>
                 </Grid>

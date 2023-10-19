@@ -3,18 +3,19 @@ import { Box, Paper, SxProps, Typography } from "@mui/material";
 import SmallIconBox from "@/components/SmallIconBox";
 import { ElementWithLoadingState, PromiseState } from "@abdulrhmangoni/am-store-library";
 
-interface AverageOrdersProps extends PromiseState {
+interface CardInfoWithChartProps extends PromiseState {
     title: string,
     mainValue: any
     description: string,
     theChart?: JSX.Element,
     icon: JSX.Element,
-    sx?: SxProps
+    sx?: SxProps,
+    disableIconColor?: boolean
 }
 
-export default function CardInfoWithChart(props: AverageOrdersProps) {
+export default function CardInfoWithChart(props: CardInfoWithChartProps) {
 
-    let { theChart, icon, title, mainValue, description, sx, isLoading } = props
+    let { theChart, icon, title, mainValue, description, sx, isLoading, disableIconColor } = props
 
     return (
         <Paper
@@ -38,6 +39,7 @@ export default function CardInfoWithChart(props: AverageOrdersProps) {
                     <SmallIconBox
                         boxStyle={{ borderRadius: "50%", p: 1 }}
                         icon={icon}
+                        disableIconColor={disableIconColor}
                     />
                 }
             />
@@ -47,7 +49,7 @@ export default function CardInfoWithChart(props: AverageOrdersProps) {
                 isLoading={isLoading}
                 element={<Typography variant="h6">{title}</Typography>}
             />
-            <Box className="flex-column-center" sx={{ mb: 2, gap: 1}}>
+            <Box className="flex-column-center" sx={{ mb: 2, gap: 1 }}>
                 <ElementWithLoadingState
                     height={33}
                     width={175}
