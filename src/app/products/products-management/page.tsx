@@ -8,6 +8,7 @@ import { ReadMore } from "@mui/icons-material";
 import { SearchForProductsField } from "@abdulrhmangoni/am-store-library";
 import SvgIcon from "@/components/SvgIcon";
 import { productsManagementIcon } from "@/components/svgIconsAsString";
+import host from "@/CONSTANT/API_hostName";
 
 const ProductsManagement: FC = function () {
 
@@ -24,6 +25,7 @@ const ProductsManagement: FC = function () {
         <Grid item xs={12}>
           <Card sx={{ p: 2, overflow: "visible" }}>
             <SearchForProductsField
+              dominName={`${host}/`}
               actionWithProductId={(id) => display(id)}
               endItemIcon={<ReadMore />}
             />
