@@ -3,11 +3,12 @@ import {
     Add, LiveTv, Subtitles,
     AllInbox, AttachMoney, Class,
 } from '@mui/icons-material'
-import { Box, Typography, Grid, Paper } from '@mui/material'
+import { Box, Typography, Grid, Paper, LinearProgress } from '@mui/material'
 import { LoadingButton } from '@mui/lab';
 import { CustomTextField, ErrorMessage, ImagesInputs } from '../components/ProductsFormComponents';
 import useAddProducts from '../hooks/useAddProducts';
 import { pageSpaces } from '@/app/page';
+import DarkOverlay from '@/components/DarkOverlay';
 
 export default function AddProductForm() {
 
@@ -34,7 +35,22 @@ export default function AddProductForm() {
                 "& input": { pl: 1.5 }
             }}
         >
-            <Paper sx={{ p: pageSpaces, maxWidth: 1000 }}>
+            <Paper sx={{ p: pageSpaces, maxWidth: 1000, position: "relative" }}>
+                <LinearProgress sx={{
+                    display: isLoading ? "block" : "none",
+                    position: "absolute",
+                    width: "100%",
+                    left: 0,
+                    top: 0
+                }}
+                />
+                <DarkOverlay
+                    style={{
+                        zIndex: isLoading ? 10 : 0,
+                        display: isLoading ? "flex" : "none",
+                        borderRadius: .5
+                    }}
+                />
                 <Typography sx={{ p: "8px 4px", pb: pageSpaces }} variant='h5'>Add Product</Typography>
                 <Grid container spacing={pageSpaces}>
                     <Grid item xs={12} md={6}>

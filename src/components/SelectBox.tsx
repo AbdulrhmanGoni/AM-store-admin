@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { MenuItem, TextField } from '@mui/material'
 
 interface SelectBoxProps {
     values: string[],
     defaultValue?: string,
-    size?: 'small' | 'medium'
+    size?: 'small' | 'medium',
+    noneOption?: boolean,
+    onSelect: (value: string, index: number) => void
 }
 
-export default function SelectBox({ defaultValue, size, values }: SelectBoxProps) {
+export default function SelectBox({ defaultValue, size, values, noneOption, onSelect }: SelectBoxProps) {
 
-    const [selected, setSelected] = useState<string>("None");
+    const [selected, setSelected] = useState<string>(noneOption ? "None" : values[0]);
 
     useEffect(() => { defaultValue && setSelected(defaultValue) }, [defaultValue])
 
@@ -18,10 +20,14 @@ export default function SelectBox({ defaultValue, size, values }: SelectBoxProps
             select
             size={size}
             value={selected}
-            onChange={(event) => { setSelected(event.target.value) }}
-            sx={{ "& .MuiSelect-select": { p: "4px 8px" } }}
+            onChange={(event) => {
+                let value = event.target.value
+                setSelected(value)
+                onSelect(value, values.indexOf(value))
+            }}
+            sx={{ "& .MuiSelect-select": { p: "4px 8px", pr: "40px !important" } }}
         >
-            <MenuItem key="None" value="None">None</MenuItem>
+            {noneOption && <MenuItem key="None" value="None">None</MenuItem>}
             {values.map((value) => (<MenuItem key={value} value={value}>{value}</MenuItem>))}
         </TextField>
     )

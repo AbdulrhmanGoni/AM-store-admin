@@ -1,6 +1,6 @@
 import CustomChartBox from "./CustomChartBox";
 import SvgIcon from "@/components/SvgIcon";
-import { growthIcon } from "./svgIconsAsString";
+import { growChartIcon2 } from "./growChartIcon";
 import moment from "moment";
 import { NorthEast, SouthEast } from "@mui/icons-material";
 import { SmalLine } from "./SmallChart";
@@ -36,7 +36,7 @@ export default function SalesGrowth({ data, isError, isLoading }: SalesGrowthPro
     return (
         <CustomChartBox
             title="Sales growth"
-            titleIcon={<SvgIcon svgElementAsString={growthIcon} />}
+            titleIcon={<SvgIcon svgElementAsString={growChartIcon2} />}
             isLoading={isLoading}
             isError={isError}
             smallChart={<SmalLine data={[beforeLastMonthEarnings, lastMonthEarnings]} tooltipIsMony />}

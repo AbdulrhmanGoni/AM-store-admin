@@ -38,7 +38,6 @@ export default function ProductsStatistics() {
     } = useProductsStatisticsContent();
 
     const infoBoxStyle = { flexBasis: "50%", p: 2 }
-    // console.log(topSerieses?.seriesesCount[0].count)
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
             <PageTitle

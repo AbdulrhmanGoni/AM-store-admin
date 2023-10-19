@@ -197,15 +197,11 @@ function ImageInput(props: FieldProps & { clear?: boolean }) {
             zIndex: 1
         },
         AddIconStyle = { width: "35px", height: "35px" },
-        imageStyle: CSSProperties = {
-            ...center,
-            borderRadius: 0,
-            zIndex: 2
-        },
-        imageContainerStyle: CSSProperties = {
+        fieldContainerStyle: CSSProperties = {
             position: "relative",
             height: "120px!important",
-            width: "100%"
+            width: "100%",
+            ...border
         },
         labelStyle: CSSProperties = {
             cursor: disabled ? "not-allowed" : "pointer",
@@ -214,8 +210,7 @@ function ImageInput(props: FieldProps & { clear?: boolean }) {
             alignItems: "center",
             justifyContent: "center",
             gap: 1, ...center,
-            borderRadius: "4px",
-            ...border
+            borderRadius: "4px"
         },
         floatingIconStyle: CSSProperties = {
             position: "absolute",
@@ -227,7 +222,7 @@ function ImageInput(props: FieldProps & { clear?: boolean }) {
         }
 
     return (
-        <Box sx={imageContainerStyle}>
+        <Box sx={fieldContainerStyle}>
             <TextField
                 type={readyUrl ? "text" : "file"}
                 name={name}
@@ -247,12 +242,16 @@ function ImageInput(props: FieldProps & { clear?: boolean }) {
             </Box>
             {
                 (imageSrc || readyUrl) &&
-                <>
-                    <Avatar
-                        sx={imageStyle}
+                <Box sx={{ ...center, zIndex: 2, bgcolor: "background.paper" }}>
+                    <Box
+                        component="img"
+                        sx={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "contain"
+                        }}
                         src={readyUrl ?? imageSrc}
                         alt={name}
-                        imgProps={{ sx: { objectFit: "contain" } }}
                     />
                     <ChangeCircleOutlined
                         onClick={openInput}
@@ -262,9 +261,8 @@ function ImageInput(props: FieldProps & { clear?: boolean }) {
                         sx={{ ...floatingIconStyle, right: "35px", bgcolor: "error.main" }}
                         onClick={clearInput}
                     />
-                </>
+                </Box>
             }
         </Box>
     )
 }
-

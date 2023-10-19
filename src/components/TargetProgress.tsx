@@ -1,6 +1,9 @@
 import * as React from 'react';
 import calculatePercentage from '@/functions/calculatePercentage'
 import { LinearProgress, CircularProgress, Typography, Box, SxProps } from '@mui/material'
+import { Done, NorthEast } from '@mui/icons-material';
+import { nDecorator } from '@abdulrhmangoni/am-store-library';
+
 
 interface TargetProgressProps {
     target: number,
@@ -9,15 +12,34 @@ interface TargetProgressProps {
 }
 
 export function TargetProgressLine({ target, value, progressStyle }: TargetProgressProps) {
-    const percentage = calculatePercentage(target, value);
+    let achivedPercentage = calculatePercentage(target, value)
+    const percentage = achivedPercentage ? achivedPercentage : 0
+    const isCompleted = percentage >= 100
     return (
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 1 }}>
-            <LinearProgress
-                sx={{ width: "100%", ...progressStyle }}
-                variant="determinate"
-                value={percentage}
-            />
-            <Typography>{percentage}%</Typography>
+        <Box>
+            <Box className="flex-row-center-between">
+                <Typography variant='h6' fontSize="16px">
+                    Current Earnings: ${nDecorator(value?.toFixed(2))}
+                </Typography>
+                <Typography variant='body1' className='flex-row-center' color="success.main">
+                    {
+                        percentage > 100 &&
+                        <>
+                            {(percentage - 100).toFixed(2)}%
+                            <NorthEast sx={{ fontSize: "1.3rem" }} color='success' />
+                        </>
+                    }
+                </Typography>
+            </Box>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: .5 }}>
+                <LinearProgress
+                    sx={{ width: "100%", ...progressStyle }}
+                    variant="determinate"
+                    value={isCompleted ? 100 : percentage}
+                    color={isCompleted ? "success" : "primary"}
+                />
+                {isCompleted ? <Done color="success" /> : <Typography>{percentage}%</Typography>}
+            </Box>
         </Box>
     )
 }
