@@ -1,0 +1,142 @@
+import {
+    Collapse, useTheme,
+    List, ListItem, ListItemButton,
+    ListItemIcon, ListItemText, alpha,
+} from '@mui/material';
+import { useState, useEffect, MouseEvent } from "react";
+import sideBarLinks, { LinkProps } from './SideBarLinks';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ArrowDropDown } from '@mui/icons-material';
+
+interface LinkItemProps extends LinkProps {
+    close?: () => void,
+    onClick?: () => void,
+    isParent?: boolean,
+    isChild?: boolean,
+    children?: JSX.Element | false,
+    endIcon?: JSX.Element | false,
+}
+
+function isCurrentPath(target: string, pathname: string): boolean {
+    const isTheRoot = target === "/"
+    return !!(isTheRoot ? target === pathname : pathname.match(new RegExp(target, "gi")))
+}
+
+function LinkItem({ target, icon, text, close, onClick, isParent, isChild, children, endIcon }: LinkItemProps) {
+
+    const { pathname } = useLocation();
+    const navigate = useNavigate();
+    const { palette: { primary: { main }, background: { paper }, text: { primary: txt } } } = useTheme();
+
+    function whenClick(event: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) {
+        event.preventDefault()
+        onClick?.();
+        if (!isParent) { navigate(target); close?.() }
+        return false
+    }
+
+    const isCurr = isCurrentPath(target, pathname)
+    const innerLinkColor = isCurr ? "#fff" : txt;
+    const linkBg = isCurr ? `${main}` : paper;
+    const itemSx = {
+        color: innerLinkColor,
+        bgcolor: linkBg,
+        "&:hover": { bgcolor: isCurr ? undefined : alpha(main, .25) },
+        borderBottom: `solid 1px ${alpha(innerLinkColor, .2)}`,
+        borderRadius: 1,
+        "& :is(svg, g, path)": {
+            fill: innerLinkColor + '!important',
+            color: innerLinkColor + '!important',
+        }
+    }
+
+    const listItemDot = isChild ? {
+        position: "relative",
+        "&::before": {
+            content: "' '",
+            bgcolor: "primary.main",
+            width: 10, height: 10,
+            position: "absolute",
+            left: 10, top: "50%",
+            borderRadius: "50%",
+            transform: "translateY(-50%)"
+        }
+    } : {}
+
+    return (
+        <>
+            <ListItem
+                disablePadding
+                sx={{
+                    width: 300,
+                    pl: isChild ? 4 : "",
+                    ...listItemDot,
+                }}
+            >
+                <ListItemButton href={target} LinkComponent={"a"} sx={itemSx} onClick={(e) => whenClick(e)}>
+                    <ListItemIcon sx={{ minWidth: "33px" }}>{icon}</ListItemIcon>
+                    <ListItemText primary={text} />
+                    {endIcon}
+                </ListItemButton>
+            </ListItem>
+            {children}
+        </>
+    )
+}
+
+export default function SideBarLinksList({ close }: { close: () => void }) {
+
+    const { pathname } = useLocation();
+    const [currentPath, setCurrentPath] = useState<string>("none");
+
+    useEffect(() => { setCurrentPath(pathname) }, [])
+
+    return (
+        <List sx={listStyle} disablePadding>
+            {sideBarLinks.map(({ target, text, icon, nestedLinks }) => {
+                const
+                    openChildren = isCurrentPath(target, currentPath),
+                    hasChildren = !!nestedLinks?.length
+                return (
+                    <LinkItem
+                        key={target} close={close}
+                        onClick={() => { setCurrentPath((state) => state === target ? "none" : target) }}
+                        icon={icon} text={text} target={target}
+                        isParent={hasChildren}
+                        endIcon={
+                            hasChildren &&
+                            <ArrowDropDown
+                                sx={{
+                                    transition: ".3s",
+                                    transform: openChildren ? "rotate(180deg)" : "none"
+                                }}
+                            />
+                        }
+                    >
+                        {
+                            !!nestedLinks &&
+                            <Collapse in={openChildren} timeout="auto" unmountOnExit>
+                                <List sx={listStyle} disablePadding>
+                                    {nestedLinks?.map(link => {
+                                        return (
+                                            <LinkItem
+                                                key={link.target}
+                                                close={close}
+                                                icon={link.icon}
+                                                text={link.text}
+                                                target={`${target}/${link.target}`}
+                                                isChild
+                                            />
+                                        )
+                                    })}
+                                </List>
+                            </Collapse>
+                        }
+                    </LinkItem>
+                )
+            })}
+        </List>
+    )
+}
+
+const listStyle = { display: "flex", flexDirection: "column", gap: .5 }
