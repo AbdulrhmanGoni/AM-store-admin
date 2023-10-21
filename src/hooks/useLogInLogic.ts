@@ -1,5 +1,5 @@
 import { useState } from "react";
-import host from "../CONSTANT/API_hostName";
+import host from "../CONSTANTS/API_hostName";
 import useApiRequest from "./useApiRequest";
 import { useCookies } from "react-cookie";
 import useNotifications from "./useNotifications";

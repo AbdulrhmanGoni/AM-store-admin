@@ -9,7 +9,7 @@ export interface UseUsersDataType {
 
 export default function useUsersStatistics() {
 
-    let query = "users-statistics"
+    const query = "users-statistics"
     const path = `statistics/?get=${query}`;
     const {
         data: usersData,

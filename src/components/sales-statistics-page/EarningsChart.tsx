@@ -7,7 +7,7 @@ import { ApexOptions } from "apexcharts";
 import { Money } from "@mui/icons-material";
 import ChartTitle from "../ChartTitle";
 import { MonthStatistics, MonthlyStatistics } from "../../hooks/useMonthlyStatistics";
-import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANT/MONTHES";
+import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
 
 interface EarningsChartProps extends MonthlyStatistics { }
 
@@ -33,7 +33,7 @@ export default function EarningsChart({ monthesData }: EarningsChartProps) {
             x: {
                 formatter: (index) => MONTHES_FULL_NAME[index - 1],
             },
-            y: { formatter: (value: number, obj: string) => { obj = "$" + nDecorator(value); return obj } }
+            y: { formatter: (value: number) => "$" + nDecorator(value) }
         },
         noData: {
             text: "No data fetched yet",

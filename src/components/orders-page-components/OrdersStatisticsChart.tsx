@@ -6,7 +6,7 @@ import { ApexOptions } from "apexcharts";
 import Icon from "../SvgIcon";
 import { averageOrdersIcon } from "../svgIconsAsString";
 import ChartTitle from "../ChartTitle";
-import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANT/MONTHES";
+import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
 
 type OrdersStatisticsChartProps = {
     data: number[],

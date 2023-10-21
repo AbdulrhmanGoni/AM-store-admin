@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import useApiRequest from './useApiRequest';
-import { host } from '../CONSTANT/API_hostName';
+import { host } from '../CONSTANTS/API_hostName';
 import { useCookies } from 'react-cookie';
 import { AdminData } from '../types/dataTypes';
 

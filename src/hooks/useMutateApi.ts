@@ -1,12 +1,11 @@
 import { MutationKey, useMutation } from '@tanstack/react-query'
-import { host } from '../CONSTANT/API_hostName';
+import { host } from '../CONSTANTS/API_hostName';
 import useApiRequest from './useApiRequest';
-import { JSX } from 'react';
 
 
 interface params { key: MutationKey, path: string }
 interface funParams {
-    body: JSX.Element | string | number,
+    body: unknown,
     method?: "put" | "post" | "delete"
 }
 

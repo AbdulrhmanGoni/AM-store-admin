@@ -5,7 +5,7 @@ import { NorthEast, SouthEast } from "@mui/icons-material";
 import { SmalLine } from "../SmallChart";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { MonthlyStatistics, MonthStatistics } from "../../hooks/useMonthlyStatistics";
-import MONTHES from "../../CONSTANT/MONTHES";
+import MONTHES from "../../CONSTANTS/MONTHES";
 
 interface SalesGrowthProps extends MonthlyStatistics { }
 

@@ -10,9 +10,9 @@ import { SmalLine } from "../components/SmallChart";
 import { averageOrdersIcon } from "../components/svgIconsAsString";
 import DisplayInfoBox from "../components/DisplayInfoBox";
 import moneyIcon from "../components/moneyIcon";
-import randomColorsArr from "../CONSTANT/randomColorsArr";
+import randomColorsArr from "../CONSTANTS/randomColorsArr";
 import useMonthlyStatistics, { MonthStatistics } from "../hooks/useMonthlyStatistics";
-import pageSpaces from "../CONSTANT/pageSpaces";
+import pageSpaces from "../CONSTANTS/pageSpaces";
 
 
 const boxSx = { width: "100%" }

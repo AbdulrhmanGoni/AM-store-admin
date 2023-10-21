@@ -8,7 +8,7 @@ import SvgIcon from "../components/SvgIcon";
 import { faker } from "@faker-js/faker";
 import useMonthlyStatistics, { MonthStatistics } from "../hooks/useMonthlyStatistics";
 import PageTitle from "../components/PageTitle";
-import pageSpaces from "../CONSTANT/pageSpaces";
+import pageSpaces from "../CONSTANTS/pageSpaces";
 
 const boxSx = { width: "100%" }
 const paperStyle = {
@@ -19,7 +19,7 @@ const paperStyle = {
     p: 1
 }
 
-export default function OrdersManagementPage(){
+export default function OrdersManagementPage() {
 
     const { monthesData, isLoading } = useMonthlyStatistics();
 

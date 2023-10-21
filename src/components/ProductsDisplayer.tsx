@@ -1,6 +1,6 @@
 import { useEffect, useState, JSX } from "react"
 import { Card, Typography, Box, IconButton, Rating, Button } from "@mui/material"
-import { productData } from "@/types/dataTypes"
+import { productData } from "../types/dataTypes"
 import { Close, Delete, Edit } from "@mui/icons-material"
 import {
     ActionAlert,
@@ -9,27 +9,35 @@ import {
     ProductImagesDisplayer,
     nDecorator
 } from "@abdulrhmangoni/am-store-library"
-import useProductsActions from "../app/products/hooks/useProductsActions"
+import useProductsActions from "../hooks/useProductsActions"
 import { CSSProperties } from "@mui/material/styles/createMixins"
+// import { useNavigate } from "react-router-dom"
 
+interface ProductsDisplayerProps {
+    id: string,
+    close: () => void,
+    bgColor: string,
+    textColor: string
+}
+export default function ProductsDisplayer({ id, close, bgColor, textColor }: ProductsDisplayerProps) {
 
-export default function ProductsDisplayer({ id, close, bgColor, textColor }) {
-
+    // const navigate = useNavigate();
     const { getProduct, deleteProduct } = useProductsActions();
     const [product, setProduct] = useState<productData>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
     const [cardsOpacity, setCardsOpacity] = useState<number>(0);
 
-    function fetchProduct(productId: string) {
-        setIsLoading(true)
-        getProduct(productId)
-            .then((data) => { setProduct(data) })
-            .catch(() => { setIsError(true) })
-            .finally(() => { setIsLoading(false) })
-    }
+    useEffect(() => {
+        if (!product) {
+            setIsLoading(true)
+            getProduct(id)
+                .then((data) => { setProduct(data) })
+                .catch(() => { setIsError(true) })
+                .finally(() => { setIsLoading(false) })
+        }
+    }, [getProduct, id, product]);
 
-    useEffect(() => { !product && fetchProduct(id) }, [id]);
     useEffect(() => { setCardsOpacity(1) }, [id]);
 
     const { title, price, description, series, images, sold, earnings, _id } = product ?? {}
@@ -46,7 +54,7 @@ export default function ProductsDisplayer({ id, close, bgColor, textColor }) {
     }
 
     return (
-        <Box sx={containerStyle}>
+        <Box id="product-displayer-container" sx={containerStyle}>
             {
                 isError ? <ErrorHappend
                     icon={<CloseIcon />}
@@ -80,7 +88,7 @@ export default function ProductsDisplayer({ id, close, bgColor, textColor }) {
                                 element={
                                     <Typography key="ear" variant="subtitle1">
                                         {
-                                            !!earnings ?
+                                            earnings ?
                                                 `This product achieves $${nDecorator(earnings?.toFixed(2))} of earnings`
                                                 : "This product has not been sold before"
                                         }
@@ -118,7 +126,7 @@ export default function ProductsDisplayer({ id, close, bgColor, textColor }) {
                                             variant="contained"
                                             size="small"
                                             endIcon={<Edit />}
-                                        // onClick={async () => { close(); push(`products/edit-product/${_id}`) }}
+                                            // onClick={() => { close(); navigate(`products/edit-product/${_id}`) }}
                                         >
                                             Edit
                                         </Button>

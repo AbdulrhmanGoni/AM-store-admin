@@ -6,7 +6,7 @@ import SelectBox from '../SelectBox'
 import SvgIcon from '../SvgIcon'
 import { targetIcon } from '../targetIcon'
 import { MonthlyStatistics } from '../../hooks/useMonthlyStatistics'
-import MONTHES from '../../CONSTANT/MONTHES'
+import MONTHES from '../../CONSTANTS/MONTHES'
 
 interface MonthlyTargetProps extends MonthlyStatistics { }
 

@@ -11,12 +11,16 @@ import {
 } from "react-router-dom";
 import SalesStatisticsPage from './pages/SalesStatisticsPage.tsx'
 import OrdersManagementPage from './pages/OrdersManagementPage.tsx';
+import ProductsManagementPage from './pages/ProductsManagementPage.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index element={<SalesStatisticsPage />} />
       <Route path='orders' element={<OrdersManagementPage />} />
+      <Route path='products'>
+        <Route path='products-management' element={<ProductsManagementPage />} />
+      </Route>
     </Route>
   )
 );
