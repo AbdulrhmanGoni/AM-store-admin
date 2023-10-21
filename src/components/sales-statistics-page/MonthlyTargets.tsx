@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { Box, Paper, Typography } from '@mui/material'
-import { TargetProgressLine } from './TargetProgress'
+import { TargetProgressLine } from '../TargetProgress'
 import { ElementWithLoadingState, nDecorator } from '@abdulrhmangoni/am-store-library'
-import SelectBox from './SelectBox'
-import SvgIcon from './SvgIcon'
-import { targetIcon } from './targetIcon'
-import { MonthlyStatistics } from '../hooks/useMonthlyStatistics'
-import MONTHES from '../CONSTANT/MONTHES'
+import SelectBox from '../SelectBox'
+import SvgIcon from '../SvgIcon'
+import { targetIcon } from '../targetIcon'
+import { MonthlyStatistics } from '../../hooks/useMonthlyStatistics'
+import MONTHES from '../../CONSTANT/MONTHES'
 
 interface MonthlyTargetProps extends MonthlyStatistics { }
 

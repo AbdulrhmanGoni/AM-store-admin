@@ -1,13 +1,13 @@
 import { useTheme } from "@mui/material";
 import Chart from "react-apexcharts";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
-import ApexchartsContainer from "./ApexchartsContainer";
+import ApexchartsContainer from "../ApexchartsContainer";
 import { faker } from "@faker-js/faker";
 import { ApexOptions } from "apexcharts";
 import { Money } from "@mui/icons-material";
-import ChartTitle from "./ChartTitle";
-import { MonthStatistics, MonthlyStatistics } from "../hooks/useMonthlyStatistics";
-import MONTHES, { MONTHES_FULL_NAME } from "../CONSTANT/MONTHES";
+import ChartTitle from "../ChartTitle";
+import { MonthStatistics, MonthlyStatistics } from "../../hooks/useMonthlyStatistics";
+import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANT/MONTHES";
 
 interface EarningsChartProps extends MonthlyStatistics { }
 

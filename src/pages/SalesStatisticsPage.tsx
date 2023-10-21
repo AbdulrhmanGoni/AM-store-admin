@@ -1,8 +1,8 @@
 import { Box, Grid, Paper } from "@mui/material";
-import EarningsChart from "../components/EarningsChart";
-import SalesGrowth from "../components/SalesGrowth";
+import EarningsChart from "../components/sales-statistics-page/EarningsChart";
+import SalesGrowth from "../components/sales-statistics-page/SalesGrowth";
 import SvgIcon from "../components/SvgIcon";
-import MonthlyTargets from "../components/MonthlyTargets";
+import MonthlyTargets from "../components/sales-statistics-page/MonthlyTargets";
 import CardInfoWithChart from "../components/CardInfoWithChart";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { faker } from "@faker-js/faker";

@@ -1,10 +1,10 @@
-import CustomChartBox from "./CustomChartBox";
-import SvgIcon from "./SvgIcon";
-import { averageEarningsIcon } from "./svgIconsAsString";
+import CustomChartBox from "../CustomChartBox";
+import SvgIcon from "../SvgIcon";
+import { averageEarningsIcon } from "../svgIconsAsString";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
-import { SmalLine } from "./SmallChart";
+import { SmalLine } from "../SmallChart";
 import { faker } from "@faker-js/faker";
-import { MonthStatistics, MonthlyStatistics } from "../hooks/useMonthlyStatistics";
+import { MonthStatistics, MonthlyStatistics } from "../../hooks/useMonthlyStatistics";
 
 
 interface AverageEarningsProps extends MonthlyStatistics {
