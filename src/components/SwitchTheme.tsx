@@ -1,19 +1,18 @@
-import { useContext } from 'react';
 import { FormGroup, FormControlLabel, Switch, styled } from '@mui/material';
-import { Context } from './SwitchThemeContext';
 import { useCookies } from 'react-cookie';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
-    width: 54,
-    height: 30,
-    padding: 7,
+    width: 45,
+    height: 16,
+    padding: 0,
+    overflow: "visible",
     '& .MuiSwitch-switchBase': {
         margin: 1,
         padding: 1,
-        transform: 'translateX(4px)',
+        transform: 'translate(-3px, -6px)',
         '&.Mui-checked': {
             color: '#fff',
-            transform: 'translateX(22px)',
+            transform: 'translate(20px, -6px)',
             '& .MuiSwitch-thumb:before': {
                 backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
                     '#fff',
@@ -52,26 +51,25 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 export default function SwitchTheme() {
 
-    const setMode = useContext(Context);
-    const [coockies, setCoockies] = useCookies();
-    const mode = coockies.theme;
+    const [{ theme: mode }, setCoockies] = useCookies();
 
     function switchTheme() {
-        if (mode === "light") {
-            setCoockies("theme", "dark")
-            setMode!("dark");
-        } else {
-            setCoockies("theme", "light")
-            setMode!("light");
-        }
+        setCoockies("theme", mode === "light" ? "dark" : "light")
     }
 
     return (
         <FormGroup>
             <FormControlLabel
                 sx={{ "& lable": { mr: 0 } }}
-                control={<MaterialUISwitch sx={{ m: 1 }} checked={!(mode === "dark")} />}
-                onChange={switchTheme}
+                control={
+                    <MaterialUISwitch
+                        onChange={() => {
+                            switchTheme()
+                        }}
+                        checked={!(mode === "dark")}
+                    />
+                }
+                // onChange={}
                 label=""
             />
         </FormGroup>
