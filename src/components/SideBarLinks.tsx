@@ -19,7 +19,7 @@ export interface LinkProps {
 const drawerLinks: LinkProps[] = [
     {
         target: "/",
-        text: "Dashboard",
+        text: "Sales Analytics",
         icon: <AnalyticsOutlined />
     },
     {

@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 export default function useCustomTheme(): { theme: Theme, appStyle: SxProps } {
 
     const [{ theme: mode }] = useCookies();
-    const lightBackground = { default: "#e9ebf3", paper: "#fff" }
+    const lightBackground = { default: "#f9f9f9", paper: "#fff" }
     const darkBackground = { default: "#111936", paper: "#0a1336" }
 
     const theme = createTheme({
@@ -13,7 +13,13 @@ export default function useCustomTheme(): { theme: Theme, appStyle: SxProps } {
             mode: mode === "light" ? "light" : "dark",
             primary: { main: indigo["A400"] },
             action: { hover: "3d5afe4d" },
-            background: mode === "light" ? lightBackground : darkBackground
+            background: mode === "light" ? lightBackground : darkBackground,
+            success: { main: "#66bb6a" }
+        },
+        typography: {
+            allVariants: {
+                color: mode === "light" ? "#000000" : "#fff"
+            }
         }
     })
 
@@ -24,8 +30,8 @@ export default function useCustomTheme(): { theme: Theme, appStyle: SxProps } {
         flexDirection: "column",
         minHeight: "100vh",
         bgcolor: background.default,
-        "& *::-webkit-scrollbar-thumb": { bgcolor: primary.main },
-        "& *::-webkit-scrollbar": { bgcolor: text.primary, width: "3px", height: "6px" },
+        "*::-webkit-scrollbar": { bgcolor: text.primary, width: "3px", height: "6px" },
+        "*::-webkit-scrollbar-thumb": { bgcolor: primary.main },
         "& input:autofill": {
             boxShadow: `0 0 0 100px ${background.default} inset !important`,
             WebkitTextFillColor: `${text.primary} !important`

@@ -7,7 +7,7 @@ import { ApexOptions } from "apexcharts";
 import { Money } from "@mui/icons-material";
 import ChartTitle from "./ChartTitle";
 import { MonthStatistics, MonthlyStatistics } from "../hooks/useMonthlyStatistics";
-import { MONTHES_FULL_NAME } from "../CONSTANT/MONTHES";
+import MONTHES, { MONTHES_FULL_NAME } from "../CONSTANT/MONTHES";
 
 interface EarningsChartProps extends MonthlyStatistics { }
 
@@ -18,7 +18,7 @@ export default function EarningsChart({ monthesData }: EarningsChartProps) {
         chart: { type: "area" },
         dataLabels: { enabled: false },
         stroke: { curve: 'smooth' },
-        xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Oug', 'Sep', 'Oct', "Des", "Nov"] },
+        xaxis: { categories: MONTHES },
         yaxis: { title: { text: 'Dolars ($)' } },
         theme: {
             mode,

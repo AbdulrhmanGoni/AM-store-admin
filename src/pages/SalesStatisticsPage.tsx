@@ -57,6 +57,7 @@ export default function SalesStatisticsPage() {
           <DisplayInfoBox
             type="columnly"
             title="Total Earnings"
+            isLoading={isLoading}
             body={`$${nDecorator(totalEarnings?.toFixed(2))}`}
             bodyColor="success.main"
             icon={<SvgIcon svgElementAsString={moneyIcon} />}
