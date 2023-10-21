@@ -1,22 +1,21 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Box, Paper, Typography } from '@mui/material'
 import { TargetProgressLine } from './TargetProgress'
-import { ElementWithLoadingState, PromiseState, nDecorator } from '@abdulrhmangoni/am-store-library'
-import moment, { monthsShort } from 'moment'
-import SelectBox from '@/components/SelectBox'
+import { ElementWithLoadingState, nDecorator } from '@abdulrhmangoni/am-store-library'
+import SelectBox from './SelectBox'
 import SvgIcon from './SvgIcon'
 import { targetIcon } from './targetIcon'
+import { MonthlyStatistics } from '../hooks/useMonthlyStatistics'
+import MONTHES from '../CONSTANT/MONTHES'
 
-interface MonthlyTargetProps extends PromiseState {
-    monthesData: any[]
-}
+interface MonthlyTargetProps extends MonthlyStatistics { }
 
 export default function MonthlyTargets({ monthesData, isLoading }: MonthlyTargetProps) {
 
     const [monthIndex, setMonthIndex] = useState<number>(new Date().getMonth());
     const [loading, setLoading] = useState<boolean>(false);
 
-    let loadingState = isLoading || loading
+    const loadingState = isLoading || loading
 
     return (
         <Paper sx={{ display: "flex", flexDirection: "column", justifyContent: "space-around", gap: 1, p: 2, height: "100%" }}>
@@ -51,8 +50,8 @@ export default function MonthlyTargets({ monthesData, isLoading }: MonthlyTarget
                     height={32}
                     element={
                         <SelectBox
-                            values={monthsShort()}
-                            defaultValue={moment().month(monthIndex).format("MMM")}
+                            values={MONTHES}
+                            defaultValue={MONTHES[monthIndex]}
                             onSelect={(_, index) => {
                                 setLoading(true)
                                 setTimeout(() => {
@@ -70,8 +69,8 @@ export default function MonthlyTargets({ monthesData, isLoading }: MonthlyTarget
                 element={
                     <TargetProgressLine
                         progressStyle={{ height: 15, borderRadius: 1 }}
-                        target={monthesData?.[monthIndex].earningsTarget}
-                        value={monthesData?.[monthIndex].totalEarnings}
+                        target={monthesData?.[monthIndex].earningsTarget ?? 0}
+                        value={monthesData?.[monthIndex].totalEarnings ?? 0}
                     />
                 }
             />

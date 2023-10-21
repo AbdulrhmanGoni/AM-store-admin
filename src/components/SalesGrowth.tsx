@@ -1,32 +1,27 @@
 import CustomChartBox from "./CustomChartBox";
 import SvgIcon from "./SvgIcon";
 import { growChartIcon2 } from "./growChartIcon";
-import moment from "moment";
 import { NorthEast, SouthEast } from "@mui/icons-material";
 import { SmalLine } from "./SmallChart";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
-import { PromiseState } from "../types/interfaces";
+import { MonthlyStatistics, MonthStatistics } from "../hooks/useMonthlyStatistics";
+import MONTHES from "../CONSTANT/MONTHES";
 
-interface SalesGrowthProps extends PromiseState { data: dataProps[] }
-
-export interface dataProps {
-    month: string,
-    totalEarnings: number
-}
+interface SalesGrowthProps extends MonthlyStatistics { }
 
 function countGrowthRete(pastValue: number = 1, currentValue: number = 1) {
     return (currentValue - pastValue) / pastValue
 }
 
-export default function SalesGrowth({ data, isError, isLoading }: SalesGrowthProps) {
+export default function SalesGrowth({ monthesData, isError, isLoading }: SalesGrowthProps) {
 
-    const currentMonth = moment().month();
-    const lastMonth = moment().month(currentMonth - 1).format("MMM");
-    const beforeLastMonth = moment().month(currentMonth - 2).format("MMM");
+    const currentMonth = new Date().getMonth();
+    const lastMonth = MONTHES[currentMonth - 1];
+    const beforeLastMonth = MONTHES[currentMonth - 2];
     let lastMonthEarnings = 0;
     let beforeLastMonthEarnings = 0;
 
-    data?.forEach(({ month, totalEarnings }: dataProps) => {
+    monthesData?.forEach(({ month, totalEarnings }: MonthStatistics) => {
         lastMonthEarnings += month === lastMonth ? totalEarnings : 0;
         beforeLastMonthEarnings += month === beforeLastMonth ? totalEarnings : 0;
     });

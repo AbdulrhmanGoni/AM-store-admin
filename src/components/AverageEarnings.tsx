@@ -4,17 +4,18 @@ import { averageEarningsIcon } from "./svgIconsAsString";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { SmalLine } from "./SmallChart";
 import { faker } from "@faker-js/faker";
-import { dataProps } from "./SalesGrowth";
+import { MonthStatistics, MonthlyStatistics } from "../hooks/useMonthlyStatistics";
 
-type AverageEarningsProps = {
-    data: dataProps[],
+
+interface AverageEarningsProps extends MonthlyStatistics {
+    data: MonthStatistics[],
     isError: boolean,
     isLoading: boolean
 }
 
 export default function AverageEarnings({ data, isError, isLoading }: AverageEarningsProps) {
 
-    const earnings: number[] = data?.map((mon: dataProps) => {
+    const earnings: number[] = data?.map((mon: MonthStatistics) => {
         const randomNimber = faker.number.float({ precision: 0.01, max: 5000, min: 4000 });
         return mon.totalEarnings ? mon.totalEarnings : randomNimber
     });

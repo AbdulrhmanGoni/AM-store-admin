@@ -1,5 +1,4 @@
-import * as React from 'react';
-import calculatePercentage from '@/functions/calculatePercentage'
+import calculatePercentage from '../functions/calculatePercentage'
 import { LinearProgress, CircularProgress, Typography, Box, SxProps } from '@mui/material'
 import { Done, NorthEast } from '@mui/icons-material';
 import { nDecorator } from '@abdulrhmangoni/am-store-library';

@@ -5,7 +5,7 @@ import { JSX } from 'react'
 interface SmallIconBoxProps {
     color?: string,
     icon?: JSX.Element | string | number,
-    children?: JSX.Element,
+    children?: JSX.Element | string | number,
     boxStyle?: CSSProperties,
     svgIconStyle?: CSSProperties,
     svgIconSize?: number,

@@ -1,5 +1,4 @@
 import { useTheme } from "@mui/material";
-import moment from "moment";
 import Chart from "react-apexcharts";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import ApexchartsContainer from "./ApexchartsContainer";
@@ -7,11 +6,12 @@ import { faker } from "@faker-js/faker";
 import { ApexOptions } from "apexcharts";
 import { Money } from "@mui/icons-material";
 import ChartTitle from "./ChartTitle";
-import { dataProps } from "./SalesGrowth";
+import { MonthStatistics, MonthlyStatistics } from "../hooks/useMonthlyStatistics";
+import { MONTHES_FULL_NAME } from "../CONSTANT/MONTHES";
 
-type EarningsChartProps = { data: dataProps[] }
+interface EarningsChartProps extends MonthlyStatistics { }
 
-export default function EarningsChart({ data }: EarningsChartProps) {
+export default function EarningsChart({ monthesData }: EarningsChartProps) {
 
     const { palette: { mode, primary } } = useTheme();
     const options: ApexOptions = {
@@ -31,9 +31,7 @@ export default function EarningsChart({ data }: EarningsChartProps) {
         },
         tooltip: {
             x: {
-                formatter: (index, confg) => {
-                    return moment().month(confg.w.globals.categoryLabels[index - 1]).format("MMMM")
-                },
+                formatter: (index) => MONTHES_FULL_NAME[index - 1],
             },
             y: { formatter: (value: number, obj: string) => { obj = "$" + nDecorator(value); return obj } }
         },
@@ -51,7 +49,7 @@ export default function EarningsChart({ data }: EarningsChartProps) {
     const series: ApexAxisChartSeries = [
         {
             name: 'Earnings',
-            data: data?.map((doc: dataProps) => {
+            data: monthesData?.map((doc: MonthStatistics) => {
                 const randomNimber = faker.number.float({ precision: 0.02, max: 5000, min: 4000 });
                 return doc.totalEarnings ? +doc.totalEarnings.toFixed(2) : randomNimber
             }) ?? [0]

@@ -3,6 +3,7 @@ import "normalize.css/normalize.css";
 // import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
+import SalesStatisticsPage from './pages/SalesStatisticsPage.tsx'
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -13,7 +14,7 @@ import {
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
-      <Route index element={<h1>Seeeeeeeeeeeee</h1>} />
+      <Route index element={<SalesStatisticsPage />} />
     </Route>
   )
 );
