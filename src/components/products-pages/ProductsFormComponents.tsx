@@ -26,8 +26,8 @@ type TextFieldProps = {
     Icon?: OverridableComponent<SvgIconTypeMap<{ sx: SxProps }, "svg">> & { muiName: string },
     multiline?: boolean,
     errorMsg?: string,
-    sx?: CSSProperties,
-    TextFieldSx?: CSSProperties,
+    sx?: SxProps,
+    TextFieldSx?: SxProps,
     placeholder?: string,
     minRows?: number,
     isSelectBox?: boolean
@@ -59,7 +59,8 @@ export function CustomTextField(props: TextFieldProps & FieldProps) {
                             type={type}
                         />
                         :
-                        <TextField sx={TextFieldSx}
+                        <TextField 
+                            sx={TextFieldSx}
                             fullWidth
                             defaultValue={defaultValue}
                             multiline={multiline}

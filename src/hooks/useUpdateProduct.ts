@@ -64,7 +64,7 @@ export default function useUpdateProduct({ productId }: { productId: string }) {
                 .catch(() => setAnError("unexpected"))
                 .finally(() => setIsLoading(false))
         }
-    }, [])
+    }, [productId])
 
     return {
         handleSubmit,

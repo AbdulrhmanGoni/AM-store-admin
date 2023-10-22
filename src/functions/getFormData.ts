@@ -1,4 +1,4 @@
-import isAnImage from "@/functions/isAnImage";
+import isAnImage from "./isAnImage";
 
 export interface ProductformData {
     title: string;
@@ -12,7 +12,7 @@ export interface ProductformData {
 
 export default function getFormData(formData: FormData): ProductformData {
 
-    let files = [formData.get('image1'), formData.get('image2'), formData.get('image3'), formData.get('image4')]
+    const files = [formData.get('image1'), formData.get('image2'), formData.get('image3'), formData.get('image4')]
 
     return {
         title: String(formData.get('title')),
