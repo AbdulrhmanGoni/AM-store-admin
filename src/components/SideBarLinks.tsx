@@ -33,8 +33,8 @@ const drawerLinks: LinkProps[] = [
                 icon: <Store />
             },
             {
-                target: "statistics-page",
-                text: "Statistics",
+                target: "products-statistics",
+                text: "Products Statistics",
                 icon: <AnalyticsSharp />
             },
             {

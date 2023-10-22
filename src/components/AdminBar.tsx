@@ -24,6 +24,7 @@ export default function AdminAppBar() {
                         variant="h6"
                         noWrap
                         component="div"
+                        color="white"
                         sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
                         AM STORE
