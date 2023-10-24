@@ -31,7 +31,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <AdminDataContext.Provider value={adminData}>
         <QueryClientProvider client={queryClient}>
-          <Box sx={appStyle}>
+          <Box id="app" sx={appStyle}>
             {
               isLoading ? <LoadingPage />
                 : isLogged ? <AppContent />

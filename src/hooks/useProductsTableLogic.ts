@@ -5,7 +5,11 @@ import useGetApi from "./useGetApi";
 import useNotifications from "./useNotifications";
 import useMutateApi from "./useMutateApi";
 
-
+export interface UpdateCelEvent {
+    type: string,
+    code: string,
+    target: { value: string | number }
+}
 export default function useProductsTableLogic() {
 
     const apiRef = useGridApiRef();
@@ -48,7 +52,7 @@ export default function useProductsTableLogic() {
         setTimeout(() => { apiRef.current.updateRows([{ _id: id, [field]: originalValue }]) }, 1)
     }
 
-    function updateCell(params: GridCellParams, event: { type: string; code: string; target: { value: string | number; }; }) {
+    function updateCell(params: GridCellParams, event: UpdateCelEvent) {
         const
             isEnter = event.type === "keydown" && event.code === "Enter",
             newValue = event.target?.value,

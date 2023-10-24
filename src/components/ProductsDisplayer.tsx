@@ -1,5 +1,5 @@
 import { useEffect, useState, JSX } from "react"
-import { Card, Typography, Box, IconButton, Rating, Button } from "@mui/material"
+import { Card, Typography, Box, IconButton, Rating, Button, Alert } from "@mui/material"
 import { productData } from "../types/dataTypes"
 import { Close, Delete, Edit } from "@mui/icons-material"
 import {
@@ -11,17 +11,16 @@ import {
 } from "@abdulrhmangoni/am-store-library"
 import useProductsActions from "../hooks/useProductsActions"
 import { CSSProperties } from "@mui/material/styles/createMixins"
-// import { useNavigate } from "react-router-dom"
 
 interface ProductsDisplayerProps {
-    id: string,
+    productId: string,
     close: () => void,
     bgColor: string,
-    textColor: string
+    textColor: string,
+    navigate: () => void
 }
-export default function ProductsDisplayer({ id, close, bgColor, textColor }: ProductsDisplayerProps) {
+export default function ProductsDisplayer({ productId, close, navigate, bgColor, textColor }: ProductsDisplayerProps) {
 
-    // const navigate = useNavigate();
     const { getProduct, deleteProduct } = useProductsActions();
     const [product, setProduct] = useState<productData>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -31,16 +30,16 @@ export default function ProductsDisplayer({ id, close, bgColor, textColor }: Pro
     useEffect(() => {
         if (!product) {
             setIsLoading(true)
-            getProduct(id)
+            getProduct(productId)
                 .then((data) => { setProduct(data) })
                 .catch(() => { setIsError(true) })
                 .finally(() => { setIsLoading(false) })
         }
-    }, [getProduct, id, product]);
+    }, [getProduct, productId, product]);
 
-    useEffect(() => { setCardsOpacity(1) }, [id]);
+    useEffect(() => { setCardsOpacity(1) }, [productId]);
 
-    const { title, price, description, series, images, sold, earnings, _id } = product ?? {}
+    const { title, price, description, series, images, sold, earnings, _id, amount } = product ?? {}
 
     function CloseIcon() {
         return (
@@ -54,7 +53,7 @@ export default function ProductsDisplayer({ id, close, bgColor, textColor }: Pro
     }
 
     return (
-        <Box id="product-displayer-container" sx={containerStyle}>
+        <Box id="product-displayer" sx={containerStyle}>
             {
                 isError ? <ErrorHappend
                     icon={<CloseIcon />}
@@ -74,11 +73,11 @@ export default function ProductsDisplayer({ id, close, bgColor, textColor }: Pro
                         />
                         <Box sx={infoSectionStyle}>
                             <ElementWithLoadingState isLoading={isLoading} height={40} width={300}
-                                element={<Typography key="tit" variant="h6">{title}</Typography>}
+                                element={<Typography variant="h6">{title}</Typography>}
                             />
                             <ElementWithLoadingState isLoading={isLoading} height={20} width={200}
                                 element={
-                                    <Box key="pri-sol" sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                                    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                                         <Typography variant="subtitle1">Price: ${price?.toFixed(2)}</Typography>
                                         <Typography variant="subtitle1">Sold: {sold}</Typography>
                                     </Box>
@@ -86,7 +85,7 @@ export default function ProductsDisplayer({ id, close, bgColor, textColor }: Pro
                             />
                             <ElementWithLoadingState isLoading={isLoading} height={20} width={300}
                                 element={
-                                    <Typography key="ear" variant="subtitle1">
+                                    <Typography variant="subtitle1">
                                         {
                                             earnings ?
                                                 `This product achieves $${nDecorator(earnings?.toFixed(2))} of earnings`
@@ -97,7 +96,7 @@ export default function ProductsDisplayer({ id, close, bgColor, textColor }: Pro
                             />
                             <ElementWithLoadingState isLoading={isLoading} height={20} width={170}
                                 element={
-                                    <Box key="rat" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                                         <Rating
                                             value={3} precision={.5} readOnly
                                             sx={{ ".MuiRating-iconEmpty": { color: textColor } }}
@@ -107,14 +106,17 @@ export default function ProductsDisplayer({ id, close, bgColor, textColor }: Pro
                                 }
                             />
                             <ElementWithLoadingState isLoading={isLoading} height={25} width={250}
-                                element={<Typography key="ser" variant="subtitle1">Series: {series}</Typography>}
+                                element={<Typography variant="subtitle1">Series: {series}</Typography>}
                             />
                             <ElementWithLoadingState isLoading={isLoading} height={100}
-                                element={<Typography key="des" variant="body1">{description}</Typography>}
+                                element={<Typography variant="body1">{description}</Typography>}
+                            />
+                            <ElementWithLoadingState isLoading={isLoading} height={100}
+                                element={<Alert color="info">{amount}</Alert>}
                             />
                             <ElementWithLoadingState isLoading={isLoading} height={60}
                                 element={
-                                    <Box key="act" sx={{ display: "flex", alignItems: "center", mt: 1, gap: 1 }}>
+                                    <Box sx={{ display: "flex", alignItems: "center", mt: 1, gap: 1 }}>
                                         <ActionAlert
                                             action={() => { _id ? deleteProduct(_id) : null }}
                                             title={"You are going to delete the product"}
@@ -126,7 +128,7 @@ export default function ProductsDisplayer({ id, close, bgColor, textColor }: Pro
                                             variant="contained"
                                             size="small"
                                             endIcon={<Edit />}
-                                            // onClick={() => { close(); navigate(`products/edit-product/${_id}`) }}
+                                            onClick={() => { close(); navigate() }}
                                         >
                                             Edit
                                         </Button>
