@@ -8,7 +8,7 @@ interface DisplayInfoBoxProps extends PromiseState {
     icon: JSX.Element | string | number,
     body: string | number,
     bodyColor?: string,
-    color: string,
+    iconColor?: string,
     BoxStyle?: CSSProperties,
     type: "columnly" | "horizontally",
     disableIconColor?: boolean,
@@ -16,7 +16,7 @@ interface DisplayInfoBoxProps extends PromiseState {
 
 export default function DisplayInfoBox(props: DisplayInfoBoxProps) {
     const {
-        title, body, icon, color, BoxStyle,
+        title, body, icon, iconColor, BoxStyle,
         disableIconColor, isLoading, type,
         bodyColor
     } = props;
@@ -25,10 +25,10 @@ export default function DisplayInfoBox(props: DisplayInfoBoxProps) {
         justifyContent: "center",
         flexDirection: "column",
         textAlign: "center",
-        gap: 1.5, p: 1,
+        gap: 1.5, p: 2,
     }
 
-    const styleOfType = type === "columnly" ? columnly : { gap: 2, p: "0px 16px" }
+    const styleOfType = type === "columnly" ? columnly : { gap: 2, p: "8px 16px" }
 
     return (
         <Paper
@@ -41,7 +41,7 @@ export default function DisplayInfoBox(props: DisplayInfoBoxProps) {
         >
             <SmallIconBox
                 svgIconSize={30}
-                color={color}
+                color={iconColor}
                 disableIconColor={disableIconColor}
                 boxStyle={{ p: 1 }}
             >

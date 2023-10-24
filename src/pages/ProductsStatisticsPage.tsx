@@ -53,7 +53,7 @@ export default function ProductsStatisticsPage() {
                             isLoading={productsStatisticsLoading}
                             title="Products"
                             body={nDecorator(String(productsTotals?.totalProducts))}
-                            color={randomColorsArr[0]}
+                            iconColor={randomColorsArr[0]}
                             icon={<Icon svgElementAsString={stockIcon} />}
                             disableIconColor
                             BoxStyle={infoBoxStyle}
@@ -63,7 +63,7 @@ export default function ProductsStatisticsPage() {
                             isLoading={productsStatisticsLoading}
                             title="Categories"
                             body={nDecorator(String(productsTotals?.categoriesCount))}
-                            color={randomColorsArr[1]}
+                            iconColor={randomColorsArr[1]}
                             icon={<Icon svgElementAsString={categoriesIcon} />}
                             BoxStyle={infoBoxStyle}
                         />
@@ -76,7 +76,7 @@ export default function ProductsStatisticsPage() {
                             isLoading={productsStatisticsLoading}
                             title="Products Sold"
                             body={nDecorator(String(productsTotals?.totalProductsSold))}
-                            color={randomColorsArr[2]}
+                            iconColor={randomColorsArr[2]}
                             icon={<Icon svgElementAsString={stockIcon} />}
                             disableIconColor
                             BoxStyle={infoBoxStyle}
@@ -86,7 +86,7 @@ export default function ProductsStatisticsPage() {
                             isLoading={productsStatisticsLoading}
                             title="In Stock"
                             body={nDecorator(String(productsTotals?.totalInStock))}
-                            color={randomColorsArr[3]}
+                            iconColor={randomColorsArr[3]}
                             icon={<Icon svgElementAsString={inStockIcon} />}
                             disableIconColor
                             BoxStyle={infoBoxStyle}

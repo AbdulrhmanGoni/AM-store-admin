@@ -15,6 +15,7 @@ import ProductsManagementPage from './pages/ProductsManagementPage.tsx';
 import AddProductsPage from './pages/AddProductsPage.tsx';
 import EditProductPage from './pages/EditProductPage.tsx';
 import ProductsStatisticsPage from './pages/ProductsStatisticsPage.tsx';
+import UsersPage from './pages/UsersPage.tsx';
 import NotFoundPage from './pages/NotFoundPage.tsx';
 
 const router = createBrowserRouter(
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
         <Route path='add-products' element={<AddProductsPage />} />
         <Route path='edit-product/:productId?' element={<EditProductPage />} />
       </Route>
+      <Route path='users' element={<UsersPage />} />
       <Route path='*' element={<NotFoundPage />} />
     </Route>
   )

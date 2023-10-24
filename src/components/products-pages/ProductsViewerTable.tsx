@@ -5,7 +5,7 @@ import columns from './ProductsGridColumnsConfig';
 import ToolBar from './ProducsTableToolbar';
 import Footer from './ProducsTableFooter';
 import { ErrorThrower } from '@abdulrhmangoni/am-store-library';
-import useProductsTableLogic from '../../hooks/useProductsTableLogic';
+import useProductsTableLogic, { UpdateCelEvent } from '../../hooks/useProductsTableLogic';
 
 
 export default function ProductsViewerTable() {
@@ -46,7 +46,7 @@ export default function ProductsViewerTable() {
                 hideFooterSelectedRowCount
                 isRowSelectable={(params: GridRowParams) => !goingToDelete.includes(params.row._id)}
                 onRowSelectionModelChange={(rows) => setSelectedRows(rows)}
-                onCellEditStop={updateCell}
+                onCellEditStop={(params, event) => { updateCell(params, event as UpdateCelEvent) }}
                 onPaginationModelChange={(model: GridPaginationModel) => { setPaginationModel(model); }}
                 localeText={{ noRowsLabel: tablesMassages, noResultsOverlayLabel: 'No products found.' }}
                 slotProps={{ toolbar: { quickFilterProps: { debounceMs: 500 } } }}
@@ -58,6 +58,7 @@ export default function ProductsViewerTable() {
                         message='There is error hapends when products fetching'
                         disableHeight
                         illustratorType="empty"
+                        style={{ height: "100%" }}
                     />,
                     loadingOverlay: LinearProgress,
                 }}

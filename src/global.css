@@ -6,9 +6,6 @@
     width: 3px;
     height: 6px
 }
-/* *::-webkit-scrollbar-thumb {
-    
-} */
 
 .apexcharts-legend-text {
     padding-left: 15px !important;
@@ -47,6 +44,13 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+}
+
+.flex-row-center-end {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .flex-column {

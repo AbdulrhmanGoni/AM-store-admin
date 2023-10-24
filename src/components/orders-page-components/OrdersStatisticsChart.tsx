@@ -45,7 +45,9 @@ export default function OrdersStatisticsChart({ data }: OrdersStatisticsChartPro
             }
         },
         tooltip: {
-            x: { formatter: (month: number) => MONTHES_FULL_NAME[month] },
+            x: {
+                formatter: (_: number, details: { dataPointIndex: number }) => MONTHES_FULL_NAME[details.dataPointIndex]
+            },
             y: {
                 formatter: (value, obj) => { obj = nDecorator(value); return obj }
             },

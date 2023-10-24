@@ -61,7 +61,7 @@ export default function SalesStatisticsPage() {
             body={`$${nDecorator(totalEarnings?.toFixed(2))}`}
             bodyColor="success.main"
             icon={<SvgIcon svgElementAsString={moneyIcon} />}
-            color={randomColorsArr[1]}
+            iconColor={randomColorsArr[1]}
             BoxStyle={{ height: "100%", p: 2 }}
           />
         </Grid>

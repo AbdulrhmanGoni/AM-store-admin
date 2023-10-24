@@ -47,14 +47,15 @@ function renderProductsCell(params: GridRenderCellParams) {
     return <Typography variant='body2'>{count === 1 ? "One product" : count + " Products"}</Typography>
 }
 function renderTotalCell(params: GridRenderCellParams) {
-    const total: number = params.row.totalPrice.after
+    const total: number = params.row.totalPrice
     return <Typography variant='body2'>${(nDecorator(total.toFixed(2)))}</Typography>
 }
 function renderDeleviryCell(params: GridRenderCellParams) {
-    const { value } = params.row.deliveryPrice
-    const renderValue = value === "Free" ? "Free" : "$" + value
+    const value = params.row.deliveryPrice
+    const isFreeDelivery = value == 0
+    const renderValue = isFreeDelivery ? "Free" : "$" + value
     return <Typography
-        sx={{ color: value === "Free" ? "success.main" : undefined }}
+        sx={{ color: isFreeDelivery ? "success.main" : undefined }}
         variant='body2'>
         {renderValue}
     </Typography>
@@ -83,7 +84,7 @@ const columns: GridColDef[] = [
     rowProps(['userAvatar', 'User', 65, renderImageCell]),
     rowProps(['userEmail', 'User Email', 240, renderUserEmailCell]),
     rowProps(['deliveryPrice', 'Delivery Price', 130, renderDeleviryCell]),
-    rowProps(['deliveryDate', 'Delivery Date', 170, undefined]),
+    rowProps(['expectedDeliveryDate', 'Expected Delivery Date', 150, undefined])
 ];
 
 export default columns 
