@@ -28,7 +28,9 @@ export default function CategoriesEarnings({ data }: { data: chartCategory[] }) 
     }
 
     return (
-        <ApexchartsContainer>
+        <ApexchartsContainer sx={{
+            "& .apexcharts-legend-text": { ml: "-10px !important" }
+        }}>
             <ChartTitle
                 title="Categories Earnings"
                 disableIconColor

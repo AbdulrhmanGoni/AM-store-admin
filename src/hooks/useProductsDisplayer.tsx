@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 export default function useProductsDisplayer() {
 
     const navigate = useNavigate();
-    const { palette: { background, text } } = useTheme();
+    const theme = useTheme();
 
     function display(productId: string) {
         const container = document.createElement("div");
@@ -16,9 +16,8 @@ export default function useProductsDisplayer() {
         app?.appendChild(container);
         const toRender = <ProductsDisplayer
             productId={productId}
+            theme={theme}
             close={close}
-            bgColor={background.paper}
-            textColor={text.primary}
             navigate={() => { navigate(`/products/edit-product/${productId}`) }}
         />
         ReactDom.createRoot(container).render(toRender);

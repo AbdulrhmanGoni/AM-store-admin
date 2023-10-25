@@ -1,5 +1,6 @@
 import './global.css'
 import "normalize.css/normalize.css";
+import "@abdulrhmangoni/am-store-library/dist/cjs/gloabal.css";
 // import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
