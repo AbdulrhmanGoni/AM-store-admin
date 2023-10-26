@@ -10,7 +10,7 @@ import { productsIcon } from "./svgIconsAsString";
 
 
 export interface LinkProps {
-    target: string,
+    path: string,
     icon: JSX.Element,
     text: string,
     nestedLinks?: LinkProps[]
@@ -18,49 +18,49 @@ export interface LinkProps {
 
 const drawerLinks: LinkProps[] = [
     {
-        target: "/",
+        path: "/",
         text: "Sales Analytics",
         icon: <AnalyticsOutlined />
     },
     {
-        target: "/products",
+        path: "/products",
         text: "Products",
         icon: <Icon svgElementAsString={productsIcon} width={22} />,
         nestedLinks: [
             {
-                target: "products-management",
+                path: "products-management",
                 text: " Products Management",
                 icon: <Store />
             },
             {
-                target: "products-statistics",
+                path: "products-statistics",
                 text: "Products Statistics",
                 icon: <AnalyticsSharp />
             },
             {
-                target: "add-products",
+                path: "add-products",
                 text: "Add Products",
                 icon: <AddBusiness />
             },
             {
-                target: "edit-product",
+                path: "edit-product",
                 text: "Edit Product",
                 icon: <EditAttributes />
             },
         ]
     },
     {
-        target: "/orders",
+        path: "/orders",
         text: "Orders",
         icon: <Inbox />
     },
     {
-        target: "/users",
+        path: "/users",
         text: "Users",
         icon: <Groups />
     },
     {
-        target: "/emails",
+        path: "/emails",
         text: "Emails",
         icon: <Email />
     }

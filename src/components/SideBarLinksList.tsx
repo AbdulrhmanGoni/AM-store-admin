@@ -17,12 +17,12 @@ interface LinkItemProps extends LinkProps {
     endIcon?: JSX.Element | false,
 }
 
-function isCurrentPath(target: string, pathname: string): boolean {
-    const isTheRoot = target === "/"
-    return !!(isTheRoot ? target === pathname : pathname.match(new RegExp(target, "gi")))
+function isCurrentPath(path: string, pathname: string): boolean {
+    const isTheRoot = path === "/"
+    return !!(isTheRoot ? path === pathname : pathname.match(new RegExp(path, "gi")))
 }
 
-function LinkItem({ target, icon, text, close, onClick, isParent, isChild, children, endIcon }: LinkItemProps) {
+function LinkItem({ path, icon, text, close, onClick, isParent, isChild, children, endIcon }: LinkItemProps) {
 
     const { pathname } = useLocation();
     const navigate = useNavigate();
@@ -31,22 +31,23 @@ function LinkItem({ target, icon, text, close, onClick, isParent, isChild, child
     function whenClick(event: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) {
         event.preventDefault()
         onClick?.();
-        if (!isParent) { navigate(target); close?.() }
+        if (!isParent) { navigate(path); close?.() }
         return false
     }
 
-    const isCurr = isCurrentPath(target, pathname)
-    const innerLinkColor = isCurr ? "#fff" : txt;
+    const isCurr = isCurrentPath(path, pathname)
+    let innerLinkColor = isCurr ? "#fff" : txt;
+    innerLinkColor += " !important"
     const linkBg = isCurr ? `${main}` : paper;
     const itemSx = {
-        color: innerLinkColor,
+        "& span.MuiListItemText-primary": { color: innerLinkColor },
         bgcolor: linkBg,
         "&:hover": { bgcolor: isCurr ? undefined : alpha(main, .25) },
-        borderBottom: `solid 1px ${alpha(innerLinkColor, .2)}`,
+        borderBottom: `solid 1px ${alpha(txt, .2)}`,
         borderRadius: 1,
         "& :is(svg, g, path)": {
-            fill: innerLinkColor + '!important',
-            color: innerLinkColor + '!important',
+            fill: innerLinkColor,
+            color: innerLinkColor
         }
     }
 
@@ -54,7 +55,7 @@ function LinkItem({ target, icon, text, close, onClick, isParent, isChild, child
         position: "relative",
         "&::before": {
             content: "' '",
-            bgcolor: "primary.main",
+            bgcolor: innerLinkColor,
             width: 10, height: 10,
             position: "absolute",
             left: 10, top: "50%",
@@ -73,7 +74,7 @@ function LinkItem({ target, icon, text, close, onClick, isParent, isChild, child
                     ...listItemDot,
                 }}
             >
-                <ListItemButton href={target} LinkComponent={"a"} sx={itemSx} onClick={(e) => whenClick(e)}>
+                <ListItemButton href={path} LinkComponent={"a"} sx={itemSx} onClick={(e) => whenClick(e)}>
                     <ListItemIcon sx={{ minWidth: "33px" }}>{icon}</ListItemIcon>
                     <ListItemText primary={text} />
                     {endIcon}
@@ -93,15 +94,15 @@ export default function SideBarLinksList({ close }: { close: () => void }) {
 
     return (
         <List sx={listStyle} disablePadding>
-            {sideBarLinks.map(({ target, text, icon, nestedLinks }) => {
+            {sideBarLinks.map(({ path, text, icon, nestedLinks }) => {
                 const
-                    openChildren = isCurrentPath(target, currentPath),
+                    openChildren = isCurrentPath(path, currentPath),
                     hasChildren = !!nestedLinks?.length
                 return (
                     <LinkItem
-                        key={target} close={close}
-                        onClick={() => { setCurrentPath((state) => state === target ? "none" : target) }}
-                        icon={icon} text={text} target={target}
+                        key={path} close={close}
+                        onClick={() => { setCurrentPath((state) => state === path ? "none" : path) }}
+                        icon={icon} text={text} path={path}
                         isParent={hasChildren}
                         endIcon={
                             hasChildren &&
@@ -120,11 +121,11 @@ export default function SideBarLinksList({ close }: { close: () => void }) {
                                     {nestedLinks?.map(link => {
                                         return (
                                             <LinkItem
-                                                key={link.target}
+                                                key={link.path}
                                                 close={close}
                                                 icon={link.icon}
                                                 text={link.text}
-                                                target={`${target}/${link.target}`}
+                                                path={`${path}/${link.path}`}
                                                 isChild
                                             />
                                         )
