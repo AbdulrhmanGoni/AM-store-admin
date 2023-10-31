@@ -20,9 +20,7 @@ export default function PageTitle({ title, description, icon }: PageTitleProps) 
                     boxStyle={{ p: .3 }}
                 />
             </Typography>
-            <Typography variant='body1'>
-                {description}
-            </Typography>
+            <Typography variant='body1'>{description}</Typography>
         </Box>
     )
 }

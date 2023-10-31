@@ -1,23 +1,25 @@
 import { Box, useTheme } from '@mui/material';
 import Chart from "react-apexcharts";
+import { JSX } from "react";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
+import { ApexOptions } from 'apexcharts';
 
 type SmallChartProps = {
-    data?: any[],
-    height?: number | string,
-    width?: number | string,
+    data?: number[],
+    height?: number,
+    width?: number,
     tooltipIsMony?: boolean,
     colors?: string[]
 }
 
-const Container = ({ children }) => {
+const Container = ({ children }: { children: JSX.Element }) => {
     return (
-        <Box sx={{ "& svg": { backgroundColor: "transparent !important"} }}>
+        <Box sx={{ "& svg": { backgroundColor: "transparent !important" } }}>
             {children}
         </Box>
     )
 }
-const useChartOptions = (tooltipIsMony?: boolean, colors?: string[]) => {
+const useChartOptions = (tooltipIsMony?: boolean, colors?: string[]): ApexOptions => {
     const { palette: { mode, primary } } = useTheme();
     return {
         colors: colors ?? [primary.main],
@@ -27,7 +29,10 @@ const useChartOptions = (tooltipIsMony?: boolean, colors?: string[]) => {
             marker: { show: false },
             x: { show: false },
             y: {
-                formatter: (val: number) => tooltipIsMony ? "$" + nDecorator(val.toFixed(2)) : val,
+                formatter: (val: number, obj) => {
+                    obj = tooltipIsMony ? "$" + nDecorator(val.toFixed(2)) : val
+                    return obj
+                },
                 title: { formatter: () => "" }
             }
         }
@@ -36,7 +41,7 @@ const useChartOptions = (tooltipIsMony?: boolean, colors?: string[]) => {
 
 export function SmalBar({ data, height, width, tooltipIsMony }: SmallChartProps) {
 
-    const options = {
+    const options: ApexOptions = {
         chart: { type: 'bar', width: 100, height: 35, sparkline: { enabled: true } },
         plotOptions: { bar: { columnWidth: '80%' } },
         xaxis: { crosshairs: { width: 1 } },
@@ -47,7 +52,6 @@ export function SmalBar({ data, height, width, tooltipIsMony }: SmallChartProps)
 
     return (
         <Container>
-            {/* @ts-ignore */}
             <Chart options={options} type='bar' series={series} height={height ?? 60} width={width ?? 130} />
         </Container>
     )
@@ -55,7 +59,7 @@ export function SmalBar({ data, height, width, tooltipIsMony }: SmallChartProps)
 
 export function SmalLine({ data, height, width, tooltipIsMony }: SmallChartProps) {
 
-    const options = {
+    const options: ApexOptions = {
         chart: {
             type: 'line', width: 150, height: 35,
             sparkline: { enabled: true }
@@ -68,7 +72,6 @@ export function SmalLine({ data, height, width, tooltipIsMony }: SmallChartProps
 
     return (
         <Container>
-            {/* @ts-ignore */}
             <Chart options={options} type='line' series={series} height={height ?? 60} width={width ?? 130} />
         </Container>
     )
@@ -76,14 +79,13 @@ export function SmalLine({ data, height, width, tooltipIsMony }: SmallChartProps
 
 export function SmalDonut({ data, height = 100, width = 100, tooltipIsMony, colors }: SmallChartProps) {
 
-    const options = {
+    const options: ApexOptions = {
         chart: { type: 'donut', width, height, sparkline: { enabled: true } },
         stroke: { width: 1 },
         ...useChartOptions(tooltipIsMony, colors)
     }
     return (
         <Container>
-            {/* @ts-ignore */}
             <Chart options={options} type='donut' series={data ?? [43, 32, 12]} height={height} width={width} />
         </Container>
     )

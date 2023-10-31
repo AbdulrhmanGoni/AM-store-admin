@@ -1,11 +1,11 @@
-import { PromiseState } from '@/types/interfaces';
 import { Box, useTheme } from '@mui/material'
 import { CSSProperties } from '@mui/material/styles/createMixins'
+import { JSX } from 'react'
 
 interface SmallIconBoxProps {
     color?: string,
-    icon?: any,
-    children?: any,
+    icon?: JSX.Element | string | number,
+    children?: JSX.Element | string | number,
     boxStyle?: CSSProperties,
     svgIconStyle?: CSSProperties,
     svgIconSize?: number,
@@ -14,9 +14,9 @@ interface SmallIconBoxProps {
 
 export default function SmallIconBox(props: SmallIconBoxProps) {
     const { palette: { primary, text } } = useTheme()
-    let { 
-        color = primary.main, icon, boxStyle, 
-        svgIconStyle, children, svgIconSize, 
+    const {
+        color = primary.main, icon, boxStyle,
+        svgIconStyle, children, svgIconSize,
         disableIconColor
     } = props;
     return (

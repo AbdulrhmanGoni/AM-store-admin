@@ -1,5 +1,4 @@
-import * as React from 'react';
-import calculatePercentage from '@/functions/calculatePercentage'
+import calculatePercentage from '../functions/calculatePercentage'
 import { LinearProgress, CircularProgress, Typography, Box, SxProps } from '@mui/material'
 import { Done, NorthEast } from '@mui/icons-material';
 import { nDecorator } from '@abdulrhmangoni/am-store-library';
@@ -12,7 +11,7 @@ interface TargetProgressProps {
 }
 
 export function TargetProgressLine({ target, value, progressStyle }: TargetProgressProps) {
-    let achivedPercentage = calculatePercentage(target, value)
+    const achivedPercentage = calculatePercentage(target, value)
     const percentage = achivedPercentage ? achivedPercentage : 0
     const isCompleted = percentage >= 100
     return (

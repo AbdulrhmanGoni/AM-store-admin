@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react'
 
-export default function DarkOverlay({ children, style }: { children?: any, style?: CSSProperties }) {
+export default function DarkOverlay({ children, style }: { children?: JSX.Element | string | number, style?: CSSProperties }) {
 
     const overlayStyle: CSSProperties = {
         backgroundColor: "#00000054",

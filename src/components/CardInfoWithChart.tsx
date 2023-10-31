@@ -1,11 +1,11 @@
 import { JSX } from "react";
 import { Box, Paper, SxProps, Typography } from "@mui/material";
-import SmallIconBox from "@/components/SmallIconBox";
+import SmallIconBox from "./SmallIconBox";
 import { ElementWithLoadingState, PromiseState } from "@abdulrhmangoni/am-store-library";
 
 interface CardInfoWithChartProps extends PromiseState {
     title: string,
-    mainValue: any
+    mainValue: JSX.Element | string | number
     description: string,
     theChart?: JSX.Element,
     icon: JSX.Element,
@@ -15,7 +15,7 @@ interface CardInfoWithChartProps extends PromiseState {
 
 export default function CardInfoWithChart(props: CardInfoWithChartProps) {
 
-    let { theChart, icon, title, mainValue, description, sx, isLoading, disableIconColor } = props
+    const { theChart, icon, title, mainValue, description, sx, isLoading, disableIconColor } = props
 
     return (
         <Paper

@@ -1,3 +1,3 @@
-import { AdminDataContext } from '@/app/layout';
-import { useContext } from 'react'
+import { useContext } from "react"
+import { AdminDataContext } from "../App"
 export default function useAdminData() { return useContext(AdminDataContext) }

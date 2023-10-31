@@ -1,10 +1,10 @@
 import { useState } from "react";
-import host from "@/CONSTANT/API_hostName";
+import host from "../CONSTANTS/API_hostName";
 import useApiRequest from "./useApiRequest";
 import { useCookies } from "react-cookie";
-import useAdminData from "./useAdminData";
 import useNotifications from "./useNotifications";
 import { loadingControl } from "@abdulrhmangoni/am-store-library";
+import { AdminData } from "../types/dataTypes";
 
 interface SubmitEventProps {
     preventDefault: () => void;
@@ -25,22 +25,20 @@ export default function useLogInLogic() {
 
     const { api } = useApiRequest();
     const setCookies = useCookies()[1];
-    const setAdminData = useAdminData()[1];
     const [logInFailed, setFailed] = useState<ErrorStateProps>({ state: true, message: "" });
     const { message } = useNotifications();
 
-    function complateLog({ accessToken, adminData }) {
-        let maxAge = 3600 * 24 * 20;
+    function complateLog({ accessToken, adminData }: { accessToken: string, adminData: AdminData }) {
+        const maxAge = 3600 * 24 * 20;
         setCookies("admin-access-token", accessToken, { maxAge })
         setCookies("adminId", adminData._id, { maxAge })
-        setAdminData(adminData);
         window.location.reload();
     }
 
     function apiRequest(path: requestPath, body: requestBody, feedback: requestFeedback) {
         loadingControl(true)
         api.post(`${host}/admin-log-in/${path}`, body)
-            .then(({ data }) => { if (!!data) complateLog(data); else feedback(data) })
+            .then(({ data }) => { if (data) complateLog(data); else feedback(data) })
             .catch(() => { message("Unexpected error happened !", "error") })
             .finally(() => { loadingControl(false) })
     }

@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
 import useApiRequest from './useApiRequest';
-import { host } from '@/CONSTANT/API_hostName';
+import { host } from '../CONSTANTS/API_hostName';
 import { useCookies } from 'react-cookie';
+import { AdminData } from '../types/dataTypes';
 
 
 export default function useAdminLogIn() {
 
     const { api } = useApiRequest();
-
-    const [adminData, setAdminData] = useState<any>({});
+    const [adminData, setAdminData] = useState<AdminData | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
     const [isServerError, setServerError] = useState<boolean>(false);
@@ -39,9 +39,13 @@ export default function useAdminLogIn() {
     }, [])
 
     return {
-        adminData, setAdminData,
-        isError, isNetworkError,
-        isLoading, isLogged,
-        isOut, isServerError
+        adminData, 
+        setAdminData,
+        isError, 
+        isNetworkError,
+        isLoading, 
+        isLogged,
+        isOut, 
+        isServerError
     }
 }

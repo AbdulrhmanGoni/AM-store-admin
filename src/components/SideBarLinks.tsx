@@ -2,7 +2,6 @@ import {
     AddBusiness,
     AnalyticsOutlined,
     AnalyticsSharp,
-    DiscountOutlined,
     EditAttributes,
     Email, Groups, Inbox, Store
 } from "@mui/icons-material";
@@ -11,57 +10,57 @@ import { productsIcon } from "./svgIconsAsString";
 
 
 export interface LinkProps {
-    target: string,
-    icon: any,
+    path: string,
+    icon: JSX.Element,
     text: string,
     nestedLinks?: LinkProps[]
 }
 
 const drawerLinks: LinkProps[] = [
     {
-        target: "/",
-        text: "Dashboard",
+        path: "/",
+        text: "Sales Analytics",
         icon: <AnalyticsOutlined />
     },
     {
-        target: "/products",
+        path: "/products",
         text: "Products",
         icon: <Icon svgElementAsString={productsIcon} width={22} />,
         nestedLinks: [
             {
-                target: "products-management",
+                path: "products-management",
                 text: " Products Management",
                 icon: <Store />
             },
             {
-                target: "statistics-page",
-                text: "Statistics",
+                path: "products-statistics",
+                text: "Products Statistics",
                 icon: <AnalyticsSharp />
             },
             {
-                target: "add-products",
+                path: "add-products",
                 text: "Add Products",
                 icon: <AddBusiness />
             },
             {
-                target: "edit-product",
+                path: "edit-product",
                 text: "Edit Product",
                 icon: <EditAttributes />
             },
         ]
     },
     {
-        target: "/orders",
+        path: "/orders",
         text: "Orders",
         icon: <Inbox />
     },
     {
-        target: "/users",
+        path: "/users",
         text: "Users",
         icon: <Groups />
     },
     {
-        target: "/emails",
+        path: "/emails",
         text: "Emails",
         icon: <Email />
     }

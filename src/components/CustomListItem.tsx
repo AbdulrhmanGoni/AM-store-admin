@@ -2,16 +2,16 @@ import { ExpandMore } from "@mui/icons-material";
 import {
     Accordion, AccordionDetails, AccordionSummary,
     Avatar, Box, Button, Chip, ListItem,
-    Typography, capitalize, useTheme
+    SxProps,
+    Typography, capitalize
 } from "@mui/material";
-import { CSSProperties } from "@mui/material/styles/createTypography";
 
 export default function CustomListItem(props: {
     id?: string,
     title: string,
     subTitle?: string,
     avatar?: string,
-    avatarSx?: CSSProperties,
+    avatarSx?: SxProps,
     descriptionBox?: JSX.Element,
     onRightElement?: JSX.Element,
     actionButton?: {
@@ -38,7 +38,10 @@ export default function CustomListItem(props: {
                     id={id}
                     sx={{
                         gap: 1, p: "0px 8px",
-                        "& .css-o4b71y-MuiAccordionSummary-content": { alignItems: "center", m: "8px 0px" }
+                        "& .css-o4b71y-MuiAccordionSummary-content": { 
+                            alignItems: "center", 
+                            m: "8px 0px" 
+                        }
                     }}
                 >
                     <Avatar src={avatar} sx={{ width: 40, height: 40, mr: 1, ...props.avatarSx }}>
@@ -72,7 +75,12 @@ export default function CustomListItem(props: {
     )
 }
 
-export const DisplyProductDetails = ({ price, category, description }) => {
+interface DisplyProductDetailsProps {
+    price: number | string, 
+    category: string, 
+    description: string
+}
+export const DisplyProductDetails = ({ price, category, description }: DisplyProductDetailsProps) => {
     return (
         <Box>
             <Typography sx={{ display: "inline", mr: 1 }} variant='subtitle1'>

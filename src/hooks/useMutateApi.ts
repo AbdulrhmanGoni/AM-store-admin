@@ -1,13 +1,16 @@
-import { useMutation } from '@tanstack/react-query'
-import { host } from '@/CONSTANT/API_hostName';
+import { MutationKey, useMutation } from '@tanstack/react-query'
+import { host } from '../CONSTANTS/API_hostName';
 import useApiRequest from './useApiRequest';
 
 
-interface params { key: string[], path: string, moreProps?: {} }
-interface funParams { body: any, method?: "put" | "post" | "delete" }
+interface params { key: MutationKey, path: string }
+interface funParams {
+    body: unknown,
+    method?: "put" | "post" | "delete"
+}
 
 export default function useMutateApi(props: params) {
-    const { key, path, moreProps } = props;
+    const { key, path } = props;
     const { api } = useApiRequest();
 
     async function theFunc({ method, body }: funParams) {
@@ -21,6 +24,5 @@ export default function useMutateApi(props: params) {
     return useMutation({
         mutationFn: async (params: funParams) => await theFunc(params),
         mutationKey: key,
-        ...moreProps
     })
 }

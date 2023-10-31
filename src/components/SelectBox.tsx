@@ -21,7 +21,7 @@ export default function SelectBox({ defaultValue, size, values, noneOption, onSe
             size={size}
             value={selected}
             onChange={(event) => {
-                let value = event.target.value
+                const value = event.target.value
                 setSelected(value)
                 onSelect(value, values.indexOf(value))
             }}

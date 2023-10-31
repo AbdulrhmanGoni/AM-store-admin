@@ -4,7 +4,7 @@ import {
     Typography, Container
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import useLogInLogic from '@/hooks/useLogInLogic';
+import useLogInLogic from '../hooks/useLogInLogic';
 import { useGoogleAuth } from '@abdulrhmangoni/am-store-library';
 
 

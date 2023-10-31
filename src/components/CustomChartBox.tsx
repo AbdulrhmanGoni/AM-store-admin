@@ -5,13 +5,18 @@ type strOrnum = string | number
 
 interface chartBoxProps extends PromiseState {
     title: strOrnum,
-    mainValue?: any,
-    customMainValue?: any,
-    titleIcon: any,
+    mainValue?: JSX.Element | string | number,
+    customMainValue?: JSX.Element,
+    titleIcon: JSX.Element,
     mainValueColor?: string,
-    mainValueEndIcon?: any,
-    smallChart: any,
-    chartDescription?: { title: strOrnum, subTitle: strOrnum, severity?: string, titleEndIcon?: any },
+    mainValueEndIcon?: JSX.Element,
+    smallChart: JSX.Element,
+    chartDescription?: {
+        title: strOrnum,
+        subTitle: strOrnum,
+        severity?: string,
+        titleEndIcon?: JSX.Element
+    },
 }
 
 const containerStyle = {
@@ -28,7 +33,7 @@ const containerChildrenStyle = {
 
 export default function CustomChartBox({
     title, mainValue, titleIcon,
-    smallChart, chartDescription, isError,
+    smallChart, chartDescription,
     mainValueColor, isLoading,
     mainValueEndIcon, customMainValue
 }: chartBoxProps) {

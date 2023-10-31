@@ -1,10 +1,10 @@
 import { Box, Typography } from '@mui/material'
-import React from 'react'
+import {JSX} from 'react'
 import SmallIconBox from './SmallIconBox'
 import { CSSProperties } from '@mui/material/styles/createMixins'
 
 type ChartTitleProps = {
-    icon: any,
+    icon: JSX.Element | string | number,
     title: string,
     titleSize?: string,
     svgIconSize?: number

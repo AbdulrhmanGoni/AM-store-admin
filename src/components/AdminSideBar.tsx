@@ -5,20 +5,19 @@ import {
     Paper, Typography,
     Drawer, IconButton
 } from '@mui/material';
-import useAdminData from '@/hooks/useAdminData';
+import useAdminData from '../hooks/useAdminData';
 import SideBarLinksList from './SideBarLinksList';
-
-
-const backdropClass = "MuiBackdrop-root MuiModal-backdrop css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop";
 
 export default function AdminSideBar({ isOpen, close }: { isOpen: boolean, close: () => void }) {
 
-    const [adminData] = useAdminData();
+    const adminData = useAdminData();
 
     useEffect(() => {
         document?.addEventListener("click", (event) => {
-            {/* @ts-ignore */ }
-            event.target?.className === backdropClass && close?.()
+            const clickedElem = event.target as HTMLElement
+            if (clickedElem) {
+                clickedElem.classList.contains("MuiBackdrop-root") && close()
+            }
         });
     }, []);
 
