@@ -28,7 +28,7 @@ export default function UsersOverviewTable() {
                             <TableCell sx={{ width: "75px" }}>Orders</TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody sx={{ p: 0 }}>
+                    <TableBody>
                         {
                             isLoading ?
                                 <LoadingUserRow itemsCount={pageSize} /> :
@@ -40,8 +40,10 @@ export default function UsersOverviewTable() {
                                             </TableCell>
                                             <TableCell>{userName}</TableCell>
                                             <TableCell>
-                                                <EmailCellIcon isVerified={!isEmailVerified} />
-                                                {userEmail}
+                                                <Typography variant='body2' className='flex-row-center-start'>
+                                                    <EmailCellIcon isVerified={!isEmailVerified} />
+                                                    {userEmail}
+                                                </Typography>
                                             </TableCell>
                                             <TableCell>{userOrders}</TableCell>
                                         </TableRow>

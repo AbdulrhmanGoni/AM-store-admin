@@ -7,7 +7,7 @@ export default function EmailCellIcon({ isVerified }: { isVerified: boolean }) {
     const verifiedMessage = "This email is verified"
     const unVerifiedMessage = "This email not verified yet"
     const iconProps: SvgIconOwnProps = {
-        sx: { transform: "translate(0px, 5px)", mr: 0.5, width: ".8em", height: ".8em" },
+        sx: { mr: 0.5, width: ".8em", height: ".8em" },
         color: isVerified ? 'success' : "warning"
     }
 
