@@ -128,7 +128,7 @@ export default function ProductsStatisticsPage() {
             </Grid>
             <Grid container spacing={{ xs: 1, md: 2 }}>
                 <Grid item xs={12} sm={6} lg={4}>
-                    <Paper sx={{ p: 1 }}>
+                    
                         <TopSerieses
                             title="Best Selling"
                             icon={<SvgIcon svgElementAsString={rankingIconCup} width={30} height={30} />}
@@ -136,17 +136,14 @@ export default function ProductsStatisticsPage() {
                             data={topSerieses?.topEarnings}
                             isMoney
                         />
-                    </Paper>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>
-                    <Paper sx={{ p: 1 }}>
                         <TopSerieses
                             title="Top Selling"
                             icon={<SvgIcon svgElementAsString={rankingIconMedal} width={30} height={30} />}
                             isLoading={topSeriesesLoading}
                             data={topSerieses?.topSold}
                         />
-                    </Paper>
                 </Grid>
                 <Grid item xs={12} md={8} lg={4}>
                     <Paper sx={{ p: 1, height: "100%" }}>

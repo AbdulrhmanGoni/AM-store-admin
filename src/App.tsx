@@ -25,13 +25,25 @@ export default function App() {
     isOut, isServerError
   } = useAdminLogIn();
 
-  const { theme, appStyle } = useCustomTheme();
+  const theme = useCustomTheme();
 
   return (
     <ThemeProvider theme={theme}>
       <AdminDataContext.Provider value={adminData}>
         <QueryClientProvider client={queryClient}>
-          <Box id="app" sx={appStyle}>
+          <Box
+            id="app"
+            className="flex-column full-height-vh"
+            sx={{
+              overflow: "auto",
+              bgcolor: "background.default",
+              "*::-webkit-scrollbar, &::-webkit-scrollbar": { bgcolor: "background.paper" },
+              "*::-webkit-scrollbar-thumb, &::-webkit-scrollbar-thumb": { bgcolor: "primary.main" },
+              "& input:autofill": {
+                boxShadow: `0 0 0 100px ${theme.palette.background.default} inset !important`,
+                WebkitTextFillColor: `${theme.palette.text.primary} !important`
+              }
+            }}>
             {
               isLoading ? <LoadingPage />
                 : isLogged ? <AppContent />

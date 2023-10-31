@@ -4,7 +4,7 @@ import useApiRequest from "./useApiRequest";
 import { useCookies } from "react-cookie";
 import useNotifications from "./useNotifications";
 import { loadingControl } from "@abdulrhmangoni/am-store-library";
-import { AdminData } from "@/types/dataTypes";
+import { AdminData } from "../types/dataTypes";
 
 interface SubmitEventProps {
     preventDefault: () => void;

@@ -1,50 +1,37 @@
-import { createTheme, SxProps, Theme } from "@mui/material";
-import { indigo } from "@mui/material/colors";
+import { createTheme, Theme, colors } from "@mui/material";
 import { useCookies } from "react-cookie";
 
-export default function useCustomTheme(): { theme: Theme, appStyle: SxProps } {
+export default function useCustomTheme(): Theme {
 
-    const [{ theme: mode }] = useCookies();
+    const [{ AM_Store_admind_panel_theme: mode }] = useCookies();
     const lightBackground = { default: "#f9f9f9", paper: "#fff" }
     const darkBackground = { default: "#111936", paper: "#0a1336" }
+    const isLightMode = mode === "light"
+    const textColor = isLightMode ? "#000000" : "#fff"
 
-    const theme = createTheme({
+    return createTheme({
         palette: {
-            mode: mode === "light" ? "light" : "dark",
-            primary: { main: indigo["A400"] },
+            mode: isLightMode ? "light" : "dark",
+            primary: { main: colors.indigo["A400"] },
             action: { hover: "3d5afe4d" },
-            background: mode === "light" ? lightBackground : darkBackground,
+            background: isLightMode ? lightBackground : darkBackground,
             success: { main: "#66bb6a" }
         },
         typography: {
             allVariants: {
-                color: mode === "light" ? "#000000" : "#fff"
+                color: textColor
+            }
+        },
+        components: {
+            MuiAppBar: {
+                styleOverrides: {
+                    root: {
+                        backgroundColor: isLightMode ? lightBackground.paper : darkBackground.paper,
+                        color: textColor
+                    }
+                }
             }
         }
     })
-
-    const { palette: { primary, background, text } } = theme;
-
-    const appStyle: SxProps = {
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
-        bgcolor: background.default,
-        "*::-webkit-scrollbar": { bgcolor: text.primary, width: "3px", height: "6px" },
-        "*::-webkit-scrollbar-thumb": { bgcolor: primary.main },
-        "& input:autofill": {
-            boxShadow: `0 0 0 100px ${background.default} inset !important`,
-            WebkitTextFillColor: `${text.primary} !important`
-        },
-        ":root": {
-            "--toastify-color-info": primary.main,
-            "--toastify-color-dark": background.default
-        }
-    }
-
-    return {
-        theme,
-        appStyle
-    }
 }
 

@@ -1,6 +1,6 @@
 import { JSX } from 'react'
 import { PromiseState, nDecorator } from '@abdulrhmangoni/am-store-library'
-import { Box, Chip, Divider, List, ListItem, ListItemText, Skeleton, Typography } from '@mui/material'
+import { Box, Chip, Divider, List, ListItem, ListItemText, Paper, Skeleton, Typography } from '@mui/material'
 
 type TopSeriesesData = {
     series: string,
@@ -21,18 +21,22 @@ export default function TopSerieses({ data, isLoading, title, icon, isMoney }: T
         money = isMoney ? "$" : ""
 
     return (
-        <>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                {icon}
-                <Typography variant="h6" >{title}</Typography>
+        <Paper>
+            <Box className="flex-column" p={1}>
+                <Box className="flex-row gap1">
+                    {icon}
+                    <Typography variant="h6" >{title}</Typography>
+                </Box>
+                <Divider sx={{ width: "100%", mt: 1 }} />
             </Box>
-            <Divider sx={{ width: "100%", mt: 1 }} />
             <List
                 className="flex-column"
+                disablePadding
                 sx={{
                     overflow: "auto",
                     height: "calc(100% - 32px)",
-                    gap: isLoading ? 1 : .5
+                    gap: isLoading ? 1 : .5,
+                    padding: .5
                 }}>
                 {
                     dataArray.map(({ series, value }: TopSeriesesData, index: number) => {
@@ -40,9 +44,8 @@ export default function TopSerieses({ data, isLoading, title, icon, isMoney }: T
                             <Skeleton key={index} variant="rounded" width="100%" height={32} />
                             :
                             <ListItem
-                                sx={{ pr: "6px" }}
+                                sx={{ pr: "6px", bgcolor: "background.default" }}
                                 key={series}
-                                disablePadding
                             >
                                 <ListItemText primary={series} />
                                 <Chip
@@ -55,7 +58,7 @@ export default function TopSerieses({ data, isLoading, title, icon, isMoney }: T
                     })
                 }
             </List>
-        </>
+        </Paper>
     )
 }
 

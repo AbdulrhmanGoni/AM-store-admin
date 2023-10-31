@@ -39,9 +39,13 @@ export default function useAdminLogIn() {
     }, [])
 
     return {
-        adminData, setAdminData,
-        isError, isNetworkError,
-        isLoading, isLogged,
-        isOut, isServerError
+        adminData, 
+        setAdminData,
+        isError, 
+        isNetworkError,
+        isLoading, 
+        isLogged,
+        isOut, 
+        isServerError
     }
 }

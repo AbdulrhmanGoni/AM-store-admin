@@ -13,9 +13,7 @@ export default function AdminAppBar() {
             <AdminSideBar isOpen={drawerState} close={() => { setDrawerState(false) }} />
             <AppBar elevation={1} position='relative'>
                 <Toolbar>
-                    <IconButton onClick={() => { setDrawerState(true) }} >
-                        <Menu sx={{ color: "white" }} />
-                    </IconButton>
+                    <IconButton onClick={() => { setDrawerState(true) }} ><Menu /></IconButton>
                     <IconButton
                         sx={{ width: 50, height: 50, p: 0, mr: 1 }}>
                         <Avatar src="https://live.staticflickr.com/65535/52735512062_1fb9bc6f2a_o.jpg">AM</Avatar>
@@ -24,8 +22,7 @@ export default function AdminAppBar() {
                         variant="h6"
                         noWrap
                         component="div"
-                        color="white"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}
+                        sx={{ display: { xs: 'none', sm: 'block' }, fontWeight: "bold" }}
                     >
                         AM STORE
                     </Typography>

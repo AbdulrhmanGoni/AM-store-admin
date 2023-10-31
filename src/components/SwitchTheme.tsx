@@ -51,10 +51,10 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 export default function SwitchTheme() {
 
-    const [{ theme: mode }, setCoockies] = useCookies();
+    const [{ AM_Store_admind_panel_theme: mode }, setCoockies] = useCookies();
 
     function switchTheme() {
-        setCoockies("theme", mode === "light" ? "dark" : "light")
+        setCoockies("AM_Store_admind_panel_theme", mode === "light" ? "dark" : "light")
     }
 
     return (
@@ -63,13 +63,10 @@ export default function SwitchTheme() {
                 sx={{ "& lable": { mr: 0 } }}
                 control={
                     <MaterialUISwitch
-                        onChange={() => {
-                            switchTheme()
-                        }}
+                        onChange={switchTheme}
                         checked={!(mode === "dark")}
                     />
                 }
-                // onChange={}
                 label=""
             />
         </FormGroup>

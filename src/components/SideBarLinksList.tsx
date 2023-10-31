@@ -55,7 +55,7 @@ function LinkItem({ path, icon, text, close, onClick, isParent, isChild, childre
         position: "relative",
         "&::before": {
             content: "' '",
-            bgcolor: innerLinkColor,
+            bgcolor: isCurr ? "primary.main" : "text.primary",
             width: 10, height: 10,
             position: "absolute",
             left: 10, top: "50%",
