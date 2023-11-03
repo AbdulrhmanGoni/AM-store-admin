@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 
 
 export type typeMessage = 'info' | 'success' | 'warning' | 'error' | 'default'
-type promiseFunc = Promise<any>
+type promiseFunc = Promise<unknown>
 interface promiseParams {
     loadingMsg: string,
     successgMsg: string,

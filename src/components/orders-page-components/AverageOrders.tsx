@@ -5,7 +5,7 @@ import { SmalBar } from "../SmallChart";
 import { Box, Typography } from "@mui/material";
 import { PromiseState } from "@abdulrhmangoni/am-store-library";
 
-interface AverageOrdersProps extends PromiseState{ 
+interface AverageOrdersProps extends PromiseState { 
     data: number[], 
     totalOrders: number,
 }

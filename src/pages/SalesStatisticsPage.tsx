@@ -11,7 +11,7 @@ import { averageOrdersIcon } from "../components/svgIconsAsString";
 import DisplayInfoBox from "../components/DisplayInfoBox";
 import moneyIcon from "../components/moneyIcon";
 import randomColorsArr from "../CONSTANTS/randomColorsArr";
-import useMonthlyStatistics, { MonthStatistics } from "../hooks/useMonthlyStatistics";
+import useMonthlyStatistics, { MonthSalesStatistics } from "../hooks/useMonthlySalesStatistics";
 import pageSpaces from "../CONSTANTS/pageSpaces";
 
 
@@ -28,7 +28,7 @@ export default function SalesStatisticsPage() {
 
   const { monthesData, isLoading, isError } = useMonthlyStatistics();
 
-  const monthlyEarnings: number[] = monthesData?.map((mon: MonthStatistics) => {
+  const monthlyEarnings: number[] = monthesData?.map((mon: MonthSalesStatistics) => {
     const randomNimber = faker.number.float({ precision: 0.01, max: 5000, min: 4000 });
     return mon.totalEarnings ? mon.totalEarnings : randomNimber
   }) ?? [0];

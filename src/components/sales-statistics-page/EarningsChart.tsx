@@ -6,10 +6,10 @@ import { faker } from "@faker-js/faker";
 import { ApexOptions } from "apexcharts";
 import { Money } from "@mui/icons-material";
 import ChartTitle from "../ChartTitle";
-import { MonthStatistics, MonthlyStatistics } from "../../hooks/useMonthlyStatistics";
+import { MonthSalesStatistics, UseMonthlySalesStatisticsType } from "../../hooks/useMonthlySalesStatistics";
 import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
 
-interface EarningsChartProps extends MonthlyStatistics { }
+interface EarningsChartProps extends UseMonthlySalesStatisticsType { }
 
 export default function EarningsChart({ monthesData }: EarningsChartProps) {
 
@@ -49,7 +49,7 @@ export default function EarningsChart({ monthesData }: EarningsChartProps) {
     const series: ApexAxisChartSeries = [
         {
             name: 'Earnings',
-            data: monthesData?.map((doc: MonthStatistics) => {
+            data: monthesData?.map((doc: MonthSalesStatistics) => {
                 const randomNimber = faker.number.float({ precision: 0.02, max: 5000, min: 4000 });
                 return doc.totalEarnings ? +doc.totalEarnings.toFixed(2) : randomNimber
             }) ?? [0]

@@ -4,10 +4,10 @@ import { growChartIcon2 } from "../growChartIcon";
 import { NorthEast, SouthEast } from "@mui/icons-material";
 import { SmalLine } from "../SmallChart";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
-import { MonthlyStatistics, MonthStatistics } from "../../hooks/useMonthlyStatistics";
+import { UseMonthlySalesStatisticsType, MonthSalesStatistics } from "../../hooks/useMonthlySalesStatistics";
 import MONTHES from "../../CONSTANTS/MONTHES";
 
-interface SalesGrowthProps extends MonthlyStatistics { }
+interface SalesGrowthProps extends UseMonthlySalesStatisticsType { }
 
 function countGrowthRete(pastValue: number = 1, currentValue: number = 1) {
     return (currentValue - pastValue) / pastValue
@@ -21,7 +21,7 @@ export default function SalesGrowth({ monthesData, isError, isLoading }: SalesGr
     let lastMonthEarnings = 0;
     let beforeLastMonthEarnings = 0;
 
-    monthesData?.forEach(({ month, totalEarnings }: MonthStatistics) => {
+    monthesData?.forEach(({ month, totalEarnings }: MonthSalesStatistics) => {
         lastMonthEarnings += month === lastMonth ? totalEarnings : 0;
         beforeLastMonthEarnings += month === beforeLastMonth ? totalEarnings : 0;
     });

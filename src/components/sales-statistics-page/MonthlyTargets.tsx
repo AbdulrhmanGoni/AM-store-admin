@@ -5,10 +5,10 @@ import { ElementWithLoadingState, nDecorator } from '@abdulrhmangoni/am-store-li
 import SelectBox from '../SelectBox'
 import SvgIcon from '../SvgIcon'
 import { targetIcon } from '../targetIcon'
-import { MonthlyStatistics } from '../../hooks/useMonthlyStatistics'
+import { UseMonthlySalesStatisticsType } from '../../hooks/useMonthlySalesStatistics'
 import MONTHES from '../../CONSTANTS/MONTHES'
 
-interface MonthlyTargetProps extends MonthlyStatistics { }
+interface MonthlyTargetProps extends UseMonthlySalesStatisticsType { }
 
 export default function MonthlyTargets({ monthesData, isLoading }: MonthlyTargetProps) {
 

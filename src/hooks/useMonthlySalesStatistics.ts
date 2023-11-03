@@ -1,7 +1,7 @@
 import { PromiseState } from "@abdulrhmangoni/am-store-library";
 import useGetApi from "./useGetApi";
 
-export interface MonthStatistics {
+export interface MonthSalesStatistics {
     month: string,
     totalEarnings: number,
     totalOrders: number,
@@ -9,12 +9,12 @@ export interface MonthStatistics {
     earningsTarget: number
 }
 
-export interface MonthlyStatistics extends PromiseState {
-    monthesData?: MonthStatistics[]
+export interface UseMonthlySalesStatisticsType extends PromiseState {
+    monthesData?: MonthSalesStatistics[]
 }
-export default function useMonthlyStatistics(): MonthlyStatistics {
+export default function useMonthlySalesStatistics(): UseMonthlySalesStatisticsType {
 
-    const query = "monthly-statistics"
+    const query = "monthly-sales-statistics"
     const path = `statistics/?get=${query}`;
     const { data, isError, isLoading } = useGetApi({ key: [query], path });
 

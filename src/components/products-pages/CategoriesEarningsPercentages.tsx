@@ -2,33 +2,31 @@ import { JSX } from "react";
 import CustomChartBox from "../CustomChartBox";
 import SvgIcon from "../SvgIcon";
 import { categoriesEarningsIcon } from "../svgIconsAsString";
-import { Box, Typography, capitalize } from "@mui/material";
+import { Box, Paper, Typography, capitalize } from "@mui/material";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { SmalDonut } from "../SmallChart";
 import { PromiseState } from "../../types/interfaces";
 import calculatePercentage from "../../functions/calculatePercentage";
+import { chartCategory, chartObtions } from "../../hooks/useMonthlyCategoriesStatistics";
 
-type data = { color: string, name: string }
-export interface chartCategory extends data { data: number[] }
-interface series extends data { total: number }
+interface series extends chartObtions { total: number }
 
 interface CategoriesEarningsPercentages extends PromiseState {
     data: chartCategory[],
-    isError: boolean,
-    isLoading: boolean,
     totalEarnings: number
 }
+
 export default function CategoriesEarningsPercentages({ data, isError, isLoading, totalEarnings }: CategoriesEarningsPercentages) {
 
     const series: series[] = data.map(({ name, color, data }: chartCategory) => {
         return {
             name, color,
-            total: data?.reduce((acc: number, curr: number) => acc + curr) ?? 0,
+            total: data.reduce((acc: number, curr: number) => acc + curr) ?? 0,
         }
     })
 
-    const chartColors: string[] = series?.map((cat: series) => cat.color);
-    const legends: JSX.Element[] = series?.map(({ color, name, total: categoryEarnings }: series) => {
+    const chartColors: string[] = series.map((cat: series) => cat.color);
+    const legends: JSX.Element[] = series.map(({ color, name, total: categoryEarnings }: series) => {
         return (
             <Box key={name} sx={{ display: "flex", alignItems: "center", gap: "6px", "& > p": { fontSize: "15px" } }}>
                 <Typography sx={legendsMark(color)}></Typography>
@@ -38,6 +36,18 @@ export default function CategoriesEarningsPercentages({ data, isError, isLoading
         )
     })
 
+    return (
+        <Paper className="flex-row-center-between" sx={{ p: 2, height: "100%" }}>
+            <Box sx={legendsContainer}>{legends}</Box>
+            <SmalDonut
+                data={series.map((cat: series) => cat.total)}
+                tooltipIsMony
+                height={140}
+                width={140}
+                colors={chartColors}
+            />
+        </Paper>
+    )
     return (
         <CustomChartBox
             title="Categories Earnings"

@@ -11,12 +11,13 @@ import { stockIcon } from "../components/stockIcon";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import TopSerieses from "../components/products-pages/TopSerieses";
 import TopCategories from "../components/products-pages/TopCategories";
-import useProductsStatisticsContent from "../hooks/useProductsStatisticsContent";
+import useProductsStatisticsPageContent from "../hooks/useProductsStatisticsPageContent";
 import DisplayInfoBox from "../components/DisplayInfoBox";
 import SvgIcon from "../components/SvgIcon";
 import PageTitle from "../components/PageTitle";
 import { rankingIconMedal } from '../components/rankingIconMedal'
 import { rankingIconCup } from '../components/rankingIconCup'
+import pageSpaces from "../CONSTANTS/pageSpaces";
 
 
 export default function ProductsStatisticsPage() {
@@ -35,19 +36,19 @@ export default function ProductsStatisticsPage() {
         topProducts,
         topProductsLoading,
         topProductsError,
-    } = useProductsStatisticsContent();
+    } = useProductsStatisticsPageContent();
 
     const infoBoxStyle = { flexBasis: "50%", p: 2 }
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, md: 2 } }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
             <PageTitle
                 title="Products Statistics"
                 description="View statistics and information of products & categories & serieses"
                 icon={<SvgIcon svgElementAsString={orderIcon} />}
             />
-            <Grid container spacing={{ xs: 1, md: 2 }}>
+            <Grid container spacing={pageSpaces}>
                 <Grid item xs={12} md={6}>
-                    <Box sx={{ display: "flex", gap: { xs: 1, md: 2 } }}>
+                    <Box sx={{ display: "flex", gap: pageSpaces }}>
                         <DisplayInfoBox
                             type={media ? "horizontally" : "columnly"}
                             isLoading={productsStatisticsLoading}
@@ -70,7 +71,7 @@ export default function ProductsStatisticsPage() {
                     </Box>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <Box sx={{ display: "flex", gap: { xs: 1, md: 2 } }}>
+                    <Box sx={{ display: "flex", gap: pageSpaces }}>
                         <DisplayInfoBox
                             type={media ? "horizontally" : "columnly"}
                             isLoading={productsStatisticsLoading}
@@ -94,7 +95,17 @@ export default function ProductsStatisticsPage() {
                     </Box>
                 </Grid>
             </Grid>
-            <Grid container spacing={{ xs: 1, md: 2 }}>
+            <Grid container spacing={pageSpaces}>
+                <Grid item xs={12} md={6}>
+                    <CategoriesEarningsPercentages
+                        data={earningsChartData}
+                        totalEarnings={totalEarnings}
+                        isLoading={chartLoading}
+                        isError={chartError}
+                    />
+                </Grid>
+            </Grid>
+            <Grid container spacing={pageSpaces}>
                 <Grid item xs={12} md={6.5} lg={8}>
                     <Paper sx={{ height: "100%", p: 1 }}>
                         <CategoriesEarnings data={earningsChartData} />
@@ -106,7 +117,7 @@ export default function ProductsStatisticsPage() {
                     </Paper>
                 </Grid>
             </Grid>
-            <Grid container spacing={{ xs: 1, md: 2 }}>
+            <Grid container spacing={pageSpaces}>
                 <Grid item xs={12} md={6}>
                     <Paper sx={{ p: 1 }}>
                         <ProductsTopSales
@@ -126,34 +137,23 @@ export default function ProductsStatisticsPage() {
                     </Paper>
                 </Grid>
             </Grid>
-            <Grid container spacing={{ xs: 1, md: 2 }}>
-                <Grid item xs={12} sm={6} lg={4}>
-                    
-                        <TopSerieses
-                            title="Best Selling"
-                            icon={<SvgIcon svgElementAsString={rankingIconCup} width={30} height={30} />}
-                            isLoading={topSeriesesLoading}
-                            data={topSerieses?.topEarnings}
-                            isMoney
-                        />
+            <Grid container spacing={pageSpaces}>
+                <Grid item xs={12} sm={6}>
+                    <TopSerieses
+                        title="Best Selling"
+                        icon={<SvgIcon svgElementAsString={rankingIconCup} width={30} height={30} />}
+                        isLoading={topSeriesesLoading}
+                        data={topSerieses?.topEarnings}
+                        isMoney
+                    />
                 </Grid>
-                <Grid item xs={12} sm={6} lg={4}>
-                        <TopSerieses
-                            title="Top Selling"
-                            icon={<SvgIcon svgElementAsString={rankingIconMedal} width={30} height={30} />}
-                            isLoading={topSeriesesLoading}
-                            data={topSerieses?.topSold}
-                        />
-                </Grid>
-                <Grid item xs={12} md={8} lg={4}>
-                    <Paper sx={{ p: 1, height: "100%" }}>
-                        <CategoriesEarningsPercentages
-                            data={earningsChartData}
-                            totalEarnings={totalEarnings}
-                            isLoading={chartLoading}
-                            isError={chartError}
-                        />
-                    </Paper>
+                <Grid item xs={12} sm={6}>
+                    <TopSerieses
+                        title="Top Selling"
+                        icon={<SvgIcon svgElementAsString={rankingIconMedal} width={30} height={30} />}
+                        isLoading={topSeriesesLoading}
+                        data={topSerieses?.topSold}
+                    />
                 </Grid>
             </Grid>
         </Box>

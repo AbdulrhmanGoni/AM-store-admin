@@ -6,8 +6,8 @@ import { ApexOptions } from "apexcharts";
 import ChartTitle from "../ChartTitle";
 import { lineChartIcon } from "../lineChartIcon";
 import Icon from "../SvgIcon";
-import { chartCategory } from "./CategoriesEarningsPercentages";
 import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
+import { chartCategory } from "../../hooks/useMonthlyCategoriesStatistics";
 
 
 export default function CategoriesEarnings({ data }: { data: chartCategory[] }) {

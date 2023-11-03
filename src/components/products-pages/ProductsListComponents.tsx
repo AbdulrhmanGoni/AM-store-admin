@@ -6,6 +6,7 @@ import {
 import useProductsDisplayer from '../../hooks/useProductsDisplayer'
 import CustomListItem, { DisplyProductDetails } from '../CustomListItem'
 import SmallIconBox from '../SmallIconBox'
+import { PromiseState } from '@abdulrhmangoni/am-store-library'
 
 export interface productData {
     _id: string,
@@ -18,10 +19,8 @@ export interface productData {
     earnings: number,
     category: string,
 }
-export interface RecieverProps {
+export interface RecieverProps extends PromiseState {
     data: productData[]
-    isLoading?: boolean
-    isError?: boolean,
 }
 interface ProductsListDisplayerProps extends RecieverProps {
     onRightElement: (product: productData) => JSX.Element
@@ -94,8 +93,8 @@ export function LoadingState() {
     const { palette: { primary } } = useTheme();
     return (
         <ListItem sx={{ display: "flex", gap: 1, bgcolor: alpha(primary.main, .3), borderRadius: 1 }}>
-            <Skeleton variant="rounded" width={50} height={50} />
-            <Skeleton variant="rounded" width="100%" height={50} />
+            <Skeleton variant="rounded" width={50} height={48} />
+            <Skeleton variant="rounded" width="100%" height={48} />
         </ListItem>
     )
 }

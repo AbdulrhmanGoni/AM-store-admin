@@ -1,21 +1,23 @@
-import randomColorsArr from "../CONSTANTS/randomColorsArr";
+import useMonthlyCategoriesStatistics from "./useMonthlyCategoriesStatistics";
+import useCategoriesStatistics, { CategoryStatistics } from "./useCategoriesStatistics";
 import useGetApi from "./useGetApi";
-import { faker } from "@faker-js/faker";
 import { useMemo } from "react";
 
-type MonthProps = {
-    totalEarnings: number,
-    productsSold: number
-}
 
-export default function useProductsStatisticsContent() {
+export default function useProductsStatisticsPageContent() {
 
-    const { data: categoriesStatistics, isError: chartError, isLoading: chartLoading, } = useGetApi({
-        key: ["categories-statistics"], path: 'statistics/?get=categories-statistics'
-    })
-    const { data: productsStatistics, isLoading: productsStatisticsLoading, isError: productsStatisticsError } = useGetApi({
-        key: ["products-statistics"], path: "statistics/?get=products-statistics"
-    })
+    const {
+        isLoading: chartLoading,
+        isError: chartError,
+        chartData: { earningsChartData, totalEarnings }
+    } = useMonthlyCategoriesStatistics();
+
+    const {
+        data: productsStatistics,
+        isLoading: productsStatisticsLoading,
+        isError: productsStatisticsError
+    } = useCategoriesStatistics();
+
     const { data: topProducts, isLoading: topProductsLoading, isError: topProductsError } = useGetApi({
         key: ["top-products"], path: "statistics/?get=top-products&limit=5"
     })
@@ -31,27 +33,12 @@ export default function useProductsStatisticsContent() {
         return prepareTopCategoriesData(productsStatistics)
     }, [productsStatistics])
 
-
-    let total: number = 0;
-    const earningsChartData = Object.keys(categoriesStatistics ?? {}).map((category, index) => {
-        return {
-            name: category,
-            color: randomColorsArr[index],
-            data: categoriesStatistics[category]?.map((month: MonthProps) => {
-                const randomEarnings = faker.number.float({ precision: 0.02, max: 3000, min: 1500 });
-                const totalEarnings = month.totalEarnings ? month.totalEarnings : randomEarnings;
-                total += totalEarnings;
-                return +totalEarnings.toFixed(2);
-            }) ?? [0]
-        }
-    })
-
     return {
         earningsChartData,
         chartLoading,
         chartError,
+        totalEarnings,
         topCategoriesData,
-        totalEarnings: total,
         productsTotals,
         productsStatisticsLoading,
         productsStatisticsError,
@@ -64,15 +51,8 @@ export default function useProductsStatisticsContent() {
     }
 }
 
-interface ProductsStatisticsResponse {
-    inStock: number
-    productsCount: number
-    productsSold: number
-    totalEarnings: number
-    _id: string
-}
 
-function prepareProductsStatistics(response?: ProductsStatisticsResponse[]) {
+function prepareProductsStatistics(response?: CategoryStatistics[]) {
     const productsStatistics = response?.reduce((acc, curr) => {
         acc.productsCount += curr.productsCount
         acc.inStock += curr.inStock
@@ -89,12 +69,12 @@ function prepareProductsStatistics(response?: ProductsStatisticsResponse[]) {
         categoriesCount: response?.length
     }
 }
-function prepareTopCategoriesData(response?: ProductsStatisticsResponse[]) {
+function prepareTopCategoriesData(response?: CategoryStatistics[]) {
     const
         categories: string[] = [],
         values: number[] = []
     response?.forEach((cat) => {
-        categories.push(cat._id)
+        categories.push(cat.category)
         values.push(cat.productsSold)
     })
 

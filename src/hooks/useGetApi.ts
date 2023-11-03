@@ -1,4 +1,3 @@
-// /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery } from '@tanstack/react-query'
 import host from '../CONSTANTS/API_hostName';
 import useApiRequest from './useApiRequest';

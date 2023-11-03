@@ -6,7 +6,7 @@ import OrdersStatisticsChart from "../components/orders-page-components/OrdersSt
 import { averageOrdersIcon, orderIcon } from "../components/svgIconsAsString";
 import SvgIcon from "../components/SvgIcon";
 import { faker } from "@faker-js/faker";
-import useMonthlyStatistics, { MonthStatistics } from "../hooks/useMonthlyStatistics";
+import useMonthlyStatistics, { MonthSalesStatistics } from "../hooks/useMonthlySalesStatistics";
 import PageTitle from "../components/PageTitle";
 import pageSpaces from "../CONSTANTS/pageSpaces";
 
@@ -24,7 +24,7 @@ export default function OrdersManagementPage() {
     const { monthesData, isLoading } = useMonthlyStatistics();
 
     let totalOrders: number = 0;
-    const dataChart: number[] = monthesData?.map((doc: MonthStatistics) => {
+    const dataChart: number[] = monthesData?.map((doc: MonthSalesStatistics) => {
         const randomNimber = faker.number.float({ precision: 1, max: 50, min: 30 });
         const orders = doc.totalOrders ? doc.totalOrders : randomNimber
         totalOrders += orders;
@@ -51,6 +51,14 @@ export default function OrdersManagementPage() {
                         />
                         {/* <DisplayInfoBox
                             title="Total Orders"
+                            type="horizontally"
+                            body={nDecorator(totalOrders)}
+                            icon={<SvgIcon svgElementAsString={totalIcon} />}
+                            color={randomColorsArr[0]}
+                            BoxStyle={{ width: "100%", p: 1.5 }}
+                        /> */}
+                        {/* <DisplayInfoBox
+                            title="Current Month Orders"
                             type="horizontally"
                             body={nDecorator(totalOrders)}
                             icon={<SvgIcon svgElementAsString={totalIcon} />}
