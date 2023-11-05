@@ -1,15 +1,15 @@
 import { useMediaQuery, useTheme } from "@mui/material"
 
 
-export default function useBreakPoints() {
+export default function useBreakPoints(type: "up" | "not" | "down" | "only" = "only") {
 
     const { breakpoints } = useTheme();
 
     return {
-        xSmallScreen: useMediaQuery(breakpoints.only("xs")),
-        smallScreen: useMediaQuery(breakpoints.only("sm")),
-        mediumScreen: useMediaQuery(breakpoints.only("md")),
-        largeScreen: useMediaQuery(breakpoints.only("lg")),
-        xLargeScreen: useMediaQuery(breakpoints.only("xl")),
+        xSmallScreen: useMediaQuery(breakpoints[type]("xs")),
+        smallScreen: useMediaQuery(breakpoints[type]("sm")),
+        mediumScreen: useMediaQuery(breakpoints[type]("md")),
+        largeScreen: useMediaQuery(breakpoints[type]("lg")),
+        xLargeScreen: useMediaQuery(breakpoints[type]("xl")),
     }
 }

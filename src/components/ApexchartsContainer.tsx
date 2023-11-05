@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import { Box } from "@mui/material";
+import { Paper } from "@mui/material";
 import { CSSProperties } from "@mui/material/styles/createMixins";
 
 type props = {
@@ -10,11 +10,14 @@ type props = {
 
 export default function ApexchartsContainer({ children, sx }: props) {
     return (
-        <Box component="div" sx={{
-            width: "100%", ...sx,
-            "& svg": { backgroundColor: "transparent !important" },
-        }}>
+        <Paper
+            component="div"
+            sx={{
+                width: "100%", ...sx,
+                "& svg": { backgroundColor: "transparent !important" },
+                "& .apexcharts-legend-text": { ml: "-10px !important" }
+            }}>
             {children}
-        </Box>
+        </Paper>
     )
 }

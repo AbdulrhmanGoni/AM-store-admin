@@ -1,14 +1,9 @@
-import useMonthlyCategoriesStatistics from "./useMonthlyCategoriesStatistics";
 import useCategoriesStatistics, { CategoryStatistics } from "./useCategoriesStatistics";
 import useGetApi from "./useGetApi";
 import { useMemo } from "react";
 
 
 export default function useProductsStatisticsPageContent() {
-
-    const {
-        chartData: { earningsChartData }
-    } = useMonthlyCategoriesStatistics();
 
     const {
         data: categoriesStatistics,
@@ -27,13 +22,7 @@ export default function useProductsStatisticsPageContent() {
         return prepareProductsStatistics(categoriesStatistics)
     }, [categoriesStatistics])
 
-    const topCategoriesData = useMemo(() => {
-        return prepareTopCategoriesData(categoriesStatistics)
-    }, [categoriesStatistics])
-
     return {
-        earningsChartData,
-        topCategoriesData,
         productsStatistics,
         productsStatisticsLoading,
         productsStatisticsError,
@@ -77,15 +66,4 @@ function prepareProductsStatistics(response?: CategoryStatistics[]) {
         seriesesCount: new Set(categoriesStatistics?.serieses).size,
         categoriesCount: response?.length
     }
-}
-function prepareTopCategoriesData(response?: CategoryStatistics[]) {
-    const
-        categories: string[] = [],
-        values: number[] = []
-    response?.forEach((cat) => {
-        categories.push(cat.category)
-        values.push(cat.productsSold)
-    })
-
-    return { categories, values }
 }

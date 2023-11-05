@@ -5,9 +5,6 @@ import { faker } from "@faker-js/faker"
 import { PromiseState } from "@abdulrhmangoni/am-store-library"
 
 
-export interface chartObtions { color: string, name: string }
-export interface chartCategory extends chartObtions { data: number[] }
-
 export interface MonthlyCategoryStatistics {
     month: string
     productsSold: number
@@ -20,9 +17,9 @@ interface CategoriesStatisticsType {
 }
 
 interface UseMonthlyCategoriesStatisticsType extends PromiseState {
-    data: CategoriesStatisticsType[],
     chartData: {
-        earningsChartData: chartCategory[],
+        earningsChartData: ApexAxisChartSeries,
+        salesChartData: ApexAxisChartSeries,
         totalEarnings: number
     }
 }
@@ -36,25 +33,39 @@ export default function useMonthlyCategoriesStatistics(): UseMonthlyCategoriesSt
 
     const chartData = useMemo(() => {
         let total: number = 0;
+        const
+            earningsChartData: ApexAxisChartSeries = [],
+            salesChartData: ApexAxisChartSeries = []
+
+        data.forEach(({ category, monthlyStatistics }: CategoriesStatisticsType, index: number) => {
+            earningsChartData.push({
+                name: category,
+                color: randomColorsArr[index],
+                data: monthlyStatistics?.map((month: MonthlyCategoryStatistics) => {
+                    const randomEarnings = faker.number.float({ precision: 0.02, max: 3000, min: 1500 });
+                    const totalEarnings = month.totalEarnings ? month.totalEarnings : randomEarnings;
+                    total += totalEarnings;
+                    return +totalEarnings.toFixed(2);
+                })
+            })
+            salesChartData.push({
+                name: category,
+                color: randomColorsArr[index],
+                data: monthlyStatistics?.map((month: MonthlyCategoryStatistics) => {
+                    const randomNumber = faker.number.float({ precision: 1, max: 45, min: 30 });
+                    return month.productsSold ? month.productsSold : randomNumber
+                })
+            })
+        })
+
         return {
-            earningsChartData: data.map(({ category, monthlyStatistics }: CategoriesStatisticsType, index: number) => {
-                return {
-                    name: category,
-                    color: randomColorsArr[index],
-                    data: monthlyStatistics?.map((month: MonthlyCategoryStatistics) => {
-                        const randomEarnings = faker.number.float({ precision: 0.02, max: 3000, min: 1500 });
-                        const totalEarnings = month.totalEarnings ? month.totalEarnings : randomEarnings;
-                        total += totalEarnings;
-                        return +totalEarnings.toFixed(2);
-                    })
-                }
-            }),
+            earningsChartData,
+            salesChartData,
             totalEarnings: total
         }
     }, [data])
 
     return {
-        data,
         chartData,
         isLoading,
         isError

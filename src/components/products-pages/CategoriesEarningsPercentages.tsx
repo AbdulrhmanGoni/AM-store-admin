@@ -1,19 +1,11 @@
 import { Alert, Box, Paper, Skeleton, alpha, capitalize } from "@mui/material";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { SmalDonut } from "../SmallChart";
-import { PromiseState } from "../../types/interfaces";
 import calculatePercentage from "../../functions/calculatePercentage";
-import { chartCategory } from "../../hooks/useMonthlyCategoriesStatistics";
 import P, { PProps } from "../P";
 import useCategoriesStatistics, { CategoryStatistics } from "../../hooks/useCategoriesStatistics";
 import randomColorsArr from "../../CONSTANTS/randomColorsArr";
 import useBreakPoints from "../../hooks/useBreakPoints";
-
-
-interface CategoriesEarningsPercentages extends PromiseState {
-    data: chartCategory[],
-    totalEarnings: number
-}
 
 const rowClass = "flex-row-center-between full-width"
 
@@ -72,6 +64,7 @@ export default function CategoriesEarningsPercentages() {
                                     category,
                                     totalEarnings: categoryEarnings,
                                     productsCount,
+                                    serieses,
                                     productsSold
                                 } = cat
                                 const color = chartColors[index]
@@ -107,6 +100,7 @@ export default function CategoriesEarningsPercentages() {
                                         </Box>
                                         <P {...PProps}>Earnings <Box component="span">${nDecorator(categoryEarnings.toFixed(0))}</Box></P>
                                         <P {...PProps}>Products Count <Box component="span">{productsCount}</Box></P>
+                                        <P {...PProps}>Serieses <Box component="span">{serieses.length}</Box></P>
                                         <P {...PProps}>Products Sold <Box component="span">{productsSold}</Box></P>
                                     </Box>
                                 )
@@ -155,11 +149,15 @@ function LoadingState() {
                     <Skeleton variant="rounded" width={55} height={17} />
                 </Box>
                 <Box className={rowClass}>
-                    <Skeleton variant="rounded" width={82} height={17} />
+                    <Skeleton variant="rounded" width={90} height={17} />
                     <Skeleton variant="rounded" width={40} height={17} />
                 </Box>
                 <Box className={rowClass}>
                     <Skeleton variant="rounded" width={80} height={17} />
+                    <Skeleton variant="rounded" width={40} height={17} />
+                </Box>
+                <Box className={rowClass}>
+                    <Skeleton variant="rounded" width={90} height={17} />
                     <Skeleton variant="rounded" width={40} height={17} />
                 </Box>
             </Box>

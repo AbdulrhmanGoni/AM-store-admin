@@ -7,10 +7,12 @@ import ChartTitle from "../ChartTitle";
 import { lineChartIcon } from "../lineChartIcon";
 import Icon from "../SvgIcon";
 import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
-import { chartCategory } from "../../hooks/useMonthlyCategoriesStatistics";
+import useMonthlyCategoriesStatistics from "../../hooks/useMonthlyCategoriesStatistics";
 
 
-export default function CategoriesMonthlyEarnings({ data }: { data: chartCategory[] }) {
+export default function CategoriesMonthlyEarnings() {
+
+    const { chartData: { earningsChartData } } = useMonthlyCategoriesStatistics();
 
     const { palette: { mode } } = useTheme();
     const options: ApexOptions = {
@@ -18,7 +20,11 @@ export default function CategoriesMonthlyEarnings({ data }: { data: chartCategor
         dataLabels: { enabled: false },
         stroke: { curve: 'smooth' },
         xaxis: { categories: MONTHES },
-        yaxis: { title: { text: 'Dolars ($)' } },
+        yaxis: {
+            labels: {
+                formatter(val, opts) { opts = nDecorator(val, true); return opts },
+            }
+        },
         theme: { mode },
         fill: { type: "image" },
         tooltip: {
@@ -28,15 +34,13 @@ export default function CategoriesMonthlyEarnings({ data }: { data: chartCategor
     }
 
     return (
-        <ApexchartsContainer sx={{
-            "& .apexcharts-legend-text": { ml: "-10px !important" }
-        }}>
+        <ApexchartsContainer>
             <ChartTitle
                 title="Categories Monthly Earnings"
                 disableIconColor
                 icon={<Icon disableIconColor svgElementAsString={lineChartIcon} />}
             />
-            <Chart options={options} series={data} type="area" height={280} />
+            <Chart options={options} series={earningsChartData} type="area" height={280} />
         </ApexchartsContainer>
     )
 }

@@ -1,5 +1,5 @@
 "use client"
-import { Box, Grid, Paper, useMediaQuery } from "@mui/material";
+import { Box, Grid, Paper } from "@mui/material";
 import CategoriesMonthlyEarnings from "../components/products-pages/CategoriesMonthlyEarnings";
 import CategoriesEarningsPercentages from "../components/products-pages/CategoriesEarningsPercentages";
 import ProductsTopSales from "../components/products-pages/ProductsTopSales";
@@ -10,40 +10,43 @@ import { inStockIcon, orderIcon } from "../components/svgIconsAsString";
 import { stockIcon } from "../components/stockIcon";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import TopSerieses from "../components/products-pages/TopSerieses";
-import TopCategories from "../components/products-pages/TopCategories";
 import useProductsStatisticsPageContent from "../hooks/useProductsStatisticsPageContent";
 import DisplayInfoBox from "../components/DisplayInfoBox";
 import PageTitle from "../components/PageTitle";
 import { rankingIconMedal } from '../components/rankingIconMedal'
 import { rankingIconCup } from '../components/rankingIconCup'
 import pageSpaces from "../CONSTANTS/pageSpaces";
+import CategoriesMonthlySales from "../components/products-pages/CategoriesMonthlySales";
+import useBreakPoints from "../hooks/useBreakPoints";
 
 
 export default function ProductsStatisticsPage() {
 
-    const media = useMediaQuery('(min-width:1200px)')
+
+    const { largeScreen, mediumScreen } = useBreakPoints("up");
+
     const {
-        earningsChartData,
         productsStatistics,
         productsStatisticsLoading,
         topSerieses,
         topSeriesesLoading,
-        topCategoriesData,
         topProducts,
         topProductsLoading,
         topProductsError,
     } = useProductsStatisticsPageContent();
 
-    const { 
-        totalInStock, 
-        totalProducts, 
-        productsOutOfStock, 
+    const {
+        totalInStock,
+        totalProducts,
+        productsOutOfStock,
         totalProductsSold,
         seriesesCount,
         categoriesCount
     } = productsStatistics
 
-    const infoBoxStyle = { flexBasis: "50%", p: 2 }
+    const infoBoxStyle = { height: "100%", p: 1.5 };
+    const infoBoxType = largeScreen ? "horizontally" : "columnly";
+    const sec2infoBoxType = mediumScreen ? "columnly" : "horizontally";
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
             <PageTitle
@@ -52,9 +55,9 @@ export default function ProductsStatisticsPage() {
                 icon={<SvgIcon svgElementAsString={orderIcon} />}
             />
             <Grid container spacing={pageSpaces}>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={6} sm={3} md={3}>
                     <DisplayInfoBox
-                        type={media ? "horizontally" : "columnly"}
+                        type={infoBoxType}
                         isLoading={productsStatisticsLoading}
                         title="Products"
                         body={nDecorator(String(totalProducts))}
@@ -64,9 +67,9 @@ export default function ProductsStatisticsPage() {
                         BoxStyle={infoBoxStyle}
                     />
                 </Grid>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={6} sm={3} md={3}>
                     <DisplayInfoBox
-                        type={media ? "horizontally" : "columnly"}
+                        type={infoBoxType}
                         isLoading={productsStatisticsLoading}
                         title="Products Sold"
                         body={nDecorator(String(totalProductsSold))}
@@ -76,9 +79,9 @@ export default function ProductsStatisticsPage() {
                         BoxStyle={infoBoxStyle}
                     />
                 </Grid>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={6} sm={3} md={3}>
                     <DisplayInfoBox
-                        type={media ? "horizontally" : "columnly"}
+                        type={infoBoxType}
                         isLoading={productsStatisticsLoading}
                         title="In Stock"
                         body={nDecorator(String(totalInStock))}
@@ -88,9 +91,9 @@ export default function ProductsStatisticsPage() {
                         BoxStyle={infoBoxStyle}
                     />
                 </Grid>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={6} sm={3} md={3}>
                     <DisplayInfoBox
-                        type={media ? "horizontally" : "columnly"}
+                        type={infoBoxType}
                         isLoading={productsStatisticsLoading}
                         title="Out of Stock"
                         body={nDecorator(String(productsOutOfStock))}
@@ -102,42 +105,38 @@ export default function ProductsStatisticsPage() {
                 </Grid>
             </Grid>
             <Grid container spacing={pageSpaces}>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} order={{ xs: 3, md: 1 }}>
                     <CategoriesEarningsPercentages />
                 </Grid>
-                <Grid item xs={6} md={3}>
+                <Grid item xs={6} md={3} order={{ xs: 1, md: 2 }}>
                     <DisplayInfoBox
-                        type="columnly"
+                        type={sec2infoBoxType}
                         isLoading={productsStatisticsLoading}
                         title="Categories"
                         body={nDecorator(String(categoriesCount))}
-                        iconColor={randomColorsArr[0]}
+                        iconColor={randomColorsArr[4]}
                         icon={<img src="/icons/categoriesIcon.svg" />}
-                        BoxStyle={{ p: 2, height: "100%" }}
+                        BoxStyle={infoBoxStyle}
                     />
                 </Grid>
-                <Grid item xs={6} md={3}>
+                <Grid item xs={6} md={3} order={{ xs: 2, md: 3 }}>
                     <DisplayInfoBox
-                        type="columnly"
+                        type={sec2infoBoxType}
                         isLoading={productsStatisticsLoading}
                         title="Serieses"
                         body={nDecorator(String(seriesesCount))}
-                        iconColor={randomColorsArr[1]}
+                        iconColor={randomColorsArr[5]}
                         icon={<img src="/icons/televisionIcon.svg" />}
-                        BoxStyle={{ p: 2, height: "100%" }}
+                        BoxStyle={infoBoxStyle}
                     />
                 </Grid>
             </Grid>
             <Grid container spacing={pageSpaces}>
-                <Grid item xs={12} md={6.5} lg={8}>
-                    <Paper sx={{ height: "100%", p: 1 }}>
-                        <CategoriesMonthlyEarnings data={earningsChartData} />
-                    </Paper>
+                <Grid item xs={12} lg={6}>
+                    <CategoriesMonthlyEarnings />
                 </Grid>
-                <Grid item xs={12} md={5.5} lg={4}>
-                    <Paper sx={{ p: 1, height: "100%", }}>
-                        <TopCategories data={topCategoriesData} height={280} />
-                    </Paper>
+                <Grid item xs={12} lg={6}>
+                    <CategoriesMonthlySales />
                 </Grid>
             </Grid>
             <Grid container spacing={pageSpaces}>
