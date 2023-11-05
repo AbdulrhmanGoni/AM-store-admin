@@ -7,13 +7,11 @@ import { useMemo } from "react";
 export default function useProductsStatisticsPageContent() {
 
     const {
-        isLoading: chartLoading,
-        isError: chartError,
-        chartData: { earningsChartData, totalEarnings }
+        chartData: { earningsChartData }
     } = useMonthlyCategoriesStatistics();
 
     const {
-        data: productsStatistics,
+        data: categoriesStatistics,
         isLoading: productsStatisticsLoading,
         isError: productsStatisticsError
     } = useCategoriesStatistics();
@@ -25,21 +23,18 @@ export default function useProductsStatisticsPageContent() {
         key: ["top-serieses"], path: "statistics/?get=top-serieses&limit=5"
     })
 
-    const productsTotals = useMemo(() => {
-        return prepareProductsStatistics(productsStatistics)
-    }, [productsStatistics])
+    const productsStatistics = useMemo(() => {
+        return prepareProductsStatistics(categoriesStatistics)
+    }, [categoriesStatistics])
 
     const topCategoriesData = useMemo(() => {
-        return prepareTopCategoriesData(productsStatistics)
-    }, [productsStatistics])
+        return prepareTopCategoriesData(categoriesStatistics)
+    }, [categoriesStatistics])
 
     return {
         earningsChartData,
-        chartLoading,
-        chartError,
-        totalEarnings,
         topCategoriesData,
-        productsTotals,
+        productsStatistics,
         productsStatisticsLoading,
         productsStatisticsError,
         topSerieses,
@@ -53,19 +48,33 @@ export default function useProductsStatisticsPageContent() {
 
 
 function prepareProductsStatistics(response?: CategoryStatistics[]) {
-    const productsStatistics = response?.reduce((acc, curr) => {
+
+    const initaiResult = {
+        productsCount: 0,
+        inStock: 0,
+        outOfStock: 0,
+        productsSold: 0,
+        totalEarnings: 0,
+        serieses: Array<string>()
+    }
+
+    const categoriesStatistics = response?.reduce((acc, curr) => {
         acc.productsCount += curr.productsCount
         acc.inStock += curr.inStock
+        acc.outOfStock += curr.outOfStock
         acc.productsSold += curr.productsSold
         acc.totalEarnings += curr.totalEarnings
+        acc.serieses = acc.serieses.concat(curr.serieses)
         return acc
-    }, { productsCount: 0, inStock: 0, productsSold: 0, totalEarnings: 0 })
+    }, initaiResult)
 
     return {
-        totalProducts: productsStatistics?.productsCount,
-        totalInStock: productsStatistics?.inStock,
-        totalProductsSold: productsStatistics?.productsSold,
-        totalProductsEarnings: productsStatistics?.totalEarnings,
+        totalProducts: categoriesStatistics?.productsCount,
+        totalInStock: categoriesStatistics?.inStock,
+        productsOutOfStock: categoriesStatistics?.outOfStock,
+        totalProductsSold: categoriesStatistics?.productsSold,
+        totalProductsEarnings: categoriesStatistics?.totalEarnings,
+        seriesesCount: new Set(categoriesStatistics?.serieses).size,
         categoriesCount: response?.length
     }
 }

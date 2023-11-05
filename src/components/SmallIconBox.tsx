@@ -28,12 +28,14 @@ export default function SmallIconBox(props: SmallIconBoxProps) {
                 border: `solid 1px ${text.primary}`,
                 bgcolor: color,
                 p: "13px", ...boxStyle,
-                "& svg": {
+                "& :is(img, svg)": {
+                    userSelect: "none",
+                    WebkitUserDrag: "none",
                     width: `${svgIconSize ?? 35}px !important`,
                     height: `${svgIconSize ?? 35}px !important`,
                     ...svgIconStyle
                 },
-                "& :is(svg, g, path)": { fill: disableIconColor ? undefined : "white !important" }
+                "& :is(img, svg, g, path)": { fill: disableIconColor ? undefined : "white !important" }
             }}
         >
             {children ? children : icon}

@@ -10,7 +10,7 @@ import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
 import { chartCategory } from "../../hooks/useMonthlyCategoriesStatistics";
 
 
-export default function CategoriesEarnings({ data }: { data: chartCategory[] }) {
+export default function CategoriesMonthlyEarnings({ data }: { data: chartCategory[] }) {
 
     const { palette: { mode } } = useTheme();
     const options: ApexOptions = {
@@ -32,7 +32,7 @@ export default function CategoriesEarnings({ data }: { data: chartCategory[] }) 
             "& .apexcharts-legend-text": { ml: "-10px !important" }
         }}>
             <ChartTitle
-                title="Categories Earnings"
+                title="Categories Monthly Earnings"
                 disableIconColor
                 icon={<Icon disableIconColor svgElementAsString={lineChartIcon} />}
             />
