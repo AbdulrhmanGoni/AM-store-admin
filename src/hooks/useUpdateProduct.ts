@@ -33,7 +33,7 @@ export default function useUpdateProduct({ productId }: { productId: string }) {
             .then((res) => {
                 if (res) {
                     update("success", "The Product Updated successfully")
-                    navigate("products/edit-product")
+                    navigate("/products/edit-product", { replace: true })
                 }
                 !res && update("warning", "There is Unexpected issue")
             })

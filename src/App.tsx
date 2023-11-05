@@ -1,5 +1,5 @@
 import "normalize.css/normalize.css";
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.minimal.css';
 import { createContext } from "react";
 import AdminAppBar from "./components/AdminBar";
 import { Box, ThemeProvider } from "@mui/material";
@@ -79,7 +79,7 @@ function ServerError() {
       title="Server Error"
       illustratorType="server"
       message="There is unexpected error happends in our server"
-      fullPage
+      fullPage withRefreshButton
     />
   )
 }
@@ -101,7 +101,7 @@ function UnexpectedError() {
       title="Unexpected Error"
       illustratorType="unexpected"
       message="There is unexpected happends, may its in your network or you dont have the access to this application"
-      fullPage
+      fullPage withRefreshButton
     />
   )
 }
