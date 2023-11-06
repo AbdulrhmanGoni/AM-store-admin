@@ -13,9 +13,11 @@ export default function ApexchartsContainer({ children, sx }: props) {
         <Paper
             component="div"
             sx={{
-                width: "100%", ...sx,
+                width: "100%",
+                p: { xs: 0, sm: 1 },
                 "& svg": { backgroundColor: "transparent !important" },
-                "& .apexcharts-legend-text": { ml: "-10px !important" }
+                "& .apexcharts-legend-text": { ml: "-10px !important" },
+                ...sx
             }}>
             {children}
         </Paper>

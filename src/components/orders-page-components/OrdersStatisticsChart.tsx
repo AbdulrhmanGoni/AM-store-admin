@@ -14,6 +14,7 @@ type OrdersStatisticsChartProps = {
     isLoading?: boolean,
     isError?: boolean
 }
+
 export default function OrdersStatisticsChart({ data }: OrdersStatisticsChartProps) {
 
     const { palette: { mode, primary } } = useTheme();
@@ -33,7 +34,6 @@ export default function OrdersStatisticsChart({ data }: OrdersStatisticsChartPro
             colors: ['transparent']
         },
         xaxis: { categories: MONTHES },
-        yaxis: { title: { text: 'Orders' } },
         fill: { opacity: 1 },
         theme: {
             mode,

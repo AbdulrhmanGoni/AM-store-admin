@@ -1,24 +1,22 @@
 import {
     Table, Paper, TableRow, TableHead, TableContainer,
-    TableBody, Avatar, Box, Typography, TableCell
+    TableBody, Box, Typography, TableCell
 } from '@mui/material';
-import useUsersStatistics, { UseUsersDataType } from '../../hooks/useUsersStatistics';
+import useUsersOverview from '../../hooks/useUsersOverview';
 import LoadingUserRow from './LoadingUserRow';
 import ErrorUsersTable from './ErrorUsersTable';
 import TableNavigationButton from './TableNavigationButton';
 import EmailCellIcon from './EmailCellIcon';
+import AvatarCell from './AvatarCell';
 
 
 export default function UsersOverviewTable() {
 
-    const { usersData, isLoading, page, pageSize, navigate, isThereNextPage } = useUsersStatistics();
+    const { usersData, isLoading, page, pageSize, navigate, isThereNextPage } = useUsersOverview();
 
     return (
-        <Paper>
-            <TableContainer sx={{
-                width: { xs: "calc(100vw - 19px)", md: "100%" },
-                maxHeight: `calc(57.2px * ${pageSize + 1})`
-            }}>
+        <Paper sx={{ width: "100%", height: "100%" }}>
+            <TableContainer sx={{ width: "100%" }}>
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -33,15 +31,13 @@ export default function UsersOverviewTable() {
                             isLoading ?
                                 <LoadingUserRow itemsCount={pageSize} /> :
                                 usersData ?
-                                    usersData.map(({ avatar, userName, userEmail, userOrders, isEmailVerified }: UseUsersDataType, index: number) => (
+                                    usersData.map(({ avatar, userName, userEmail, userOrders, hisEmailVerified }, index: number) => (
                                         <TableRow key={index}>
-                                            <TableCell sx={{ p: 1 }}>
-                                                <Avatar src={avatar} sx={{ width: "40px", height: "40px" }} />
-                                            </TableCell>
+                                            <AvatarCell avatar={avatar} />
                                             <TableCell>{userName}</TableCell>
                                             <TableCell>
                                                 <Typography variant='body2' className='flex-row-center-start'>
-                                                    <EmailCellIcon isVerified={!isEmailVerified} />
+                                                    <EmailCellIcon isVerified={hisEmailVerified} />
                                                     {userEmail}
                                                 </Typography>
                                             </TableCell>
@@ -56,9 +52,7 @@ export default function UsersOverviewTable() {
                 className="flex-row-center-end"
                 sx={{
                     p: 1.5,
-                    gap: 1.5,
-                    borderTop: "solid 1px",
-                    borderColor: "text.primary"
+                    gap: 1.5
                 }}
             >
                 <Typography>Page: {page}</Typography>

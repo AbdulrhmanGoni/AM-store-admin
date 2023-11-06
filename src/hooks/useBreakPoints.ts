@@ -1,9 +1,13 @@
-import { useMediaQuery, useTheme } from "@mui/material"
+import { Breakpoint, useMediaQuery, useTheme } from "@mui/material"
 
-
-export default function useBreakPoints(type: "up" | "not" | "down" | "only" = "only") {
+type UseBreakPointsProp = "up" | "not" | "down" | "only"
+export default function useBreakPoints(type: UseBreakPointsProp = "only") {
 
     const { breakpoints } = useTheme();
+
+    function useBetweenDevices(start: number | Breakpoint, end: number | Breakpoint) {
+        return useMediaQuery(breakpoints.between(start, end))
+    }
 
     return {
         xSmallScreen: useMediaQuery(breakpoints[type]("xs")),
@@ -11,5 +15,6 @@ export default function useBreakPoints(type: "up" | "not" | "down" | "only" = "o
         mediumScreen: useMediaQuery(breakpoints[type]("md")),
         largeScreen: useMediaQuery(breakpoints[type]("lg")),
         xLargeScreen: useMediaQuery(breakpoints[type]("xl")),
+        useBetweenDevices
     }
 }

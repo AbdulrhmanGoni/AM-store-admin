@@ -22,7 +22,6 @@ export default function DisplayInfoBox(props: DisplayInfoBoxProps) {
     } = props;
 
     const columnly: CSSProperties = {
-        justifyContent: "center",
         flexDirection: "column",
         textAlign: "center",
         gap: 1.5, p: 2,

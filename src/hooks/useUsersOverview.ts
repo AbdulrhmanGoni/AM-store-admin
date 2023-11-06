@@ -3,19 +3,22 @@ import { useState } from "react";
 import useApiRequest from "./useApiRequest";
 import host from "../CONSTANTS/API_hostName";
 
-export interface UseUsersDataType {
-    avatar: string,
-    userName: string,
-    userEmail: string,
-    userOrders: number,
-    isEmailVerified: boolean
+interface UseUsersOverviewType {
+    isThereNextPage: boolean,
+    users: {
+        avatar: string,
+        userName: string,
+        userEmail: string,
+        userOrders: number,
+        hisEmailVerified: boolean
+    }[]
 }
 
-export default function useUsersStatistics() {
+export default function useUsersOverview() {
 
-    const { api } = useApiRequest()
-    const [page, setPage] = useState<number>(1)
-    const [pageSize] = useState<number>(6)
+    const { api } = useApiRequest();
+    const [page, setPage] = useState<number>(1);
+    const [pageSize] = useState<number>(6);
     const query = "users-overview";
     const path = `statistics/?get=${query}&limit=${pageSize}&page=`;
 
@@ -29,7 +32,7 @@ export default function useUsersStatistics() {
         })
     }
 
-    const { isFetching, isError, data } = useQuery({
+    const { isFetching, isError, data } = useQuery<UseUsersOverviewType>({
         queryKey: [query, page],
         queryFn: () => fetchUsers(page),
         keepPreviousData: true,

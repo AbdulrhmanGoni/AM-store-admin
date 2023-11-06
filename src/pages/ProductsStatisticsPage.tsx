@@ -23,7 +23,7 @@ import useBreakPoints from "../hooks/useBreakPoints";
 export default function ProductsStatisticsPage() {
 
 
-    const { largeScreen, mediumScreen } = useBreakPoints("up");
+    const { largeScreen, useBetweenDevices } = useBreakPoints("up");
 
     const {
         productsStatistics,
@@ -46,7 +46,8 @@ export default function ProductsStatisticsPage() {
 
     const infoBoxStyle = { height: "100%", p: 1.5 };
     const infoBoxType = largeScreen ? "horizontally" : "columnly";
-    const sec2infoBoxType = mediumScreen ? "columnly" : "horizontally";
+    const sec2InfoBoxStyle = { ...infoBoxStyle, justifyContent: "center" };
+    const sec2infoBoxType = useBetweenDevices("sm", "md") ? "horizontally" : "columnly";
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
             <PageTitle
@@ -116,7 +117,7 @@ export default function ProductsStatisticsPage() {
                         body={nDecorator(String(categoriesCount))}
                         iconColor={randomColorsArr[4]}
                         icon={<img src="/icons/categoriesIcon.svg" />}
-                        BoxStyle={infoBoxStyle}
+                        BoxStyle={sec2InfoBoxStyle}
                     />
                 </Grid>
                 <Grid item xs={6} md={3} order={{ xs: 2, md: 3 }}>
@@ -127,7 +128,7 @@ export default function ProductsStatisticsPage() {
                         body={nDecorator(String(seriesesCount))}
                         iconColor={randomColorsArr[5]}
                         icon={<img src="/icons/televisionIcon.svg" />}
-                        BoxStyle={infoBoxStyle}
+                        BoxStyle={sec2InfoBoxStyle}
                     />
                 </Grid>
             </Grid>

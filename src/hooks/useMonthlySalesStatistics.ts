@@ -16,7 +16,7 @@ export default function useMonthlySalesStatistics(): UseMonthlySalesStatisticsTy
 
     const query = "monthly-sales-statistics"
     const path = `statistics/?get=${query}`;
-    const { data, isError, isLoading } = useGetApi({ key: [query], path });
+    const { data, isError, isLoading } = useGetApi<MonthSalesStatistics[]>({ key: [query], path });
 
     return {
         monthesData: data,

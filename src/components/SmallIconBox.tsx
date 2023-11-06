@@ -35,7 +35,10 @@ export default function SmallIconBox(props: SmallIconBoxProps) {
                     height: `${svgIconSize ?? 35}px !important`,
                     ...svgIconStyle
                 },
-                "& :is(img, svg, g, path)": { fill: disableIconColor ? undefined : "white !important" }
+                "& :is(img, svg, g, path)": {
+                    fill: disableIconColor ? undefined : "white !important",
+                    stroke: disableIconColor ? undefined : "white !important"
+                }
             }}
         >
             {children ? children : icon}
