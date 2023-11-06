@@ -1,35 +1,35 @@
-import { Grid, Box, Paper } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import LatestOrdersTable from "../components/orders-page-components/LatestOrdersTable"
 import CardInfoWithChart from "../components/CardInfoWithChart";
 import { SmalBar } from "../components/SmallChart";
 import OrdersStatisticsChart from "../components/orders-page-components/OrdersStatisticsChart";
-import { averageOrdersIcon, orderIcon } from "../components/svgIconsAsString";
+import { averageOrdersIcon, orderIcon, totalIcon } from "../components/svgIconsAsString";
 import SvgIcon from "../components/SvgIcon";
-import { faker } from "@faker-js/faker";
-import useMonthlyStatistics, { MonthSalesStatistics } from "../hooks/useMonthlySalesStatistics";
 import PageTitle from "../components/PageTitle";
 import pageSpaces from "../CONSTANTS/pageSpaces";
+import randomColorsArr from "../CONSTANTS/randomColorsArr";
+import { nDecorator } from "@abdulrhmangoni/am-store-library";
+import DisplayInfoBox from "../components/DisplayInfoBox";
+import useOrdersPageContent from "../hooks/useOrdersPageContent";
 
-const boxSx = { width: "100%" }
-const paperStyle = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-    p: 1
-}
 
 export default function OrdersManagementPage() {
 
-    const { monthesData, isLoading } = useMonthlyStatistics();
+    const {
+        dataChart,
+        isLoading,
+        ordersStatistics,
+        statisticsAreLoading
+    } = useOrdersPageContent();
 
-    let totalOrders: number = 0;
-    const dataChart: number[] = monthesData?.map((doc: MonthSalesStatistics) => {
-        const randomNimber = faker.number.float({ precision: 1, max: 50, min: 30 });
-        const orders = doc.totalOrders ? doc.totalOrders : randomNimber
-        totalOrders += orders;
-        return orders
-    }) ?? [0]
+    const { 
+        currentYearOrders,
+        canceledOrders, 
+        completedOrders, 
+        pendingOrders
+    } = ordersStatistics;
+
+    const infoBoxStyle = { width: "100%", height: "100%", p: 2 }
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
@@ -39,39 +39,65 @@ export default function OrdersManagementPage() {
                 icon={<SvgIcon svgElementAsString={orderIcon} />}
             />
             <Grid container spacing={pageSpaces}>
+                <Grid item xs={6} md={3}>
+                    <DisplayInfoBox
+                        title="Total Orders"
+                        type="columnly"
+                        isLoading={statisticsAreLoading}
+                        body={nDecorator(currentYearOrders)}
+                        icon={<SvgIcon svgElementAsString={totalIcon} />}
+                        iconColor={randomColorsArr[0]}
+                        BoxStyle={infoBoxStyle}
+                    />
+                </Grid>
+                <Grid item xs={6} md={3}>
+                    <DisplayInfoBox
+                        title="Completed Orders"
+                        type="columnly"
+                        isLoading={statisticsAreLoading}
+                        body={nDecorator(completedOrders)}
+                        icon={<img src="/icons/completed.svg" />}
+                        iconColor={randomColorsArr[1]}
+                        BoxStyle={infoBoxStyle}
+                    />
+                </Grid>
+                <Grid item xs={6} md={3}>
+                    <DisplayInfoBox
+                        title="Pending Orders"
+                        type="columnly"
+                        isLoading={statisticsAreLoading}
+                        body={nDecorator(pendingOrders)}
+                        icon={<img src="/icons/waiting.svg" />}
+                        iconColor={randomColorsArr[2]}
+                        BoxStyle={infoBoxStyle}
+                    />
+                </Grid>
+                <Grid item xs={6} md={3}>
+                    <DisplayInfoBox
+                        title="Canceled Orders"
+                        type="columnly"
+                        isLoading={statisticsAreLoading}
+                        body={nDecorator(canceledOrders)}
+                        icon={<img src="/icons/canceling.svg" />}
+                        iconColor={randomColorsArr[3]}
+                        BoxStyle={infoBoxStyle}
+                    />
+                </Grid>
+            </Grid>
+            <Grid container spacing={pageSpaces}>
                 <Grid item xs={12} md={5.5} lg={4}>
-                    <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces, height: "100%" }}>
-                        <CardInfoWithChart
-                            isLoading={isLoading}
-                            theChart={<SmalBar data={dataChart} width={170} />}
-                            icon={<SvgIcon svgElementAsString={averageOrdersIcon} />}
-                            title="Avarage Orders"
-                            mainValue={`${Math.floor(totalOrders / dataChart?.length)} Orders`}
-                            description="per month"
-                        />
-                        {/* <DisplayInfoBox
-                            title="Total Orders"
-                            type="horizontally"
-                            body={nDecorator(totalOrders)}
-                            icon={<SvgIcon svgElementAsString={totalIcon} />}
-                            color={randomColorsArr[0]}
-                            BoxStyle={{ width: "100%", p: 1.5 }}
-                        /> */}
-                        {/* <DisplayInfoBox
-                            title="Current Month Orders"
-                            type="horizontally"
-                            body={nDecorator(totalOrders)}
-                            icon={<SvgIcon svgElementAsString={totalIcon} />}
-                            color={randomColorsArr[0]}
-                            BoxStyle={{ width: "100%", p: 1.5 }}
-                        /> */}
-                    </Box>
+                    <CardInfoWithChart
+                        isLoading={isLoading}
+                        theChart={<SmalBar data={dataChart} width={170} />}
+                        icon={<SvgIcon svgElementAsString={averageOrdersIcon} />}
+                        title="Avarage Orders"
+                        mainValue={`${Math.floor(currentYearOrders / dataChart?.length)} Orders`}
+                        description="per month"
+                    />
                 </Grid>
                 <Grid item xs={12} md={6.5} lg={8}>
-                    <Box sx={boxSx}>
-                        <Paper sx={paperStyle}>
-                            <OrdersStatisticsChart data={dataChart} />
-                        </Paper>
+                    <Box sx={{ width: "100%" }}>
+                        <OrdersStatisticsChart data={dataChart} />
                     </Box>
                 </Grid>
             </Grid>
