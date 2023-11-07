@@ -7,23 +7,14 @@ import useProductsDisplayer from '../../hooks/useProductsDisplayer'
 import CustomListItem, { DisplyProductDetails } from '../CustomListItem'
 import SmallIconBox from '../SmallIconBox'
 import { PromiseState } from '@abdulrhmangoni/am-store-library'
+import { ProductData } from '../../hooks/useProductsStatisticsPageContent'
 
-export interface productData {
-    _id: string,
-    title: string,
-    description: string,
-    images: string[],
-    series: string,
-    price: number,
-    sold: number,
-    earnings: number,
-    category: string,
+
+export interface TopProductsList extends PromiseState {
+    productsList?: ProductData[]
 }
-export interface RecieverProps extends PromiseState {
-    data: productData[]
-}
-interface ProductsListDisplayerProps extends RecieverProps {
-    onRightElement: (product: productData) => JSX.Element
+interface ProductsListDisplayerProps extends TopProductsList {
+    onRightElement: (product: ProductData) => JSX.Element
 }
 type ListTitleProps = {
     title: string,
@@ -32,7 +23,7 @@ type ListTitleProps = {
     icon: JSX.Element | string | number
 }
 
-export function ProductsListDisplayer({ data, isError, isLoading, onRightElement }: ProductsListDisplayerProps) {
+export function ProductsListDisplayer({ productsList, isError, isLoading, onRightElement }: ProductsListDisplayerProps) {
     const { display } = useProductsDisplayer();
     return (
         <List
@@ -49,7 +40,7 @@ export function ProductsListDisplayer({ data, isError, isLoading, onRightElement
                 isLoading ? [1, 2, 3, 4, 5].map(index => <LoadingState key={index} />) :
                     isError ? <Alert severity='error'>There is unexpected error</Alert>
                         :
-                        data?.map((product: productData) => {
+                        productsList?.map((product: ProductData) => {
                             return (
                                 <CustomListItem
                                     key={product._id}

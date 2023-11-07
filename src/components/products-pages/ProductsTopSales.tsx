@@ -1,10 +1,10 @@
 import { Chip } from '@mui/material'
 import { Star } from '@mui/icons-material'
 import { nDecorator } from '@abdulrhmangoni/am-store-library'
-import { ListTitle, ProductsListDisplayer, RecieverProps } from './ProductsListComponents'
+import { ListTitle, ProductsListDisplayer, TopProductsList } from './ProductsListComponents'
 
 
-export default function ProductsTopSales({ data, isLoading, isError }: RecieverProps) {
+export default function ProductsTopSales({ productsList, isLoading, isError }: TopProductsList) {
 
     return (
         <>
@@ -14,7 +14,7 @@ export default function ProductsTopSales({ data, isLoading, isError }: RecieverP
                 icon={<Star />}
             />
             <ProductsListDisplayer
-                data={data}
+                productsList={productsList}
                 isLoading={isLoading}
                 isError={isError}
                 onRightElement={(product: { sold: string | number }) => {

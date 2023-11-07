@@ -1,9 +1,9 @@
 import { Chip } from '@mui/material'
 import { AttachMoney } from '@mui/icons-material';
 import { nDecorator } from '@abdulrhmangoni/am-store-library'
-import { ListTitle, ProductsListDisplayer, RecieverProps } from './ProductsListComponents';
+import { ListTitle, ProductsListDisplayer, TopProductsList } from './ProductsListComponents';
 
-export default function ProductsTopEarnings({ data, isLoading, isError }: RecieverProps) {
+export default function ProductsTopEarnings({ productsList, isLoading, isError }: TopProductsList) {
 
     return (
         <>
@@ -13,7 +13,7 @@ export default function ProductsTopEarnings({ data, isLoading, isError }: Reciev
                 icon={<AttachMoney />}
             />
             <ProductsListDisplayer
-                data={data}
+                productsList={productsList}
                 isLoading={isLoading}
                 isError={isError}
                 onRightElement={(product: { earnings: number }) => {

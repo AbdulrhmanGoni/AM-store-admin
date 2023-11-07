@@ -90,7 +90,7 @@ export default function SideBarLinksList({ close }: { close: () => void }) {
     const { pathname } = useLocation();
     const [currentPath, setCurrentPath] = useState<string>("none");
 
-    useEffect(() => { setCurrentPath(pathname) }, [])
+    useEffect(() => { setCurrentPath(pathname) }, [pathname])
 
     return (
         <List sx={listStyle} disablePadding>

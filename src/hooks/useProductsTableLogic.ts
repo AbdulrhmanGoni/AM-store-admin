@@ -18,7 +18,7 @@ export default function useProductsTableLogic() {
     const [tablesMassages, setTablesMassages] = useState<string>("No products");
 
     const { bySteps, promised } = useNotifications();
-    const { data: productsLength, isError } = useGetApi({ key: ["products-length"], path: "products/length" });
+    const { data: productsLength = 0, isError } = useGetApi<number>({ key: ["products-length"], path: "products/length" });
     const { mutateAsync: updateProduct } = useMutateApi({ key: ["update-filed"], path: "admin/products?type=update-filed" });
     const { mutateAsync: deleteProducts } = useMutateApi({ key: ["delete-products"], path: "admin/products" });
 

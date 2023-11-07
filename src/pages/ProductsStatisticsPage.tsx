@@ -22,7 +22,6 @@ import useBreakPoints from "../hooks/useBreakPoints";
 
 export default function ProductsStatisticsPage() {
 
-
     const { largeScreen, useBetweenDevices } = useBreakPoints("up");
 
     const {
@@ -42,7 +41,7 @@ export default function ProductsStatisticsPage() {
         totalProductsSold,
         seriesesCount,
         categoriesCount
-    } = productsStatistics
+    } = productsStatistics;
 
     const infoBoxStyle = { height: "100%", p: 1.5 };
     const infoBoxType = largeScreen ? "horizontally" : "columnly";
@@ -146,7 +145,7 @@ export default function ProductsStatisticsPage() {
                         <ProductsTopSales
                             isLoading={topProductsLoading}
                             isError={topProductsError}
-                            data={topProducts?.topSales}
+                            productsList={topProducts?.topSales}
                         />
                     </Paper>
                 </Grid>
@@ -155,7 +154,7 @@ export default function ProductsStatisticsPage() {
                         <ProductsTopEarnings
                             isLoading={topProductsLoading}
                             isError={topProductsError}
-                            data={topProducts?.topEarnings}
+                            productsList={topProducts?.topEarnings}
                         />
                     </Paper>
                 </Grid>

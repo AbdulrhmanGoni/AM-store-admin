@@ -1,14 +1,11 @@
 import { JSX } from 'react'
 import { PromiseState, nDecorator } from '@abdulrhmangoni/am-store-library'
 import { Box, Chip, Divider, List, ListItem, ListItemText, Paper, Skeleton, Typography } from '@mui/material'
+import { SeriesType } from '../../hooks/useProductsStatisticsPageContent'
 
-type TopSeriesesData = {
-    series: string,
-    value: number
-}
 
 interface TopSeriesesProps extends PromiseState {
-    data: TopSeriesesData[],
+    data?: SeriesType[],
     title: string,
     icon: JSX.Element,
     isMoney?: boolean
@@ -17,7 +14,6 @@ interface TopSeriesesProps extends PromiseState {
 export default function TopSerieses({ data, isLoading, title, icon, isMoney }: TopSeriesesProps) {
     const
         rankingColors = ["#AF9500", "#c0c0c0", "#6A3805"],
-        dataArray = data ?? [{}, {}, {}, {}, {}],
         money = isMoney ? "$" : ""
 
     return (
@@ -39,23 +35,26 @@ export default function TopSerieses({ data, isLoading, title, icon, isMoney }: T
                     padding: .5
                 }}>
                 {
-                    dataArray.map(({ series, value }: TopSeriesesData, index: number) => {
-                        return isLoading ?
-                            <Skeleton key={index} variant="rounded" width="100%" height={32} />
-                            :
-                            <ListItem
-                                sx={{ pr: "6px", bgcolor: "background.default" }}
-                                key={series}
-                            >
-                                <ListItemText primary={series} />
-                                <Chip
-                                    size='small'
-                                    variant="outlined"
-                                    sx={{ bgcolor: rankingColors[index], borderRadius: 1 }}
-                                    label={money + nDecorator(value.toFixed(isMoney ? 2 : 0))}
-                                />
-                            </ListItem>
-                    })
+                    isLoading ?
+                        Array.from(Array(5)).map((_, index: number) => {
+                            return <Skeleton key={index} variant="rounded" width="100%" height={32} />
+                        })
+                        : data?.map(({ series, value }: SeriesType, index: number) => {
+                            return (
+                                <ListItem
+                                    sx={{ pr: "6px", bgcolor: "background.default" }}
+                                    key={series}
+                                >
+                                    <ListItemText primary={series} />
+                                    <Chip
+                                        size='small'
+                                        variant="outlined"
+                                        sx={{ bgcolor: rankingColors[index], borderRadius: 1 }}
+                                        label={money + nDecorator(value.toFixed(isMoney ? 2 : 0))}
+                                    />
+                                </ListItem>
+                            )
+                        })
                 }
             </List>
         </Paper>
