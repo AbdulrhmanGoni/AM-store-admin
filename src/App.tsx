@@ -1,29 +1,30 @@
 import "normalize.css/normalize.css";
 import 'react-toastify/dist/ReactToastify.minimal.css';
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import AdminAppBar from "./components/AdminBar";
-import { Box, ThemeProvider } from "@mui/material";
+import { Box, Button, ThemeProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from 'react-toastify';
 import useAdminLogIn from "./hooks/useAdminLogIn";
-import LogInForm from "./components/LogInForm";
 import { ErrorThrower, LoadingCircle, LoadingPage } from "@abdulrhmangoni/am-store-library";
 import { Outlet } from "react-router-dom";
 import { AdminData } from "./types/dataTypes";
 import useCustomTheme from "./hooks/useCustomTheme";
+import LogInForm from "./components/LogInForm";
 
 export const AdminDataContext = createContext<AdminData | null>(null);
 
 export default function App() {
 
   const queryClient = new QueryClient();
-
   const {
     adminData,
     isLoading, isError,
     isNetworkError, isLogged,
-    isOut, isServerError
+    isUnauthorized, isServerError,
+    isUnexpected
   } = useAdminLogIn();
+  const [logInPage, setLogInPage] = useState<boolean>(false);
 
   const theme = useCustomTheme();
 
@@ -43,15 +44,18 @@ export default function App() {
                 boxShadow: `0 0 0 100px ${theme.palette.background.default} inset !important`,
                 WebkitTextFillColor: `${theme.palette.text.primary} !important`
               }
-            }}>
+            }}
+          >
             {
               isLoading ? <LoadingPage />
                 : isLogged ? <AppContent />
-                  : isOut ? <LogInForm />
-                    : isNetworkError ? <NetworkError />
-                      : isServerError ? <ServerError />
-                        : isError ? <UnexpectedError />
-                          : null
+                  : logInPage ? <LogInForm />
+                    : isUnauthorized ? <Unauthorized action={() => setLogInPage(true)} />
+                      : isNetworkError ? <NetworkError />
+                        : isError ? <BadRequest />
+                          : isServerError ? <ServerError />
+                            : isUnexpected ? <UnexpectedError />
+                              : null
             }
           </Box>
           <LoadingCircle staticCircle darkBg />
@@ -95,13 +99,35 @@ function NetworkError() {
   )
 }
 
+function BadRequest() {
+  return (
+    <ErrorThrower
+      title="Bad Request"
+      illustratorType="unexpected"
+      message="This Error happends may because of your network or because the server recived unexpected input"
+      fullPage withRefreshButton
+    />
+  )
+}
 function UnexpectedError() {
   return (
     <ErrorThrower
       title="Unexpected Error"
       illustratorType="unexpected"
-      message="There is unexpected happends, may its in your network or you dont have the access to this application"
+      message="There is unexpected happends, refrech the page and try again"
       fullPage withRefreshButton
     />
+  )
+}
+
+function Unauthorized({ action }: { action: () => void }) {
+  return (
+    <ErrorThrower
+      title="You are not authorized"
+      illustratorType="unauthorized"
+      hideAlertMsg fullPage
+    >
+      <Button onClick={action} variant="contained">log In</Button>
+    </ErrorThrower>
   )
 }

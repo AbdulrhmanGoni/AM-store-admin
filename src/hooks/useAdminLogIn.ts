@@ -3,49 +3,54 @@ import useApiRequest from './useApiRequest';
 import { host } from '../CONSTANTS/API_hostName';
 import { useCookies } from 'react-cookie';
 import { AdminData } from '../types/dataTypes';
+import { AxiosError } from 'axios';
 
 
 export default function useAdminLogIn() {
 
     const { api } = useApiRequest();
     const [adminData, setAdminData] = useState<AdminData | null>(null);
+    const [isLogged, setIsLogged] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
     const [isServerError, setServerError] = useState<boolean>(false);
     const [isNetworkError, setIsNetworkError] = useState<boolean>(false);
-    const [isLogged, setIsLogged] = useState<boolean>(false);
-    const [isOut, setIsOut] = useState<boolean>(false);
-    const [cookie] = useCookies();
+    const [isUnauthorized, setIsUnauthorized] = useState<boolean>(false);
+    const [isUnexpected, setIsUnexpected] = useState<boolean>(false);
+    const [{ adminId, ["admin-access-token"]: accessToken }] = useCookies();
 
     useEffect(() => {
-        setIsLoading(true);
-        api.get(`${host}/admin-log-in/${cookie.adminId}`)
-            .then(({ data }) => {
-                setAdminData(data);
-                setIsLogged(true);
-                isNetworkError && setIsNetworkError(false);
-                isError && setIsError(false)
-            })
-            .catch((error) => {
-                if (!error.response?.status) {
-                    setServerError(true);
-                } else if (!navigator.onLine) {
-                    setIsNetworkError(true);
-                } else if (!(!!cookie["admin-access-token"] && !!cookie["adminId"])) {
-                    setIsOut(true);
-                } else setIsError(true);
-            })
-            .finally(() => { setIsLoading(false); })
+        if (accessToken && adminId) {
+            setIsLoading(true);
+            api.get(`${host}/admin-log-in/${adminId}`)
+                .then(({ data }) => {
+                    setAdminData(data);
+                    setIsLogged(true);
+                    isNetworkError && setIsNetworkError(false);
+                    isError && setIsError(false);
+                    isUnauthorized && setIsUnauthorized(true);
+                })
+                .catch((error: AxiosError) => {
+                    if (error.response?.status === 401) setIsUnauthorized(true);
+                    else if (!navigator.onLine) setIsNetworkError(true);
+                    else if (error.response?.status === 400) setIsError(true);
+                    else if (!error.response?.status) setIsUnexpected(true);
+                    else setServerError(true);
+                })
+                .finally(() => setIsLoading(false))
+        }
+        else setIsUnauthorized(true);
     }, [])
 
     return {
-        adminData, 
+        adminData,
         setAdminData,
-        isError, 
+        isError,
         isNetworkError,
-        isLoading, 
+        isLoading,
         isLogged,
-        isOut, 
-        isServerError
+        isUnauthorized,
+        isServerError,
+        isUnexpected
     }
 }

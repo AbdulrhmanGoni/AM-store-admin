@@ -17,7 +17,6 @@ export default function OrdersManagementPage() {
 
     const {
         dataChart,
-        isLoading,
         ordersStatistics,
         statisticsAreLoading
     } = useOrdersPageContent();
@@ -29,7 +28,7 @@ export default function OrdersManagementPage() {
         pendingOrders
     } = ordersStatistics;
 
-    const infoBoxStyle = { width: "100%", height: "100%", p: 2 }
+    const infoBoxStyle = { width: "100%", height: "100%", p: 2 };
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
@@ -87,11 +86,11 @@ export default function OrdersManagementPage() {
             <Grid container spacing={pageSpaces}>
                 <Grid item xs={12} md={5.5} lg={4}>
                     <CardInfoWithChart
-                        isLoading={isLoading}
+                        isLoading={statisticsAreLoading}
                         theChart={<SmalBar data={dataChart} width={170} />}
                         icon={<SvgIcon svgElementAsString={averageOrdersIcon} />}
                         title="Avarage Orders"
-                        mainValue={`${Math.floor(currentYearOrders / dataChart?.length)} Orders`}
+                        mainValue={`${Math.floor(currentYearOrders / 12)} Orders`}
                         description="per month"
                     />
                 </Grid>

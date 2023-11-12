@@ -25,17 +25,17 @@ export default function useUpdateProduct({ productId }: { productId: string }) {
     const { bySteps } = useNotifications();
 
     function copmlateUpload(changes: findTheChangesReturnType, productId: string, update: updateTostProps, updateLoading: updateLoadingTostProps) {
-        setUpdatingLoading(true)
-        updateLoading("Saving changes...")
+        setUpdatingLoading(true);
+        updateLoading("Saving changes...");
         updateProduct(changes, productId)
             .catch(() => { update("error", "Opse! The Product Fieled update") })
             .finally(() => { setUpdatingLoading(false) })
             .then((res) => {
                 if (res) {
-                    update("success", "The Product Updated successfully")
-                    navigate("/products/edit-product", { replace: true })
+                    update("success", "The Product Updated successfully");
+                    navigate("/products/edit-product", { replace: true });
                 }
-                !res && update("warning", "There is Unexpected issue")
+                !res && update("warning", "There is Unexpected issue");
             })
     }
 
@@ -45,11 +45,19 @@ export default function useUpdateProduct({ productId }: { productId: string }) {
         if (formData && theProduct) {
             const { update, updateLoading } = bySteps("Updating images...");
             const changes = findTheChanges(theProduct, formData)
-            uploadImages(changes.files)
-                .then((images) => {
-                    const finalChanges = { ...changes, images, files: undefined }
-                    copmlateUpload(finalChanges, productId, update, updateLoading);
-                })
+            if (changes) {
+                uploadImages(changes.files)
+                    .then((images) => {
+                        if (changes.files?.length === images?.length) {
+                            const finalChanges = { ...changes, images, files: undefined }
+                            copmlateUpload(finalChanges, productId, update, updateLoading);
+                        } else {
+                            update("error", "There is one image or mere failed to upload");
+                        }
+                    })
+            } else {
+                update("warning", "There is no changes happends");
+            }
         }
     }
 

@@ -23,7 +23,8 @@ export default function useProductImagesUploader() {
                             const imageUrl = data.url ?? data.secure_url;
                             imageUrl && uploadedImagesList.push(imageUrl);
                         })
-                        .catch(() => {
+                        .catch((err) => {
+                            console.log(err)
                             message(`Uploading the image '${theFile.name}' failed!`, "error", { theme })
                         })
                 } else if (typeof files[i] === "string") {

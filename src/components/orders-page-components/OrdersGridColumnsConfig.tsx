@@ -29,10 +29,10 @@ function renderStateCell(params: GridRenderCellParams) {
 function renderIdCell(params: GridRenderCellParams) {
     const id = params.row._id
     return (
-        <Box sx={{ display: "flex", alignItems: "center", gap: .5 }}>
+        <Box className="flex-row-center" gap={.5}>
             <SimplePopper
                 thePopper={id}
-                onClick={() => { console.log(id); navigator.clipboard.writeText(id) }}
+                onClick={() => { navigator.clipboard.writeText(id) }}
             >
                 <IconButton>
                     <CopyAll sx={{ cursor: "copy" }} />

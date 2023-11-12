@@ -27,7 +27,7 @@ export default function useOrdersPageContent() {
         path: "statistics?get=orders-statistics",
         key: ["orders-statistics"]
     });
-    const { monthesData, isLoading } = useMonthlySalesStatistics();
+    const { monthesData } = useMonthlySalesStatistics();
 
     let totalOrders: number = 0;
     const dataChart: number[] = monthesData?.map((doc: MonthSalesStatistics) => {
@@ -39,7 +39,6 @@ export default function useOrdersPageContent() {
 
     return {
         dataChart,
-        isLoading,
         totalOrders,
         ordersStatistics,
         statisticsAreLoading
