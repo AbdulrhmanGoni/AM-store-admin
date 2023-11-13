@@ -5,32 +5,32 @@ import { ElementWithLoadingState, nDecorator } from '@abdulrhmangoni/am-store-li
 import SelectBox from '../SelectBox'
 import SvgIcon from '../SvgIcon'
 import { targetIcon } from '../targetIcon'
-import { UseMonthlySalesStatisticsType } from '../../hooks/useMonthlySalesStatistics'
+import useMonthlySalesStatistics from '../../hooks/useMonthlySalesStatistics'
 import MONTHES from '../../CONSTANTS/MONTHES'
 
-interface MonthlyTargetProps extends UseMonthlySalesStatisticsType { }
 
-export default function MonthlyTargets({ monthesData, isLoading }: MonthlyTargetProps) {
+export default function MonthlyTargets() {
 
+    const { monthesData, isLoading, year } = useMonthlySalesStatistics();
     const [monthIndex, setMonthIndex] = useState<number>(new Date().getMonth());
     const [loading, setLoading] = useState<boolean>(false);
 
-    const loadingState = isLoading || loading
+    const loadingState = isLoading || loading;
 
     return (
-        <Paper sx={{ display: "flex", flexDirection: "column", justifyContent: "space-around", gap: 1, p: 2, height: "100%" }}>
-            <ElementWithLoadingState
-                isLoading={isLoading}
-                height={30}
-                width="70%"
-                element={
-                    <Box className="flex-row-center-start" gap={1}>
-                        <SvgIcon width={35} height={35} svgElementAsString={targetIcon} />
-                        <Typography variant='h6'>Monthly Target</Typography>
-                    </Box>
-                }
-            />
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Paper className='flex-column j-around gap2 full-height' sx={{ p: 2 }}>
+            <Box className="flex-row-center-start gap1">
+                <ElementWithLoadingState isLoading={isLoading} width={35} height={35}
+                    element={<SvgIcon width={35} height={35} svgElementAsString={targetIcon} />}
+                />
+                <ElementWithLoadingState isLoading={isLoading} height={30} width={150}
+                    element={<Typography flex={1} variant='h6'>Monthly Target</Typography>}
+                />
+                <ElementWithLoadingState isLoading={isLoading} width={65} height={32}
+                    element={<Typography color="success.main" variant='h6'>{year}</Typography>}
+                />
+            </Box>
+            <Box className="flex-row-center-between">
                 <ElementWithLoadingState
                     isLoading={loadingState}
                     width={75}

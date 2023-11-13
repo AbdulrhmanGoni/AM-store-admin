@@ -1,5 +1,5 @@
 import { Box, Grid, Paper } from "@mui/material";
-import EarningsChart from "../components/sales-statistics-page/EarningsChart";
+import MonthlyEarningsChart from "../components/sales-statistics-page/MonthlyEarningsChart";
 import SalesGrowth from "../components/sales-statistics-page/SalesGrowth";
 import SvgIcon from "../components/SvgIcon";
 import MonthlyTargets from "../components/sales-statistics-page/MonthlyTargets";
@@ -11,8 +11,9 @@ import { averageOrdersIcon } from "../components/svgIconsAsString";
 import DisplayInfoBox from "../components/DisplayInfoBox";
 import moneyIcon from "../components/moneyIcon";
 import randomColorsArr from "../CONSTANTS/randomColorsArr";
-import useMonthlyStatistics, { MonthSalesStatistics } from "../hooks/useMonthlySalesStatistics";
+import useMonthlySalesStatistics, { MonthSalesStatistics } from "../hooks/useMonthlySalesStatistics";
 import pageSpaces from "../CONSTANTS/pageSpaces";
+import PageTitle from "../components/PageTitle";
 
 
 const boxSx = { width: "100%" }
@@ -23,10 +24,9 @@ const paperStyle = {
   flexDirection: "column",
 }
 
-
 export default function SalesStatisticsPage() {
 
-  const { monthesData, isLoading, isError } = useMonthlyStatistics();
+  const { monthesData, isLoading } = useMonthlySalesStatistics();
 
   const monthlyEarnings: number[] = monthesData?.map((mon: MonthSalesStatistics) => {
     const randomNimber = faker.number.float({ precision: 0.01, max: 5000, min: 4000 });
@@ -36,23 +36,13 @@ export default function SalesStatisticsPage() {
   const totalEarnings: number = monthlyEarnings?.reduce((acc, cur) => acc + cur, 0);
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
+    <Box className="flex-column" sx={{ gap: pageSpaces }}>
+      <PageTitle
+        title="Sales Statistics"
+        icon={<img src="/icons/analytics.svg" />}
+        description="Showing sales statistics like Monthly Earnings, Sales Growth, Monthly Targets and Avarage Earning"
+      />
       <Grid container spacing={pageSpaces}>
-        <Grid item xs={12} md={4.5}>
-          <MonthlyTargets
-            isLoading={isLoading}
-            monthesData={monthesData}
-          />
-        </Grid>
-        <Grid item xs={12} sm={7.5} md={4.5}>
-          <Paper sx={{ p: 1, height: "200px" }}>
-            <SalesGrowth
-              monthesData={monthesData}
-              isError={isError}
-              isLoading={isLoading}
-            />
-          </Paper>
-        </Grid>
         <Grid item xs={12} sm={4.5} md={3}>
           <DisplayInfoBox
             type="columnly"
@@ -62,15 +52,23 @@ export default function SalesStatisticsPage() {
             bodyColor="success.main"
             icon={<SvgIcon svgElementAsString={moneyIcon} />}
             iconColor={randomColorsArr[1]}
-            BoxStyle={{ height: "100%", p: 2 }}
+            BoxStyle={{ height: "100%", p: 2, justifyContent: "center" }}
           />
+        </Grid>
+        <Grid item xs={12} sm={7.5} md={4.5}>
+          <Paper sx={{ p: 1, height: "200px" }}>
+            <SalesGrowth />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={4.5}>
+          <MonthlyTargets />
         </Grid>
       </Grid>
       <Grid container spacing={pageSpaces}>
         <Grid item xs={12} sm={7.5} lg={8}>
           <Box sx={boxSx}>
             <Paper sx={paperStyle}>
-              <EarningsChart monthesData={monthesData} />
+              <MonthlyEarningsChart />
             </Paper>
           </Box>
         </Grid>

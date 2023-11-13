@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import useGetApi from "./useGetApi"
 import randomColorsArr from "../CONSTANTS/randomColorsArr"
 import { faker } from "@faker-js/faker"
@@ -21,14 +21,22 @@ interface UseMonthlyCategoriesStatisticsType extends PromiseState {
         earningsChartData: ApexAxisChartSeries,
         salesChartData: ApexAxisChartSeries,
         totalEarnings: number
-    }
+    },
+    year?: number,
+    setYear: (year: number) => void
+}
+
+interface reaponseType {
+    categories: CategoriesStatisticsType[],
+    year: number
 }
 
 export default function useMonthlyCategoriesStatistics(): UseMonthlyCategoriesStatisticsType {
 
+    const [year, setYear] = useState<number>(new Date().getFullYear())
     const queryKey = "monthly-categories-statistics"
-    const { data = [], isError, isLoading } = useGetApi({
-        key: [queryKey], path: `statistics/?get=${queryKey}`
+    const { data, isError, isLoading } = useGetApi<reaponseType>({
+        key: [queryKey, year], path: `statistics/?get=${queryKey}&year=${year}`
     })
 
     const chartData = useMemo(() => {
@@ -37,7 +45,7 @@ export default function useMonthlyCategoriesStatistics(): UseMonthlyCategoriesSt
             earningsChartData: ApexAxisChartSeries = [],
             salesChartData: ApexAxisChartSeries = []
 
-        data.forEach(({ category, monthlyStatistics }: CategoriesStatisticsType, index: number) => {
+        data?.categories.forEach(({ category, monthlyStatistics }: CategoriesStatisticsType, index: number) => {
             earningsChartData.push({
                 name: category,
                 color: randomColorsArr[index],
@@ -67,6 +75,8 @@ export default function useMonthlyCategoriesStatistics(): UseMonthlyCategoriesSt
 
     return {
         chartData,
+        year: data?.year,
+        setYear,
         isLoading,
         isError
     }

@@ -17,12 +17,13 @@ export default function OrdersManagementPage() {
 
     const {
         dataChart,
+        year,
         ordersStatistics,
         statisticsAreLoading
     } = useOrdersPageContent();
 
-    const { 
-        currentYearOrders,
+    const {
+        totalOrders,
         canceledOrders, 
         completedOrders, 
         pendingOrders
@@ -43,7 +44,7 @@ export default function OrdersManagementPage() {
                         title="Total Orders"
                         type="columnly"
                         isLoading={statisticsAreLoading}
-                        body={nDecorator(currentYearOrders)}
+                        body={nDecorator(totalOrders)}
                         icon={<SvgIcon svgElementAsString={totalIcon} />}
                         iconColor={randomColorsArr[0]}
                         BoxStyle={infoBoxStyle}
@@ -90,13 +91,13 @@ export default function OrdersManagementPage() {
                         theChart={<SmalBar data={dataChart} width={170} />}
                         icon={<SvgIcon svgElementAsString={averageOrdersIcon} />}
                         title="Avarage Orders"
-                        mainValue={`${Math.floor(currentYearOrders / 12)} Orders`}
+                        mainValue={`${Math.floor(totalOrders / 12)} Orders`}
                         description="per month"
                     />
                 </Grid>
                 <Grid item xs={12} md={6.5} lg={8}>
                     <Box sx={{ width: "100%" }}>
-                        <OrdersStatisticsChart data={dataChart} />
+                        <OrdersStatisticsChart year={year} data={dataChart} />
                     </Box>
                 </Grid>
             </Grid>

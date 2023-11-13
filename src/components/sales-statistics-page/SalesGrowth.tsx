@@ -4,27 +4,19 @@ import { growChartIcon2 } from "../growChartIcon";
 import { NorthEast, SouthEast } from "@mui/icons-material";
 import { SmalLine } from "../SmallChart";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
-import { UseMonthlySalesStatisticsType, MonthSalesStatistics } from "../../hooks/useMonthlySalesStatistics";
-import MONTHES from "../../CONSTANTS/MONTHES";
-
-interface SalesGrowthProps extends UseMonthlySalesStatisticsType { }
+import useMonthlySalesStatistics from "../../hooks/useMonthlySalesStatistics";
 
 function countGrowthRete(pastValue: number = 1, currentValue: number = 1) {
     return (currentValue - pastValue) / pastValue
 }
 
-export default function SalesGrowth({ monthesData, isError, isLoading }: SalesGrowthProps) {
+export default function SalesGrowth() {
+
+    const { isLoading, monthesData, isError } = useMonthlySalesStatistics();
 
     const currentMonth = new Date().getMonth();
-    const lastMonth = MONTHES[currentMonth - 1];
-    const beforeLastMonth = MONTHES[currentMonth - 2];
-    let lastMonthEarnings = 0;
-    let beforeLastMonthEarnings = 0;
-
-    monthesData?.forEach(({ month, totalEarnings }: MonthSalesStatistics) => {
-        lastMonthEarnings += month === lastMonth ? totalEarnings : 0;
-        beforeLastMonthEarnings += month === beforeLastMonth ? totalEarnings : 0;
-    });
+    const lastMonthEarnings = monthesData?.[currentMonth - 1].totalEarnings ?? 0;
+    const beforeLastMonthEarnings = monthesData?.[currentMonth - 2].totalEarnings ?? 0;
 
     const growthRete = countGrowthRete(beforeLastMonthEarnings, lastMonthEarnings);
 
@@ -41,7 +33,7 @@ export default function SalesGrowth({ monthesData, isError, isLoading }: SalesGr
             chartDescription={{
                 title: `$${nDecorator(lastMonthEarnings.toFixed(2))}`,
                 subTitle: "Last month",
-                severity: "default"
+                severity: "success"
             }}
         />
     )

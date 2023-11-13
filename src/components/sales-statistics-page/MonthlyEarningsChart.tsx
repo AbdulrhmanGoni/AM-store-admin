@@ -1,17 +1,17 @@
-import { useTheme } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import Chart from "react-apexcharts";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import ApexchartsContainer from "../ApexchartsContainer";
 import { faker } from "@faker-js/faker";
 import { ApexOptions } from "apexcharts";
-import { Money } from "@mui/icons-material";
 import ChartTitle from "../ChartTitle";
-import { MonthSalesStatistics, UseMonthlySalesStatisticsType } from "../../hooks/useMonthlySalesStatistics";
+import useMonthlySalesStatistics, { MonthSalesStatistics } from "../../hooks/useMonthlySalesStatistics";
 import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
 
-interface EarningsChartProps extends UseMonthlySalesStatisticsType { }
 
-export default function EarningsChart({ monthesData }: EarningsChartProps) {
+export default function MonthlyEarningsChart() {
+
+    const { monthesData, year } = useMonthlySalesStatistics();
 
     const { palette: { mode, primary } } = useTheme();
     const options: ApexOptions = {
@@ -19,7 +19,14 @@ export default function EarningsChart({ monthesData }: EarningsChartProps) {
         dataLabels: { enabled: false },
         stroke: { curve: 'smooth' },
         xaxis: { categories: MONTHES },
-        yaxis: { title: { text: 'Dolars ($)' } },
+        yaxis: {
+            labels: {
+                formatter(val, opts) {
+                    opts = nDecorator(val, true);
+                    return opts
+                }
+            }
+        },
         theme: {
             mode,
             monochrome: {
@@ -30,9 +37,7 @@ export default function EarningsChart({ monthesData }: EarningsChartProps) {
             }
         },
         tooltip: {
-            x: {
-                formatter: (index) => MONTHES_FULL_NAME[index - 1],
-            },
+            x: { formatter: (index) => MONTHES_FULL_NAME[index - 1] },
             y: { formatter: (value: number) => "$" + nDecorator(value) }
         },
         noData: {
@@ -58,7 +63,11 @@ export default function EarningsChart({ monthesData }: EarningsChartProps) {
 
     return (
         <ApexchartsContainer>
-            <ChartTitle title="Monthly Earnings" icon={<Money />} />
+            <ChartTitle
+                title="Monthly Earnings"
+                icon={<img src="/icons/line-chart.svg" />}
+                endItem={<Typography variant="h6">{year}</Typography>}
+            />
             <Chart options={options} series={series} type="area" height={285} />
         </ApexchartsContainer>
     )

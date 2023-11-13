@@ -13,7 +13,7 @@ interface SmallIconBoxProps {
 }
 
 export default function SmallIconBox(props: SmallIconBoxProps) {
-    const { palette: { primary, text } } = useTheme()
+    const { palette: { primary, text } } = useTheme();
     const {
         color = primary.main, icon, boxStyle,
         svgIconStyle, children, svgIconSize,

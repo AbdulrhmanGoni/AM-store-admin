@@ -1,21 +1,20 @@
 import Chart from "react-apexcharts";
 import ApexchartsContainer from "../ApexchartsContainer";
-import { useTheme } from "@mui/material";
-import { nDecorator } from "@abdulrhmangoni/am-store-library";
+import { Typography, useTheme } from "@mui/material";
+import { PromiseState, nDecorator } from "@abdulrhmangoni/am-store-library";
 import { ApexOptions } from "apexcharts";
 import Icon from "../SvgIcon";
 import { averageOrdersIcon } from "../svgIconsAsString";
 import ChartTitle from "../ChartTitle";
 import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
 
-type OrdersStatisticsChartProps = {
+interface OrdersStatisticsChartProps extends PromiseState {
     data: number[],
-    totalOrders?: number,
-    isLoading?: boolean,
-    isError?: boolean
+    year: number,
+    totalOrders?: number
 }
 
-export default function OrdersStatisticsChart({ data }: OrdersStatisticsChartProps) {
+export default function OrdersStatisticsChart({ data, year }: OrdersStatisticsChartProps) {
 
     const { palette: { mode, primary } } = useTheme();
 
@@ -60,7 +59,11 @@ export default function OrdersStatisticsChart({ data }: OrdersStatisticsChartPro
 
     return (
         <ApexchartsContainer>
-            <ChartTitle title="Monthly Orders" icon={<Icon svgElementAsString={averageOrdersIcon} />} />
+            <ChartTitle
+                title="Monthly Orders"
+                icon={<Icon svgElementAsString={averageOrdersIcon} />}
+                endItem={<Typography variant="h6">{year}</Typography>}
+            />
             <Chart options={options} series={series} type="bar" height={285} />
         </ApexchartsContainer>
     )

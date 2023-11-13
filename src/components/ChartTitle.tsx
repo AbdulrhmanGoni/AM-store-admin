@@ -1,10 +1,11 @@
 import { Box, Typography } from '@mui/material'
-import {JSX} from 'react'
+import { JSX } from 'react'
 import SmallIconBox from './SmallIconBox'
 import { CSSProperties } from '@mui/material/styles/createMixins'
 
 type ChartTitleProps = {
-    icon: JSX.Element | string | number,
+    icon: JSX.Element,
+    endItem?: JSX.Element,
     title: string,
     titleSize?: string,
     svgIconSize?: number
@@ -12,7 +13,10 @@ type ChartTitleProps = {
     disableIconColor?: boolean
 }
 
-export default function ChartTitle({ icon, title, svgIconSize, titleSize, containerStyle, disableIconColor }: ChartTitleProps) {
+export default function ChartTitle(props: ChartTitleProps) {
+
+    const { icon, title, endItem, svgIconSize, titleSize, containerStyle, disableIconColor } = props
+
     return (
         <Box sx={{
             display: "flex",
@@ -28,12 +32,11 @@ export default function ChartTitle({ icon, title, svgIconSize, titleSize, contai
             />
             <Typography
                 variant="h6"
-                sx={{
-                    fontSize: `${titleSize ?? "1.25rm"}`
-                }}
+                sx={{ fontSize: `${titleSize ?? "1.25rm"}`, flex: 1 }}
             >
                 {title}
             </Typography>
+            {endItem}
         </Box>
     )
 }
