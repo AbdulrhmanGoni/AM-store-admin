@@ -1,7 +1,7 @@
 "use client"
 import { Box, Grid, Paper } from "@mui/material";
 import CategoriesMonthlyEarnings from "../components/products-pages/CategoriesMonthlyEarnings";
-import CategoriesEarningsPercentages from "../components/products-pages/CategoriesEarningsPercentages";
+import CategoriesStatistics from "../components/products-pages/CategoriesStatistics";
 import ProductsTopSales from "../components/products-pages/ProductsTopSales";
 import ProductsTopEarnings from "../components/products-pages/ProductsTopEarnings";
 import randomColorsArr from "../CONSTANTS/randomColorsArr";
@@ -25,7 +25,14 @@ export default function ProductsStatisticsPage() {
     const { largeScreen, useBetweenDevices } = useBreakPoints("up");
 
     const {
-        productsStatistics,
+        productsStatistics: {
+            totalInStock,
+            totalProducts,
+            productsOutOfStock,
+            totalProductsSold,
+            seriesesCount,
+            categoriesCount
+        },
         productsStatisticsLoading,
         topSerieses,
         topSeriesesLoading,
@@ -34,24 +41,16 @@ export default function ProductsStatisticsPage() {
         topProductsError,
     } = useProductsStatisticsPageContent();
 
-    const {
-        totalInStock,
-        totalProducts,
-        productsOutOfStock,
-        totalProductsSold,
-        seriesesCount,
-        categoriesCount
-    } = productsStatistics;
-
     const infoBoxStyle = { height: "100%", p: 1.5 };
     const infoBoxType = largeScreen ? "horizontally" : "columnly";
     const sec2InfoBoxStyle = { ...infoBoxStyle, justifyContent: "center" };
     const sec2infoBoxType = useBetweenDevices("sm", "md") ? "horizontally" : "columnly";
+
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
+        <Box className="flex-column" gap={pageSpaces}>
             <PageTitle
                 title="Products Statistics"
-                description="View statistics and information of products & categories & serieses"
+                description="View statistics and information about products & categories & serieses"
                 icon={<SvgIcon svgElementAsString={orderIcon} />}
             />
             <Grid container spacing={pageSpaces}>
@@ -106,7 +105,7 @@ export default function ProductsStatisticsPage() {
             </Grid>
             <Grid container spacing={pageSpaces}>
                 <Grid item xs={12} md={6} order={{ xs: 3, md: 1 }}>
-                    <CategoriesEarningsPercentages />
+                    <CategoriesStatistics />
                 </Grid>
                 <Grid item xs={6} md={3} order={{ xs: 1, md: 2 }}>
                     <DisplayInfoBox

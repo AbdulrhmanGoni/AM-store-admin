@@ -2,9 +2,6 @@ import { PromiseState } from "@abdulrhmangoni/am-store-library"
 import useGetApi from "./useGetApi"
 
 export interface CategoryStatistics {
-    inStock: number,
-    outOfStock: number,
-    serieses: string[],
     productsCount: number,
     productsSold: number,
     totalEarnings: number,

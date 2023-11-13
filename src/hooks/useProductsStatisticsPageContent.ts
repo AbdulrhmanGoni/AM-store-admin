@@ -1,6 +1,5 @@
-import useCategoriesStatistics, { CategoryStatistics } from "./useCategoriesStatistics";
 import useGetApi from "./useGetApi";
-import { useMemo } from "react";
+import useProductsStatistics from "./useProductsStatistics";
 
 export interface ProductData {
     _id: string,
@@ -32,10 +31,10 @@ interface TopSeriesesType {
 export default function useProductsStatisticsPageContent() {
 
     const {
-        data: categoriesStatistics,
+        productsStatistics,
         isLoading: productsStatisticsLoading,
         isError: productsStatisticsError
-    } = useCategoriesStatistics();
+    } = useProductsStatistics();
 
     const {
         data: topProducts,
@@ -49,10 +48,6 @@ export default function useProductsStatisticsPageContent() {
         isError: topSeriesesError
     } = useGetApi<TopSeriesesType>({ key: ["top-serieses"], path: "statistics/?get=top-serieses&limit=5" })
 
-    const productsStatistics = useMemo(() => {
-        return prepareProductsStatistics(categoriesStatistics)
-    }, [categoriesStatistics])
-
     return {
         productsStatistics,
         productsStatisticsLoading,
@@ -63,38 +58,5 @@ export default function useProductsStatisticsPageContent() {
         topProducts,
         topProductsLoading,
         topProductsError,
-    }
-}
-
-
-function prepareProductsStatistics(response?: CategoryStatistics[]) {
-
-    const initaiResult = {
-        productsCount: 0,
-        inStock: 0,
-        outOfStock: 0,
-        productsSold: 0,
-        totalEarnings: 0,
-        serieses: Array<string>()
-    }
-
-    const categoriesStatistics = response?.reduce((acc, curr) => {
-        acc.productsCount += curr.productsCount
-        acc.inStock += curr.inStock
-        acc.outOfStock += curr.outOfStock
-        acc.productsSold += curr.productsSold
-        acc.totalEarnings += curr.totalEarnings
-        acc.serieses = acc.serieses.concat(curr.serieses)
-        return acc
-    }, initaiResult)
-
-    return {
-        totalProducts: categoriesStatistics?.productsCount,
-        totalInStock: categoriesStatistics?.inStock,
-        productsOutOfStock: categoriesStatistics?.outOfStock,
-        totalProductsSold: categoriesStatistics?.productsSold,
-        totalProductsEarnings: categoriesStatistics?.totalEarnings,
-        seriesesCount: new Set(categoriesStatistics?.serieses).size,
-        categoriesCount: response?.length
     }
 }
