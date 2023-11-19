@@ -7,6 +7,7 @@ import useAsyncActions from "./useProductsActions";
 import useProductImagesUploader from "./useProductImagesUploader";
 import { productData } from "../types/dataTypes";
 
+
 export default function useAddProducts() {
 
     const {
@@ -35,7 +36,7 @@ export default function useAddProducts() {
     function handleSubmit(event: submetEvent): void {
         event.preventDefault();
         const theForm = new FormData(event.currentTarget);
-        const formData = formValidation(theForm)
+        const formData = formValidation(theForm);
         if (formData) {
             setIsLoading(true);
             const { update } = bySteps("Uploading product's images...");
@@ -45,14 +46,14 @@ export default function useAddProducts() {
                         const theProduct: productData = {
                             ...formData,
                             images: imagesList!,
-                            files: undefined
+                            files: [null]
                         }
-                        copmlateAddingProduct(theProduct, update)
+                        copmlateAddingProduct(theProduct, update);
                     } else {
-                        update("error", "Uploading product images failed! try again")
+                        update("error", "Uploading product images failed! try again");
                     }
                 })
-                .finally(() => { setIsLoading(false) })
+                .finally(() => { setIsLoading(false) });
         }
     }
 

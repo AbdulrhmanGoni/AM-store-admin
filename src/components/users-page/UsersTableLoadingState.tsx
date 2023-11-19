@@ -1,7 +1,7 @@
 import { Box, Skeleton, TableRow, TableCell } from '@mui/material';
 
 
-export default function LoadingUserRow({ itemsCount }: { itemsCount: number }) {
+export default function UsersTableLoadingState({ itemsCount }: { itemsCount: number }) {
     return (
         Array.from(Array(itemsCount)).map((_: undefined, index: number) => (
             <TableRow key={index}>

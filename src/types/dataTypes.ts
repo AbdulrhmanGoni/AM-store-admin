@@ -6,10 +6,7 @@ interface productData {
     files: (FormDataEntryValue | null)[],
     images: string[],
     amount: number,
-    description: string,
-    sold: number,
-    earnings: number,
-    _id: string
+    description: string
 }
 interface UserData {
     userName: string;

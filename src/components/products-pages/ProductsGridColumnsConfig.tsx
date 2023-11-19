@@ -42,7 +42,7 @@ const columns: GridColDef[] = [
     rowProps(['_id', 'ID', 70, false, false, false]),
     rowProps(['title', 'Title', 130, false, true, false]),
     rowProps(['series', 'Series', 130, false, true, false]),
-    rowProps(['category', 'Category', 120, false, true, false]),
+    rowProps(['category', 'Category', 120, false, false, false]),
     rowProps(['price', 'Price ($)', 100, true, false, true]),
     rowProps(['rate', 'Rate', 160, true, false, false, renderRateCell, undefined]),
     rowProps(['sold', 'Sold', 80, true, false, true]),

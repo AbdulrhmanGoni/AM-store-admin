@@ -191,6 +191,7 @@ function NotFound({ productId }: { productId: string }) {
             illustratorType="notFound"
             message={`There is no product with '${productId}' id`}
             alertType="warning"
+            disableHeight
         />
     )
 }
@@ -201,6 +202,7 @@ function Unexpected() {
             title='There is error happends'
             illustratorType="unexpected"
             hideAlertMsg
+            disableHeight
         />
     )
 }

@@ -3,7 +3,7 @@ import {
     TableBody, Box, Typography, TableCell
 } from '@mui/material';
 import useUsersOverview from '../../hooks/useUsersOverview';
-import LoadingUserRow from './LoadingUserRow';
+import UsersTableLoadingState from './UsersTableLoadingState';
 import ErrorUsersTable from './ErrorUsersTable';
 import TableNavigationButton from './TableNavigationButton';
 import EmailCellIcon from './EmailCellIcon';
@@ -29,7 +29,7 @@ export default function UsersOverviewTable() {
                     <TableBody>
                         {
                             isLoading ?
-                                <LoadingUserRow itemsCount={pageSize} /> :
+                                <UsersTableLoadingState itemsCount={pageSize} /> :
                                 usersData ?
                                     usersData.map(({ avatar, userName, userEmail, userOrders, hisEmailVerified }, index: number) => (
                                         <TableRow key={index}>

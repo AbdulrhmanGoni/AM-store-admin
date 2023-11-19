@@ -3,6 +3,7 @@ import useApiRequest from './useApiRequest';
 import host from '../CONSTANTS/API_hostName';
 import { productData } from '../types/dataTypes';
 
+
 function useGetProducts() {
     const { api } = useApiRequest();
 
@@ -14,8 +15,6 @@ function useGetProducts() {
     }
     return { getProducts }
 }
-
-
 
 export default function useProductsPagination({ productsLength }: { productsLength: number }) {
 

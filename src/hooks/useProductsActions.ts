@@ -1,11 +1,11 @@
-import { host_admin, host } from "../CONSTANTS/API_hostName";
+import { host_admin } from "../CONSTANTS/API_hostName";
 import useApiRequest from "./useApiRequest";
 import { productData } from "../types/dataTypes";
 import { findTheChangesReturnType } from "../functions/findUpdateFormChanges";
 
 export default function useProductsActions() {
 
-    const { api } = useApiRequest()
+    const { api } = useApiRequest();
 
     const path = (type: string) => `${host_admin}/products?type=${type}`;
 
@@ -14,11 +14,7 @@ export default function useProductsActions() {
     }
 
     async function updateProduct(changes: findTheChangesReturnType, productId: string) {
-        return (await api.post(`${host_admin}/products/${productId}`, { changes, productId })).data
-    }
-
-    async function searchForProducts(searchInput: string) {
-        return (await api.get(`${host}/products?title=${searchInput}`)).data
+        return (await api.post(`${host_admin}/products/${productId}`, { changes })).data
     }
 
     async function getProduct(productId: string) {
@@ -33,7 +29,6 @@ export default function useProductsActions() {
         addNewProduct,
         updateProduct,
         getProduct,
-        searchForProducts,
         deleteProduct
     }
 }
