@@ -34,8 +34,6 @@ export default function ProductsStatisticsPage() {
             categoriesCount
         },
         productsStatisticsLoading,
-        topSerieses,
-        topSeriesesLoading,
         topProducts,
         topProductsLoading,
         topProductsError,
@@ -163,8 +161,7 @@ export default function ProductsStatisticsPage() {
                     <TopSerieses
                         title="Best Selling"
                         icon={<SvgIcon svgElementAsString={rankingIconCup} width={30} height={30} />}
-                        isLoading={topSeriesesLoading}
-                        data={topSerieses?.topEarnings}
+                        sortType="topEarnings"
                         isMoney
                     />
                 </Grid>
@@ -172,8 +169,7 @@ export default function ProductsStatisticsPage() {
                     <TopSerieses
                         title="Top Selling"
                         icon={<SvgIcon svgElementAsString={rankingIconMedal} width={30} height={30} />}
-                        isLoading={topSeriesesLoading}
-                        data={topSerieses?.topSold}
+                        sortType="topSold"
                     />
                 </Grid>
             </Grid>

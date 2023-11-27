@@ -18,16 +18,6 @@ interface TopProductsType {
     topSales: ProductData[]
 }
 
-export interface SeriesType {
-    series: string,
-    value: number
-}
-
-interface TopSeriesesType {
-    topEarnings: SeriesType[],
-    topSold: SeriesType[]
-}
-
 export default function useProductsStatisticsPageContent() {
 
     const {
@@ -42,19 +32,10 @@ export default function useProductsStatisticsPageContent() {
         isError: topProductsError
     } = useGetApi<TopProductsType>({ key: ["top-products"], path: "statistics/?get=top-products&limit=5" })
 
-    const {
-        data: topSerieses,
-        isLoading: topSeriesesLoading,
-        isError: topSeriesesError
-    } = useGetApi<TopSeriesesType>({ key: ["top-serieses"], path: "statistics/?get=top-serieses&limit=5" })
-
     return {
         productsStatistics,
         productsStatisticsLoading,
         productsStatisticsError,
-        topSerieses,
-        topSeriesesLoading,
-        topSeriesesError,
         topProducts,
         topProductsLoading,
         topProductsError,

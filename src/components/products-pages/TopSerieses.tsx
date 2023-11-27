@@ -1,20 +1,23 @@
 import { JSX } from 'react'
-import { PromiseState, nDecorator } from '@abdulrhmangoni/am-store-library'
+import { nDecorator } from '@abdulrhmangoni/am-store-library'
 import { Box, Chip, Divider, List, ListItem, ListItemText, Paper, Skeleton, Typography } from '@mui/material'
-import { SeriesType } from '../../hooks/useProductsStatisticsPageContent'
+import { SeriesType, TopSeriesesType } from '../../hooks/useTopSerieses'
+import useTopSerieses from '../../hooks/useTopSerieses'
 
 
-interface TopSeriesesProps extends PromiseState {
-    data?: SeriesType[],
+interface TopSeriesesProps {
+    sortType: "topSold" | "topEarnings",
     title: string,
     icon: JSX.Element,
     isMoney?: boolean
 }
 
-export default function TopSerieses({ data, isLoading, title, icon, isMoney }: TopSeriesesProps) {
+export default function TopSerieses({ title, icon, isMoney, sortType }: TopSeriesesProps) {
     const
         rankingColors = ["#AF9500", "#c0c0c0", "#6A3805"],
         money = isMoney ? "$" : ""
+
+    const { data, isLoading } = useTopSerieses();
 
     return (
         <Paper>
@@ -39,7 +42,7 @@ export default function TopSerieses({ data, isLoading, title, icon, isMoney }: T
                         Array.from(Array(5)).map((_, index: number) => {
                             return <Skeleton key={index} variant="rounded" width="100%" height={32} />
                         })
-                        : data?.map(({ series, value }: SeriesType, index: number) => {
+                        : data?.[sortType as keyof TopSeriesesType]?.map(({ series, value }: SeriesType, index: number) => {
                             return (
                                 <ListItem
                                     sx={{ pr: "6px", bgcolor: "background.default" }}
