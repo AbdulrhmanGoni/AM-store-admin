@@ -105,4 +105,7 @@ const containerStyle = {
     width: "100%",
     minHeight: "100vh",
     color: "white",
+    backgroundImage: "url(/images/looking-to-galaxy.png)",
+    backgroundSize: "cover",
+    backgroundPosition: "center"
 }

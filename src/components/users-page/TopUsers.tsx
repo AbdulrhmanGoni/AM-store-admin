@@ -6,6 +6,7 @@ import useGetApi from '../../hooks/useGetApi';
 import P from '../P';
 import { nDecorator } from '@abdulrhmangoni/am-store-library';
 import AvatarCell from './AvatarCell';
+import UsersTableLoadingState from './UsersTableLoadingState';
 
 
 interface UserDataType {
@@ -50,7 +51,7 @@ export default function TopUsers() {
                     <TableBody>
                         {
                             isLoading ?
-                                null :
+                                <UsersTableLoadingState itemsCount={5} hideEmailState /> :
                                 usersList ?
                                     usersList.map(({ userData: { userName, userEmail, avatar }, totalOrders, totalSpending }, index: number) => (
                                         <TableRow key={index}>
