@@ -1,8 +1,9 @@
 import { JSX } from 'react'
 import { nDecorator } from '@abdulrhmangoni/am-store-library'
-import { Box, Chip, Divider, List, ListItem, ListItemText, Paper, Skeleton, Typography } from '@mui/material'
+import { Alert, Box, Chip, Divider, List, ListItem, ListItemText, Paper, Skeleton, Typography, IconButton } from '@mui/material'
 import { SeriesType, TopSeriesesType } from '../../hooks/useTopSerieses'
 import useTopSerieses from '../../hooks/useTopSerieses'
+import { Refresh } from '@mui/icons-material'
 
 
 interface TopSeriesesProps {
@@ -13,11 +14,12 @@ interface TopSeriesesProps {
 }
 
 export default function TopSerieses({ title, icon, isMoney, sortType }: TopSeriesesProps) {
+
     const
         rankingColors = ["#AF9500", "#c0c0c0", "#6A3805"],
         money = isMoney ? "$" : ""
 
-    const { data, isLoading } = useTopSerieses();
+    const { data, isLoading, isError, refetch } = useTopSerieses();
 
     return (
         <Paper>
@@ -42,22 +44,35 @@ export default function TopSerieses({ title, icon, isMoney, sortType }: TopSerie
                         Array.from(Array(5)).map((_, index: number) => {
                             return <Skeleton key={index} variant="rounded" width="100%" height={32} />
                         })
-                        : data?.[sortType as keyof TopSeriesesType]?.map(({ series, value }: SeriesType, index: number) => {
-                            return (
-                                <ListItem
-                                    sx={{ pr: "6px", bgcolor: "background.default" }}
-                                    key={series}
+                        : data ?
+                            data[sortType as keyof TopSeriesesType]?.map(({ series, value }: SeriesType, index: number) => {
+                                return (
+                                    <ListItem
+                                        sx={{ pr: "6px", bgcolor: "background.default" }}
+                                        key={series}
+                                    >
+                                        <ListItemText primary={series} />
+                                        <Chip
+                                            size='small'
+                                            variant="outlined"
+                                            sx={{ bgcolor: rankingColors[index], borderRadius: 1 }}
+                                            label={money + nDecorator(value.toFixed(isMoney ? 2 : 0))}
+                                        />
+                                    </ListItem>
+                                )
+                            })
+                            : isError ?
+                                <Alert
+                                    severity="error"
+                                    action={
+                                        <IconButton onClick={() => { refetch() }}>
+                                            <Refresh />
+                                        </IconButton>
+                                    }
                                 >
-                                    <ListItemText primary={series} />
-                                    <Chip
-                                        size='small'
-                                        variant="outlined"
-                                        sx={{ bgcolor: rankingColors[index], borderRadius: 1 }}
-                                        label={money + nDecorator(value.toFixed(isMoney ? 2 : 0))}
-                                    />
-                                </ListItem>
-                            )
-                        })
+                                    Failed to fetch serieses statistics
+                                </Alert>
+                                : null
                 }
             </List>
         </Paper>

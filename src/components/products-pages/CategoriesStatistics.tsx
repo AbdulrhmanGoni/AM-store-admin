@@ -57,7 +57,7 @@ export default function CategoriesStatistics() {
                         : isError ? <Alert className="flex-row-center" severity="error">Error !</Alert>
                             : categoriesStatistics.length ?
                                 categoriesStatistics.map((cat: CategoryStatistics, index) => (
-                                    <CategoryStatisticsCard category={cat} cardColor={chartColors[index]} total={totalEarnings} />
+                                    <CategoryStatisticsCard key={cat.category} category={cat} cardColor={chartColors[index]} total={totalEarnings} />
                                 )) : null
                 }
             </Box>

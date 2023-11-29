@@ -21,8 +21,8 @@ export default function useAddProducts() {
     const [addingDone, setAddingDone] = useState(false);
 
     function copmlateAddingProduct(productData: productData, update: updateTostProps) {
+        setIsLoading(true);
         addNewProduct(productData)
-            .catch(() => { update("error", "Addeding product failed! try again") })
             .then(res => {
                 if (res) {
                     update("success", "The product added successfully");
@@ -31,6 +31,8 @@ export default function useAddProducts() {
                     setTimeout(() => { setAddingDone(false) }, 2000)
                 }
             })
+            .catch(() => { update("error", "Addeding product failed! try again") })
+            .finally(() => { setIsLoading(false) });
     }
 
     function handleSubmit(event: submetEvent): void {

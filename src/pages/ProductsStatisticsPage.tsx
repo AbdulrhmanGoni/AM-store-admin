@@ -8,7 +8,7 @@ import randomColorsArr from "../CONSTANTS/randomColorsArr";
 import SvgIcon from "../components/SvgIcon";
 import { inStockIcon, orderIcon } from "../components/svgIconsAsString";
 import { stockIcon } from "../components/stockIcon";
-import { nDecorator } from "@abdulrhmangoni/am-store-library";
+import { nDecorator, useWhenElementAppears } from "@abdulrhmangoni/am-store-library";
 import TopSerieses from "../components/products-pages/TopSerieses";
 import useProductsStatisticsPageContent from "../hooks/useProductsStatisticsPageContent";
 import DisplayInfoBox from "../components/DisplayInfoBox";
@@ -18,11 +18,13 @@ import { rankingIconCup } from '../components/rankingIconCup'
 import pageSpaces from "../CONSTANTS/pageSpaces";
 import CategoriesMonthlySales from "../components/products-pages/CategoriesMonthlySales";
 import useBreakPoints from "../hooks/useBreakPoints";
+import { useState } from "react";
 
 
 export default function ProductsStatisticsPage() {
 
     const { largeScreen, useBetweenDevices } = useBreakPoints("up");
+    const [renderSeriesesSection, setRenderSeriesesSection] = useState<boolean>(false);
 
     const {
         productsStatistics: {
@@ -36,13 +38,19 @@ export default function ProductsStatisticsPage() {
         productsStatisticsLoading,
         topProducts,
         topProductsLoading,
-        topProductsError,
+        topProductsError
     } = useProductsStatisticsPageContent();
 
     const infoBoxStyle = { height: "100%", p: 1.5 };
     const infoBoxType = largeScreen ? "horizontally" : "columnly";
     const sec2InfoBoxStyle = { ...infoBoxStyle, justifyContent: "center" };
     const sec2infoBoxType = useBetweenDevices("sm", "md") ? "horizontally" : "columnly";
+
+    useWhenElementAppears(
+        "top-products-section",
+        () => { setRenderSeriesesSection(true) },
+        { fullAppearing: true, scrollElementId: "app" }
+    );
 
     return (
         <Box className="flex-column" gap={pageSpaces}>
@@ -136,7 +144,7 @@ export default function ProductsStatisticsPage() {
                     <CategoriesMonthlySales />
                 </Grid>
             </Grid>
-            <Grid container spacing={pageSpaces}>
+            <Grid id="top-products-section" container spacing={pageSpaces}>
                 <Grid item xs={12} md={6}>
                     <Paper sx={{ p: 1 }}>
                         <ProductsTopSales
@@ -156,23 +164,26 @@ export default function ProductsStatisticsPage() {
                     </Paper>
                 </Grid>
             </Grid>
-            <Grid container spacing={pageSpaces}>
-                <Grid item xs={12} sm={6}>
-                    <TopSerieses
-                        title="Best Selling"
-                        icon={<SvgIcon svgElementAsString={rankingIconCup} width={30} height={30} />}
-                        sortType="topEarnings"
-                        isMoney
-                    />
+            {
+                renderSeriesesSection &&
+                <Grid container spacing={pageSpaces}>
+                    <Grid item xs={12} sm={6}>
+                        <TopSerieses
+                            title="Best Selling"
+                            icon={<SvgIcon svgElementAsString={rankingIconCup} width={30} height={30} />}
+                            sortType="topEarnings"
+                            isMoney
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TopSerieses
+                            title="Top Selling"
+                            icon={<SvgIcon svgElementAsString={rankingIconMedal} width={30} height={30} />}
+                            sortType="topSold"
+                        />
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TopSerieses
-                        title="Top Selling"
-                        icon={<SvgIcon svgElementAsString={rankingIconMedal} width={30} height={30} />}
-                        sortType="topSold"
-                    />
-                </Grid>
-            </Grid>
+            }
         </Box>
     )
 }

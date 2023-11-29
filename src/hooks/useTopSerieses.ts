@@ -16,6 +16,6 @@ export default function useTopSerieses() {
 
     return useGetApi<TopSeriesesType>({
         key: [query],
-        path: `statistics/?get=&{query}&limit=5`
+        path: `statistics/?get=${query}&limit=5`
     })
 }

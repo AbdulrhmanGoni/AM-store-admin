@@ -20,7 +20,6 @@ export default function CategoryStatisticsCard({ category: cat, cardColor, total
     return (
         <Box
             id={category}
-            key={category}
             component="div"
             className="flex-column-center"
             sx={{
