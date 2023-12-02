@@ -4,6 +4,7 @@ import useProductsPagination from "./useProductsPagination";
 import useGetApi from "./useGetApi";
 import useNotifications from "./useNotifications";
 import useMutateApi from "./useMutateApi";
+import useProductsActions from "./useProductsActions";
 
 export interface UpdateCelEvent {
     type: string,
@@ -16,10 +17,10 @@ export default function useProductsTableLogic() {
     const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
     const [goingToDelete, setGoingToDelete] = useState<GridRowSelectionModel>([]);
     const [tablesMassages, setTablesMassages] = useState<string>("No products");
+    const { updateProduct } = useProductsActions();
 
     const { bySteps, promised } = useNotifications();
     const { data: productsLength = 0, isError } = useGetApi<number>({ key: ["products-length"], path: "products/length" });
-    const { mutateAsync: updateProduct } = useMutateApi({ key: ["update-filed"], path: "admin/products?type=update-filed" });
     const { mutateAsync: deleteProducts } = useMutateApi({ key: ["delete-products"], path: "admin/products" });
 
     const {
@@ -59,11 +60,10 @@ export default function useProductsTableLogic() {
             field = params.field,
             productId = params.row._id,
             isChanged = newValue && newValue !== params.value
-
         if (isEnter) {
             if (isChanged) {
-                const { update } = bySteps("Loading")
-                updateProduct({ body: { productId, change: { field, newValue } } })
+                const { update } = bySteps("Loading");
+                updateProduct({ [field]: newValue }, productId)
                     .then(res => { res && update("success", `Product's ${field} updated successfully`) })
                     .catch(() => {
                         cancelChanges(productId, field, params.value as string);
