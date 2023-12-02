@@ -24,7 +24,7 @@ export default function ProductsViewerTable() {
         apiRef,
         productsLength,
         selectedRows,
-        setSelectedRows,
+        setSelectedRows
     } = useProductsTableLogic();
 
     return (

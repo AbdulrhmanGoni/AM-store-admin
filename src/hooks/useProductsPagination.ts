@@ -3,9 +3,15 @@ import useApiRequest from './useApiRequest';
 import host from '../CONSTANTS/API_hostName';
 import { productData } from '../types/dataTypes';
 
-
-function useGetProducts() {
+export default function useProductsPagination({ productsLength }: { productsLength: number }) {
+    
     const { api } = useApiRequest();
+    const [products, setProducts] = useState<productData[]>([]);
+    const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 20 });
+    const [loadedPages, setLoadedPages] = useState<number[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isError, setIsError] = useState<boolean>(true);
+    const [thereIsMore, setThereIsMore] = useState<boolean>(true);
 
     async function getProducts({ pageSize, page }: { pageSize: number, page: number }) {
         const returnType = "_rate,_comments,_updatedAt,_createdAt"
@@ -13,18 +19,6 @@ function useGetProducts() {
         try { return (await api.get(`${host}/products/pagination?${query}`)).data }
         catch { return null }
     }
-    return { getProducts }
-}
-
-export default function useProductsPagination({ productsLength }: { productsLength: number }) {
-
-    const { getProducts } = useGetProducts();
-    const [products, setProducts] = useState<productData[]>([]);
-    const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 20 });
-    const [loadedPages, setLoadedPages] = useState<number[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [isError, setIsError] = useState<boolean>(true);
-    const [thereIsMore, setThereIsMore] = useState<boolean>(true);
 
     useEffect(() => {
         if (!loadedPages.includes(paginationModel.page) && thereIsMore) {
@@ -41,7 +35,9 @@ export default function useProductsPagination({ productsLength }: { productsLeng
         }
     }, [paginationModel.page])
 
-    useEffect(() => { products.length >= productsLength && setThereIsMore(false) }, [products, productsLength])
+    useEffect(() => { 
+        productsLength && products.length >= productsLength && setThereIsMore(false) 
+    }, [products, productsLength])
 
     return {
         products,

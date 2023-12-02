@@ -26,7 +26,7 @@ export default function useProductsTableLogic() {
         products,
         paginationModel,
         setPaginationModel,
-        isLoading,
+        isLoading
     } = useProductsPagination({ productsLength })
 
     function deleteProducs() {
