@@ -3,7 +3,7 @@ import host from "../CONSTANTS/API_hostName";
 import useApiRequest from "./useApiRequest";
 import { useCookies } from "react-cookie";
 import useNotifications from "./useNotifications";
-import { loadingControl } from "@abdulrhmangoni/am-store-library";
+import { GoogleUserCredentials, loadingControl } from "@abdulrhmangoni/am-store-library";
 import { AdminData } from "../types/dataTypes";
 
 interface SubmitEventProps {
@@ -15,11 +15,10 @@ type requestPath = string
 type requestBody = {
     adminEmail?: FormDataEntryValue,
     adminPassword?: FormDataEntryValue,
+    googleUserCredentials?: GoogleUserCredentials,
 }
 type requestResponse = null | false
 type requestFeedback = (response: requestResponse) => void
-
-
 
 export default function useLogInLogic() {
 
@@ -43,10 +42,10 @@ export default function useLogInLogic() {
             .finally(() => { loadingControl(false) })
     }
 
-    function logInWithGoogle(userInfo: { email?: string, email_verified?: boolean, name?: string }) {
-        const adminEmail = userInfo.email;
+    function logInWithGoogle(googleUserCredentials: GoogleUserCredentials) {
+        console.log(googleUserCredentials)
         apiRequest(
-            "google-auth", { adminEmail },
+            "google-auth", { googleUserCredentials },
             (response: requestResponse) => {
                 if (response === false) {
                     message("Your email registred by another signing up method", "warning")
