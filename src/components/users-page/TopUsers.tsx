@@ -7,6 +7,7 @@ import P from '../P';
 import { nDecorator } from '@abdulrhmangoni/am-store-library';
 import AvatarCell from './AvatarCell';
 import UsersTableLoadingState from './UsersTableLoadingState';
+import ErrorUsersTable from './ErrorUsersTable';
 
 
 interface UserDataType {
@@ -22,7 +23,12 @@ interface UserDataType {
 export default function TopUsers() {
 
     const queryKey = "top-customers", path = `statistics?get=${queryKey}&limit=5`;
-    const { data: usersList, isLoading } = useGetApi<UserDataType[]>({ path, key: [queryKey] })
+    const {
+        data: usersList,
+        isFetching: isLoading,
+        isError,
+        refetch
+    } = useGetApi<UserDataType[]>({ path, key: [queryKey] })
 
     return (
         <Paper sx={{ width: "100%", height: "100%" }}>
@@ -38,33 +44,37 @@ export default function TopUsers() {
                     borderTop: "0px"
                 }}
             >
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell sx={{ width: "75px" }}>Avatar</TableCell>
-                            <TableCell sx={{ minWidth: "160px" }}>User Name</TableCell>
-                            <TableCell sx={{ minWidth: "180px" }}>User Email</TableCell>
-                            <TableCell sx={{ width: "75px" }}>Orders</TableCell>
-                            <TableCell sx={{ width: "100px" }}>Spending</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {
-                            isLoading ?
-                                <UsersTableLoadingState itemsCount={5} hideEmailState /> :
-                                usersList ?
-                                    usersList.map(({ userData: { userName, userEmail, avatar }, totalOrders, totalSpending }, index: number) => (
-                                        <TableRow key={index}>
-                                            <AvatarCell avatar={avatar} />
-                                            <TableCell>{userName}</TableCell>
-                                            <TableCell>{userEmail}</TableCell>
-                                            <TableCell>{nDecorator(totalOrders)}</TableCell>
-                                            <TableCell>${nDecorator(totalSpending.toFixed(2))}</TableCell>
-                                        </TableRow>
-                                    )) : null
-                        }
-                    </TableBody>
-                </Table>
+                {
+                    isLoading || usersList ?
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell sx={{ width: "75px" }}>Avatar</TableCell>
+                                    <TableCell sx={{ minWidth: "160px" }}>User Name</TableCell>
+                                    <TableCell sx={{ minWidth: "180px" }}>User Email</TableCell>
+                                    <TableCell sx={{ width: "75px" }}>Orders</TableCell>
+                                    <TableCell sx={{ width: "100px" }}>Spending</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {
+                                    isLoading ?
+                                        <UsersTableLoadingState itemsCount={5} hideEmailState /> :
+                                        usersList?.length ?
+                                            usersList.map(({ userData: { userName, userEmail, avatar }, totalOrders, totalSpending }, index: number) => (
+                                                <TableRow key={index}>
+                                                    <AvatarCell avatar={avatar} />
+                                                    <TableCell>{userName}</TableCell>
+                                                    <TableCell>{userEmail}</TableCell>
+                                                    <TableCell>{nDecorator(totalOrders)}</TableCell>
+                                                    <TableCell>${nDecorator(totalSpending.toFixed(2))}</TableCell>
+                                                </TableRow>
+                                            )) : <ErrorUsersTable isError={isError} />
+                                }
+                            </TableBody>
+                        </Table>
+                        : <ErrorUsersTable isError={isError} refetch={refetch} />
+                }
             </TableContainer>
         </Paper>
     );

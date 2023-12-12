@@ -13,7 +13,11 @@ const defaultStatistics = {
 
 export default function useUsersPageContent() {
     const queryKey = "users-statistics", path = `statistics?get=${queryKey}`;
-    const { data: usersStatistics = defaultStatistics, isLoading, isError } = useGetApi<UsersStatisticsType>({ path, key: [queryKey] })
+    const {
+        data: usersStatistics = defaultStatistics,
+        isLoading,
+        isError
+    } = useGetApi<UsersStatisticsType>({ path, key: [queryKey] })
 
     return {
         usersStatistics,

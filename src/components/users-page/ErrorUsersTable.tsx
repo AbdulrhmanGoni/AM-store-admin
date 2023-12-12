@@ -1,15 +1,30 @@
-import { TableRow, TableCell } from '@mui/material';
+import { Refresh } from '@mui/icons-material';
+import { IconButton, Alert } from '@mui/material';
 
-
-export default function ErrorUsersTable({ itemsCount }: { itemsCount: number }) {
+interface ErrorUsersTableProps {
+    itemsCount?: number,
+    refetch?: () => void,
+    isError: boolean
+}
+export default function ErrorUsersTable({ isError, refetch }: ErrorUsersTableProps) {
     return (
-        Array.from(Array(itemsCount)).map((num: number) => (
-            <TableRow key={num}>
-                <TableCell sx={{ p: 0, height: "57.2px" }}></TableCell>
-                <TableCell sx={{ p: 0, height: "57.2px" }}></TableCell>
-                <TableCell sx={{ p: 0, height: "57.2px" }}></TableCell>
-                <TableCell sx={{ p: 0, height: "57.2px" }}></TableCell>
-            </TableRow>
-        ))
+        <Alert
+            severity={isError ? "error" : "info"}
+            className='flex-row-center'
+            sx={{
+                width: "100%", height: "100%",
+                "& .MuiAlert-action": { ml: 0, pl: 1 }
+            }}
+            action={
+                isError &&
+                <IconButton
+                    onClick={refetch}
+                >
+                    <Refresh />
+                </IconButton>
+            }
+        >
+            {isError ? "Failed to fetch your payment methods" : "There is no users"}
+        </Alert>
     )
 }

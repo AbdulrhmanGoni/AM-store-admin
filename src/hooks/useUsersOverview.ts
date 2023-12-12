@@ -32,7 +32,7 @@ export default function useUsersOverview() {
         })
     }
 
-    const { isFetching, isError, data } = useQuery<UseUsersOverviewType>({
+    const { isFetching, isError, data, refetch } = useQuery<UseUsersOverviewType>({
         queryKey: [query, page],
         queryFn: () => fetchUsers(page),
         keepPreviousData: true,
@@ -43,6 +43,7 @@ export default function useUsersOverview() {
         usersData: data?.users,
         isLoading: isFetching,
         isError,
+        refetch,
         navigate,
         page,
         pageSize,
