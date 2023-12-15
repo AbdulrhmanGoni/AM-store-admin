@@ -1,4 +1,3 @@
-"use client"
 import { Box, LinearProgress, useMediaQuery } from '@mui/material';
 import { DataGrid, GridPaginationModel, GridRowParams } from '@mui/x-data-grid';
 import columns from './ProductsGridColumnsConfig';
@@ -52,7 +51,7 @@ export default function ProductsViewerTable() {
                 slotProps={{ toolbar: { quickFilterProps: { debounceMs: 500 } } }}
                 slots={{
                     toolbar: () => <ToolBar />,
-                    footer: () => <Footer delelteFun={deleteProducs} selectedRows={selectedRows} />,
+                    footer: () => <Footer delelteFun={deleteProducs} selectedRows={selectedRows} tableApiRef={apiRef} />,
                     noRowsOverlay: () => <ErrorThrower
                         title='No Products'
                         message='There is error hapends when products fetching'

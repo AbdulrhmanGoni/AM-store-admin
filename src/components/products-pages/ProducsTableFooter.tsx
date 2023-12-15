@@ -4,41 +4,59 @@ import { Box, Button } from "@mui/material";
 import { GridFooter, GridRowSelectionModel } from "@mui/x-data-grid";
 import { ActionAlert } from '@abdulrhmangoni/am-store-library';
 import { useNavigate } from "react-router-dom";
+import DiscountsApplyer from "./DiscountsApplyer";
+import { MutableRefObject } from "react";
+import { GridApiCommunity } from "@mui/x-data-grid/internals";
 
+interface TableFooterProps {
+    tableApiRef: MutableRefObject<GridApiCommunity>,
+    delelteFun: () => void,
+    selectedRows: GridRowSelectionModel
+}
 
-export default function Footer({ delelteFun, selectedRows }: { delelteFun: () => void, selectedRows: GridRowSelectionModel }) {
+export default function Footer({ delelteFun, selectedRows, tableApiRef }: TableFooterProps) {
 
     const { display } = useProductsDisplayer();
     const navigate = useNavigate();
-    const rowsCount = selectedRows.length;
+    const selectedRowsCount = selectedRows.length;
 
     const warningMessage = `
-    Are you sure you want to delete ${rowsCount > 1 ? "these products" : "this product"}, 
+    Are you sure you want to delete ${selectedRowsCount > 1 ? "these products" : "this product"}, 
     note that you can't undo this procces if you continue
-    `
+    `;
+
+    function unselectAllRows() {
+        tableApiRef.current.setRowSelectionModel([])
+    }
 
     return (
-        <Box sx={{ p: "0px 12px", display: "flex", alignItems: "center", borderTop: "solid rgba(81, 81, 81, 1) 1px", gap: "12px" }}>
+        <Box
+            className="flex-row-center"
+            sx={{ p: "0px 12px", borderTop: "solid rgba(81, 81, 81, 1) 1px", gap: "12px" }}
+        >
             {
-                !!rowsCount &&
-                <ActionAlert
-                    action={delelteFun}
-                    message={warningMessage}
-                    title={`You are going to detete (${rowsCount}) product${rowsCount > 1 ? "s" : ""}`}>
-                    <Button
-                        endIcon={<Box fontSize={"13px!important"}>{rowsCount}</Box>}
-                        startIcon={<Delete />}
-                        variant="contained"
-                        color='error'
-                        size='small'
-                    // disabled
-                    >
-                        Delete
-                    </Button>
-                </ActionAlert>
+                !!selectedRowsCount &&
+                <>
+                    <ActionAlert
+                        action={delelteFun}
+                        message={warningMessage}
+                        title={`You are going to detete (${selectedRowsCount}) product${selectedRowsCount > 1 ? "s" : ""}`}>
+                        <Button
+                            endIcon={<Box fontSize={"13px!important"}>{selectedRowsCount}</Box>}
+                            startIcon={<Delete />}
+                            variant="contained"
+                            color='error'
+                            size='small'
+                            disabled
+                        >
+                            Delete
+                        </Button>
+                    </ActionAlert>
+                    <DiscountsApplyer productsIds={selectedRows} onDiscountApplyied={unselectAllRows} />
+                </>
             }
             {
-                rowsCount === 1 &&
+                selectedRowsCount === 1 &&
                 <>
                     <Button
                         endIcon={<ReadMore />}

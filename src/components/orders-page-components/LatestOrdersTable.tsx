@@ -1,4 +1,3 @@
-"use client"
 import { Paper, useMediaQuery, LinearProgress } from '@mui/material';
 import { DataGrid, GridRowsProp, useGridApiRef } from '@mui/x-data-grid';
 import columns from './OrdersGridColumnsConfig';

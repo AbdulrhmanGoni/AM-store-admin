@@ -1,4 +1,3 @@
-"use client"
 import { Box, Grid } from '@mui/material'
 import PageTitle from '../components/PageTitle';
 import { Groups } from '@mui/icons-material';

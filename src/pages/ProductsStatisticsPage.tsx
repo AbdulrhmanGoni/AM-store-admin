@@ -1,4 +1,3 @@
-"use client"
 import { Box, Grid, Paper } from "@mui/material";
 import CategoriesMonthlyEarnings from "../components/products-pages/CategoriesMonthlyEarnings";
 import CategoriesStatistics from "../components/products-pages/CategoriesStatistics";

@@ -15,14 +15,7 @@ import useMonthlySalesStatistics, { MonthSalesStatistics } from "../hooks/useMon
 import pageSpaces from "../CONSTANTS/pageSpaces";
 import PageTitle from "../components/PageTitle";
 
-
 const boxSx = { width: "100%" }
-const paperStyle = {
-  display: "flex", p: 1,
-  alignItems: "center",
-  justifyContent: "center",
-  flexDirection: "column",
-}
 
 export default function SalesStatisticsPage() {
 
@@ -67,9 +60,7 @@ export default function SalesStatisticsPage() {
       <Grid container spacing={pageSpaces}>
         <Grid item xs={12} sm={7.5} lg={8}>
           <Box sx={boxSx}>
-            <Paper sx={paperStyle}>
-              <MonthlyEarningsChart />
-            </Paper>
+            <MonthlyEarningsChart />
           </Box>
         </Grid>
         <Grid item xs={12} sm={4.5} lg={4}>
