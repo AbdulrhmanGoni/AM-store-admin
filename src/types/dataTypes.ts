@@ -20,15 +20,9 @@ interface AdminData {
     _id: string,
     avatar: string
 }
-interface submetEvent {
-    preventDefault: () => void,
-    currentTarget: HTMLFormElement | undefined
-}
-
 
 export type {
     productData,
-    submetEvent,
     AdminData,
     UserData,
 }

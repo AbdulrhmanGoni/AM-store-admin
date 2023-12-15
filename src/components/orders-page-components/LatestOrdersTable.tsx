@@ -1,7 +1,7 @@
 import { Paper, useMediaQuery, LinearProgress } from '@mui/material';
 import { DataGrid, GridRowsProp, useGridApiRef } from '@mui/x-data-grid';
 import columns from './OrdersGridColumnsConfig';
-import { ErrorThrower } from '@abdulrhmangoni/am-store-library';
+import { IllustrationCard } from '@abdulrhmangoni/am-store-library';
 import useGetApi from '../../hooks/useGetApi';
 
 interface LatestOrdersType {
@@ -40,7 +40,7 @@ export default function LatestOrdersTable() {
                 localeText={{ noRowsLabel: "No orders", noResultsOverlayLabel: 'No products found.' }}
                 slotProps={{ toolbar: { quickFilterProps: { debounceMs: 500 } } }}
                 slots={{
-                    noRowsOverlay: () => <ErrorThrower
+                    noRowsOverlay: () => <IllustrationCard
                         title='No Orders'
                         message='There is error hapends when orders fetching'
                         disableHeight

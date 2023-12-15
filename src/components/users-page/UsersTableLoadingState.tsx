@@ -1,7 +1,12 @@
 import { Box, Skeleton, TableRow, TableCell } from '@mui/material';
 
+interface UsersTableLoadingStateProps {
+    itemsCount: number,
+    hideEmailState?: boolean,
+    addAnotherCell?: boolean
+}
 
-export default function UsersTableLoadingState({ itemsCount, hideEmailState }: { itemsCount: number, hideEmailState?: boolean }) {
+export default function UsersTableLoadingState({ itemsCount, hideEmailState, addAnotherCell }: UsersTableLoadingStateProps) {
     return (
         Array.from(Array(itemsCount)).map((_: undefined, index: number) => (
             <TableRow key={index}>
@@ -20,6 +25,12 @@ export default function UsersTableLoadingState({ itemsCount, hideEmailState }: {
                 <TableCell sx={{ height: "57.2px" }}>
                     <Skeleton variant="rounded" />
                 </TableCell>
+                {
+                    addAnotherCell &&
+                    <TableCell sx={{ height: "57.2px" }}>
+                        <Skeleton variant="rounded" />
+                    </TableCell>
+                }
             </TableRow>
         ))
     )

@@ -4,7 +4,7 @@ import { Box, Typography, Grid, Paper } from '@mui/material'
 import { LoadingButton } from '@mui/lab';
 import { CustomTextField, ErrorMessage, ImagesInputs } from './ProductsFormComponents';
 import useUpdateProduct from '../../hooks/useUpdateProduct';
-import { ActionAlert, ElementWithLoadingState, ErrorThrower } from '@abdulrhmangoni/am-store-library';
+import { ActionAlert, ElementWithLoadingState, IllustrationCard } from '@abdulrhmangoni/am-store-library';
 import pageSpaces from '../../CONSTANTS/pageSpaces';
 
 export default function EditProductForm({ productId }: { productId: string }) {
@@ -186,7 +186,7 @@ export default function EditProductForm({ productId }: { productId: string }) {
 
 function NotFound({ productId }: { productId: string }) {
     return (
-        <ErrorThrower
+        <IllustrationCard
             title='The Product Not Found'
             illustratorType="notFound"
             message={`There is no product with '${productId}' id`}
@@ -198,7 +198,7 @@ function NotFound({ productId }: { productId: string }) {
 
 function Unexpected() {
     return (
-        <ErrorThrower
+        <IllustrationCard
             title='There is error happends'
             illustratorType="unexpected"
             hideAlertMsg

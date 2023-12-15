@@ -59,7 +59,7 @@ export default function TopUsers() {
                             <TableBody>
                                 {
                                     isLoading ?
-                                        <UsersTableLoadingState itemsCount={5} hideEmailState /> :
+                                        <UsersTableLoadingState itemsCount={5} addAnotherCell hideEmailState /> :
                                         usersList?.length ?
                                             usersList.map(({ userData: { userName, userEmail, avatar }, totalOrders, totalSpending }, index: number) => (
                                                 <TableRow key={index}>

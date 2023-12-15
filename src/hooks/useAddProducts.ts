@@ -1,7 +1,6 @@
-import { submetEvent } from "../types/interfaces";
 import clearForm from "../functions/clearForm";
 import useFormValidationState from "./useFormValidationState";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import useNotifications, { updateTostProps } from "./useNotifications";
 import useAsyncActions from "./useProductsActions";
 import useProductImagesUploader from "./useProductImagesUploader";
@@ -35,7 +34,7 @@ export default function useAddProducts() {
             .finally(() => { setIsLoading(false) });
     }
 
-    function handleSubmit(event: submetEvent): void {
+    function handleSubmit(event: FormEvent<HTMLFormElement>): void {
         event.preventDefault();
         const theForm = new FormData(event.currentTarget);
         const formData = formValidation(theForm);

@@ -1,4 +1,4 @@
-import { ErrorThrower } from "@abdulrhmangoni/am-store-library";
+import { IllustrationCard } from "@abdulrhmangoni/am-store-library";
 import { Box, Button, useMediaQuery } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -7,7 +7,7 @@ export default function NotFoundPage() {
     const { pathname } = useLocation();
     const back = useNavigate();
     return (
-        <ErrorThrower
+        <IllustrationCard
             title="Not Found Page"
             alertType="info"
             message={`There is no page at this path '${pathname}'`}
@@ -17,6 +17,6 @@ export default function NotFoundPage() {
                 <Button size={media ? "small" : "large"} onClick={() => back(-1)} variant="contained">Back</Button>
                 <Button size={media ? "small" : "large"} variant="contained">Do Something</Button>
             </Box>
-        </ErrorThrower>
+        </IllustrationCard>
     )
 }

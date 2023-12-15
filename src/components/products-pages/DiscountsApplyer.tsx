@@ -7,7 +7,7 @@ import useNotifications from '../../hooks/useNotifications';
 
 interface DiscountsApplyerProps {
     productsIds: (string | number)[],
-    onDiscountApplyied?: () => void
+    onDiscountApplyied?: (discount: number) => void
 }
 export default function DiscountsApplyer({ productsIds, onDiscountApplyied }: DiscountsApplyerProps) {
 
@@ -24,8 +24,8 @@ export default function DiscountsApplyer({ productsIds, onDiscountApplyied }: Di
             setLoading(true)
             addDiscountToProducts(productsIds, +`0.${discountValue}`)
                 .then(() => {
+                    onDiscountApplyied?.(+`0.${discountValue}`)
                     setDiscount(0);
-                    onDiscountApplyied?.()
                     message("The Discount added successfully", "success")
                 })
                 .catch(() => { })
@@ -57,7 +57,7 @@ export default function DiscountsApplyer({ productsIds, onDiscountApplyied }: Di
                 aria-label="Apply the discount"
                 size='small'
                 type='submit'
-                variant='contained'
+                variant={discount > 0 ? 'contained' : 'outlined'}
                 sx={{ ml: 1 }}
                 loading={loading}
                 loadingPosition='start'

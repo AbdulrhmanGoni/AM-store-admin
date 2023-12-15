@@ -29,11 +29,16 @@ export default function useProductsActions() {
         return (await api.post(`${host_admin}/products/discounts`, { productsIds, discount })).data
     }
 
+    async function removeDiscountFromProducts(productsIds: (string | number)[]) {
+        return (await api.delete(`${host_admin}/products/discounts`, { data: { productsIds } })).data
+    }
+
     return {
         addNewProduct,
         updateProduct,
         getProduct,
         deleteProduct,
-        addDiscountToProducts
+        addDiscountToProducts,
+        removeDiscountFromProducts
     }
 }

@@ -3,7 +3,7 @@ import { DataGrid, GridPaginationModel, GridRowParams } from '@mui/x-data-grid';
 import columns from './ProductsGridColumnsConfig';
 import ToolBar from './ProducsTableToolbar';
 import Footer from './ProducsTableFooter';
-import { ErrorThrower } from '@abdulrhmangoni/am-store-library';
+import { IllustrationCard } from '@abdulrhmangoni/am-store-library';
 import useProductsTableLogic, { UpdateCelEvent } from '../../hooks/useProductsTableLogic';
 
 
@@ -52,7 +52,7 @@ export default function ProductsViewerTable() {
                 slots={{
                     toolbar: () => <ToolBar />,
                     footer: () => <Footer delelteFun={deleteProducs} selectedRows={selectedRows} tableApiRef={apiRef} />,
-                    noRowsOverlay: () => <ErrorThrower
+                    noRowsOverlay: () => <IllustrationCard
                         title='No Products'
                         message='There is error hapends when products fetching'
                         disableHeight

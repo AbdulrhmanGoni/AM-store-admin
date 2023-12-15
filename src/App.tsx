@@ -6,7 +6,7 @@ import { Box, Button, ThemeProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from 'react-toastify';
 import useAdminLogIn from "./hooks/useAdminLogIn";
-import { ErrorThrower, LoadingCircle, LoadingPage } from "@abdulrhmangoni/am-store-library";
+import { IllustrationCard, LoadingCircle, LoadingPage } from "@abdulrhmangoni/am-store-library";
 import { Outlet } from "react-router-dom";
 import { AdminData } from "./types/dataTypes";
 import useCustomTheme from "./hooks/useCustomTheme";
@@ -79,7 +79,7 @@ function AppContent() {
 
 function ServerError() {
   return (
-    <ErrorThrower
+    <IllustrationCard
       title="Server Error"
       illustratorType="server"
       message="There is unexpected error happends in our server"
@@ -90,7 +90,7 @@ function ServerError() {
 
 function NetworkError() {
   return (
-    <ErrorThrower
+    <IllustrationCard
       title="Network Error"
       illustratorType="network"
       message="There is problem in your network, please check your internet"
@@ -101,7 +101,7 @@ function NetworkError() {
 
 function BadRequest() {
   return (
-    <ErrorThrower
+    <IllustrationCard
       title="Bad Request"
       illustratorType="unexpected"
       message="This Error happends may because of your network or because the server recived unexpected input"
@@ -111,7 +111,7 @@ function BadRequest() {
 }
 function UnexpectedError() {
   return (
-    <ErrorThrower
+    <IllustrationCard
       title="Unexpected Error"
       illustratorType="unexpected"
       message="There is unexpected happends, refrech the page and try again"
@@ -122,12 +122,12 @@ function UnexpectedError() {
 
 function Unauthorized({ action }: { action: () => void }) {
   return (
-    <ErrorThrower
+    <IllustrationCard
       title="You are not authorized"
       illustratorType="unauthorized"
       hideAlertMsg fullPage
     >
       <Button onClick={action} variant="contained">log In</Button>
-    </ErrorThrower>
+    </IllustrationCard>
   )
 }
