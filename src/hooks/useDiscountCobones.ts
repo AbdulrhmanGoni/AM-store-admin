@@ -4,7 +4,8 @@ import { useQueryClient } from '@tanstack/react-query';
 export type CoboneType = {
     id: string,
     name: string,
-    value: number
+    value: number,
+    isNew?: boolean
 }
 
 export default function useDiscountCobones() {

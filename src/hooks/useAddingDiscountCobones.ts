@@ -51,7 +51,7 @@ export default function useAddingDiscountCobones() {
             setLoading(true);
             addDiscountCobone(payload)
                 .then((coboneId) => {
-                    addCobone({ ...payload, id: coboneId })
+                    addCobone({ ...payload, id: coboneId, isNew: true })
                     setError("");
                     clearInput();
                     message("The cobone added successfully", "success");

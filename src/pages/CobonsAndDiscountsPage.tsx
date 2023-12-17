@@ -14,6 +14,11 @@ export default function CobonsAndDiscountsPage() {
     const { cobones, isLoading, isError, refetch } = useDiscountCobones();
     const [openAddCoboneField, setOpenAddCoboneField] = useState<boolean>(false);
 
+    function toggleAddCoboneField() {
+        if (openAddCoboneField) setOpenAddCoboneField(false)
+        else setOpenAddCoboneField(true)
+    }
+
     return (
         <Container maxWidth="md" sx={{ px: 1 }}>
             <PageTitle
@@ -23,8 +28,15 @@ export default function CobonsAndDiscountsPage() {
             <Box className="flex-row-center-end" sx={{ my: 4 }}>
                 <Button
                     variant="contained"
-                    onClick={() => { !openAddCoboneField && setOpenAddCoboneField(true) }}
-                    startIcon={<Add />}
+                    onClick={toggleAddCoboneField}
+                    startIcon={
+                        <Add
+                            sx={{
+                                transition: ".3s",
+                                transform: openAddCoboneField ? "rotate(-45deg)" : "rotate(0deg)"
+                            }}
+                        />
+                    }
                 >
                     Add Cobone
                 </Button>
@@ -57,7 +69,7 @@ export default function CobonsAndDiscountsPage() {
                         )
                             : cobones ?
                                 cobones.length ?
-                                    cobones.map((cobone) => (<CoboneCard key={cobone.id} cobone={cobone} />))
+                                    cobones.map((cobone) => <CoboneCard key={cobone.id} cobone={cobone} />)
                                     : <Alert severity="info">No Discount Copones</Alert>
                                 : null
                 }
