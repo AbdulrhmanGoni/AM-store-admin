@@ -18,25 +18,34 @@ const defaultStatistics = {
 
 export default function useOrdersPageContent() {
 
-    const { monthesData, year } = useMonthlySalesStatistics();
+    const {
+        monthesData,
+        year,
+        isLoading: chartDataLoading,
+        isError: chartDataError,
+        refetch: refetchChartData
+    } = useMonthlySalesStatistics();
     const {
         data: ordersStatistics = defaultStatistics,
-        isLoading: statisticsAreLoading
+        isFetching: statisticsAreLoading
     } = useGetApi<OrdersStatisticsType>({
         path: `statistics?get=orders-statistics&year=${year}`,
         key: ["orders-statistics", year]
     });
 
-    const dataChart: number[] = monthesData?.map((doc: MonthSalesStatistics) => {
+    const chartData: number[] = monthesData?.map((doc: MonthSalesStatistics) => {
         const randomNimber = faker.number.float({ precision: 1, max: 50, min: 30 });
         const orders = doc.totalOrders ? doc.totalOrders : randomNimber;
         return orders;
     }) ?? [0]
 
     return {
-        dataChart,
+        chartData,
         year,
         ordersStatistics,
-        statisticsAreLoading
+        statisticsAreLoading,
+        chartDataLoading,
+        chartDataError,
+        refetchChartData
     }
 }

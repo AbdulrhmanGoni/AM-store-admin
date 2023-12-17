@@ -1,7 +1,7 @@
 import Chart from "react-apexcharts";
 import ApexchartsContainer from "../ApexchartsContainer";
-import { Typography, useTheme } from "@mui/material";
-import { PromiseState, nDecorator } from "@abdulrhmangoni/am-store-library";
+import { Skeleton, Typography, useTheme } from "@mui/material";
+import { FetchFailedAlert, PromiseState, nDecorator } from "@abdulrhmangoni/am-store-library";
 import { ApexOptions } from "apexcharts";
 import Icon from "../SvgIcon";
 import { averageOrdersIcon } from "../svgIconsAsString";
@@ -11,10 +11,11 @@ import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
 interface OrdersStatisticsChartProps extends PromiseState {
     data: number[],
     year: number,
-    totalOrders?: number
+    totalOrders?: number,
+    refetch?: () => void
 }
 
-export default function OrdersStatisticsChart({ data, year }: OrdersStatisticsChartProps) {
+export default function OrdersStatisticsChart({ data, year, isLoading, isError, refetch }: OrdersStatisticsChartProps) {
 
     const { palette: { mode, primary } } = useTheme();
 
@@ -64,7 +65,17 @@ export default function OrdersStatisticsChart({ data, year }: OrdersStatisticsCh
                 icon={<Icon svgElementAsString={averageOrdersIcon} />}
                 endItem={<Typography variant="h6">{year}</Typography>}
             />
-            <Chart options={options} series={series} type="bar" height={285} />
+            {
+                isLoading ? <Skeleton variant="rounded" height={CHART_HEIGHT} />
+                    : isError ? <FetchFailedAlert
+                        height={`${CHART_HEIGHT}px`}
+                        message="Failed to fetch the data"
+                        refetch={refetch}
+                    />
+                        : <Chart options={options} series={series} type="bar" height={CHART_HEIGHT} />
+            }
         </ApexchartsContainer>
     )
-} 
+}
+
+const CHART_HEIGHT = 285

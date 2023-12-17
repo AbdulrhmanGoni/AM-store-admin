@@ -19,6 +19,7 @@ export interface UseMonthlySalesStatisticsType extends PromiseState {
     monthesData?: MonthSalesStatistics[],
     year: number,
     setYear: (year: number) => void
+    refetch: () => void
 }
 export default function useMonthlySalesStatistics(): UseMonthlySalesStatisticsType {
 
@@ -28,7 +29,8 @@ export default function useMonthlySalesStatistics(): UseMonthlySalesStatisticsTy
     const {
         data,
         isError,
-        isLoading
+        isFetching: isLoading,
+        refetch
     } = useGetApi<reaponseType>({ key: [query, year], path });
 
     return {
@@ -36,6 +38,7 @@ export default function useMonthlySalesStatistics(): UseMonthlySalesStatisticsTy
         year: data?.year ?? year,
         setYear,
         isLoading,
-        isError
+        isError,
+        refetch
     }
 }

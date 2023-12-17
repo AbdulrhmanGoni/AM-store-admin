@@ -1,6 +1,6 @@
-import { Typography, useTheme } from "@mui/material";
+import { Skeleton, Typography, useTheme } from "@mui/material";
 import Chart from "react-apexcharts";
-import { nDecorator } from "@abdulrhmangoni/am-store-library";
+import { FetchFailedAlert, nDecorator } from "@abdulrhmangoni/am-store-library";
 import ApexchartsContainer from "../ApexchartsContainer";
 import { faker } from "@faker-js/faker";
 import { ApexOptions } from "apexcharts";
@@ -11,7 +11,7 @@ import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
 
 export default function MonthlyEarningsChart() {
 
-    const { monthesData, year } = useMonthlySalesStatistics();
+    const { monthesData, year, isLoading, isError, refetch } = useMonthlySalesStatistics();
 
     const { palette: { mode, primary } } = useTheme();
     const options: ApexOptions = {
@@ -68,7 +68,17 @@ export default function MonthlyEarningsChart() {
                 icon={<img src="/icons/line-chart.svg" />}
                 endItem={<Typography variant="h6">{year}</Typography>}
             />
-            <Chart options={options} series={series} type="area" height={285} />
+            {
+                isLoading ? <Skeleton variant="rounded" height={CHART_HEIGHT} />
+                    : isError ? <FetchFailedAlert
+                        height={`${CHART_HEIGHT}px`}
+                        message="Failed to fetch the data"
+                        refetch={refetch}
+                    />
+                        : <Chart options={options} series={series} type="area" height={CHART_HEIGHT} />
+            }
         </ApexchartsContainer>
     )
 }
+
+const CHART_HEIGHT = 285

@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@abdulrhmangoni/am-store-library": "^1.6.8",
+    "@abdulrhmangoni/am-store-library": "^1.6.9",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@faker-js/faker": "^8.2.0",

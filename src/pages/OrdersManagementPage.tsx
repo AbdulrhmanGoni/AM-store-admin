@@ -16,23 +16,26 @@ import useOrdersPageContent from "../hooks/useOrdersPageContent";
 export default function OrdersManagementPage() {
 
     const {
-        dataChart,
+        chartData,
         year,
         ordersStatistics,
-        statisticsAreLoading
+        statisticsAreLoading,
+        chartDataLoading,
+        chartDataError,
+        refetchChartData
     } = useOrdersPageContent();
 
     const {
         totalOrders,
-        canceledOrders, 
-        completedOrders, 
+        canceledOrders,
+        completedOrders,
         pendingOrders
     } = ordersStatistics;
 
     const infoBoxStyle = { width: "100%", height: "100%", p: 2 };
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: pageSpaces }}>
+        <Box className="flex-column" gap={pageSpaces}>
             <PageTitle
                 title="Orders Management"
                 description="View statistics, View latest orders, Search for orders"
@@ -88,7 +91,7 @@ export default function OrdersManagementPage() {
                 <Grid item xs={12} md={5.5} lg={4}>
                     <CardInfoWithChart
                         isLoading={statisticsAreLoading}
-                        theChart={<SmalBar data={dataChart} width={170} />}
+                        theChart={<SmalBar data={chartData} width={170} />}
                         icon={<SvgIcon svgElementAsString={averageOrdersIcon} />}
                         title="Avarage Orders"
                         mainValue={`${Math.floor(totalOrders / 12)} Orders`}
@@ -97,7 +100,13 @@ export default function OrdersManagementPage() {
                 </Grid>
                 <Grid item xs={12} md={6.5} lg={8}>
                     <Box sx={{ width: "100%" }}>
-                        <OrdersStatisticsChart year={year} data={dataChart} />
+                        <OrdersStatisticsChart
+                            isLoading={chartDataLoading}
+                            isError={chartDataError}
+                            refetch={refetchChartData}
+                            year={year}
+                            data={chartData}
+                        />
                     </Box>
                 </Grid>
             </Grid>
