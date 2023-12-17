@@ -2,6 +2,7 @@ import {
     AddBusiness,
     AnalyticsOutlined,
     AnalyticsSharp,
+    Discount,
     EditAttributes,
     Email, Groups, Inbox, Store
 } from "@mui/icons-material";
@@ -47,6 +48,11 @@ const drawerLinks: LinkProps[] = [
                 text: "Edit Product",
                 icon: <EditAttributes />
             },
+            {
+                path: "cobones-and-discounts",
+                text: "Cobones & Discount",
+                icon: <Discount />
+            }
         ]
     },
     {

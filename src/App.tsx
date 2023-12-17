@@ -109,6 +109,7 @@ function BadRequest() {
     />
   )
 }
+
 function UnexpectedError() {
   return (
     <IllustrationCard

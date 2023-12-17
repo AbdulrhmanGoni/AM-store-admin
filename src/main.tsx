@@ -19,6 +19,7 @@ import ProductsStatisticsPage from './pages/ProductsStatisticsPage.tsx';
 import UsersPage from './pages/UsersPage.tsx';
 import EmailsPage from './pages/EmailsPage.tsx';
 import NotFoundPage from './pages/NotFoundPage.tsx';
+import CobonsAndDiscountsPage from './pages/CobonsAndDiscountsPage.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
         <Route path='products-statistics' element={<ProductsStatisticsPage />} />
         <Route path='add-products' element={<AddProductsPage />} />
         <Route path='edit-product/:productId?' element={<EditProductPage />} />
+        <Route path='cobones-and-discounts' element={<CobonsAndDiscountsPage />} />
       </Route>
       <Route path='users' element={<UsersPage />} />
       <Route path='emails' element={<EmailsPage />} />

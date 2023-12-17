@@ -43,7 +43,6 @@ export default function useLogInLogic() {
     }
 
     function logInWithGoogle(googleUserCredentials: GoogleUserCredentials) {
-        console.log(googleUserCredentials)
         apiRequest(
             "google-auth", { googleUserCredentials },
             (response: requestResponse) => {

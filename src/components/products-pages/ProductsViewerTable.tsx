@@ -52,13 +52,15 @@ export default function ProductsViewerTable() {
                 slots={{
                     toolbar: () => <ToolBar />,
                     footer: () => <Footer delelteFun={deleteProducs} selectedRows={selectedRows} tableApiRef={apiRef} />,
-                    noRowsOverlay: () => <IllustrationCard
-                        title='No Products'
-                        message='There is error hapends when products fetching'
-                        disableHeight
-                        illustratorType="empty"
-                        style={{ height: "100%" }}
-                    />,
+                    noRowsOverlay: () => (
+                        <IllustrationCard
+                            title='No Products'
+                            message='There is error hapends when products fetching'
+                            disableHeight
+                            illustratorType="empty"
+                            style={{ height: "100%" }}
+                        />
+                    ),
                     loadingOverlay: LinearProgress,
                 }}
             />
