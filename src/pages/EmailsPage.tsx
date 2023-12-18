@@ -1,10 +1,11 @@
-import { Container, Typography } from "@mui/material";
+import { P } from "@abdulrhmangoni/am-store-library";
+import { Container } from "@mui/material";
 
 
 export default function EmailsPage() {
     return (
         <Container maxWidth="md">
-            <Typography margin="0px auto" variant="h1">Emails Page</Typography>
+            <P margin="0px auto" variant="h1">Emails Page</P>
         </Container>
     )
 }

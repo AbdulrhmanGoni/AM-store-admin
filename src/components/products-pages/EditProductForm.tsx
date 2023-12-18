@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { LiveTv, Subtitles, AllInbox, AttachMoney, Class, Save } from '@mui/icons-material'
-import { Box, Typography, Grid, Paper } from '@mui/material'
+import { Box, Grid, Paper } from '@mui/material'
 import { LoadingButton } from '@mui/lab';
 import { CustomTextField, ErrorMessage, ImagesInputs } from './ProductsFormComponents';
 import useUpdateProduct from '../../hooks/useUpdateProduct';
@@ -46,9 +46,9 @@ export default function EditProductForm({ productId }: { productId: string }) {
             >
                 <ElementWithLoadingState height={24} width={280} isLoading={isLoading}
                     element={
-                        <Typography sx={{ pb: pageSpaces }} variant='subtitle1'>
+                        <P sx={{ pb: pageSpaces }} variant='subtitle1'>
                             Editing "{productId}"
-                        </Typography>
+                        </P>
                     }
                 />
                 <Grid container spacing={pageSpaces}>

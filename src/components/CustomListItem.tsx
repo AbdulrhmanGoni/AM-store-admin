@@ -1,9 +1,9 @@
+import { P } from "@abdulrhmangoni/am-store-library";
 import { ExpandMore } from "@mui/icons-material";
 import {
     Accordion, AccordionDetails, AccordionSummary,
-    Avatar, Box, Button, Chip, ListItem,
-    SxProps,
-    Typography, capitalize
+    Avatar, Box, Button, Chip,
+    ListItem, SxProps, capitalize
 } from "@mui/material";
 
 export default function CustomListItem(props: {
@@ -26,21 +26,21 @@ export default function CustomListItem(props: {
     return (
         <ListItem sx={{ p: 0, borderRadius: 1 }} >
             <Accordion
-                sx={{ 
-                    bgcolor: "background.default", 
+                sx={{
+                    bgcolor: "background.default",
                     width: "100%",
                     backgroundImage: "none"
                 }}
-                
+
             >
                 <AccordionSummary
                     expandIcon={<ExpandMore />}
                     id={id}
                     sx={{
                         gap: 1, p: "0px 8px",
-                        "& .css-o4b71y-MuiAccordionSummary-content": { 
-                            alignItems: "center", 
-                            m: "8px 0px" 
+                        "& .css-o4b71y-MuiAccordionSummary-content": {
+                            alignItems: "center",
+                            m: "8px 0px"
                         }
                     }}
                 >
@@ -48,11 +48,11 @@ export default function CustomListItem(props: {
                         {title[0]}
                     </Avatar>
                     <Box>
-                        <Typography variant='subtitle1'>
+                        <P variant='subtitle1'>
                             {title}
                             {note && <Chip size="small" sx={{ fontSize: "12px", ml: 1 }} label={note} />}
-                        </Typography>
-                        <Typography variant='body2'>{subTitle}</Typography>
+                        </P>
+                        <P variant='body2'>{subTitle}</P>
                     </Box>
                     <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
                         {onRightElement}
@@ -76,22 +76,22 @@ export default function CustomListItem(props: {
 }
 
 interface DisplyProductDetailsProps {
-    price: number | string, 
-    category: string, 
+    price: number | string,
+    category: string,
     description: string
 }
 export const DisplyProductDetails = ({ price, category, description }: DisplyProductDetailsProps) => {
     return (
         <Box>
-            <Typography sx={{ display: "inline", mr: 1 }} variant='subtitle1'>
+            <P sx={{ display: "inline", mr: 1 }} variant='subtitle1'>
                 ${price}
-            </Typography>
-            <Typography sx={{ display: "inline" }} variant='subtitle1'>
+            </P>
+            <P sx={{ display: "inline" }} variant='subtitle1'>
                 {capitalize(category)}
-            </Typography>
-            <Typography variant='body1'>
+            </P>
+            <P variant='body1'>
                 {description}
-            </Typography>
+            </P>
         </Box>
     )
 }

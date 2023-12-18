@@ -1,6 +1,6 @@
-import { Typography, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import Chart from "react-apexcharts";
-import { nDecorator } from "@abdulrhmangoni/am-store-library";
+import { P, nDecorator } from "@abdulrhmangoni/am-store-library";
 import ApexchartsContainer from "../ApexchartsContainer";
 import { ApexOptions } from "apexcharts";
 import ChartTitle from "../ChartTitle";
@@ -39,7 +39,7 @@ export default function CategoriesMonthlyEarnings() {
                 title="Categories Monthly Earnings"
                 disableIconColor
                 icon={<Icon disableIconColor svgElementAsString={lineChartIcon} />}
-                endItem={<Typography variant="h6">{year}</Typography>}
+                endItem={<P variant="h6">{year}</P>}
             />
             <Chart options={options} series={earningsChartData} type="area" height={280} />
         </ApexchartsContainer>

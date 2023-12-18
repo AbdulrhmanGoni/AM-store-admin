@@ -1,7 +1,8 @@
-import { Box, Paper, Skeleton, Typography } from '@mui/material'
+import { Box, Paper, Skeleton } from '@mui/material'
 import SmallIconBox from './SmallIconBox'
 import { CSSProperties } from '@mui/material/styles/createMixins'
 import { PromiseState } from '../types/interfaces'
+import { P } from '@abdulrhmangoni/am-store-library'
 
 interface DisplayInfoBoxProps extends PromiseState {
     title: string
@@ -55,8 +56,8 @@ export default function DisplayInfoBox(props: DisplayInfoBoxProps) {
                         </>
                         :
                         <>
-                            <Typography variant="h6">{title}</Typography>
-                            <Typography color={bodyColor} variant="h5">{body}</Typography>
+                            <P variant="h6">{title}</P>
+                            <P color={bodyColor} variant="h5">{body}</P>
                         </>
                 }
             </Box>

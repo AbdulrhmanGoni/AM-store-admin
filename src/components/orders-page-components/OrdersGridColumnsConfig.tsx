@@ -1,7 +1,7 @@
 import { JSX } from 'react';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { nDecorator, timeAgo } from "@abdulrhmangoni/am-store-library";
-import { Avatar, Box, Chip, Tooltip, Typography, IconButton } from '@mui/material';
+import { nDecorator, timeAgo, P } from "@abdulrhmangoni/am-store-library";
+import { Avatar, Box, Chip, Tooltip, IconButton } from '@mui/material';
 import SimplePopper from '../SimplePopper';
 import { CopyAll } from '@mui/icons-material';
 
@@ -38,38 +38,38 @@ function renderIdCell(params: GridRenderCellParams) {
                     <CopyAll sx={{ cursor: "copy" }} />
                 </IconButton>
             </SimplePopper>
-            <Typography variant='body2'>{id}</Typography>
+            <P variant='body2'>{id}</P>
         </Box>
     )
 }
 function renderProductsCell(params: GridRenderCellParams) {
     const count = params.row.products.length
-    return <Typography variant='body2'>{count === 1 ? "One product" : count + " Products"}</Typography>
+    return <P variant='body2'>{count === 1 ? "One product" : count + " Products"}</P>
 }
 function renderTotalCell(params: GridRenderCellParams) {
     const total: number = params.row.totalPrice
-    return <Typography variant='body2'>${(nDecorator(total.toFixed(2)))}</Typography>
+    return <P variant='body2'>${(nDecorator(total.toFixed(2)))}</P>
 }
 function renderDeleviryCell(params: GridRenderCellParams) {
     const value = params.row.deliveryPrice
     const isFreeDelivery = value == 0
     const renderValue = isFreeDelivery ? "Free" : "$" + value
-    return <Typography
+    return <P
         sx={{ color: isFreeDelivery ? "success.main" : undefined }}
         variant='body2'>
         {renderValue}
-    </Typography>
+    </P>
 }
 function renderUserEmailCell(params: GridRenderCellParams) {
-    return <Typography variant='body2'>{params.row.userData.userEmail}</Typography>
+    return <P variant='body2'>{params.row.userData.userEmail}</P>
 }
 function renderDateCell(params: GridRenderCellParams) {
     const date = params.row.createdAt;
     return (
         <Tooltip title={date}>
             <Box>
-                <Typography variant='body2'>{timeAgo(date)}</Typography>
-                <Typography variant='body2'>{date.slice(0, 19)}</Typography>
+                <P variant='body2'>{timeAgo(date)}</P>
+                <P variant='body2'>{date.slice(0, 19)}</P>
             </Box>
         </Tooltip>
     )

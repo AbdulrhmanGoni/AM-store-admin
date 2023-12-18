@@ -1,6 +1,6 @@
-import { Skeleton, Typography, useTheme } from "@mui/material";
+import { Skeleton, useTheme } from "@mui/material";
 import Chart from "react-apexcharts";
-import { FetchFailedAlert, nDecorator } from "@abdulrhmangoni/am-store-library";
+import { FetchFailedAlert, nDecorator, P } from "@abdulrhmangoni/am-store-library";
 import ApexchartsContainer from "../ApexchartsContainer";
 import { faker } from "@faker-js/faker";
 import { ApexOptions } from "apexcharts";
@@ -66,7 +66,7 @@ export default function MonthlyEarningsChart() {
             <ChartTitle
                 title="Monthly Earnings"
                 icon={<img src="/icons/line-chart.svg" />}
-                endItem={<Typography variant="h6">{year}</Typography>}
+                endItem={<P variant="h6">{year}</P>}
             />
             {
                 isLoading ? <Skeleton variant="rounded" height={CHART_HEIGHT} />

@@ -1,5 +1,5 @@
 import { useEffect, useState, JSX } from "react"
-import { Card, Typography, Box, IconButton, Rating, Button, ThemeProvider, Theme } from "@mui/material"
+import { Card, Box, IconButton, Rating, Button, ThemeProvider, Theme } from "@mui/material"
 import { productData } from "../types/dataTypes"
 import { Close, Delete, Edit, Remove } from "@mui/icons-material"
 import {
@@ -12,7 +12,7 @@ import {
     PriceDisplayer,
     AlertTooltip,
     loadingControl,
-
+    P
 } from "@abdulrhmangoni/am-store-library"
 import useProductsActions from "../hooks/useProductsActions"
 import { CSSProperties } from "@mui/material/styles/createMixins"
@@ -99,12 +99,12 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
                             />
                             <Box className="flex-column" sx={infoSectionStyle}>
                                 <ElementWithLoadingState isLoading={isLoading} height={40} width={300}
-                                    element={<Typography variant="h6">{title}</Typography>}
+                                    element={<P variant="h6">{title}</P>}
                                 />
                                 <ElementWithLoadingState isLoading={isLoading} height={30} width={150}
                                     element={
                                         <Box className="flex-row a-end gap1">
-                                            <Typography fontWeight="bold">Price:</Typography>
+                                            <P fontWeight="bold">Price:</P>
                                             <PriceDisplayer price={price || 0} discount={productDiscount} />
                                             {
                                                 !!productDiscount &&
@@ -128,16 +128,16 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
                                 <ElementWithLoadingState isLoading={isLoading} height={25} width={250}
                                     element={
                                         <Box className="flex-row-center-start gap1">
-                                            <Typography fontWeight="bold">Series:</Typography>
-                                            <Typography>{series}</Typography>
+                                            <P fontWeight="bold">Series:</P>
+                                            <P>{series}</P>
                                         </Box>
                                     }
                                 />
                                 <ElementWithLoadingState isLoading={isLoading} height={27} width={100}
                                     element={
                                         <Box className="flex-row-center-start gap1">
-                                            <Typography fontWeight="bold">Sold:</Typography>
-                                            <Typography>{sold} times</Typography>
+                                            <P fontWeight="bold">Sold:</P>
+                                            <P>{sold} times</P>
                                         </Box>
                                     }
                                 />
@@ -145,15 +145,15 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
                                     element={
                                         earnings ?
                                             <Box className="flex-row-center-start" gap={.5}>
-                                                <Typography variant="subtitle1">This product achieves</Typography>
-                                                <Typography color="success.main" variant="subtitle1">
+                                                <P variant="subtitle1">This product achieves</P>
+                                                <P color="success.main" variant="subtitle1">
                                                     ${nDecorator(earnings?.toFixed(2))}
-                                                </Typography>
-                                                <Typography variant="subtitle1">of earnings</Typography>
+                                                </P>
+                                                <P variant="subtitle1">of earnings</P>
                                             </Box>
-                                            : <Typography variant="subtitle1">
+                                            : <P variant="subtitle1">
                                                 This product has not been sold before
-                                            </Typography>
+                                            </P>
                                     }
                                 />
                                 <ElementWithLoadingState isLoading={isLoading} height={30} width={170}
@@ -163,12 +163,12 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
                                                 value={3} precision={.5} readOnly
                                                 sx={{ ".MuiRating-iconEmpty": { color: "text.primary" } }}
                                             />
-                                            <Typography variant="body2">(18) Rivews</Typography>
+                                            <P variant="body2">(18) Rivews</P>
                                         </Box>
                                     }
                                 />
                                 <ElementWithLoadingState isLoading={isLoading} height={100}
-                                    element={<Typography variant="body1">{description}</Typography>}
+                                    element={<P variant="body1">{description}</P>}
                                 />
                                 <ElementWithLoadingState isLoading={isLoading} height={100}
                                     element={

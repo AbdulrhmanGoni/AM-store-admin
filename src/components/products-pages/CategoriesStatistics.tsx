@@ -1,7 +1,6 @@
 import { Alert, Box, Paper } from "@mui/material";
-import { nDecorator } from "@abdulrhmangoni/am-store-library";
+import { P, nDecorator } from "@abdulrhmangoni/am-store-library";
 import { SmalDonut } from "../SmallChart";
-import P from "../P";
 import useCategoriesStatistics, { CategoryStatistics } from "../../hooks/useCategoriesStatistics";
 import randomColorsArr from "../../CONSTANTS/randomColorsArr";
 import useBreakPoints from "../../hooks/useBreakPoints";

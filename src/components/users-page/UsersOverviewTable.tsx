@@ -1,6 +1,6 @@
 import {
     Table, Paper, TableRow, TableHead, TableContainer,
-    TableBody, Box, Typography, TableCell
+    TableBody, Box, TableCell
 } from '@mui/material';
 import useUsersOverview from '../../hooks/useUsersOverview';
 import UsersTableLoadingState from './UsersTableLoadingState';
@@ -8,6 +8,7 @@ import ErrorUsersTable from './ErrorUsersTable';
 import TableNavigationButton from './TableNavigationButton';
 import EmailCellIcon from './EmailCellIcon';
 import AvatarCell from './AvatarCell';
+import { P } from '@abdulrhmangoni/am-store-library';
 
 
 export default function UsersOverviewTable() {
@@ -47,10 +48,10 @@ export default function UsersOverviewTable() {
                                                     <AvatarCell avatar={avatar} />
                                                     <TableCell>{userName}</TableCell>
                                                     <TableCell>
-                                                        <Typography variant='body2' className='flex-row-center-start'>
+                                                        <P variant='body2' className='flex-row-center-start'>
                                                             <EmailCellIcon isVerified={hisEmailVerified} />
                                                             {userEmail}
-                                                        </Typography>
+                                                        </P>
                                                     </TableCell>
                                                     <TableCell>{userOrders}</TableCell>
                                                 </TableRow>
@@ -65,7 +66,7 @@ export default function UsersOverviewTable() {
                 className="flex-row-center-end"
                 sx={{ p: 1.5, gap: 1.5 }}
             >
-                <Typography>Page: {page}</Typography>
+                <P>Page: {page}</P>
                 <TableNavigationButton {...{ isThereNextPage, page, navigate }} direction='previous' />
                 <TableNavigationButton {...{ isThereNextPage, page, navigate, isLoading }} direction='next' />
             </Box>

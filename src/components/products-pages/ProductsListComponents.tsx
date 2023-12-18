@@ -1,12 +1,12 @@
 import {
     Alert, List,
-    ListItem, Typography,
+    ListItem,
     alpha, useTheme, Box, Skeleton
 } from '@mui/material'
 import useProductsDisplayer from '../../hooks/useProductsDisplayer'
 import CustomListItem, { DisplyProductDetails } from '../CustomListItem'
 import SmallIconBox from '../SmallIconBox'
-import { PromiseState } from '@abdulrhmangoni/am-store-library'
+import { PromiseState, P } from '@abdulrhmangoni/am-store-library'
 import { ProductData } from '../../hooks/useProductsStatisticsPageContent'
 
 
@@ -68,7 +68,7 @@ export function ListTitle({ title, subTitle, color, icon }: ListTitleProps) {
     return (
         <Box sx={{ width: "100%", p: "0px 10px 10px" }}>
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: 1 }}>
-                <Typography variant="h6">{title}</Typography>
+                <P variant="h6">{title}</P>
                 <SmallIconBox
                     icon={icon}
                     color={color}
@@ -76,7 +76,7 @@ export function ListTitle({ title, subTitle, color, icon }: ListTitleProps) {
                     boxStyle={{ p: "2px" }}
                 />
             </Box>
-            <Typography variant="body2">{subTitle}</Typography>
+            <P variant="body2">{subTitle}</P>
         </Box >
     )
 }

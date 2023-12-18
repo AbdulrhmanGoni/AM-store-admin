@@ -1,10 +1,10 @@
-import { Typography, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import Chart from "react-apexcharts";
 import ApexchartsContainer from "../ApexchartsContainer";
 import { ApexOptions } from "apexcharts";
 import ChartTitle from "../ChartTitle";
 import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
-import { nDecorator } from "@abdulrhmangoni/am-store-library";
+import { nDecorator, P } from "@abdulrhmangoni/am-store-library";
 import useMonthlyCategoriesStatistics from "../../hooks/useMonthlyCategoriesStatistics";
 
 
@@ -45,7 +45,7 @@ export default function CategoriesMonthlySales() {
                 title="Categories Monthly Sales"
                 disableIconColor
                 icon={<img src="/icons/bar-chart.svg" />}
-                endItem={<Typography variant="h6">{year}</Typography>}
+                endItem={<P variant="h6">{year}</P>}
             />
             <Chart options={options} series={salesChartData} type="bar" height={280} />
         </ApexchartsContainer>

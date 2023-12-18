@@ -1,7 +1,7 @@
 import { JSX } from "react";
-import { Box, Paper, SxProps, Typography } from "@mui/material";
+import { Box, Paper, SxProps } from "@mui/material";
 import SmallIconBox from "./SmallIconBox";
-import { ElementWithLoadingState, PromiseState } from "@abdulrhmangoni/am-store-library";
+import { ElementWithLoadingState, PromiseState, P } from "@abdulrhmangoni/am-store-library";
 
 interface CardInfoWithChartProps extends PromiseState {
     title: string,
@@ -47,7 +47,7 @@ export default function CardInfoWithChart(props: CardInfoWithChartProps) {
                 height={24}
                 width={200}
                 isLoading={isLoading}
-                element={<Typography variant="h6">{title}</Typography>}
+                element={<P variant="h6">{title}</P>}
             />
             <Box className="flex-column-center" sx={{ mb: 2, gap: 1 }}>
                 <ElementWithLoadingState
@@ -55,19 +55,19 @@ export default function CardInfoWithChart(props: CardInfoWithChartProps) {
                     width={175}
                     isLoading={isLoading}
                     element={
-                        <Typography
+                        <P
                             variant="body1"
                             sx={{ fontSize: "1.7rem", color: "success.main" }}
                         >
                             {mainValue}
-                        </Typography>
+                        </P>
                     }
                 />
                 <ElementWithLoadingState
                     height={20}
                     isLoading={isLoading}
                     width={150}
-                    element={<Typography variant="body1">{description}</Typography>}
+                    element={<P variant="body1">{description}</P>}
                 />
             </Box>
             <ElementWithLoadingState

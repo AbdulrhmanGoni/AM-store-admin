@@ -1,7 +1,8 @@
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { JSX } from 'react'
 import SmallIconBox from './SmallIconBox'
 import { CSSProperties } from '@mui/material/styles/createMixins'
+import { P } from '@abdulrhmangoni/am-store-library'
 
 type ChartTitleProps = {
     icon: JSX.Element,
@@ -30,12 +31,12 @@ export default function ChartTitle(props: ChartTitleProps) {
                 disableIconColor={disableIconColor}
                 icon={icon}
             />
-            <Typography
+            <P
                 variant="h6"
                 sx={{ fontSize: `${titleSize ?? "1.25rm"}`, flex: 1 }}
             >
                 {title}
-            </Typography>
+            </P>
             {endItem}
         </Box>
     )

@@ -2,11 +2,11 @@ import CustomChartBox from "../CustomChartBox";
 import SvgIcon from "../SvgIcon";
 import { averageOrdersIcon } from "../svgIconsAsString";
 import { SmalBar } from "../SmallChart";
-import { Box, Typography } from "@mui/material";
-import { PromiseState } from "@abdulrhmangoni/am-store-library";
+import { Box } from "@mui/material";
+import { PromiseState, P } from "@abdulrhmangoni/am-store-library";
 
-interface AverageOrdersProps extends PromiseState { 
-    data: number[], 
+interface AverageOrdersProps extends PromiseState {
+    data: number[],
     totalOrders: number,
 }
 export default function AverageOrders({ data, isLoading, isError, totalOrders }: AverageOrdersProps) {
@@ -17,7 +17,7 @@ export default function AverageOrders({ data, isLoading, isError, totalOrders }:
             smallChart={<SmalBar data={data} />}
             customMainValue={
                 <Box>
-                    <Typography
+                    <P
                         variant="h6"
                         sx={{
                             fontSize: "1.7rem",
@@ -25,8 +25,8 @@ export default function AverageOrders({ data, isLoading, isError, totalOrders }:
                         }}
                     >
                         {Math.floor(totalOrders / data?.length)} Orders
-                    </Typography>
-                    <Typography variant="body1">Per month</Typography>
+                    </P>
+                    <P variant="body1">Per month</P>
                 </Box>
             }
             isLoading={isLoading}
