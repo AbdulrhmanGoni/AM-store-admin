@@ -1,24 +1,36 @@
 import calculatePercentage from '../functions/calculatePercentage'
 import { LinearProgress, CircularProgress, Typography, Box, SxProps } from '@mui/material'
-import { Done, NorthEast } from '@mui/icons-material';
+import { Close, Done, NorthEast } from '@mui/icons-material';
 import { nDecorator } from '@abdulrhmangoni/am-store-library';
 
 
 interface TargetProgressProps {
     target: number,
     value: number,
-    progressStyle?: SxProps
+    timeout: boolean,
+    progressLineStyle?: SxProps
 }
 
-export function TargetProgressLine({ target, value, progressStyle }: TargetProgressProps) {
-    const achivedPercentage = calculatePercentage(target, value)
-    const percentage = achivedPercentage ? achivedPercentage : 0
-    const isCompleted = percentage >= 100
+export function TargetProgressLine({ target, value, progressLineStyle, timeout }: TargetProgressProps) {
+    const achivedPercentage = calculatePercentage(target, value);
+    const percentage = achivedPercentage ? achivedPercentage : 0;
+    const isCompleted = percentage >= 100;
+
     return (
         <Box>
             <Box className="flex-row-center-between">
-                <Typography variant='h6' fontSize="16px">
-                    Current Earnings: ${nDecorator(value?.toFixed(2))}
+                <Typography
+                    variant='h6'
+                    fontSize="16px"
+                >
+                    {timeout ? "Month" : "Current"} Earnings:
+                    <Typography
+                        component="span"
+                        color={isCompleted ? "success.main" : timeout ? "error.main" : "text.primary"}
+                        ml={.5}
+                    >
+                        ${nDecorator(value?.toFixed(2))}
+                    </Typography>
                 </Typography>
                 <Typography variant='body1' className='flex-row-center' color="success.main">
                     {
@@ -32,12 +44,16 @@ export function TargetProgressLine({ target, value, progressStyle }: TargetProgr
             </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: .5 }}>
                 <LinearProgress
-                    sx={{ width: "100%", ...progressStyle }}
+                    sx={{ width: "100%", ...progressLineStyle }}
                     variant="determinate"
                     value={isCompleted ? 100 : percentage}
-                    color={isCompleted ? "success" : "primary"}
+                    color={isCompleted ? "success" : timeout ? "error" : "primary"}
                 />
-                {isCompleted ? <Done color="success" /> : <Typography>{percentage}%</Typography>}
+                {
+                    isCompleted ? <Done color="success" />
+                        : timeout ? <Close color="error" />
+                            : <Typography>{percentage}%</Typography>
+                }
             </Box>
         </Box>
     )
