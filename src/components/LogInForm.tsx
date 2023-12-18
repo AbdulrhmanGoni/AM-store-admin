@@ -1,11 +1,11 @@
 import {
     Avatar, Button, CssBaseline,
     TextField, Grid, Box,
-    Typography, Container
+    Container
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import useLogInLogic from '../hooks/useLogInLogic';
-import { useGoogleAuth } from '@abdulrhmangoni/am-store-library';
+import { P, useGoogleAuth } from '@abdulrhmangoni/am-store-library';
 
 
 export default function LogInForm() {
@@ -28,7 +28,7 @@ export default function LogInForm() {
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}><LockOutlinedIcon /></Avatar>
-                    <Typography component="h1" variant="h5">Log In</Typography>
+                    <P component="h1" variant="h5">Log In</P>
                     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sx={sxTexFieldOutline(!logInFailed.state)}>
@@ -68,9 +68,9 @@ export default function LogInForm() {
                     </Box>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Typography style={{ textDecoration: "underline" }}>
+                            <P style={{ textDecoration: "underline" }}>
                                 you dont`t have an account? Sign up
-                            </Typography>
+                            </P>
                         </Grid>
                     </Grid>
                     <Grid container justifyContent="flex-end">
@@ -87,7 +87,7 @@ export default function LogInForm() {
 
 export function ErrorMessageTag({ message }: { message: string }) {
     return (
-        <Typography sx={{ fontSize: "0.87rem", color: "red", mt: "5px" }}>{message}</Typography>
+        <P sx={{ fontSize: "0.87rem", color: "red", mt: "5px" }}>{message}</P>
     )
 }
 

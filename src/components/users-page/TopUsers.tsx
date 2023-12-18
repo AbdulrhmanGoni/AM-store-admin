@@ -3,8 +3,7 @@ import {
     TableBody, TableCell, Box
 } from '@mui/material';
 import useGetApi from '../../hooks/useGetApi';
-import P from '../P';
-import { nDecorator } from '@abdulrhmangoni/am-store-library';
+import { nDecorator, P } from '@abdulrhmangoni/am-store-library';
 import AvatarCell from './AvatarCell';
 import UsersTableLoadingState from './UsersTableLoadingState';
 import ErrorUsersTable from './ErrorUsersTable';

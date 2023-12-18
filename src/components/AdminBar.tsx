@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Notifications, Mail, Menu } from '@mui/icons-material';
 import SwitchTheme from './SwitchTheme';
-import { Avatar, Typography, IconButton, Toolbar, Box, AppBar, Badge } from '@mui/material';
+import { Avatar, IconButton, Toolbar, Box, AppBar, Badge } from '@mui/material';
 import AdminSideBar from './AdminSideBar';
+import { P } from "@abdulrhmangoni/am-store-library";
 
 export default function AdminAppBar() {
 
@@ -18,14 +19,14 @@ export default function AdminAppBar() {
                         sx={{ width: 50, height: 50, p: 0, mr: 1 }}>
                         <Avatar src="https://live.staticflickr.com/65535/52735512062_1fb9bc6f2a_o.jpg">AM</Avatar>
                     </IconButton>
-                    <Typography
+                    <P
                         variant="h6"
                         noWrap
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' }, fontWeight: "bold" }}
                     >
                         AM STORE
-                    </Typography>
+                    </P>
                     <Box sx={{ flexGrow: 1 }} />
                     <SwitchTheme />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

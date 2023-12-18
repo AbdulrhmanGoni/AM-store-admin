@@ -1,6 +1,7 @@
 import { JSX } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import SmallIconBox from './SmallIconBox'
+import { P } from '@abdulrhmangoni/am-store-library'
 
 interface PageTitleProps {
     title: string,
@@ -10,7 +11,7 @@ interface PageTitleProps {
 export default function PageTitle({ title, description, icon }: PageTitleProps) {
     return (
         <Box>
-            <Typography
+            <P
                 variant='h5'
                 className='flex-row-center-start'
                 sx={{ mb: 1, position: "relative", gap: 1.5, fontWeight: "bold" }}>
@@ -23,8 +24,8 @@ export default function PageTitle({ title, description, icon }: PageTitleProps) 
                         boxStyle={{ p: .3 }}
                     />
                 }
-            </Typography>
-            <Typography variant='body1'>{description}</Typography>
+            </P>
+            <P variant='body1'>{description}</P>
         </Box>
     )
 }

@@ -1,10 +1,11 @@
 import { Add, LiveTv, Subtitles, AllInbox, AttachMoney, Class } from '@mui/icons-material'
-import { Box, Typography, Grid, Paper, LinearProgress } from '@mui/material'
+import { Box, Grid, Paper, LinearProgress } from '@mui/material'
 import { LoadingButton } from '@mui/lab';
 import { CustomTextField, ErrorMessage, ImagesInputs } from '../components/products-pages/ProductsFormComponents';
 import useAddProducts from '../hooks/useAddProducts';
 import DarkOverlay from '../components/DarkOverlay';
 import pageSpaces from '../CONSTANTS/pageSpaces';
+import { P } from '@abdulrhmangoni/am-store-library';
 
 export default function AddProductPage() {
 
@@ -47,7 +48,7 @@ export default function AddProductPage() {
                         borderRadius: .5
                     }}
                 />
-                <Typography sx={{ p: "8px 4px", pb: pageSpaces }} variant='h5'>Add Product</Typography>
+                <P sx={{ p: "8px 4px", pb: pageSpaces }} variant='h5'>Add Product</P>
                 <Grid container spacing={pageSpaces}>
                     <Grid item xs={12} md={6}>
                         <CustomTextField name="title"

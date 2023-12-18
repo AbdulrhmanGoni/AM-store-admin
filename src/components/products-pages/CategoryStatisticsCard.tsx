@@ -1,9 +1,7 @@
-import { Box, alpha, capitalize } from "@mui/material";
-import P, { PProps } from "../P";
+import { Box, TypographyProps, alpha, capitalize } from "@mui/material";
 import calculatePercentages from "../../functions/calculatePercentage";
-import { nDecorator } from "@abdulrhmangoni/am-store-library";
+import { P, nDecorator } from "@abdulrhmangoni/am-store-library";
 import { CategoryStatistics } from "../../hooks/useCategoriesStatistics";
-
 
 interface CategoryStatisticsCardProps {
     category: CategoryStatistics,
@@ -15,7 +13,7 @@ export default function CategoryStatisticsCard({ category: cat, cardColor, total
 
     const rowClass = "flex-row-center-between full-width";
     const { category, totalEarnings, productsCount, productsSold } = cat;
-    const PProps: PProps = { className: rowClass, variant: "body1" }
+    const PProps: TypographyProps = { className: rowClass, variant: "body1" }
 
     return (
         <Box

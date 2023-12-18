@@ -2,11 +2,13 @@ import { useEffect } from 'react';
 import { Close } from '@mui/icons-material';
 import {
     Avatar, Divider,
-    Paper, Typography,
+    Paper,
     Drawer, IconButton
 } from '@mui/material';
 import useAdminData from '../hooks/useAdminData';
 import SideBarLinksList from './SideBarLinksList';
+import { P } from '@abdulrhmangoni/am-store-library';
+
 
 
 export default function AdminSideBar({ isOpen, close }: { isOpen: boolean, close: () => void }) {
@@ -43,7 +45,7 @@ export default function AdminSideBar({ isOpen, close }: { isOpen: boolean, close
                 gap: 1, p: 2,
             }}>
                 <Avatar src={adminData?.avatar} sx={{ width: "60px", height: "60px" }} />
-                <Typography sx={{ display: { sm: "block", xs: "none" } }}>{adminData?.adminName}</Typography>
+                <P sx={{ display: { sm: "block", xs: "none" } }}>{adminData?.adminName}</P>
             </Paper>
             <Divider sx={{ bgcolor: "text.primary" }} />
             <SideBarLinksList close={close} />

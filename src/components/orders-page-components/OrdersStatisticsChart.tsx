@@ -1,7 +1,7 @@
 import Chart from "react-apexcharts";
 import ApexchartsContainer from "../ApexchartsContainer";
-import { Skeleton, Typography, useTheme } from "@mui/material";
-import { FetchFailedAlert, PromiseState, nDecorator } from "@abdulrhmangoni/am-store-library";
+import { Skeleton, useTheme } from "@mui/material";
+import { FetchFailedAlert, PromiseState, nDecorator, P } from "@abdulrhmangoni/am-store-library";
 import { ApexOptions } from "apexcharts";
 import Icon from "../SvgIcon";
 import { averageOrdersIcon } from "../svgIconsAsString";
@@ -63,7 +63,7 @@ export default function OrdersStatisticsChart({ data, year, isLoading, isError, 
             <ChartTitle
                 title="Monthly Orders"
                 icon={<Icon svgElementAsString={averageOrdersIcon} />}
-                endItem={<Typography variant="h6">{year}</Typography>}
+                endItem={<P variant="h6">{year}</P>}
             />
             {
                 isLoading ? <Skeleton variant="rounded" height={CHART_HEIGHT} />

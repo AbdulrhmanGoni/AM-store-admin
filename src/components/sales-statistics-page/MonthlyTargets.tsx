@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Box, Paper, Typography } from '@mui/material'
+import { Box, Paper } from '@mui/material'
 import { TargetProgressLine } from '../TargetProgress'
-import { ElementWithLoadingState, nDecorator } from '@abdulrhmangoni/am-store-library'
+import { ElementWithLoadingState, nDecorator, P } from '@abdulrhmangoni/am-store-library'
 import SelectBox from '../SelectBox'
 import SvgIcon from '../SvgIcon'
 import { targetIcon } from '../targetIcon'
@@ -26,10 +26,10 @@ export default function MonthlyTargets() {
                     element={<SvgIcon width={35} height={35} svgElementAsString={targetIcon} />}
                 />
                 <ElementWithLoadingState isLoading={isLoading} height={30} width={150}
-                    element={<Typography flex={1} variant='h6'>Monthly Target</Typography>}
+                    element={<P flex={1} variant='h6'>Monthly Target</P>}
                 />
                 <ElementWithLoadingState isLoading={isLoading} width={65} height={32}
-                    element={<Typography variant='h6'>{year}</Typography>}
+                    element={<P variant='h6'>{year}</P>}
                 />
             </Box>
             <Box className="flex-row-center-between">
@@ -38,12 +38,12 @@ export default function MonthlyTargets() {
                     width={75}
                     height={32}
                     element={
-                        <Typography
+                        <P
                             color={timeout ? "text.praimary" : "success.main"}
                             variant='h5'
                         >
                             ${nDecorator(monthesData?.[monthIndex].earningsTarget ?? 0)}
-                        </Typography>
+                        </P>
                     }
                 />
                 <ElementWithLoadingState

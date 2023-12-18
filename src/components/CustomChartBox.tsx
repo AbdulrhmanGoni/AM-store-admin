@@ -1,5 +1,5 @@
-import { ElementWithLoadingState, PromiseState } from "@abdulrhmangoni/am-store-library"
-import { Typography, Box } from "@mui/material"
+import { P, ElementWithLoadingState, PromiseState } from "@abdulrhmangoni/am-store-library"
+import { Box } from "@mui/material"
 
 type strOrnum = string | number
 
@@ -52,7 +52,7 @@ export default function CustomChartBox({
                         width={140}
                         height={35}
                         isLoading={isLoading}
-                        element={<Typography variant="h6">{title}</Typography>}
+                        element={<P variant="h6">{title}</P>}
                     />
                 </Box>
                 <ElementWithLoadingState
@@ -68,11 +68,11 @@ export default function CustomChartBox({
                     height={47}
                     isLoading={isLoading}
                     element={
-                        customMainValue ?? <Typography
+                        customMainValue ?? <P
                             sx={{ display: "flex", alignItems: "center", gap: "2px", fontSize: "1.7rem" }}
                             color={`${mainValueColor ?? "none"}.main`}>
                             {mainValue} {mainValueEndIcon}
-                        </Typography>
+                        </P>
                     }
                 />
                 <ElementWithLoadingState
@@ -81,15 +81,15 @@ export default function CustomChartBox({
                     isLoading={isLoading}
                     element={
                         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-                            <Typography variant="h6"
+                            <P variant="h6"
                                 sx={{ display: "flex", alignItems: "center", gap: "2px", "& > svg": { fontSize: "1.3rem" } }}
                                 color={`${chartDescription?.severity ?? "success"}.main`}
                             >
                                 {chartDescription?.title ?? "55%"} {chartDescription?.titleEndIcon}
-                            </Typography>
-                            <Typography variant="subtitle1">
+                            </P>
+                            <P variant="subtitle1">
                                 {chartDescription?.subTitle ?? "This month"}
-                            </Typography>
+                            </P>
                         </Box>
                     }
                 />

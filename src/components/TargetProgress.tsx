@@ -1,7 +1,7 @@
 import calculatePercentage from '../functions/calculatePercentage'
-import { LinearProgress, CircularProgress, Typography, Box, SxProps } from '@mui/material'
+import { LinearProgress, CircularProgress, Box, SxProps } from '@mui/material'
 import { Close, Done, NorthEast } from '@mui/icons-material';
-import { nDecorator } from '@abdulrhmangoni/am-store-library';
+import { nDecorator, P } from '@abdulrhmangoni/am-store-library';
 
 
 interface TargetProgressProps {
@@ -19,20 +19,20 @@ export function TargetProgressLine({ target, value, progressLineStyle, timeout }
     return (
         <Box>
             <Box className="flex-row-center-between">
-                <Typography
+                <P
                     variant='h6'
                     fontSize="16px"
                 >
                     {timeout ? "Month" : "Current"} Earnings:
-                    <Typography
+                    <P
                         component="span"
                         color={isCompleted ? "success.main" : timeout ? "error.main" : "text.primary"}
                         ml={.5}
                     >
                         ${nDecorator(value?.toFixed(2))}
-                    </Typography>
-                </Typography>
-                <Typography variant='body1' className='flex-row-center' color="success.main">
+                    </P>
+                </P>
+                <P variant='body1' className='flex-row-center' color="success.main">
                     {
                         percentage > 100 &&
                         <>
@@ -40,7 +40,7 @@ export function TargetProgressLine({ target, value, progressLineStyle, timeout }
                             <NorthEast sx={{ fontSize: "1.3rem" }} color='success' />
                         </>
                     }
-                </Typography>
+                </P>
             </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: .5 }}>
                 <LinearProgress
@@ -52,7 +52,7 @@ export function TargetProgressLine({ target, value, progressLineStyle, timeout }
                 {
                     isCompleted ? <Done color="success" />
                         : timeout ? <Close color="error" />
-                            : <Typography>{percentage}%</Typography>
+                            : <P>{percentage}%</P>
                 }
             </Box>
         </Box>
@@ -74,13 +74,13 @@ export function TargetProgressCircular({ target, value }: TargetProgressProps) {
                     justifyContent: 'center',
                 }}
             >
-                <Typography
+                <P
                     variant="caption"
                     component="div"
                     color="text.secondary"
                 >
                     {`${percentage}%`}
-                </Typography>
+                </P>
             </Box>
         </Box>
     );

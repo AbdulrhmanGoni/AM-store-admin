@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import {
-    Box, TextField, Typography,
+    Box, TextField,
     FormControl, Select, InputLabel,
     MenuItem, SelectChangeEvent,
     SvgIconTypeMap, alpha, useTheme, SxProps
@@ -10,7 +10,7 @@ import { PromiseState } from "../../types/interfaces";
 import { AddPhotoAlternateOutlined, ChangeCircleOutlined, HideImageOutlined } from "@mui/icons-material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { CSSProperties } from "@mui/material/styles/createMixins";
-import { ElementWithLoadingState } from '@abdulrhmangoni/am-store-library';
+import { ElementWithLoadingState, P } from '@abdulrhmangoni/am-store-library';
 import pageSpaces from "../../CONSTANTS/pageSpaces";
 
 type FieldProps = {
@@ -35,7 +35,7 @@ type TextFieldProps = {
 
 
 export function ErrorMessage({ error }: { error?: false | string }) {
-    return <Typography sx={{ fontSize: "12px", mt: "4px", color: "red" }}>{error}</Typography>
+    return <P sx={{ fontSize: "12px", mt: "4px", color: "red" }}>{error}</P>
 }
 
 export function CustomTextField(props: TextFieldProps & FieldProps) {
@@ -59,7 +59,7 @@ export function CustomTextField(props: TextFieldProps & FieldProps) {
                             type={type}
                         />
                         :
-                        <TextField 
+                        <TextField
                             sx={TextFieldSx}
                             fullWidth
                             defaultValue={defaultValue}
@@ -239,7 +239,7 @@ function ImageInput(props: FieldProps & { clear?: boolean }) {
                 onClick={openInput}
                 sx={labelStyle}
             >
-                <Typography>Add an image</Typography>
+                <P>Add an image</P>
                 <AddPhotoAlternateOutlined sx={AddIconStyle} />
             </Box>
             {

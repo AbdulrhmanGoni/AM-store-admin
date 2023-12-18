@@ -1,6 +1,6 @@
 import { JSX } from 'react'
-import { nDecorator } from '@abdulrhmangoni/am-store-library'
-import { Alert, Box, Chip, Divider, List, ListItem, ListItemText, Paper, Skeleton, Typography, IconButton } from '@mui/material'
+import { nDecorator, P } from '@abdulrhmangoni/am-store-library'
+import { Alert, Box, Chip, Divider, List, ListItem, ListItemText, Paper, Skeleton, IconButton } from '@mui/material'
 import { SeriesType, TopSeriesesType } from '../../hooks/useTopSerieses'
 import useTopSerieses from '../../hooks/useTopSerieses'
 import { Refresh } from '@mui/icons-material'
@@ -26,7 +26,7 @@ export default function TopSerieses({ title, icon, isMoney, sortType }: TopSerie
             <Box className="flex-column" p={1}>
                 <Box className="flex-row gap1">
                     {icon}
-                    <Typography variant="h6" >{title}</Typography>
+                    <P variant="h6" >{title}</P>
                 </Box>
                 <Divider sx={{ width: "100%", mt: 1 }} />
             </Box>
