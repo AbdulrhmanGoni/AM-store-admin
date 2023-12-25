@@ -17,8 +17,9 @@ type requestBody = {
     adminPassword?: FormDataEntryValue,
     googleUserCredentials?: GoogleUserCredentials,
 }
-type requestResponse = null | false
-type requestFeedback = (response: requestResponse) => void
+interface RequestErrorOptions {
+    setFailedError?: boolean
+}
 
 export default function useLogInLogic() {
 
@@ -34,25 +35,34 @@ export default function useLogInLogic() {
         window.location.reload();
     }
 
-    function apiRequest(path: requestPath, body: requestBody, feedback: requestFeedback) {
+    function apiRequest(path: requestPath, body: requestBody, errorOptions?: RequestErrorOptions) {
         loadingControl(true)
         api.post(`${host}/admin-log-in/${path}`, body)
-            .then(({ data }) => { if (data) complateLog(data); else feedback(data) })
-            .catch(() => { message("Unexpected error happened !", "error") })
+            .then(({ data }) => {
+                if (data?.ok) complateLog(data);
+                else {
+                    const errorMessage = data.message || "Unexpected error happened !"
+                    if (errorOptions?.setFailedError) {
+                        setFailed({ state: false, message: errorMessage })
+                    } else {
+                        message(errorMessage, "warning")
+                    }
+                }
+            })
+            .catch((error) => {
+                const errorMessage = error.response?.data?.message || "Unexpected error happened !"
+                if (errorOptions?.setFailedError) {
+                    setFailed({ state: false, message: errorMessage })
+                } else {
+                    message(errorMessage, "error")
+                }
+            })
             .finally(() => { loadingControl(false) })
     }
 
     function logInWithGoogle(googleUserCredentials: GoogleUserCredentials) {
-        apiRequest(
-            "google-auth", { googleUserCredentials },
-            (response: requestResponse) => {
-                if (response === false) {
-                    message("Your email registred by another signing up method", "warning")
-                } else if (response === null) {
-                    message("You didn't have registered with us before", "error")
-                }
-            }
-        )
+        console.log(googleUserCredentials)
+        apiRequest("google-auth", { googleUserCredentials })
     }
 
     function handleSubmit(event: SubmitEventProps) {
@@ -60,19 +70,7 @@ export default function useLogInLogic() {
         const data = new FormData(event?.currentTarget);
         const adminEmail = data.get('email')!;
         const adminPassword = data.get('password')!;
-        apiRequest(
-            "", { adminEmail, adminPassword },
-            (response: requestResponse) => {
-                if (response === false) {
-                    message("Your email registred by another signing up method", "warning");
-                } else {
-                    !response && setFailed({
-                        state: false,
-                        message: "There is issue in email or password, Try again with more verify"
-                    })
-                }
-            }
-        )
+        apiRequest("", { adminEmail, adminPassword }, { setFailedError: true })
     }
 
     return {
