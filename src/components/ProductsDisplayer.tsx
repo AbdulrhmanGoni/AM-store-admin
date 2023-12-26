@@ -1,6 +1,6 @@
 import { useEffect, useState, JSX } from "react"
 import { Card, Box, IconButton, Rating, Button, ThemeProvider, Theme } from "@mui/material"
-import { productData } from "../types/dataTypes"
+import { productFullType } from "../types/dataTypes"
 import { Close, Delete, Edit, Remove } from "@mui/icons-material"
 import {
     ActionAlert,
@@ -12,12 +12,14 @@ import {
     PriceDisplayer,
     AlertTooltip,
     loadingControl,
+    HighlightedWord,
     P
 } from "@abdulrhmangoni/am-store-library"
 import useProductsActions from "../hooks/useProductsActions"
 import { CSSProperties } from "@mui/material/styles/createMixins"
 import DiscountsApplyer from "./products-pages/DiscountsApplyer"
 import useNotifications from "../hooks/useNotifications"
+import pageSpaces from "../CONSTANTS/pageSpaces"
 
 interface ProductsDisplayerProps {
     productId: string,
@@ -26,18 +28,11 @@ interface ProductsDisplayerProps {
     theme: Theme
 }
 
-interface Product extends productData {
-    _id: string,
-    sold: number,
-    earnings: number,
-    discount?: number
-}
-
 export default function ProductsDisplayer({ productId, close, navigate, theme }: ProductsDisplayerProps) {
 
     const { getProduct, deleteProduct, removeDiscountFromProducts } = useProductsActions();
     const { message } = useNotifications();
-    const [product, setProduct] = useState<Product>();
+    const [product, setProduct] = useState<productFullType>();
     const [productDiscount, setProductDiscount] = useState<number>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
@@ -58,7 +53,7 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
 
     useEffect(() => { setCardsOpacity(1) }, [productId]);
 
-    const { title, price, description, series, images, sold, earnings, _id, amount } = product ?? {}
+    const { title, price, description, series, images, sold, earnings, _id, amount, rating } = product ?? {}
     const actionAlertMessage = "Make sure if you continue, You will not be able to undo this process after that"
 
     function CloseIcon() {
@@ -85,7 +80,11 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
 
     return (
         <ThemeProvider theme={theme}>
-            <Box id="product-displayer" className="flex-center" sx={containerStyle}>
+            <Box
+                id="product-displayer"
+                className="flex-row-center"
+                sx={{ ...containerStyle, alignItems: { xs: "flex-start", md: "center" } }}
+            >
                 {
                     isError ? <ErrorHappend icon={<CloseIcon />} /> :
                         <Card className="flex-center" sx={{
@@ -129,7 +128,12 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
                                     element={
                                         <Box className="flex-row-center-start gap1">
                                             <P fontWeight="bold">Series:</P>
-                                            <P>{series}</P>
+                                            <HighlightedWord
+                                                variant="subtitle1"
+                                                highlightColor="primary"
+                                            >
+                                                {`${series}`}
+                                            </HighlightedWord>
                                         </Box>
                                     }
                                 />
@@ -137,18 +141,26 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
                                     element={
                                         <Box className="flex-row-center-start gap1">
                                             <P fontWeight="bold">Sold:</P>
-                                            <P>{sold} times</P>
+                                            <HighlightedWord
+                                                variant="subtitle1"
+                                                highlightColor="success"
+                                            >
+                                                {`${sold} times`}
+                                            </HighlightedWord>
                                         </Box>
                                     }
                                 />
                                 <ElementWithLoadingState isLoading={isLoading} height={20} width={300}
                                     element={
                                         earnings ?
-                                            <Box className="flex-row-center-start" gap={.5}>
+                                            <Box className="flex-row-center-start" columnGap={.5}>
                                                 <P variant="subtitle1">This product achieves</P>
-                                                <P color="success.main" variant="subtitle1">
-                                                    ${nDecorator(earnings?.toFixed(2))}
-                                                </P>
+                                                <HighlightedWord
+                                                    variant="subtitle1"
+                                                    highlightColor="success"
+                                                >
+                                                    {`$${nDecorator(earnings?.toFixed(2))}`}
+                                                </HighlightedWord>
                                                 <P variant="subtitle1">of earnings</P>
                                             </Box>
                                             : <P variant="subtitle1">
@@ -160,10 +172,12 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
                                     element={
                                         <Box className="flex-row-center-start" gap={.5}>
                                             <Rating
-                                                value={3} precision={.5} readOnly
+                                                value={rating?.ratingAverage}
+                                                precision={.5}
+                                                readOnly
                                                 sx={{ ".MuiRating-iconEmpty": { color: "text.primary" } }}
                                             />
-                                            <P variant="body2">(18) Rivews</P>
+                                            <P>({rating?.reviews || 0}) Rivews</P>
                                         </Box>
                                     }
                                 />
@@ -244,7 +258,8 @@ function ErrorHappend({ icon }: { icon: JSX.Element }) {
 const containerStyle = {
     position: "fixed", bgcolor: "#00000060",
     width: "100%", height: "100vh",
-    top: 0, left: 0, zIndex: 1000
+    overflowY: "auto", zIndex: 1000,
+    top: 0, left: 0, p: pageSpaces
 }
 const cardStyle: CSSProperties = {
     position: "relative",

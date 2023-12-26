@@ -1,6 +1,6 @@
 import { GridColDef, GridRenderCellParams as GRCP, GridValueGetterParams as GVGP } from '@mui/x-data-grid';
-import { nDecorator } from "@abdulrhmangoni/am-store-library";
-import { Avatar, Rating } from '@mui/material';
+import { AlertTooltip, P, nDecorator } from "@abdulrhmangoni/am-store-library";
+import { Avatar, Box, Rating } from '@mui/material';
 import sortProductsViewerTable from './sortProductsViewerTable';
 
 
@@ -30,8 +30,28 @@ function numberField(params: GVGP, field: string, floats?: number): string | num
     return nDecorator(params.row[field]?.toFixed(floats ?? 2) ?? 0)
 }
 
-function renderRateCell(params: GRCP) {
-    return <Rating name={params.row.title} precision={0.5} value={+String(params.row.price)[0]} readOnly />
+function renderRatingCell(params: GRCP) {
+    const
+        reviews = params.row.rating?.reviews || 0,
+        ratingAverage = params.row.rating?.ratingAverage || 0
+
+    return (
+        <AlertTooltip
+            type={ratingAverage ? "success" : "info"}
+            title={`Average Rating (${ratingAverage}) - Reviews (${reviews})`}
+            hideAlertIcon
+        >
+            <Box className="flex-row-center-start">
+                <Rating
+                    name={`rating of ${params.row._id} product`}
+                    precision={0.5}
+                    value={ratingAverage}
+                    readOnly
+                />
+                <P variant='subtitle2' ml={.5}>({reviews})</P>
+            </Box>
+        </AlertTooltip>
+    )
 }
 
 function renderImageCell(params: GRCP) {
@@ -46,7 +66,7 @@ const columns: GridColDef[] = [
     rowConfig(['series', 'Series', 130, false, true, false]),
     rowConfig(['category', 'Category', 120, false, false, false]),
     rowConfig(['price', 'Price ($)', 100, true, false, true]),
-    rowConfig(['rate', 'Rate', 160, true, false, true, renderRateCell, undefined]),
+    rowConfig(['rating', 'Rating', 160, true, false, false, renderRatingCell, undefined]),
     rowConfig(['sold', 'Sold', 80, true, false, true]),
     rowConfig(['amount', 'Quantity', 80, true, false, true]),
     rowConfig(['earnings', 'Earnings ($)', 130, true, false, true]),

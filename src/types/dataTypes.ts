@@ -8,6 +8,13 @@ interface productData {
     amount: number,
     description: string
 }
+interface productFullType extends productData {
+    _id: string,
+    sold: number,
+    earnings: number,
+    discount?: number,
+    rating?: { reviews: number, ratingAverage: number }
+}
 interface UserData {
     userName: string;
     userEmail: string,
@@ -23,6 +30,7 @@ interface AdminData {
 
 export type {
     productData,
+    productFullType,
     AdminData,
     UserData,
 }
