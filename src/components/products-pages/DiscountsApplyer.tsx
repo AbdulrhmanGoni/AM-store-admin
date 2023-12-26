@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, SxProps } from '@mui/material';
 import { FormEvent, useState } from 'react';
 import useProductsActions from '../../hooks/useProductsActions';
 import { LoadingButton } from '@mui/lab';
@@ -8,9 +8,10 @@ import useDiscountInput from '../../hooks/useDiscountInput';
 
 interface DiscountsApplyerProps {
     productsIds: (string | number)[],
-    onDiscountApplyied?: (discount: number) => void
+    onDiscountApplyied?: (discount: number) => void,
+    style?: SxProps
 }
-export default function DiscountsApplyer({ productsIds, onDiscountApplyied }: DiscountsApplyerProps) {
+export default function DiscountsApplyer({ productsIds, onDiscountApplyied, style }: DiscountsApplyerProps) {
 
     const { addDiscountToProducts } = useProductsActions();
     const { message } = useNotifications();
@@ -28,7 +29,6 @@ export default function DiscountsApplyer({ productsIds, onDiscountApplyied }: Di
         const discountValue = formData.get("discount-value");
         if (discountValue && isValidDiscount(+discountValue)) {
             setLoading(true)
-
             addDiscountToProducts(productsIds, (+discountValue / 100))
                 .then(() => {
                     onDiscountApplyied?.((+discountValue / 100))
@@ -45,7 +45,7 @@ export default function DiscountsApplyer({ productsIds, onDiscountApplyied }: Di
             component="form"
             className="flex-row-center"
             onSubmit={applyTheDiscount}
-            sx={{ height: "fit-content" }}
+            sx={{ height: "fit-content", ...style }}
         >
             <DiscountInput inputName='discount-value' />
             <LoadingButton
@@ -53,7 +53,7 @@ export default function DiscountsApplyer({ productsIds, onDiscountApplyied }: Di
                 size='small'
                 type='submit'
                 variant={discount ? 'contained' : 'outlined'}
-                sx={{ ml: 1 }}
+                sx={{ ml: 1, minWidth: "162px" }}
                 loading={loading}
                 loadingPosition='start'
                 startIcon={<Discount />}

@@ -25,14 +25,18 @@ export default function Footer({ delelteFun, selectedRows, tableApiRef }: TableF
     note that you can't undo this procces if you continue
     `;
 
-    function unselectAllRows() {
-        tableApiRef.current.setRowSelectionModel([])
-    }
+    function unselectAllRows() { tableApiRef.current.setRowSelectionModel([]) }
 
     return (
         <Box
-            className="flex-row-center"
-            sx={{ p: "0px 12px", borderTop: "solid rgba(81, 81, 81, 1) 1px", gap: "12px" }}
+            className="flex-row-center-start"
+            sx={{
+                p: "16px 12px",
+                borderTop: "solid 1px",
+                borderColor: "divider",
+                width: "100%",
+                overflowX: "auto"
+            }}
         >
             {
                 !!selectedRowsCount &&
@@ -40,19 +44,24 @@ export default function Footer({ delelteFun, selectedRows, tableApiRef }: TableF
                     <ActionAlert
                         action={delelteFun}
                         message={warningMessage}
-                        title={`You are going to detete (${selectedRowsCount}) product${selectedRowsCount > 1 ? "s" : ""}`}>
+                        title={`You are going to detete (${selectedRowsCount}) product${selectedRowsCount > 1 ? "s" : ""}`}
+                    >
                         <Button
                             endIcon={<Box fontSize={"13px!important"}>{selectedRowsCount}</Box>}
                             startIcon={<Delete />}
                             variant="contained"
                             color='error'
                             size='small'
-                            disabled
+                            sx={{ mr: 1.5 }}
                         >
                             Delete
                         </Button>
                     </ActionAlert>
-                    <DiscountsApplyer productsIds={selectedRows} onDiscountApplyied={unselectAllRows} />
+                    <DiscountsApplyer
+                        productsIds={selectedRows}
+                        onDiscountApplyied={unselectAllRows}
+                        style={{ mr: 1.5 }}
+                    />
                 </>
             }
             {
@@ -62,6 +71,7 @@ export default function Footer({ delelteFun, selectedRows, tableApiRef }: TableF
                         endIcon={<ReadMore />}
                         variant="contained"
                         size='small'
+                        sx={{ minWidth: "fit-content", mr: 1.5 }}
                         onClick={() => display(String(selectedRows[0]))}
                     >
                         Veiw
@@ -71,14 +81,21 @@ export default function Footer({ delelteFun, selectedRows, tableApiRef }: TableF
                         variant="contained"
                         size='small'
                         color="info"
-                        sx={{ color: "white" }}
+                        sx={{ color: "white", minWidth: "fit-content", mr: 1.5 }}
                         onClick={() => navigate(`/products/edit-product/${selectedRows[0]}`)}
                     >
                         Edit
                     </Button>
                 </>
             }
-            <GridFooter style={{ flexGrow: 1, borderTop: "none" }} />
+            <GridFooter
+                sx={{
+                    flexGrow: 1,
+                    borderTop: "none",
+                    minHeight: "initial",
+                    ".MuiTablePagination-root": { overflow: "initial" }
+                }}
+            />
         </Box>
     )
 }

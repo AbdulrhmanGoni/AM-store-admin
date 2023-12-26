@@ -1,5 +1,5 @@
 import { GridColDef, GridRenderCellParams as GRCP, GridValueGetterParams as GVGP } from '@mui/x-data-grid';
-import { AlertTooltip, P, nDecorator } from "@abdulrhmangoni/am-store-library";
+import { AlertTooltip, P, PriceDisplayer, nDecorator } from "@abdulrhmangoni/am-store-library";
 import { Avatar, Box, Rating } from '@mui/material';
 import sortProductsViewerTable from './sortProductsViewerTable';
 
@@ -59,13 +59,17 @@ function renderImageCell(params: GRCP) {
     return <Avatar src={params.row.images?.[0]} alt='product img' sx={style} />
 }
 
+function renderPriceCell(params: GRCP) {
+    return <PriceDisplayer price={params.row.price} discount={params.row.discount} />
+}
+
 const columns: GridColDef[] = [
     rowConfig(['images', 'Image', 130, false, false, false, renderImageCell, undefined]),
     rowConfig(['_id', 'ID', 70, false, false, false]),
     rowConfig(['title', 'Title', 130, false, true, false]),
     rowConfig(['series', 'Series', 130, false, true, false]),
     rowConfig(['category', 'Category', 120, false, false, false]),
-    rowConfig(['price', 'Price ($)', 100, true, false, true]),
+    rowConfig(['price', 'Price ($)', 100, true, false, true, renderPriceCell, undefined]),
     rowConfig(['rating', 'Rating', 160, true, false, false, renderRatingCell, undefined]),
     rowConfig(['sold', 'Sold', 80, true, false, true]),
     rowConfig(['amount', 'Quantity', 80, true, false, true]),

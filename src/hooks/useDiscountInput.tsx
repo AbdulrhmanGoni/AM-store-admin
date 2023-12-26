@@ -38,7 +38,7 @@ export default function useDiscountInput() {
                     }
                 }}
                 autoFocus={focusInput}
-                sx={{ width: 110, ...style }}
+                sx={{ minWidth: 110, maxWidth: 110, ...style }}
                 inputProps={{ style: { paddingTop: "3px" } }}
                 endAdornment={<InputAdornment position="end" sx={{ ml: 0 }}>%</InputAdornment>}
             />

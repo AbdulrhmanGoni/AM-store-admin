@@ -1,4 +1,4 @@
-import { Box, LinearProgress, useMediaQuery } from '@mui/material';
+import { Box, LinearProgress } from '@mui/material';
 import { DataGrid, GridPaginationModel, GridRowParams } from '@mui/x-data-grid';
 import columns from './ProductsGridColumnsConfig';
 import ToolBar from './ProducsTableToolbar';
@@ -8,8 +8,6 @@ import useProductsTableLogic, { UpdateCelEvent } from '../../hooks/useProductsTa
 
 
 export default function ProductsViewerTable() {
-
-    const paddingSpace = useMediaQuery("(min-width: 900px)") ? 67 : 51;
 
     const {
         products,
@@ -27,7 +25,7 @@ export default function ProductsViewerTable() {
     } = useProductsTableLogic();
 
     return (
-        <Box sx={{ width: `calc(100vw - ${paddingSpace}px)` }}>
+        <Box>
             <DataGrid
                 sx={{ height: paginationModel.pageSize < 10 ? "auto" : "814px" }}
                 apiRef={apiRef}

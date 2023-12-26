@@ -143,7 +143,7 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
                                             <P fontWeight="bold">Sold:</P>
                                             <HighlightedWord
                                                 variant="subtitle1"
-                                                highlightColor="success"
+                                                highlightColor="#00ff0c"
                                             >
                                                 {`${sold} times`}
                                             </HighlightedWord>
@@ -157,7 +157,7 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
                                                 <P variant="subtitle1">This product achieves</P>
                                                 <HighlightedWord
                                                     variant="subtitle1"
-                                                    highlightColor="success"
+                                                    highlightColor="#00ff0c"
                                                 >
                                                     {`$${nDecorator(earnings?.toFixed(2))}`}
                                                 </HighlightedWord>
