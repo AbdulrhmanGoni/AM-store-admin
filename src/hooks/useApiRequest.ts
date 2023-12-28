@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useCookies } from "react-cookie";
 
-
 export default function useApiRequest() {
 
     const headers = {
@@ -10,5 +9,5 @@ export default function useApiRequest() {
         'Content-Type': 'application/json',
     }
 
-    return { api: axios.create({ headers }) }
+    return { api: axios.create({ headers }), headers }
 }

@@ -15,7 +15,7 @@ export default function useCustomTheme(): Theme {
             primary: { main: colors.indigo["A400"] },
             action: { hover: "3d5afe4d" },
             background: isLightMode ? lightBackground : darkBackground,
-            success: { main: "#66bb6a" }
+            success: { main: "#0be715" }
         },
         typography: {
             allVariants: {
@@ -30,6 +30,8 @@ export default function useCustomTheme(): Theme {
                         color: textColor
                     }
                 }
+            },
+            MuiAlert: {
             }
         }
     })
