@@ -8,6 +8,7 @@ import {
 import useAdminData from '../hooks/useAdminData';
 import SideBarLinksList from './SideBarLinksList';
 import { P } from '@abdulrhmangoni/am-store-library';
+import SwitchTheme from './SwitchTheme';
 
 
 
@@ -28,7 +29,6 @@ export default function AdminSideBar({ isOpen, close }: { isOpen: boolean, close
         <Drawer
             anchor='left' open={isOpen}
             sx={{ width: 300, position: "relative" }}
-            aria-label="Admin Tools Bar"
             PaperProps={{
                 sx: {
                     p: "0px 5px",
@@ -37,13 +37,11 @@ export default function AdminSideBar({ isOpen, close }: { isOpen: boolean, close
                 }
             }}
         >
-            <IconButton onClick={close} sx={{ position: "absolute", right: 2, top: 2 }}><Close /></IconButton>
-            <Paper sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: 1, p: 2,
-            }}>
+            <SwitchTheme style={{ position: "absolute", left: "25px", top: "15px" }} />
+            <IconButton onClick={close} sx={{ position: "absolute", right: 2, top: 2 }}>
+                <Close />
+            </IconButton>
+            <Paper className='flex-column-center gap1' sx={{ p: 2 }}>
                 <Avatar src={adminData?.avatar} sx={{ width: "60px", height: "60px" }} />
                 <P sx={{ display: { sm: "block", xs: "none" } }}>{adminData?.adminName}</P>
             </Paper>

@@ -14,21 +14,8 @@ interface chartBoxProps extends PromiseState {
     chartDescription?: {
         title: strOrnum,
         subTitle: strOrnum,
-        severity?: string,
         titleEndIcon?: JSX.Element
     },
-}
-
-const containerStyle = {
-    display: "flex", p: "10px 8px",
-    boxSizing: "border-box",
-    flexDirection: "column",
-    width: "100%", height: "100%",
-    justifyContent: "space-around"
-}
-const containerChildrenStyle = {
-    display: "flex", gap: 1,
-    justifyContent: "space-between"
 }
 
 export default function CustomChartBox({
@@ -39,9 +26,15 @@ export default function CustomChartBox({
 }: chartBoxProps) {
 
     return (
-        <Box sx={containerStyle}>
-            <Box sx={{ ...containerChildrenStyle, alignItems: "flex-start" }}>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1, "& > svg": { fontSize: "27px", color: "primary.main" } }}>
+        <Box
+            className="flex-column j-around full-width full-height"
+            sx={{ p: "10px 8px", boxSizing: "border-box" }}
+        >
+            <Box className="flex-row j-between a-start gap1">
+                <Box
+                    className="flex-row a-center gap1"
+                    sx={{ "& > svg": { fontSize: "27px", color: "primary.main" } }}
+                >
                     <ElementWithLoadingState
                         width={35}
                         height={35}
@@ -62,17 +55,19 @@ export default function CustomChartBox({
                     element={smallChart}
                 />
             </Box>
-            <Box sx={{ ...containerChildrenStyle, alignItems: "flex-end" }}>
+            <Box className="flex-row j-between a-end gap1">
                 <ElementWithLoadingState
                     width={150}
                     height={47}
                     isLoading={isLoading}
                     element={
-                        customMainValue ?? <P
-                            sx={{ display: "flex", alignItems: "center", gap: "2px", fontSize: "1.7rem" }}
-                            color={`${mainValueColor ?? "none"}.main`}>
-                            {mainValue} {mainValueEndIcon}
-                        </P>
+                        customMainValue || (
+                            <P
+                                sx={{ display: "flex", alignItems: "center", gap: "2px", fontSize: "1.7rem" }}
+                                color={`${mainValueColor ?? "none"}.main`}>
+                                {mainValue} {mainValueEndIcon}
+                            </P>
+                        )
                     }
                 />
                 <ElementWithLoadingState
@@ -80,15 +75,16 @@ export default function CustomChartBox({
                     height={55}
                     isLoading={isLoading}
                     element={
-                        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-                            <P variant="h6"
-                                sx={{ display: "flex", alignItems: "center", gap: "2px", "& > svg": { fontSize: "1.3rem" } }}
-                                color={`${chartDescription?.severity ?? "success"}.main`}
+                        <Box className="flex-column a-end">
+                            <P
+                                variant="h6"
+                                className="flex-row a-center"
+                                sx={{ gap: "2px", "& > svg": { fontSize: "1.3rem" } }}
                             >
-                                {chartDescription?.title ?? "55%"} {chartDescription?.titleEndIcon}
+                                {chartDescription?.title} {chartDescription?.titleEndIcon}
                             </P>
                             <P variant="subtitle1">
-                                {chartDescription?.subTitle ?? "This month"}
+                                {chartDescription?.subTitle}
                             </P>
                         </Box>
                     }

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Notifications, Mail, Menu } from '@mui/icons-material';
-import SwitchTheme from './SwitchTheme';
-import { Avatar, IconButton, Toolbar, Box, AppBar, Badge } from '@mui/material';
+import { Menu } from '@mui/icons-material';
+import { Avatar, IconButton, Toolbar, Box, AppBar } from '@mui/material';
 import AdminSideBar from './AdminSideBar';
 import { P } from "@abdulrhmangoni/am-store-library";
+import NotificationsCenter from "./NotificationsCenter";
 
 export default function AdminAppBar() {
 
@@ -12,7 +12,7 @@ export default function AdminAppBar() {
     return (
         <Box>
             <AdminSideBar isOpen={drawerState} close={() => { setDrawerState(false) }} />
-            <AppBar elevation={1} position='relative'>
+            <AppBar position='relative'>
                 <Toolbar>
                     <IconButton onClick={() => { setDrawerState(true) }} ><Menu /></IconButton>
                     <IconButton
@@ -28,23 +28,7 @@ export default function AdminAppBar() {
                         AM STORE
                     </P>
                     <Box sx={{ flexGrow: 1 }} />
-                    <SwitchTheme />
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="primary">
-                                <Mail />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={17} color="primary">
-                                <Notifications />
-                            </Badge>
-                        </IconButton>
-                    </Box>
+                    <NotificationsCenter />
                 </Toolbar>
             </AppBar>
         </Box>

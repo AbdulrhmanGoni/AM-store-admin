@@ -32,8 +32,7 @@ export default function SalesGrowth() {
             mainValueEndIcon={growthRete < 0 ? <SouthEast /> : <NorthEast />}
             chartDescription={{
                 title: `$${nDecorator(lastMonthEarnings.toFixed(2))}`,
-                subTitle: "Last month",
-                severity: "success"
+                subTitle: "Last month"
             }}
         />
     )

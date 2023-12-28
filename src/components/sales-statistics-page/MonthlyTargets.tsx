@@ -38,10 +38,7 @@ export default function MonthlyTargets() {
                     width={75}
                     height={32}
                     element={
-                        <P
-                            color={timeout ? "text.praimary" : "success.main"}
-                            variant='h5'
-                        >
+                        <P color="text.primary" variant='h5'>
                             ${nDecorator(monthesData?.[monthIndex].earningsTarget ?? 0)}
                         </P>
                     }

@@ -1,4 +1,4 @@
-import { FormGroup, FormControlLabel, Switch, styled } from '@mui/material';
+import { FormGroup, FormControlLabel, Switch, styled, SxProps } from '@mui/material';
 import { useCookies } from 'react-cookie';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -49,7 +49,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     },
 }));
 
-export default function SwitchTheme() {
+export default function SwitchTheme({ style }: { style?: SxProps }) {
 
     const [{ AM_Store_admind_panel_theme: mode }, setCoockies] = useCookies();
 
@@ -58,7 +58,7 @@ export default function SwitchTheme() {
     }
 
     return (
-        <FormGroup>
+        <FormGroup sx={style}>
             <FormControlLabel
                 sx={{ "& lable": { mr: 0 } }}
                 control={
