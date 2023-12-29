@@ -1,21 +1,23 @@
 import { Alert, AlertColor, IconButton, Tooltip } from "@mui/material";
 import { NotificationCenterItem } from "react-toastify/addons/use-notification-center";
-import { Notification } from "../hooks/useNotificationsManager";
+import { MarkNotificationsAsReadType, Notification } from "../hooks/useNotificationsManager";
 import { Check, MarkChatRead } from "@mui/icons-material";
+import { timeAgo } from "@abdulrhmangoni/am-store-library";
 
 interface NotificationsCardProps {
     notification: NotificationCenterItem<Notification>
-    markAsRead: (id: string) => void
+    markNotificationsAsRead: MarkNotificationsAsReadType
 }
 
-export default function NotificationsCard({ notification, markAsRead }: NotificationsCardProps) {
+export default function NotificationsCard({ notification, markNotificationsAsRead }: NotificationsCardProps) {
     const { id, type, read, data } = notification
+
     return (
         <Alert
             severity={(type as AlertColor) || "info"}
             key={id}
-            variant="filled"
-            sx={{ color: "white", bgcolor: type === "success" ? "success.main" : undefined }}
+            variant={read ? "standard" : "filled"}
+            sx={{ color: "white" }}
             className="flex-row-center"
             action={
                 read ? <Check fontSize="small" />
@@ -24,7 +26,7 @@ export default function NotificationsCard({ notification, markAsRead }: Notifica
                             <IconButton
                                 component="span"
                                 size="small"
-                                onClick={() => markAsRead(id as string)}
+                                onClick={() => markNotificationsAsRead([id])}
                             >
                                 <MarkChatRead fontSize="small" />
                             </IconButton>
@@ -32,7 +34,7 @@ export default function NotificationsCard({ notification, markAsRead }: Notifica
                     )
             }
         >
-            {data?.title}
+            {data?.title} - {data && timeAgo(data.createdAt)}
         </Alert>
     )
 }

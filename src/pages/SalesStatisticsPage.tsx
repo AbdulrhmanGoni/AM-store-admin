@@ -15,8 +15,6 @@ import useMonthlySalesStatistics, { MonthSalesStatistics } from "../hooks/useMon
 import pageSpaces from "../CONSTANTS/pageSpaces";
 import PageTitle from "../components/PageTitle";
 
-const boxSx = { width: "100%" }
-
 export default function SalesStatisticsPage() {
 
   const { monthesData, isLoading } = useMonthlySalesStatistics();
@@ -59,7 +57,7 @@ export default function SalesStatisticsPage() {
       </Grid>
       <Grid container spacing={pageSpaces}>
         <Grid item xs={12} sm={7.5} lg={8}>
-          <Box sx={boxSx}>
+          <Box sx={{ width: "100%" }}>
             <MonthlyEarningsChart />
           </Box>
         </Grid>
