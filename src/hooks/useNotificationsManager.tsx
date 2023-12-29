@@ -25,7 +25,7 @@ export default function useNotificationsManager() {
         markAllAsRead,
         markAsRead,
         unreadCount: unreadNotificationsCount,
-        add: addNotification
+        add
     } = useNotificationCenter<Notification>();
     const { message } = useNotifications();
     const { api } = useApiRequest()
@@ -63,26 +63,24 @@ export default function useNotificationsManager() {
 
     const notificationsEventSource = useNotificationsEventSource();
 
+    function addNotification(notification: Notification) {
+        add({
+            data: notification,
+            id: notification._id,
+            type: notification.type || "success"
+        })
+    }
+
     function notificationsHandler(messageEvent: MessageEvent<string>) {
         if (messageEvent.data) {
             const data = JSON.parse(messageEvent.data)
             if (data instanceof Array) {
                 notifications.length && clear();
-                data.forEach((notification) => {
-                    addNotification({
-                        data: notification,
-                        id: notification._id,
-                        type: notification.type || "success"
-                    })
-                })
+                data.forEach((notification) => { addNotification(notification) })
             } else {
                 if (data._id) {
                     const notification = data as Notification
-                    addNotification({
-                        data: notification,
-                        id: notification._id,
-                        type: notification.type || "success"
-                    })
+                    addNotification(notification)
                 }
             }
         }
