@@ -1,9 +1,9 @@
 import { JSX } from "react";
 import {
-    Badge, IconButton, Popper, Fade, Switch,
-    Button, FormGroup, FormControlLabel, Box, Paper, SxProps
+    Badge, IconButton, Popper, Fade,
+    Button, Box, Paper, SxProps
 } from "@mui/material";
-import { Mail } from "@mui/icons-material";
+import { Notifications } from "@mui/icons-material";
 import { ActionAlert, P } from "@abdulrhmangoni/am-store-library";
 import useNotificationsManager from "../hooks/useNotificationsManager";
 import NotificationsList from "./NotificationsList";
@@ -15,19 +15,17 @@ export default function NotificationsCenter() {
         toggleNotificationsCenter,
         notificationsCenterIsOpen,
         anchorEl,
-        toggleFilter,
         clearNotifications,
-        markAllAsRead,
-        markAsRead,
-        unreadNotificationsCount,
-        showUnreadNotificationsOnly
+        markAllNotificationsAsRead,
+        markNotificationsAsRead,
+        unreadNotificationsCount
     } = useNotificationsManager();
 
     return (
         <Box>
             <IconButton size="large" onClick={toggleNotificationsCenter}>
                 <Badge badgeContent={unreadNotificationsCount} color="primary">
-                    <Mail color="action" />
+                    <Notifications color="action" />
                 </Badge>
             </IconButton>
             <Popper
@@ -41,29 +39,19 @@ export default function NotificationsCenter() {
                     return (
                         <Fade {...TransitionProps} timeout={350}>
                             <Box sx={{ p: "10px" }}>
-                                <FlexBar sx={{ borderBottom: "1px solid", borderBottomColor: "divider" }}>
-                                    <P variant="h6" color="#fff">Notification</P>
-                                    <FormGroup sx={{ color: "#fff", "& .MuiFormControlLabel-root": { mr: 0 } }}>
-                                        <FormControlLabel
-                                            label="Unread only"
-                                            sx={{ "& .MuiTypography-root": { fontSize: "14px" } }}
-                                            control={
-                                                <Switch
-                                                    onChange={toggleFilter}
-                                                    checked={showUnreadNotificationsOnly}
-                                                    size="small"
-                                                />
-                                            }
-                                        />
-                                    </FormGroup>
+                                <FlexBar gap={1} justify="start" sx={{ borderBottomColor: "divider" }}>
+                                    <P variant="h6" color="#fff">Notifications</P>
+                                    <img
+                                        src="/icons/notifications.svg"
+                                        alt="Notifications icon"
+                                        style={{ width: "30px", height: "30px" }}
+                                    />
                                 </FlexBar>
                                 <NotificationsList
                                     notifications={notifications}
-                                    showUnreadNotificationsOnly={showUnreadNotificationsOnly}
-                                    unreadNotificationsCount={unreadNotificationsCount}
-                                    markAsRead={markAsRead}
+                                    markNotificationsAsRead={markNotificationsAsRead}
                                 />
-                                <FlexBar sx={{ borderTop: "1px solid", borderTopColor: "divider" }}>
+                                <FlexBar justify="between" sx={{ borderTopColor: "divider" }}>
                                     <ActionAlert
                                         action={clearNotifications}
                                         title="Are you sure to clear all notifications?"
@@ -82,7 +70,7 @@ export default function NotificationsCenter() {
                                         size="small"
                                         sx={{ fontSize: "12px" }}
                                         variant="contained"
-                                        onClick={markAllAsRead}
+                                        onClick={markAllNotificationsAsRead}
                                     >
                                         Mark all as read
                                     </Button>
@@ -96,13 +84,21 @@ export default function NotificationsCenter() {
     );
 }
 
-function FlexBar({ children, sx }: { children: JSX.Element[] | JSX.Element, sx?: SxProps }) {
+interface FlexBarProps {
+    children: JSX.Element[] | JSX.Element,
+    sx?: SxProps,
+    justify?: string
+    gap?: number
+}
+
+function FlexBar({ children, sx, justify, gap = 2 }: FlexBarProps) {
     return (
         <Paper
-            className="flex-row-center-between gap2"
+            className={`flex-row-center-${justify} gap${gap}`}
             sx={{
                 p: "8px 12px",
                 borderRadius: 0,
+                border: "solid 1px transparent",
                 ...sx
             }}
         >

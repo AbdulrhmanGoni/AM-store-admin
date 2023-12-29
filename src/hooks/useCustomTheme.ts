@@ -8,6 +8,7 @@ export default function useCustomTheme(): Theme {
     const darkBackground = { default: "#111936", paper: "#0a1336" }
     const isLightMode = mode === "light"
     const textColor = isLightMode ? "#000000" : "#fff"
+    const successColor = "#11cb1a"
 
     return createTheme({
         palette: {
@@ -15,7 +16,7 @@ export default function useCustomTheme(): Theme {
             primary: { main: colors.indigo["A400"] },
             action: { hover: "3d5afe4d" },
             background: isLightMode ? lightBackground : darkBackground,
-            success: { main: "#0be715" }
+            success: { main: successColor, dark: successColor, light: successColor }
         },
         typography: {
             allVariants: {
@@ -30,8 +31,6 @@ export default function useCustomTheme(): Theme {
                         color: textColor
                     }
                 }
-            },
-            MuiAlert: {
             }
         }
     })
