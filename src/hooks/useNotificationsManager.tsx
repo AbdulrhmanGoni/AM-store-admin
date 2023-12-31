@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import useNotificationsEventSource from './useNotificationsEventSource';
+import useEventSource from './useEventSource';
 import { useNotificationCenter } from 'react-toastify/addons/use-notification-center';
 import { Id, TypeOptions } from 'react-toastify';
 import useApiRequest from './useApiRequest';
@@ -55,13 +55,16 @@ export default function useNotificationsManager() {
 
     const clearNotifications = () => {
         const unreadNotifications = notifications.filter(({ read }) => !read);
-        const notificationsIds = unreadNotifications.map(({ id }) => id);
-        markNotificationsAsRead(notificationsIds)
-            .then(clear)
-            .catch(() => { message("Failed to clear all notifications", "error") })
+        if (unreadNotifications.length) {
+            const notificationsIds = unreadNotifications.map(({ id }) => id);
+            markNotificationsAsRead(notificationsIds)
+                .then(clear)
+                .catch(() => { message("Failed to clear all notifications", "error") })
+        }
+        else clear();
     };
 
-    const notificationsEventSource = useNotificationsEventSource();
+    const notificationsEventSource = useEventSource("notifications");
 
     function addNotification(notification: Notification) {
         add({
