@@ -1,5 +1,5 @@
 import { FormGroup, FormControlLabel, Switch, styled, SxProps } from '@mui/material';
-import { useCookies } from 'react-cookie';
+import { useCookies } from '@abdulrhmangoni/am-store-library';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     width: 45,
@@ -51,10 +51,10 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 export default function SwitchTheme({ style }: { style?: SxProps }) {
 
-    const [{ AM_Store_admind_panel_theme: mode }, setCoockies] = useCookies();
+    const { cookies: { AM_Store_admind_panel_theme: mode }, addCookie } = useCookies();
 
     function switchTheme() {
-        setCoockies("AM_Store_admind_panel_theme", mode === "light" ? "dark" : "light")
+        addCookie("AM_Store_admind_panel_theme", mode === "light" ? "dark" : "light")
     }
 
     return (

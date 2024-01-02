@@ -1,9 +1,9 @@
 import { createTheme, Theme, colors } from "@mui/material";
-import { useCookies } from "react-cookie";
+import { useCookies } from "@abdulrhmangoni/am-store-library";
 
 export default function useCustomTheme(): Theme {
 
-    const [{ AM_Store_admind_panel_theme: mode }] = useCookies();
+    const { cookies: { AM_Store_admind_panel_theme: mode } } = useCookies();
     const lightBackground = { default: "#f9f9f9", paper: "#fff" }
     const darkBackground = { default: "#111936", paper: "#0a1336" }
     const isLightMode = mode === "light"

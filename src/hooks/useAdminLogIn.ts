@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import useApiRequest from './useApiRequest';
 import { host } from '../CONSTANTS/API_hostName';
-import { useCookies } from 'react-cookie';
+import { useCookies } from '@abdulrhmangoni/am-store-library';
 import { AdminData } from '../types/dataTypes';
 import { AxiosError } from 'axios';
 
@@ -17,7 +17,7 @@ export default function useAdminLogIn() {
     const [isNetworkError, setIsNetworkError] = useState<boolean>(false);
     const [isUnauthorized, setIsUnauthorized] = useState<boolean>(false);
     const [isUnexpected, setIsUnexpected] = useState<boolean>(false);
-    const [{ adminId, ["admin-access-token"]: accessToken }] = useCookies();
+    const { cookies: { adminId, ["admin-access-token"]: accessToken } } = useCookies();
 
     useEffect(() => {
         if (accessToken && adminId) {

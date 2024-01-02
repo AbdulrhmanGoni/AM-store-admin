@@ -1,11 +1,17 @@
 import axios from "axios";
-import { useCookies } from "react-cookie";
+import { useCookies } from "@abdulrhmangoni/am-store-library";
 
 export default function useApiRequest() {
 
+    const {
+        cookies: {
+            "admin-access-token": adminAccessToken,
+            adminId
+        }
+    } = useCookies()
     const headers = {
-        'access-token': useCookies()[0]["admin-access-token"],
-        'token-id': useCookies()[0]["adminId"],
+        'access-token': adminAccessToken,
+        'token-id': adminId,
         'Content-Type': 'application/json',
     }
 

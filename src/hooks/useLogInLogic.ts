@@ -1,7 +1,7 @@
 import { useState } from "react";
 import host from "../CONSTANTS/API_hostName";
 import useApiRequest from "./useApiRequest";
-import { useCookies } from "react-cookie";
+import { useCookies } from "@abdulrhmangoni/am-store-library";
 import useNotifications from "./useNotifications";
 import { GoogleUserCredentials, loadingControl } from "@abdulrhmangoni/am-store-library";
 import { AdminData } from "../types/dataTypes";
@@ -24,14 +24,14 @@ interface RequestErrorOptions {
 export default function useLogInLogic() {
 
     const { api } = useApiRequest();
-    const setCookies = useCookies()[1];
+    const { addCookie } = useCookies();
     const [logInFailed, setFailed] = useState<ErrorStateProps>({ state: true, message: "" });
     const { message } = useNotifications();
 
     function complateLog({ accessToken, adminData }: { accessToken: string, adminData: AdminData }) {
         const maxAge = 3600 * 24 * 20;
-        setCookies("admin-access-token", accessToken, { maxAge })
-        setCookies("adminId", adminData._id, { maxAge })
+        addCookie("admin-access-token", accessToken, maxAge)
+        addCookie("adminId", adminData._id, maxAge)
         window.location.reload();
     }
 
