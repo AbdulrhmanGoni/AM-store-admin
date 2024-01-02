@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@abdulrhmangoni/am-store-library": "^1.7.1",
+    "@abdulrhmangoni/am-store-library": "^0.8.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@faker-js/faker": "^8.2.0",
@@ -28,7 +28,7 @@
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-chartjs-2": "^5.2.0",
-    "react-cookie": "^4.1.1",
+    "react-cookie": "^7.0.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
     "react-toastify": "^9.1.3"

@@ -2,9 +2,9 @@ import {
     AddBusiness,
     AnalyticsOutlined,
     AnalyticsSharp,
-    Discount,
+    Discount, Inbox,
     EditAttributes,
-    Email, Groups, Inbox, Store
+    Feedback, Groups, Store
 } from "@mui/icons-material";
 import Icon from "./SvgIcon";
 import { productsIcon } from "./svgIconsAsString";
@@ -66,9 +66,9 @@ const drawerLinks: LinkProps[] = [
         icon: <Groups />
     },
     {
-        path: "/emails",
-        text: "Emails",
-        icon: <Email />
+        path: "/users-feedbacks",
+        text: "Users Feedbacks",
+        icon: <Feedback />
     }
 ]
 

@@ -17,9 +17,9 @@ interface LinkItemProps extends LinkProps {
     endIcon?: JSX.Element | false,
 }
 
-function isCurrentPath(path: string, pathname: string): boolean {
-    const isTheRoot = path === "/"
-    return !!(isTheRoot ? path === pathname : pathname.match(new RegExp(path, "gi")))
+function isCurrentPath(path: string, pathname: string, isParent?: boolean): boolean {
+    const activeChildren = isParent && pathname.match(new RegExp(path, "gi"))
+    return !!(path === pathname || activeChildren)
 }
 
 function LinkItem({ path, icon, text, close, onClick, isParent, isChild, children, endIcon }: LinkItemProps) {
@@ -35,7 +35,7 @@ function LinkItem({ path, icon, text, close, onClick, isParent, isChild, childre
         return false
     }
 
-    const isCurr = isCurrentPath(path, pathname)
+    const isCurr = isCurrentPath(path, pathname, isParent)
     let innerLinkColor = isCurr ? "#fff" : txt;
     innerLinkColor += " !important"
     const linkBg = isCurr ? `${main}` : paper;
@@ -96,8 +96,8 @@ export default function SideBarLinksList({ close }: { close: () => void }) {
         <List sx={listStyle} disablePadding>
             {sideBarLinks.map(({ path, text, icon, nestedLinks }) => {
                 const
-                    openChildren = isCurrentPath(path, currentPath),
-                    hasChildren = !!nestedLinks?.length
+                    hasChildren = !!nestedLinks?.length,
+                    openChildren = isCurrentPath(path, currentPath, hasChildren)
                 return (
                     <LinkItem
                         key={path} close={close}

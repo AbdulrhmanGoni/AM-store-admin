@@ -17,7 +17,7 @@ import AddProductsPage from './pages/AddProductsPage.tsx';
 import EditProductPage from './pages/EditProductPage.tsx';
 import ProductsStatisticsPage from './pages/ProductsStatisticsPage.tsx';
 import UsersPage from './pages/UsersPage.tsx';
-import EmailsPage from './pages/EmailsPage.tsx';
+import UsersFeedbacksPage from './pages/UsersFeedbacksPage.tsx';
 import NotFoundPage from './pages/NotFoundPage.tsx';
 import CobonsAndDiscountsPage from './pages/CobonsAndDiscountsPage.tsx';
 
@@ -34,7 +34,7 @@ const router = createBrowserRouter(
         <Route path='cobones-and-discounts' element={<CobonsAndDiscountsPage />} />
       </Route>
       <Route path='users' element={<UsersPage />} />
-      <Route path='emails' element={<EmailsPage />} />
+      <Route path='users-feedbacks' element={<UsersFeedbacksPage />} />
       <Route path='*' element={<NotFoundPage />} />
     </Route>
   )
