@@ -2,14 +2,11 @@ import { useEffect } from 'react';
 import { Close } from '@mui/icons-material';
 import {
     Avatar, Divider,
-    Paper,
-    Drawer, IconButton
+    Paper, Drawer, IconButton
 } from '@mui/material';
 import useAdminData from '../hooks/useAdminData';
 import SideBarLinksList from './SideBarLinksList';
-import { P } from '@abdulrhmangoni/am-store-library';
-import SwitchTheme from './SwitchTheme';
-
+import { P, SwitchTheme } from '@abdulrhmangoni/am-store-library';
 
 
 export default function AdminSideBar({ isOpen, close }: { isOpen: boolean, close: () => void }) {

@@ -2,14 +2,18 @@ import "normalize.css/normalize.css";
 import 'react-toastify/dist/ReactToastify.minimal.css';
 import { createContext, useState } from "react";
 import AdminAppBar from "./components/AdminBar";
-import { Box, Button, ThemeProvider } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from 'react-toastify';
 import useAdminLogIn from "./hooks/useAdminLogIn";
-import { IllustrationCard, LoadingCircle, LoadingPage } from "@abdulrhmangoni/am-store-library";
+import {
+  IllustrationCard,
+  LoadingCircle,
+  LoadingPage,
+  CustomThemeProvider
+} from "@abdulrhmangoni/am-store-library";
 import { Outlet } from "react-router-dom";
 import { AdminData } from "./types/dataTypes";
-import useCustomTheme from "./hooks/useCustomTheme";
 import LogInForm from "./components/LogInForm";
 
 export const AdminDataContext = createContext<AdminData | null>(null);
@@ -26,23 +30,23 @@ export default function App() {
   } = useAdminLogIn();
   const [logInPage, setLogInPage] = useState<boolean>(false);
 
-  const theme = useCustomTheme();
-
   return (
-    <ThemeProvider theme={theme}>
+    <CustomThemeProvider site="admin-panel">
       <AdminDataContext.Provider value={adminData}>
         <QueryClientProvider client={queryClient}>
           <Box
             id="app"
             className="flex-column full-height-vh"
-            sx={{
-              overflow: "auto",
-              bgcolor: "background.default",
-              "*::-webkit-scrollbar, &::-webkit-scrollbar": { bgcolor: "background.paper" },
-              "*::-webkit-scrollbar-thumb, &::-webkit-scrollbar-thumb": { bgcolor: "primary.main" },
-              "& input:autofill": {
-                boxShadow: `0 0 0 100px ${theme.palette.background.default} inset !important`,
-                WebkitTextFillColor: `${theme.palette.text.primary} !important`
+            sx={({ palette: { background, primary, text } }) => {
+              return {
+                overflow: "auto",
+                bgcolor: "background.default",
+                "*::-webkit-scrollbar, &::-webkit-scrollbar": { bgcolor: background.paper },
+                "*::-webkit-scrollbar-thumb, &::-webkit-scrollbar-thumb": { bgcolor: primary.main },
+                "& input:autofill": {
+                  boxShadow: `0 0 0 100px ${background.default} inset !important`,
+                  WebkitTextFillColor: `${text.primary} !important`
+                }
               }
             }}
           >
@@ -62,7 +66,7 @@ export default function App() {
           <ToastContainer limit={4} position="bottom-left" theme="colored" />
         </QueryClientProvider>
       </AdminDataContext.Provider>
-    </ThemeProvider>
+    </CustomThemeProvider>
   )
 }
 

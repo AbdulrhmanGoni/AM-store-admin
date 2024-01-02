@@ -40,7 +40,7 @@ export default function useAdminLogIn() {
                 .finally(() => setIsLoading(false))
         }
         else setIsUnauthorized(true);
-    }, [])
+    }, [adminId, accessToken])
 
     return {
         adminData,
