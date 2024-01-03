@@ -29,7 +29,7 @@ export default function useOrdersPageContent() {
         data: ordersStatistics = defaultStatistics,
         isFetching: statisticsAreLoading
     } = useGetApi<OrdersStatisticsType>({
-        path: `statistics?get=orders-statistics&year=${year}`,
+        path: `statistics?queryKey=orders-statistics&year=${year}`,
         key: ["orders-statistics", year]
     });
 

@@ -26,7 +26,7 @@ interface UseProductsStatisticsType extends PromiseState {
 export default function useProductsStatistics(): UseProductsStatisticsType {
 
     const queryKey = "products-statistics";
-    const path = `statistics/?get=${queryKey}`;
+    const path = `statistics/?queryKey=${queryKey}`;
     const {
         data: productsStatistics = ProductsStatisticsDefault,
         isLoading,

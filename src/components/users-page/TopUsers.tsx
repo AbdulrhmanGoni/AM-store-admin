@@ -21,7 +21,7 @@ interface UserDataType {
 
 export default function TopUsers() {
 
-    const queryKey = "top-customers", path = `statistics?get=${queryKey}&limit=5`;
+    const queryKey = "top-customers", path = `statistics?queryKey=${queryKey}&limit=5`;
     const {
         data: usersList,
         isFetching: isLoading,

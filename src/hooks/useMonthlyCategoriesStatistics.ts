@@ -36,7 +36,7 @@ export default function useMonthlyCategoriesStatistics(): UseMonthlyCategoriesSt
     const [year, setYear] = useState<number>(new Date().getFullYear())
     const queryKey = "monthly-categories-statistics"
     const { data, isError, isLoading } = useGetApi<reaponseType>({
-        key: [queryKey, year], path: `statistics/?get=${queryKey}&year=${year}`
+        key: [queryKey, year], path: `statistics/?queryKey=${queryKey}&year=${year}`
     })
 
     const chartData = useMemo(() => {

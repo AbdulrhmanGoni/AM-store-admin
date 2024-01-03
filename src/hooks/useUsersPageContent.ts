@@ -12,7 +12,7 @@ const defaultStatistics = {
 }
 
 export default function useUsersPageContent() {
-    const queryKey = "users-statistics", path = `statistics?get=${queryKey}`;
+    const queryKey = "users-statistics", path = `statistics?queryKey=${queryKey}`;
     const {
         data: usersStatistics = defaultStatistics,
         isLoading,

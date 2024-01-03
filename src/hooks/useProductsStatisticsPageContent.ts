@@ -30,7 +30,7 @@ export default function useProductsStatisticsPageContent() {
         data: topProducts,
         isLoading: topProductsLoading,
         isError: topProductsError
-    } = useGetApi<TopProductsType>({ key: ["top-products"], path: "statistics/?get=top-products&limit=5" })
+    } = useGetApi<TopProductsType>({ key: ["top-products"], path: "statistics/?queryKey=top-products&limit=5" })
 
     return {
         productsStatistics,

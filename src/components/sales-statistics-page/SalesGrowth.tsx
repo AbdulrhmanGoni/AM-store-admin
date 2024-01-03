@@ -3,36 +3,65 @@ import SvgIcon from "../SvgIcon";
 import { growChartIcon2 } from "../growChartIcon";
 import { NorthEast, SouthEast } from "@mui/icons-material";
 import { SmalLine } from "../SmallChart";
-import { nDecorator } from "@abdulrhmangoni/am-store-library";
-import useMonthlySalesStatistics from "../../hooks/useMonthlySalesStatistics";
+import { P, nDecorator } from "@abdulrhmangoni/am-store-library";
+import useGetApi from "../../hooks/useGetApi";
+import { Box } from "@mui/material";
 
-function countGrowthRete(pastValue: number = 1, currentValue: number = 1) {
-    return (currentValue - pastValue) / pastValue
+interface SalesGrowthType {
+    beforeLastMonth: {
+        year: number,
+        earnings: number,
+        month: string
+    },
+    lastMonth: {
+        year: number,
+        month: string,
+        earnings: number
+    },
+    growthRete: number
 }
 
 export default function SalesGrowth() {
 
-    const { isLoading, monthesData, isError } = useMonthlySalesStatistics();
+    const query = "sales-growth"
+    const { data: growthReteData, isFetching: isLoading, isError } = useGetApi<SalesGrowthType>({
+        path: `statistics?queryKey=${query}`,
+        key: [query]
+    });
 
-    const currentMonth = new Date().getMonth();
-    const lastMonthEarnings = monthesData?.[currentMonth - 1].totalEarnings ?? 0;
-    const beforeLastMonthEarnings = monthesData?.[currentMonth - 2].totalEarnings ?? 0;
+    const lastMonthEarnings = growthReteData?.lastMonth.earnings || 0;
+    const beforeLastMonthEarnings = growthReteData?.beforeLastMonth.earnings || 0;
+    const growthRete = growthReteData?.growthRete || 0
 
-    const growthRete = countGrowthRete(beforeLastMonthEarnings, lastMonthEarnings);
+    const stateArrow = growthRete < 0 ? <SouthEast /> : <NorthEast />
 
     return (
         <CustomChartBox
-            title="Sales growth"
+            title="Sales Growth"
             titleIcon={<SvgIcon svgElementAsString={growChartIcon2} />}
             isLoading={isLoading}
             isError={isError}
             smallChart={<SmalLine data={[beforeLastMonthEarnings, lastMonthEarnings]} tooltipIsMony />}
             mainValue={`${(growthRete * 100).toFixed(2)}%`}
             mainValueColor={growthRete < 0 ? "error" : "success"}
-            mainValueEndIcon={growthRete < 0 ? <SouthEast /> : <NorthEast />}
+            mainValueEndIcon={stateArrow}
             chartDescription={{
-                title: `$${nDecorator(lastMonthEarnings.toFixed(2))}`,
-                subTitle: "Last month"
+                title: ``,
+                titleEndIcon: (
+                    <Box color={growthRete < 0 ? "error.main" : "success.main"} className="flex-row-center-start">
+                        <P variant="h6" color="inherit">
+                            ${nDecorator((lastMonthEarnings - beforeLastMonthEarnings).toFixed(2))}
+                        </P>
+                        {stateArrow}
+                    </Box>
+                ),
+                subTitle: `
+                ${growthReteData?.beforeLastMonth.month}
+                ${growthReteData?.beforeLastMonth.year} 
+                - 
+                ${growthReteData?.lastMonth.month}
+                ${growthReteData?.lastMonth.year}
+                `
             }}
         />
     )

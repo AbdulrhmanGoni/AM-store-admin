@@ -16,7 +16,7 @@ export default function useCategoriesStatistics(): UseCategoriesStatisticsType {
 
     const queryKey = "categories-statistics"
     const { data = [], isLoading, isError } = useGetApi<CategoryStatistics[]>({
-        key: [queryKey], path: `statistics/?get=${queryKey}`
+        key: [queryKey], path: `statistics/?queryKey=${queryKey}`
     })
 
     return {
