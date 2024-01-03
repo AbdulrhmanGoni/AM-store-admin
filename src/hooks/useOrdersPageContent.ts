@@ -1,4 +1,3 @@
-import { faker } from "@faker-js/faker";
 import useMonthlySalesStatistics, { MonthSalesStatistics } from "./useMonthlySalesStatistics";
 import useGetApi from "./useGetApi";
 
@@ -33,11 +32,7 @@ export default function useOrdersPageContent() {
         key: ["orders-statistics", year]
     });
 
-    const chartData: number[] = monthesData?.map((doc: MonthSalesStatistics) => {
-        const randomNimber = faker.number.float({ precision: 1, max: 50, min: 30 });
-        const orders = doc.totalOrders ? doc.totalOrders : randomNimber;
-        return orders;
-    }) ?? [0]
+    const chartData: number[] = monthesData?.map((doc: MonthSalesStatistics) => doc.totalOrders) ?? [0]
 
     return {
         chartData,

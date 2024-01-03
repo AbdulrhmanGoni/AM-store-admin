@@ -5,7 +5,6 @@ import SvgIcon from "../components/SvgIcon";
 import MonthlyTargets from "../components/sales-statistics-page/MonthlyTargets";
 import CardInfoWithChart from "../components/CardInfoWithChart";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
-import { faker } from "@faker-js/faker";
 import { SmalLine } from "../components/SmallChart";
 import { averageOrdersIcon } from "../components/svgIconsAsString";
 import DisplayInfoBox from "../components/DisplayInfoBox";
@@ -19,10 +18,7 @@ export default function SalesStatisticsPage() {
 
   const { monthesData, isLoading } = useMonthlySalesStatistics();
 
-  const monthlyEarnings: number[] = monthesData?.map((mon: MonthSalesStatistics) => {
-    const randomNimber = faker.number.float({ precision: 0.01, max: 5000, min: 4000 });
-    return mon.totalEarnings ? mon.totalEarnings : randomNimber
-  }) ?? [0];
+  const monthlyEarnings: number[] = monthesData?.map((mon: MonthSalesStatistics) => mon.totalEarnings) ?? [0];
 
   const totalEarnings: number = monthlyEarnings?.reduce((acc, cur) => acc + cur, 0);
 

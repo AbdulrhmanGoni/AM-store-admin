@@ -3,7 +3,6 @@ import SvgIcon from "../SvgIcon";
 import { averageEarningsIcon } from "../svgIconsAsString";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { SmalLine } from "../SmallChart";
-import { faker } from "@faker-js/faker";
 import { MonthSalesStatistics, UseMonthlySalesStatisticsType } from "../../hooks/useMonthlySalesStatistics";
 
 
@@ -15,10 +14,7 @@ interface AverageEarningsProps extends UseMonthlySalesStatisticsType {
 
 export default function AverageEarnings({ data, isError, isLoading }: AverageEarningsProps) {
 
-    const earnings: number[] = data?.map((mon: MonthSalesStatistics) => {
-        const randomNimber = faker.number.float({ precision: 0.01, max: 5000, min: 4000 });
-        return mon.totalEarnings ? mon.totalEarnings : randomNimber
-    });
+    const earnings: number[] = data?.map((mon: MonthSalesStatistics) => mon.totalEarnings);
     const total: number = earnings?.reduce((acc, cur) => acc + cur, 0);
 
     return (

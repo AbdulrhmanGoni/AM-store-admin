@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react"
 import useGetApi from "./useGetApi"
 import randomColorsArr from "../CONSTANTS/randomColorsArr"
-import { faker } from "@faker-js/faker"
 import { PromiseState } from "@abdulrhmangoni/am-store-library"
 
 
@@ -50,8 +49,7 @@ export default function useMonthlyCategoriesStatistics(): UseMonthlyCategoriesSt
                 name: category,
                 color: randomColorsArr[index],
                 data: monthlyStatistics?.map((month: MonthlyCategoryStatistics) => {
-                    const randomEarnings = faker.number.float({ precision: 0.02, max: 3000, min: 1500 });
-                    const totalEarnings = month.totalEarnings ? month.totalEarnings : randomEarnings;
+                    const totalEarnings = month.totalEarnings
                     total += totalEarnings;
                     return +totalEarnings.toFixed(2);
                 })
@@ -59,10 +57,7 @@ export default function useMonthlyCategoriesStatistics(): UseMonthlyCategoriesSt
             salesChartData.push({
                 name: category,
                 color: randomColorsArr[index],
-                data: monthlyStatistics?.map((month: MonthlyCategoryStatistics) => {
-                    const randomNumber = faker.number.float({ precision: 1, max: 45, min: 30 });
-                    return month.productsSold ? month.productsSold : randomNumber
-                })
+                data: monthlyStatistics?.map((month: MonthlyCategoryStatistics) => month.productsSold)
             })
         })
 

@@ -2,7 +2,6 @@ import { Skeleton, useTheme } from "@mui/material";
 import Chart from "react-apexcharts";
 import { FetchFailedAlert, nDecorator, P } from "@abdulrhmangoni/am-store-library";
 import ApexchartsContainer from "../ApexchartsContainer";
-import { faker } from "@faker-js/faker";
 import { ApexOptions } from "apexcharts";
 import ChartTitle from "../ChartTitle";
 import useMonthlySalesStatistics, { MonthSalesStatistics } from "../../hooks/useMonthlySalesStatistics";
@@ -54,10 +53,7 @@ export default function MonthlyEarningsChart() {
     const series: ApexAxisChartSeries = [
         {
             name: 'Earnings',
-            data: monthesData?.map((doc: MonthSalesStatistics) => {
-                const randomNimber = faker.number.float({ precision: 0.02, max: 5000, min: 4000 });
-                return doc.totalEarnings ? +doc.totalEarnings.toFixed(2) : randomNimber
-            }) ?? [0]
+            data: monthesData?.map((doc: MonthSalesStatistics) => +doc.totalEarnings.toFixed(2)) ?? [0]
         }
     ]
 
