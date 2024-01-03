@@ -25,7 +25,7 @@ export default function useMonthlySalesStatistics(): UseMonthlySalesStatisticsTy
 
     const [year, setYear] = useState<number>(new Date().getFullYear())
     const query = "monthly-sales-statistics"
-    const path = `statistics/?get=${query}&year=${year}`;
+    const path = `statistics/?queryKey=${query}&year=${year}`;
     const {
         data,
         isError,

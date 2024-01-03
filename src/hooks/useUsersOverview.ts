@@ -20,7 +20,7 @@ export default function useUsersOverview() {
     const [page, setPage] = useState<number>(1);
     const [pageSize] = useState<number>(6);
     const query = "users-overview";
-    const path = `statistics/?get=${query}&limit=${pageSize}&page=`;
+    const path = `statistics/?queryKey=${query}&pageSize=${pageSize}&page=`;
 
     const fetchUsers = (page = 1) => api.get(`${host}/${path}` + page).then(({ data }) => data)
 

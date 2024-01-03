@@ -4,21 +4,25 @@ import { growChartIcon2 } from "../growChartIcon";
 import { NorthEast, SouthEast } from "@mui/icons-material";
 import { SmalLine } from "../SmallChart";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
-import useMonthlySalesStatistics from "../../hooks/useMonthlySalesStatistics";
+import useGetApi from "../../hooks/useGetApi";
 
-function countGrowthRete(pastValue: number = 1, currentValue: number = 1) {
-    return (currentValue - pastValue) / pastValue
+interface SalesGrowthType {
+    beforeLastMonth: { earnings: number, month: string },
+    lastMonth: { earnings: number, month: string },
+    growthRete: number
 }
 
 export default function SalesGrowth() {
 
-    const { isLoading, monthesData, isError } = useMonthlySalesStatistics();
+    const query = "sales-growth"
+    const { data: growthReteData, isFetching: isLoading, isError } = useGetApi<SalesGrowthType>({
+        path: `statistics?queryKey=sales-growth`,
+        key: [query]
+    });
 
-    const currentMonth = new Date().getMonth();
-    const lastMonthEarnings = monthesData?.[currentMonth - 1].totalEarnings ?? 0;
-    const beforeLastMonthEarnings = monthesData?.[currentMonth - 2].totalEarnings ?? 0;
-
-    const growthRete = countGrowthRete(beforeLastMonthEarnings, lastMonthEarnings);
+    const lastMonthEarnings = growthReteData?.lastMonth.earnings || 0;
+    const beforeLastMonthEarnings = growthReteData?.beforeLastMonth.earnings || 0;
+    const growthRete = growthReteData?.growthRete || 0
 
     return (
         <CustomChartBox

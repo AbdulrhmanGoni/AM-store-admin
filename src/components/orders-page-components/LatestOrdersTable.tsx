@@ -19,9 +19,10 @@ export default function LatestOrdersTable() {
     const paddingSpace = useMediaQuery("(min-width: 900px)") ? 35 : 19;
     const apiRef = useGridApiRef();
 
+    const query = "latest-orders"
     const { data: orders = [], isLoading } = useGetApi<readonly LatestOrdersType[]>({
-        key: ["latest-orders"],
-        path: `statistics/?get=orders-get-latest&limit=10`
+        key: [query],
+        path: `orders/${query}?limit=10`
     })
 
     return (
