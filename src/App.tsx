@@ -20,7 +20,14 @@ export const AdminDataContext = createContext<AdminData | null>(null);
 
 export default function App() {
 
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false
+      },
+    }
+  });
   const {
     adminData,
     isLoading, isError,

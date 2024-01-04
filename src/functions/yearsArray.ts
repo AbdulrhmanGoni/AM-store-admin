@@ -1,5 +1,6 @@
+import foundingYear from "../CONSTANTS/foundingYear";
 
-export default function yearsArray(startYear: number) {
+export default function yearsArray(startYear: number = foundingYear) {
 
     const currentYear = new Date().getFullYear();
     const yearsArray = [startYear];

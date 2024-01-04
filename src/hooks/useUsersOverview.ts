@@ -35,8 +35,7 @@ export default function useUsersOverview() {
     const { isFetching, isError, data, refetch } = useQuery<UseUsersOverviewType>({
         queryKey: [query, page],
         queryFn: () => fetchUsers(page),
-        keepPreviousData: true,
-        refetchOnWindowFocus: false
+        keepPreviousData: true
     })
 
     return {

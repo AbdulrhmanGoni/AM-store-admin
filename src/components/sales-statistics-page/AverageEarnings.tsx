@@ -3,10 +3,10 @@ import SvgIcon from "../SvgIcon";
 import { averageEarningsIcon } from "../svgIconsAsString";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { SmalLine } from "../SmallChart";
-import { MonthSalesStatistics, UseMonthlySalesStatisticsType } from "../../hooks/useMonthlySalesStatistics";
+import { MonthSalesStatistics } from "../../hooks/useMonthlySalesStatistics";
 
 
-interface AverageEarningsProps extends UseMonthlySalesStatisticsType {
+interface AverageEarningsProps {
     data: MonthSalesStatistics[],
     isError: boolean,
     isLoading: boolean
