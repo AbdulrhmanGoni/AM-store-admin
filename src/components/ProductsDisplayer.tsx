@@ -40,14 +40,18 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
 
     useEffect(() => {
         if (!product) {
+            const controller = new AbortController();
+            const signal = controller.signal;
             setIsLoading(true)
-            getProduct(productId)
+            getProduct(productId, signal)
                 .then((data) => {
                     setProduct(data);
                     setProductDiscount(data?.discount)
                 })
                 .catch(() => { setIsError(true) })
                 .finally(() => { setIsLoading(false) })
+
+            return () => { controller.abort() }
         }
     }, [getProduct, productId, product]);
 
@@ -155,12 +159,9 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
                                         earnings ?
                                             <Box className="flex-row-center-start" columnGap={.5}>
                                                 <P variant="subtitle1">This product achieves</P>
-                                                <HighlightedWord
-                                                    variant="subtitle1"
-                                                    highlightColor="#00ff0c"
-                                                >
+                                                <P variant="subtitle1" color="#00ff0c">
                                                     {`$${nDecorator(earnings?.toFixed(2))}`}
-                                                </HighlightedWord>
+                                                </P>
                                                 <P variant="subtitle1">of earnings</P>
                                             </Box>
                                             : <P variant="subtitle1">
@@ -184,7 +185,7 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
                                 <ElementWithLoadingState isLoading={isLoading} height={100}
                                     element={<P variant="body1">{description}</P>}
                                 />
-                                <ElementWithLoadingState isLoading={isLoading} height={100}
+                                <ElementWithLoadingState isLoading={isLoading} width={60} height={30}
                                     element={
                                         <ProductAvailabationState
                                             visitAllAmount
@@ -193,7 +194,7 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
                                         />
                                     }
                                 />
-                                <ElementWithLoadingState isLoading={isLoading} height={60}
+                                <ElementWithLoadingState isLoading={isLoading} height={50}
                                     element={
                                         <Box className="flex-row-center-start gap1" sx={{ mt: 1, flexFlow: "wrap" }}>
                                             <ActionAlert

@@ -5,7 +5,6 @@ import { Id, TypeOptions } from 'react-toastify';
 import useApiRequest from './useApiRequest';
 import host from '../CONSTANTS/API_hostName';
 import useNotifications from './useNotifications';
-import { AxiosResponse } from 'axios';
 
 export interface Notification {
     _id: string,
@@ -15,7 +14,7 @@ export interface Notification {
     createdAt: string
 }
 
-export type MarkNotificationsAsReadType = (id: Id[], markAll?: boolean) => Promise<AxiosResponse>
+export type MarkNotificationsAsReadType = (id: Id[], markAll?: boolean) => Promise<void>
 
 export default function useNotificationsManager() {
 
@@ -40,11 +39,11 @@ export default function useNotificationsManager() {
 
     const markNotificationsAsRead: MarkNotificationsAsReadType = async (notificationsIds, markAll) => {
         return await api.post(`${host}/notifications`, { notificationsIds })
-            .then((res) => {
+            .then(() => {
                 if (markAll) markAllAsRead();
                 else markAsRead(notificationsIds);
-                return res
             })
+            .catch(() => { message("Failed to set the notifications as read", "error") })
     };
 
     const markAllNotificationsAsRead = async () => {
@@ -77,7 +76,7 @@ export default function useNotificationsManager() {
     function notificationsHandler(messageEvent: MessageEvent<string>) {
         if (messageEvent.data) {
             const data = JSON.parse(messageEvent.data)
-            if (data instanceof Array) {
+            if (data instanceof Array && data.length) {
                 notifications.length && clear();
                 data.forEach((notification) => { addNotification(notification) })
             } else {

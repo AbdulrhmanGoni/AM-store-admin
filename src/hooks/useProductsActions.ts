@@ -2,6 +2,7 @@ import { host_admin } from "../CONSTANTS/API_hostName";
 import useApiRequest from "./useApiRequest";
 import { productData } from "../types/dataTypes";
 import { findTheChangesReturnType } from "../functions/findUpdateFormChanges";
+import { GenericAbortSignal } from "axios";
 
 export default function useProductsActions() {
 
@@ -17,8 +18,8 @@ export default function useProductsActions() {
         return (await api.post(`${host_admin}/products/${productId}`, { changes })).data
     }
 
-    async function getProduct(productId: string) {
-        return (await api.get(`${host_admin}/products/${productId}`)).data
+    async function getProduct(productId: string, signal?: GenericAbortSignal) {
+        return (await api.get(`${host_admin}/products/${productId}`, { signal })).data
     }
 
     async function deleteProduct(productId: string) {

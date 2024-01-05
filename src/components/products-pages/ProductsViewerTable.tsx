@@ -5,10 +5,12 @@ import ToolBar from './ProducsTableToolbar';
 import Footer from './ProducsTableFooter';
 import { IllustrationCard } from '@abdulrhmangoni/am-store-library';
 import useProductsTableLogic, { UpdateCelEvent } from '../../hooks/useProductsTableLogic';
+import useProductsDisplayer from '../../hooks/useProductsDisplayer';
 
 
 export default function ProductsViewerTable() {
 
+    const { display } = useProductsDisplayer()
     const {
         products,
         paginationModel,
@@ -39,6 +41,11 @@ export default function ProductsViewerTable() {
                 paginationMode='client'
                 density='comfortable'
                 checkboxSelection
+                onCellDoubleClick={(event) => {
+                    if (event.field === "images") {
+                        display(event.id as string)
+                    }
+                }}
                 disableColumnFilter
                 hideFooterSelectedRowCount
                 isRowSelectable={(params: GridRowParams) => !goingToDelete.includes(params.row._id)}
