@@ -11,13 +11,16 @@ import randomColorsArr from "../CONSTANTS/randomColorsArr";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import DisplayInfoBox from "../components/DisplayInfoBox";
 import useOrdersPageContent from "../hooks/useOrdersPageContent";
+import SelectBox from "../components/SelectBox";
+import yearsArray from "../functions/yearsArray";
 
 
 export default function OrdersManagementPage() {
 
     const {
         chartData,
-        year,
+        currentYear,
+        setYear,
         ordersStatistics,
         statisticsAreLoading,
         chartDataLoading,
@@ -36,11 +39,18 @@ export default function OrdersManagementPage() {
 
     return (
         <Box className="flex-column" gap={pageSpaces}>
-            <PageTitle
-                title="Orders Management"
-                description="View statistics, View latest orders, Search for orders"
-                icon={<SvgIcon svgElementAsString={orderIcon} />}
-            />
+            <Box className="flex-row a-end j-between">
+                <PageTitle
+                    title="Orders Management"
+                    description="View statistics, View latest orders, Search for orders"
+                    icon={<SvgIcon svgElementAsString={orderIcon} />}
+                />
+                <SelectBox
+                    defaultValue={currentYear}
+                    values={yearsArray()}
+                    onSelect={(value) => setYear(+value)}
+                />
+            </Box>
             <Grid container spacing={pageSpaces}>
                 <Grid item xs={6} md={3}>
                     <DisplayInfoBox
@@ -104,7 +114,7 @@ export default function OrdersManagementPage() {
                             isLoading={chartDataLoading}
                             isError={chartDataError}
                             refetch={refetchChartData}
-                            year={year}
+                            year={currentYear}
                             data={chartData}
                         />
                     </Box>

@@ -1,42 +1,32 @@
 import useMonthlySalesStatistics, { MonthSalesStatistics } from "./useMonthlySalesStatistics";
-import useGetApi from "./useGetApi";
-
-interface OrdersStatisticsType {
-    totalOrders: number,
-    completedOrders: number,
-    pendingOrders: number,
-    canceledOrders: number
-}
-
-const defaultStatistics = {
-    totalOrders: 0,
-    completedOrders: 0,
-    pendingOrders: 0,
-    canceledOrders: 0
-}
+import useOrdersStatistics from "./useOrdersStatistics";
 
 export default function useOrdersPageContent() {
 
     const {
-        monthesData,
-        year,
+        data: ordersStatistics,
+        setYear: setOrdersStatisticsYear,
+        isLoading: statisticsAreLoading
+    } = useOrdersStatistics();
+
+    const {
+        data: monthesData,
+        currentYear,
+        setYear: setMonthlySalesYear,
         isLoading: chartDataLoading,
         isError: chartDataError,
         refetch: refetchChartData
-    } = useMonthlySalesStatistics();
-    const {
-        data: ordersStatistics = defaultStatistics,
-        isFetching: statisticsAreLoading
-    } = useGetApi<OrdersStatisticsType>({
-        path: `statistics?queryKey=orders-statistics&year=${year}`,
-        key: ["orders-statistics", year]
-    });
+    } = useMonthlySalesStatistics()
 
     const chartData: number[] = monthesData?.map((doc: MonthSalesStatistics) => doc.totalOrders) ?? [0]
 
     return {
         chartData,
-        year,
+        currentYear,
+        setYear: (year: number) => {
+            setMonthlySalesYear(year)
+            setOrdersStatisticsYear(year)
+        },
         ordersStatistics,
         statisticsAreLoading,
         chartDataLoading,

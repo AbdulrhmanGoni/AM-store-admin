@@ -1,6 +1,4 @@
-import { PromiseState } from "@abdulrhmangoni/am-store-library";
-import useGetApi from "./useGetApi";
-import { useState } from "react";
+import useYearStatistics from "./useYearStatistics";
 
 export interface MonthSalesStatistics {
     month: string,
@@ -10,35 +8,7 @@ export interface MonthSalesStatistics {
     earningsTarget: number
 }
 
-interface reaponseType {
-    monthes: MonthSalesStatistics[],
-    year: number
-}
-
-export interface UseMonthlySalesStatisticsType extends PromiseState {
-    monthesData?: MonthSalesStatistics[],
-    year: number,
-    setYear: (year: number) => void
-    refetch: () => void
-}
-export default function useMonthlySalesStatistics(): UseMonthlySalesStatisticsType {
-
-    const [year, setYear] = useState<number>(new Date().getFullYear())
-    const query = "monthly-sales-statistics"
-    const path = `statistics/?queryKey=${query}&year=${year}`;
-    const {
-        data,
-        isError,
-        isFetching: isLoading,
-        refetch
-    } = useGetApi<reaponseType>({ key: [query, year], path });
-
-    return {
-        monthesData: data?.monthes,
-        year: data?.year ?? year,
-        setYear,
-        isLoading,
-        isError,
-        refetch
-    }
+export default function useMonthlySalesStatistics() {
+    const options = { dataPropertyName: "monthes" }
+    return useYearStatistics<MonthSalesStatistics[]>("monthly-sales-statistics", options);
 }
