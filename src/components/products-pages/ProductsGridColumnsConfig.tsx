@@ -47,8 +47,9 @@ function renderRatingCell(params: GRCP) {
                     precision={0.5}
                     value={ratingAverage}
                     readOnly
+                    size='small'
                 />
-                <P variant='subtitle2' ml={.5}>({reviews})</P>
+                <P variant='body2' ml={.5}>({reviews})</P>
             </Box>
         </AlertTooltip>
     )
