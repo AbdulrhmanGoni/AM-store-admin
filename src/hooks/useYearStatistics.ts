@@ -27,7 +27,7 @@ export default function useYearStatistics<T>(queryKey: string, { dataPropertyNam
 
     const results = useQueries({ queries })
 
-    const currentYearData = results[queries.findIndex(({ queryKey }) => queryKey[1] == currentYear)]
+    const currentYearData = results[queries.findIndex(({ queryKey: [, year] }) => year == currentYear)]
 
     return {
         currentYear,
