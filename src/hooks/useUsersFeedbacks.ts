@@ -3,7 +3,7 @@ import host from '../CONSTANTS/API_hostName';
 import useEventSource from './useEventSource';
 import { useEffect } from 'react';
 
-interface UserFeedback {
+export interface UserFeedback {
     _id: string,
     subject: string,
     body: string,
@@ -20,14 +20,16 @@ export default function useUsersFeedbacks() {
         autoFetchingFirstSlice: true,
         itemsIdPropertyName: "_id"
     }
+    const url = `${host}/feedbacks`
     const {
         data: feedbacks,
         getNextSlice,
         isLoading,
         isError,
         addNewItem,
+        deleteItem: deleteFeedback,
         refetch
-    } = useSlicedFetch<UserFeedback>(`${host}/feedbacks`, "feedbacks", useSlicedFetchOptions);
+    } = useSlicedFetch<UserFeedback>(url, "feedbacks", useSlicedFetchOptions);
 
     useWhenElementAppears("lastFeedbackId", getNextSlice)
 
@@ -51,6 +53,7 @@ export default function useUsersFeedbacks() {
         getNextSlice,
         isLoading,
         isError,
-        refetch
+        refetch,
+        deleteFeedback
     }
 }

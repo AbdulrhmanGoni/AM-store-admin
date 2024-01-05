@@ -20,7 +20,7 @@ type byStepsType = {
 
 export default function useNotifications() {
 
-    function message(message: string, type: messageType, options?: ToastOptions) {
+    function message(message: string, type?: messageType, options?: ToastOptions) {
         toast(message, {
             pauseOnHover: true,
             pauseOnFocusLoss: true,
