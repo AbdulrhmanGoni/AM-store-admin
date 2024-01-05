@@ -1,10 +1,8 @@
-import { useMemo, useState } from "react"
-import useGetApi from "./useGetApi"
+import { useMemo } from "react"
 import randomColorsArr from "../CONSTANTS/randomColorsArr"
-import { PromiseState } from "@abdulrhmangoni/am-store-library"
+import useYearStatistics from "./useYearStatistics"
 
-
-export interface MonthlyCategoryStatistics {
+interface MonthlyCategoryStatistics {
     month: string
     productsSold: number
     totalEarnings: number
@@ -15,28 +13,17 @@ interface CategoriesStatisticsType {
     monthlyStatistics: MonthlyCategoryStatistics[]
 }
 
-interface UseMonthlyCategoriesStatisticsType extends PromiseState {
-    chartData: {
-        earningsChartData: ApexAxisChartSeries,
-        salesChartData: ApexAxisChartSeries,
-        totalEarnings: number
-    },
-    year?: number,
-    setYear: (year: number) => void
-}
+export default function useMonthlyCategoriesStatistics() {
 
-interface reaponseType {
-    categories: CategoriesStatisticsType[],
-    year: number
-}
-
-export default function useMonthlyCategoriesStatistics(): UseMonthlyCategoriesStatisticsType {
-
-    const [year, setYear] = useState<number>(new Date().getFullYear())
+    const queryOptions = { dataPropertyName: "categories" }
     const queryKey = "monthly-categories-statistics"
-    const { data, isError, isLoading } = useGetApi<reaponseType>({
-        key: [queryKey, year], path: `statistics/?queryKey=${queryKey}&year=${year}`
-    })
+    const {
+        data,
+        currentYear,
+        setYear,
+        isLoading,
+        isError
+    } = useYearStatistics<CategoriesStatisticsType[]>(queryKey, queryOptions)
 
     const chartData = useMemo(() => {
         let total: number = 0;
@@ -44,7 +31,7 @@ export default function useMonthlyCategoriesStatistics(): UseMonthlyCategoriesSt
             earningsChartData: ApexAxisChartSeries = [],
             salesChartData: ApexAxisChartSeries = []
 
-        data?.categories.forEach(({ category, monthlyStatistics }: CategoriesStatisticsType, index: number) => {
+        data?.forEach(({ category, monthlyStatistics }: CategoriesStatisticsType, index: number) => {
             earningsChartData.push({
                 name: category,
                 color: randomColorsArr[index],
@@ -70,7 +57,7 @@ export default function useMonthlyCategoriesStatistics(): UseMonthlyCategoriesSt
 
     return {
         chartData,
-        year: data?.year,
+        currentYear,
         setYear,
         isLoading,
         isError

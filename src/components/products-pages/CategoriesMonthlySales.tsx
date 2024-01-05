@@ -4,13 +4,15 @@ import ApexchartsContainer from "../ApexchartsContainer";
 import { ApexOptions } from "apexcharts";
 import ChartTitle from "../ChartTitle";
 import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
-import { nDecorator, P } from "@abdulrhmangoni/am-store-library";
+import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import useMonthlyCategoriesStatistics from "../../hooks/useMonthlyCategoriesStatistics";
+import SelectBox from "../SelectBox";
+import yearsArray from "../../functions/yearsArray";
 
 
 export default function CategoriesMonthlySales() {
 
-    const { chartData: { salesChartData }, year } = useMonthlyCategoriesStatistics()
+    const { chartData: { salesChartData }, currentYear, setYear } = useMonthlyCategoriesStatistics()
 
     const { palette: { mode } } = useTheme();
     const options: ApexOptions = {
@@ -45,7 +47,13 @@ export default function CategoriesMonthlySales() {
                 title="Categories Monthly Sales"
                 disableIconColor
                 icon={<img src="/icons/bar-chart.svg" />}
-                endItem={<P variant="h6">{year}</P>}
+                endItem={
+                    <SelectBox
+                        defaultValue={currentYear}
+                        values={yearsArray()}
+                        onSelect={(value) => setYear(+value)}
+                    />
+                }
             />
             <Chart options={options} series={salesChartData} type="bar" height={280} />
         </ApexchartsContainer>
