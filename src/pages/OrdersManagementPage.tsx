@@ -97,7 +97,7 @@ export default function OrdersManagementPage() {
                     />
                 </Grid>
             </Grid>
-            <Grid container spacing={pageSpaces}>
+            <Grid container spacing={pageSpaces} mb={2}>
                 <Grid item xs={12} md={5.5} lg={4}>
                     <CardInfoWithChart
                         isLoading={statisticsAreLoading}
@@ -120,6 +120,11 @@ export default function OrdersManagementPage() {
                     </Box>
                 </Grid>
             </Grid>
+            <PageTitle
+                title="Latest Orders"
+                description="View the details of latest orders"
+                icon={<img src="/icons/booking-history.svg" />}
+            />
             <LatestOrdersTable />
         </Box>
     )
