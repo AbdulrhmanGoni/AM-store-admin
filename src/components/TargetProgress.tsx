@@ -7,11 +7,11 @@ import { nDecorator, P } from '@abdulrhmangoni/am-store-library';
 interface TargetProgressProps {
     target: number,
     value: number,
-    timeout: boolean,
+    timeouted: boolean,
     progressLineStyle?: SxProps
 }
 
-export function TargetProgressLine({ target, value, progressLineStyle, timeout }: TargetProgressProps) {
+export function TargetProgressLine({ target, value, progressLineStyle, timeouted }: TargetProgressProps) {
     const achivedPercentage = calculatePercentage(target, value);
     const percentage = achivedPercentage ? achivedPercentage : 0;
     const isCompleted = percentage >= 100;
@@ -23,10 +23,13 @@ export function TargetProgressLine({ target, value, progressLineStyle, timeout }
                     variant='h6'
                     fontSize="16px"
                 >
-                    {timeout ? "Month" : "Current"} Earnings:
+                    {timeouted ? "Month's" : "Current"} Earnings:
                     <P
                         component="span"
-                        color={isCompleted ? "success.main" : timeout ? "error.main" : "text.primary"}
+                        color={
+                            isCompleted ? "success.main"
+                                : percentage && timeouted ? "error.main" : "text.primary"
+                        }
                         ml={.5}
                     >
                         ${nDecorator(value?.toFixed(2))}
@@ -47,11 +50,11 @@ export function TargetProgressLine({ target, value, progressLineStyle, timeout }
                     sx={{ width: "100%", ...progressLineStyle }}
                     variant="determinate"
                     value={isCompleted ? 100 : percentage}
-                    color={isCompleted ? "success" : timeout ? "error" : "primary"}
+                    color={isCompleted ? "success" : percentage && timeouted ? "error" : "primary"}
                 />
                 {
                     isCompleted ? <Done color="success" />
-                        : timeout ? <Close color="error" />
+                        : percentage && timeouted ? <Close color="error" />
                             : <P>{percentage}%</P>
                 }
             </Box>

@@ -1,11 +1,11 @@
 import { Box, useTheme } from '@mui/material'
 import { CSSProperties } from '@mui/material/styles/createMixins'
-import { JSX } from 'react'
+import { ReactNode } from 'react'
 
 interface SmallIconBoxProps {
     color?: string,
-    icon?: JSX.Element | string | number,
-    children?: JSX.Element | string | number,
+    icon?: ReactNode,
+    children?: ReactNode,
     boxStyle?: CSSProperties,
     svgIconStyle?: CSSProperties,
     svgIconSize?: number,

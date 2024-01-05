@@ -1,23 +1,27 @@
 import { useState } from 'react'
 import { Box, Paper } from '@mui/material'
 import { TargetProgressLine } from '../TargetProgress'
-import { ElementWithLoadingState, nDecorator, P } from '@abdulrhmangoni/am-store-library'
+import { ElementWithLoadingState, nDecorator, P, PromiseState } from '@abdulrhmangoni/am-store-library'
 import SelectBox from '../SelectBox'
 import SvgIcon from '../SvgIcon'
 import { targetIcon } from '../targetIcon'
-import useMonthlySalesStatistics from '../../hooks/useMonthlySalesStatistics'
+import { MonthSalesStatistics } from '../../hooks/useMonthlySalesStatistics'
 import MONTHES from '../../CONSTANTS/MONTHES'
+import isDatePassed from '../../functions/isDatePassed'
 
+interface MonthlyTargetsProps extends PromiseState {
+    currentYear: number,
+    monthesData: MonthSalesStatistics[]
+}
 
-export default function MonthlyTargets() {
+export default function MonthlyTargets({ monthesData, currentYear, isLoading }: MonthlyTargetsProps) {
 
-    const currentMonth = new Date().getMonth()
-    const { monthesData, isLoading, year } = useMonthlySalesStatistics();
+    const currentMonth = new Date().getMonth();
     const [monthIndex, setMonthIndex] = useState<number>(currentMonth);
     const [loading, setLoading] = useState<boolean>(false);
 
     const loadingState = isLoading || loading;
-    const timeout = monthIndex < currentMonth;
+    const timeouted = isDatePassed(currentYear, monthIndex);
 
     return (
         <Paper className='flex-column j-around gap2 full-height' sx={{ p: 2 }}>
@@ -29,7 +33,7 @@ export default function MonthlyTargets() {
                     element={<P flex={1} variant='h6'>Monthly Target</P>}
                 />
                 <ElementWithLoadingState isLoading={isLoading} width={65} height={32}
-                    element={<P variant='h6'>{year}</P>}
+                    element={<P variant='h6'>{currentYear}</P>}
                 />
             </Box>
             <Box className="flex-row-center-between">
@@ -70,7 +74,7 @@ export default function MonthlyTargets() {
                         progressLineStyle={{ height: 15, borderRadius: 1 }}
                         target={monthesData?.[monthIndex].earningsTarget ?? 0}
                         value={monthesData?.[monthIndex].totalEarnings ?? 0}
-                        timeout={timeout}
+                        timeouted={timeouted}
                     />
                 }
             />

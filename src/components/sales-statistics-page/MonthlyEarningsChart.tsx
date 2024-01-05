@@ -1,16 +1,19 @@
 import { Skeleton, useTheme } from "@mui/material";
 import Chart from "react-apexcharts";
-import { FetchFailedAlert, nDecorator, P } from "@abdulrhmangoni/am-store-library";
+import { FetchFailedAlert, nDecorator, P, PromiseState } from "@abdulrhmangoni/am-store-library";
 import ApexchartsContainer from "../ApexchartsContainer";
 import { ApexOptions } from "apexcharts";
 import ChartTitle from "../ChartTitle";
-import useMonthlySalesStatistics, { MonthSalesStatistics } from "../../hooks/useMonthlySalesStatistics";
+import { MonthSalesStatistics } from "../../hooks/useMonthlySalesStatistics";
 import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
 
+interface MonthlyEarningsChartProps extends PromiseState {
+    currentYear: number,
+    monthesData: MonthSalesStatistics[],
+    refetch: () => void
+}
 
-export default function MonthlyEarningsChart() {
-
-    const { monthesData, year, isLoading, isError, refetch } = useMonthlySalesStatistics();
+export default function MonthlyEarningsChart({ monthesData, currentYear, isLoading, isError, refetch }: MonthlyEarningsChartProps) {
 
     const { palette: { mode, primary } } = useTheme();
     const options: ApexOptions = {
@@ -62,7 +65,7 @@ export default function MonthlyEarningsChart() {
             <ChartTitle
                 title="Monthly Earnings"
                 icon={<img src="/icons/line-chart.svg" />}
-                endItem={<P variant="h6">{year}</P>}
+                endItem={<P variant="h6">{currentYear}</P>}
             />
             {
                 isLoading ? <Skeleton variant="rounded" height={CHART_HEIGHT} />

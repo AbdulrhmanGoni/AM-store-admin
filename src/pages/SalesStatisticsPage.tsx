@@ -13,10 +13,18 @@ import randomColorsArr from "../CONSTANTS/randomColorsArr";
 import useMonthlySalesStatistics, { MonthSalesStatistics } from "../hooks/useMonthlySalesStatistics";
 import pageSpaces from "../CONSTANTS/pageSpaces";
 import PageTitle from "../components/PageTitle";
+import SelectBox from "../components/SelectBox";
+import yearsArray from "../functions/yearsArray";
 
 export default function SalesStatisticsPage() {
 
-  const { monthesData, isLoading } = useMonthlySalesStatistics();
+  const {
+    data: monthesData,
+    isLoading,
+    currentYear,
+    setYear,
+    refetch
+  } = useMonthlySalesStatistics();
 
   const monthlyEarnings: number[] = monthesData?.map((mon: MonthSalesStatistics) => mon.totalEarnings) ?? [0];
 
@@ -24,11 +32,18 @@ export default function SalesStatisticsPage() {
 
   return (
     <Box className="flex-column" sx={{ gap: pageSpaces }}>
-      <PageTitle
-        title="Sales Statistics"
-        icon={<img src="/icons/analytics.svg" />}
-        description="Showing sales statistics like Monthly Earnings, Sales Growth, Monthly Targets and Avarage Earning"
-      />
+      <Box className="flex-row a-end j-between">
+        <PageTitle
+          title="Sales Statistics"
+          icon={<img src="/icons/analytics.svg" />}
+          description="Showing sales statistics like Monthly Earnings, Sales Growth, Monthly Targets and Avarage Earning"
+        />
+        <SelectBox
+          defaultValue={currentYear}
+          values={yearsArray()}
+          onSelect={(value) => setYear(+value)}
+        />
+      </Box>
       <Grid container spacing={pageSpaces}>
         <Grid item xs={12} sm={4.5} md={3}>
           <DisplayInfoBox
@@ -48,13 +63,22 @@ export default function SalesStatisticsPage() {
           </Paper>
         </Grid>
         <Grid item xs={12} md={4.5}>
-          <MonthlyTargets />
+          <MonthlyTargets
+            currentYear={currentYear}
+            monthesData={monthesData}
+            isLoading={isLoading}
+          />
         </Grid>
       </Grid>
       <Grid container spacing={pageSpaces}>
         <Grid item xs={12} sm={7.5} lg={8}>
           <Box sx={{ width: "100%" }}>
-            <MonthlyEarningsChart />
+            <MonthlyEarningsChart
+              currentYear={currentYear}
+              monthesData={monthesData}
+              isLoading={isLoading}
+              refetch={refetch}
+            />
           </Box>
         </Grid>
         <Grid item xs={12} sm={4.5} lg={4}>
