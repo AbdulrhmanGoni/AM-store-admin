@@ -42,7 +42,7 @@ export default function SalesGrowth() {
             isLoading={isLoading}
             isError={isError}
             smallChart={<SmalLine data={[beforeLastMonthEarnings, lastMonthEarnings]} tooltipIsMony />}
-            mainValue={`${(growthRete * 100).toFixed(2)}%`}
+            mainValue={`${growthRete}%`}
             mainValueColor={growthRete < 0 ? "error" : "success"}
             mainValueEndIcon={stateArrow}
             chartDescription={{

@@ -7,8 +7,7 @@ import useProductsDisplayer from '../../hooks/useProductsDisplayer'
 import CustomListItem, { DisplyProductDetails } from '../CustomListItem'
 import SmallIconBox from '../SmallIconBox'
 import { PromiseState, P } from '@abdulrhmangoni/am-store-library'
-import { ProductData } from '../../hooks/useProductsStatisticsPageContent'
-
+import { ProductData } from './TopProductsContainer'
 
 export interface TopProductsList extends PromiseState {
     productsList?: ProductData[]

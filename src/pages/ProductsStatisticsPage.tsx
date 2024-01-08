@@ -1,13 +1,11 @@
-import { Box, Grid, Paper } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import CategoriesMonthlyEarnings from "../components/products-pages/CategoriesMonthlyEarnings";
 import CategoriesStatistics from "../components/products-pages/CategoriesStatistics";
-import ProductsTopSales from "../components/products-pages/ProductsTopSales";
-import ProductsTopEarnings from "../components/products-pages/ProductsTopEarnings";
 import randomColorsArr from "../CONSTANTS/randomColorsArr";
 import SvgIcon from "../components/SvgIcon";
 import { inStockIcon, orderIcon } from "../components/svgIconsAsString";
 import { stockIcon } from "../components/stockIcon";
-import { nDecorator, useWhenElementAppears } from "@abdulrhmangoni/am-store-library";
+import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import TopSerieses from "../components/products-pages/TopSerieses";
 import useProductsStatisticsPageContent from "../hooks/useProductsStatisticsPageContent";
 import DisplayInfoBox from "../components/DisplayInfoBox";
@@ -17,13 +15,13 @@ import { rankingIconCup } from '../components/rankingIconCup'
 import pageSpaces from "../CONSTANTS/pageSpaces";
 import CategoriesMonthlySales from "../components/products-pages/CategoriesMonthlySales";
 import useBreakPoints from "../hooks/useBreakPoints";
-import { useState } from "react";
+import RenderSectionWhenSpecificElementAppears from "../components/products-pages/RenderSectionWhenSpecificElementAppears";
+import TopProductsContainer from "../components/products-pages/TopProductsContainer";
 
 
 export default function ProductsStatisticsPage() {
 
     const { largeScreen, useBetweenDevices } = useBreakPoints("up");
-    const [renderSeriesesSection, setRenderSeriesesSection] = useState<boolean>(false);
 
     const {
         productsStatistics: {
@@ -34,10 +32,7 @@ export default function ProductsStatisticsPage() {
             seriesesCount,
             categoriesCount
         },
-        productsStatisticsLoading,
-        topProducts,
-        topProductsLoading,
-        topProductsError
+        productsStatisticsLoading
     } = useProductsStatisticsPageContent();
 
     const infoBoxStyle = { height: "100%", p: 1.5 };
@@ -45,14 +40,8 @@ export default function ProductsStatisticsPage() {
     const sec2InfoBoxStyle = { ...infoBoxStyle, justifyContent: "center" };
     const sec2infoBoxType = useBetweenDevices("sm", "md") ? "horizontally" : "columnly";
 
-    useWhenElementAppears(
-        "top-products-section",
-        () => { setRenderSeriesesSection(true) },
-        { fullAppearing: true, scrollElementId: "app" }
-    );
-
     return (
-        <Box className="flex-column" gap={pageSpaces}>
+        <Box className="flex-column" id="products-statistics-page" gap={pageSpaces}>
             <PageTitle
                 title="Products Statistics"
                 description="View statistics and information about products & categories & serieses"
@@ -135,54 +124,51 @@ export default function ProductsStatisticsPage() {
                     />
                 </Grid>
             </Grid>
-            <Grid container spacing={pageSpaces}>
-                <Grid item xs={12} lg={6}>
-                    <CategoriesMonthlyEarnings />
-                </Grid>
-                <Grid item xs={12} lg={6}>
-                    <CategoriesMonthlySales />
-                </Grid>
+            <Grid sx={{ minHeight: "300px" }} id="charts-section" container spacing={pageSpaces}>
+                <RenderSectionWhenSpecificElementAppears
+                    sectionToAbserve="charts-section"
+                    section={
+                        <>
+                            <Grid item xs={12} lg={6}>
+                                <CategoriesMonthlyEarnings />
+                            </Grid>
+                            <Grid item xs={12} lg={6}>
+                                <CategoriesMonthlySales />
+                            </Grid>
+                        </>
+                    }
+                />
             </Grid>
-            <Grid id="top-products-section" container spacing={pageSpaces}>
-                <Grid item xs={12} md={6}>
-                    <Paper sx={{ p: 1 }}>
-                        <ProductsTopSales
-                            isLoading={topProductsLoading}
-                            isError={topProductsError}
-                            productsList={topProducts?.topSales}
-                        />
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <Paper sx={{ p: 1 }}>
-                        <ProductsTopEarnings
-                            isLoading={topProductsLoading}
-                            isError={topProductsError}
-                            productsList={topProducts?.topEarnings}
-                        />
-                    </Paper>
-                </Grid>
+            <Grid sx={{ minHeight: "300px" }} id="top-products-section" container spacing={pageSpaces}>
+                <RenderSectionWhenSpecificElementAppears
+                    sectionToAbserve="top-products-section"
+                    section={<TopProductsContainer />}
+                />
             </Grid>
-            {
-                renderSeriesesSection &&
-                <Grid container spacing={pageSpaces}>
-                    <Grid item xs={12} sm={6}>
-                        <TopSerieses
-                            title="Best Selling"
-                            icon={<SvgIcon svgElementAsString={rankingIconCup} width={30} height={30} />}
-                            sortType="topEarnings"
-                            isMoney
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TopSerieses
-                            title="Top Selling"
-                            icon={<SvgIcon svgElementAsString={rankingIconMedal} width={30} height={30} />}
-                            sortType="topSold"
-                        />
-                    </Grid>
-                </Grid>
-            }
+            <Grid id="top-serieses-section" sx={{ minHeight: "300px" }} container spacing={pageSpaces}>
+                <RenderSectionWhenSpecificElementAppears
+                    sectionToAbserve="top-serieses-section"
+                    section={
+                        <>
+                            <Grid item xs={12} sm={6}>
+                                <TopSerieses
+                                    title="Best Selling"
+                                    icon={<SvgIcon svgElementAsString={rankingIconCup} width={30} height={30} />}
+                                    sortType="topEarnings"
+                                    isMoney
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TopSerieses
+                                    title="Top Selling"
+                                    icon={<SvgIcon svgElementAsString={rankingIconMedal} width={30} height={30} />}
+                                    sortType="topSold"
+                                />
+                            </Grid>
+                        </>
+                    }
+                />
+            </Grid>
         </Box>
     )
 }
