@@ -1,43 +1,39 @@
 import calculatePercentage from '../functions/calculatePercentage'
 import { LinearProgress, CircularProgress, Box, SxProps } from '@mui/material'
-import { Close, Done, NorthEast } from '@mui/icons-material';
+import { Close, Done, NorthEast, Report } from '@mui/icons-material';
 import { nDecorator, P } from '@abdulrhmangoni/am-store-library';
-
 
 interface TargetProgressProps {
     target: number,
     value: number,
     timeouted: boolean,
+    noTarget: boolean,
     progressLineStyle?: SxProps
 }
 
-export function TargetProgressLine({ target, value, progressLineStyle, timeouted }: TargetProgressProps) {
+export function TargetProgressLine({ target, value, progressLineStyle, timeouted, noTarget }: TargetProgressProps) {
     const achivedPercentage = calculatePercentage(target, value);
     const percentage = achivedPercentage ? achivedPercentage : 0;
-    const isCompleted = percentage >= 100;
+    const isCompleted = !noTarget && percentage >= 100;
 
     return (
         <Box>
             <Box className="flex-row-center-between">
-                <P
-                    variant='h6'
-                    fontSize="16px"
-                >
+                <P variant='h6' fontSize="16px">
                     {timeouted ? "Month's" : "Current"} Earnings:
                     <P
-                        component="span"
+                        component="span" ml={.5}
                         color={
                             isCompleted ? "success.main"
                                 : percentage && timeouted ? "error.main" : "text.primary"
                         }
-                        ml={.5}
                     >
                         ${nDecorator(value?.toFixed(2))}
                     </P>
                 </P>
                 <P variant='body1' className='flex-row-center' color="success.main">
                     {
-                        percentage > 100 &&
+                        percentage > 100 && !noTarget &&
                         <>
                             {(percentage - 100).toFixed(2)}%
                             <NorthEast sx={{ fontSize: "1.3rem" }} color='success' />
@@ -49,13 +45,18 @@ export function TargetProgressLine({ target, value, progressLineStyle, timeouted
                 <LinearProgress
                     sx={{ width: "100%", ...progressLineStyle }}
                     variant="determinate"
-                    value={isCompleted ? 100 : percentage}
-                    color={isCompleted ? "success" : percentage && timeouted ? "error" : "primary"}
+                    value={noTarget ? 0 : isCompleted ? 100 : percentage}
+                    color={
+                        noTarget ? "warning"
+                            : isCompleted ? "success"
+                                : percentage && timeouted ? "error" : "primary"
+                    }
                 />
                 {
-                    isCompleted ? <Done color="success" />
-                        : percentage && timeouted ? <Close color="error" />
-                            : <P>{percentage}%</P>
+                    noTarget ? <Report color="warning" />
+                        : isCompleted ? <Done color="success" />
+                            : percentage && timeouted ? <Close color="error" />
+                                : <P>{percentage}%</P>
                 }
             </Box>
         </Box>

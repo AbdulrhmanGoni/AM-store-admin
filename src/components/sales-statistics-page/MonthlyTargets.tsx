@@ -21,6 +21,8 @@ export default function MonthlyTargets({ monthesData, currentYear, isLoading }: 
     const [loading, setLoading] = useState<boolean>(false);
 
     const loadingState = isLoading || loading;
+    const monthTarget = monthesData?.[monthIndex].earningsTarget
+    const noTarget = !monthTarget && currentMonth === monthIndex && new Date().getFullYear() === currentYear
     const timeouted = isDatePassed(currentYear, monthIndex);
 
     return (
@@ -42,9 +44,11 @@ export default function MonthlyTargets({ monthesData, currentYear, isLoading }: 
                     width={75}
                     height={32}
                     element={
-                        <P color="text.primary" variant='h5'>
-                            ${nDecorator(monthesData?.[monthIndex].earningsTarget ?? 0)}
-                        </P>
+                        !noTarget ?
+                            <P color="text.primary" variant='h5'>
+                                ${nDecorator(monthTarget)}
+                            </P>
+                            : <P color="warning.main" variant='h5'>No Targete</P>
                     }
                 />
                 <ElementWithLoadingState
@@ -75,6 +79,7 @@ export default function MonthlyTargets({ monthesData, currentYear, isLoading }: 
                         target={monthesData?.[monthIndex].earningsTarget ?? 0}
                         value={monthesData?.[monthIndex].totalEarnings ?? 0}
                         timeouted={timeouted}
+                        noTarget={noTarget}
                     />
                 }
             />
