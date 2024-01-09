@@ -54,7 +54,7 @@ export default function SalesStatisticsPage() {
             bodyColor="success.main"
             icon={<SvgIcon svgElementAsString={moneyIcon} />}
             iconColor={randomColorsArr[1]}
-            BoxStyle={{ height: "100%", p: 2, justifyContent: "center" }}
+            boxStyle={{ height: "100%", p: 2, justifyContent: "center" }}
           />
         </Grid>
         <Grid item xs={12} sm={7.5} md={4.5}>

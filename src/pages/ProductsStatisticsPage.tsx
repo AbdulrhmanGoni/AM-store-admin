@@ -57,7 +57,7 @@ export default function ProductsStatisticsPage() {
                         iconColor={randomColorsArr[0]}
                         icon={<SvgIcon svgElementAsString={stockIcon} />}
                         disableIconColor
-                        BoxStyle={infoBoxStyle}
+                        boxStyle={infoBoxStyle}
                     />
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>
@@ -69,7 +69,7 @@ export default function ProductsStatisticsPage() {
                         iconColor={randomColorsArr[1]}
                         icon={<img src="/icons/salesShop.svg" />}
                         disableIconColor
-                        BoxStyle={infoBoxStyle}
+                        boxStyle={infoBoxStyle}
                     />
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>
@@ -81,7 +81,7 @@ export default function ProductsStatisticsPage() {
                         iconColor={randomColorsArr[2]}
                         icon={<SvgIcon svgElementAsString={inStockIcon} />}
                         disableIconColor
-                        BoxStyle={infoBoxStyle}
+                        boxStyle={infoBoxStyle}
                     />
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>
@@ -93,7 +93,7 @@ export default function ProductsStatisticsPage() {
                         iconColor={randomColorsArr[3]}
                         icon={<img src="/icons/emptyBox.svg" />}
                         disableIconColor
-                        BoxStyle={infoBoxStyle}
+                        boxStyle={infoBoxStyle}
                     />
                 </Grid>
             </Grid>
@@ -109,7 +109,7 @@ export default function ProductsStatisticsPage() {
                         body={nDecorator(String(categoriesCount))}
                         iconColor={randomColorsArr[4]}
                         icon={<img src="/icons/categoriesIcon.svg" />}
-                        BoxStyle={sec2InfoBoxStyle}
+                        boxStyle={sec2InfoBoxStyle}
                     />
                 </Grid>
                 <Grid item xs={6} md={3} order={{ xs: 2, md: 3 }}>
@@ -120,7 +120,7 @@ export default function ProductsStatisticsPage() {
                         body={nDecorator(String(seriesesCount))}
                         iconColor={randomColorsArr[5]}
                         icon={<img src="/icons/televisionIcon.svg" />}
-                        BoxStyle={sec2InfoBoxStyle}
+                        boxStyle={sec2InfoBoxStyle}
                     />
                 </Grid>
             </Grid>

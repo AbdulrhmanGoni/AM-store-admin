@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { MenuItem, TextField } from '@mui/material'
+import { MenuItem, SxProps, TextField } from '@mui/material'
 
 type value = string | number
 
@@ -8,10 +8,11 @@ interface SelectBoxProps {
     defaultValue?: value,
     size?: 'small' | 'medium',
     noneOption?: boolean,
-    onSelect: (value: value, index: number) => void
+    onSelect: (value: value, index: number) => void,
+    sx?: SxProps
 }
 
-export default function SelectBox({ defaultValue, size, values, noneOption, onSelect }: SelectBoxProps) {
+export default function SelectBox({ defaultValue, size, values, noneOption, onSelect, sx }: SelectBoxProps) {
 
     const [selected, setSelected] = useState<value>(noneOption ? "None" : values[0]);
 
@@ -27,7 +28,14 @@ export default function SelectBox({ defaultValue, size, values, noneOption, onSe
                 setSelected(value)
                 onSelect(value, values.indexOf(value as never))
             }}
-            sx={{ "& .MuiSelect-select": { p: "4px 8px", pr: "40px !important" } }}
+            sx={{
+                minWidth: "87px",
+                "& .MuiSelect-select": {
+                    p: "4px 8px",
+                    pr: "40px !important"
+                },
+                ...sx
+            }}
         >
             {noneOption && <MenuItem key="None" value="None">None</MenuItem>}
             {values.map((value) => (<MenuItem key={value} value={value}>{value}</MenuItem>))}

@@ -1,21 +1,24 @@
 import Chart from "react-apexcharts";
 import ApexchartsContainer from "../ApexchartsContainer";
 import { Skeleton, useTheme } from "@mui/material";
-import { FetchFailedAlert, PromiseState, nDecorator, P } from "@abdulrhmangoni/am-store-library";
+import { FetchFailedAlert, PromiseState, nDecorator } from "@abdulrhmangoni/am-store-library";
 import { ApexOptions } from "apexcharts";
 import Icon from "../SvgIcon";
 import { averageOrdersIcon } from "../svgIconsAsString";
 import ChartTitle from "../ChartTitle";
 import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
+import SelectBox from "../SelectBox";
+import yearsArray from "../../functions/yearsArray";
 
 interface OrdersStatisticsChartProps extends PromiseState {
     data: number[],
-    year: number,
+    currentYear: number,
+    setYear: (year: number) => void,
     totalOrders?: number,
     refetch?: () => void
 }
 
-export default function OrdersStatisticsChart({ data, year, isLoading, isError, refetch }: OrdersStatisticsChartProps) {
+export default function OrdersStatisticsChart({ data, currentYear, setYear, isLoading, isError, refetch }: OrdersStatisticsChartProps) {
 
     const { palette: { mode, primary } } = useTheme();
 
@@ -63,7 +66,13 @@ export default function OrdersStatisticsChart({ data, year, isLoading, isError, 
             <ChartTitle
                 title="Monthly Orders"
                 icon={<Icon svgElementAsString={averageOrdersIcon} />}
-                endItem={<P variant="h6">{year}</P>}
+                endItem={
+                    <SelectBox
+                        defaultValue={currentYear}
+                        values={yearsArray()}
+                        onSelect={(value) => setYear(+value)}
+                    />
+                }
             />
             {
                 isLoading ? <Skeleton variant="rounded" height={CHART_HEIGHT} />

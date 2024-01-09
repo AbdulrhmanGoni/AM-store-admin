@@ -3,6 +3,7 @@ import SmallIconBox from './SmallIconBox'
 import { CSSProperties } from '@mui/material/styles/createMixins'
 import { PromiseState } from '../types/interfaces'
 import { P } from '@abdulrhmangoni/am-store-library'
+import { ReactNode } from 'react'
 
 interface DisplayInfoBoxProps extends PromiseState {
     title: string
@@ -10,16 +11,17 @@ interface DisplayInfoBoxProps extends PromiseState {
     body: string | number,
     bodyColor?: string,
     iconColor?: string,
-    BoxStyle?: CSSProperties,
+    boxStyle?: CSSProperties,
     type: "columnly" | "horizontally",
     disableIconColor?: boolean,
+    children?: ReactNode
 }
 
 export default function DisplayInfoBox(props: DisplayInfoBoxProps) {
     const {
-        title, body, icon, iconColor, BoxStyle,
+        title, body, icon, iconColor, boxStyle,
         disableIconColor, isLoading, type,
-        bodyColor
+        bodyColor, children, isError
     } = props;
 
     const columnly: CSSProperties = {
@@ -29,6 +31,7 @@ export default function DisplayInfoBox(props: DisplayInfoBoxProps) {
     }
 
     const styleOfType = type === "columnly" ? columnly : { gap: 2, p: "8px 16px" }
+    const errorStyle = isError && !isLoading ? { border: "solid 1px", borderColor: "error.main" } : undefined
 
     return (
         <Paper
@@ -36,7 +39,8 @@ export default function DisplayInfoBox(props: DisplayInfoBoxProps) {
                 display: "flex",
                 alignItems: "center",
                 ...styleOfType,
-                ...BoxStyle
+                ...boxStyle,
+                ...errorStyle
             }}
         >
             <SmallIconBox
@@ -61,6 +65,7 @@ export default function DisplayInfoBox(props: DisplayInfoBoxProps) {
                         </>
                 }
             </Box>
+            {children}
         </Paper>
     )
 }

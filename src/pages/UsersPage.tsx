@@ -42,7 +42,7 @@ export default function UsersPage() {
                         body={usersCount}
                         iconColor={randomColorsArr[0]}
                         type={infoBoxType}
-                        BoxStyle={infoBoxStyle}
+                        boxStyle={infoBoxStyle}
                     />
                 </Grid>
                 <Grid item xs={6} sm={3}>
@@ -52,7 +52,7 @@ export default function UsersPage() {
                         body={customersCount}
                         iconColor={randomColorsArr[1]}
                         type={infoBoxType}
-                        BoxStyle={infoBoxStyle}
+                        boxStyle={infoBoxStyle}
                     />
                 </Grid>
                 <Grid item xs={6} sm={3}>
@@ -62,7 +62,7 @@ export default function UsersPage() {
                         body={verifiedUsers}
                         iconColor={randomColorsArr[2]}
                         type={infoBoxType}
-                        BoxStyle={infoBoxStyle}
+                        boxStyle={infoBoxStyle}
                     />
                 </Grid>
                 <Grid item xs={6} sm={3}>
@@ -72,7 +72,7 @@ export default function UsersPage() {
                         body={usersCount - verifiedUsers}
                         iconColor={randomColorsArr[3]}
                         type={infoBoxType}
-                        BoxStyle={infoBoxStyle}
+                        boxStyle={infoBoxStyle}
                     />
                 </Grid>
             </Grid>

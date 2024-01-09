@@ -19,17 +19,8 @@ export default function CardInfoWithChart(props: CardInfoWithChartProps) {
 
     return (
         <Paper
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 1, p: 2,
-                height: "100%",
-                width: "100%",
-                textAlign: "center",
-                ...sx
-            }}
+            className="flex-column-center p2 gap1 full-width full-height"
+            sx={{ textAlign: "center", ...sx }}
         >
             <ElementWithLoadingState
                 height={60}
