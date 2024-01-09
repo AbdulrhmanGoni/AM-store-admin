@@ -126,7 +126,7 @@ export default function ProductsStatisticsPage() {
             </Grid>
             <Grid sx={{ minHeight: "300px" }} id="charts-section" container spacing={pageSpaces}>
                 <RenderSectionWhenSpecificElementAppears
-                    sectionToAbserve="charts-section"
+                    sectionIdToAbserve="charts-section"
                     section={
                         <>
                             <Grid item xs={12} lg={6}>
@@ -141,13 +141,13 @@ export default function ProductsStatisticsPage() {
             </Grid>
             <Grid sx={{ minHeight: "300px" }} id="top-products-section" container spacing={pageSpaces}>
                 <RenderSectionWhenSpecificElementAppears
-                    sectionToAbserve="top-products-section"
+                    sectionIdToAbserve="top-products-section"
                     section={<TopProductsContainer />}
                 />
             </Grid>
             <Grid id="top-serieses-section" sx={{ minHeight: "300px" }} container spacing={pageSpaces}>
                 <RenderSectionWhenSpecificElementAppears
-                    sectionToAbserve="top-serieses-section"
+                    sectionIdToAbserve="top-serieses-section"
                     section={
                         <>
                             <Grid item xs={12} sm={6}>
