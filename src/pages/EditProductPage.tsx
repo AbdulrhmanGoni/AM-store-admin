@@ -27,9 +27,13 @@ export default function EditProductPage() {
                     Search for a product and edit it
                 </P>
                 <SearchForProductsField
-                    actionWithProductId={(id) => navigate(`/products/edit-product/${id}`)}
+                    actionWithProductId={(id) => {
+                        navigate(`/products/edit-product/${id}`)
+                        !openEditForm && setOpenEditForm(true)
+                    }}
                     endItemIcon={<Edit />}
                     hostName={host}
+                    closeOnClick
                 />
             </Paper>
             {

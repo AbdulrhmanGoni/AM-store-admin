@@ -15,7 +15,7 @@ export default function useProductsActions() {
     }
 
     async function updateProduct(changes: findTheChangesReturnType, productId: string) {
-        return (await api.put(path(productId), { changes })).data
+        return (await api.patch(path(productId), { changes })).data
     }
 
     async function getProduct(productId: string, signal?: GenericAbortSignal) {
