@@ -1,13 +1,13 @@
 import { useRef } from 'react';
-import { LiveTv, Subtitles, AllInbox, AttachMoney, Class, Save } from '@mui/icons-material'
-import { Box, Grid, Paper } from '@mui/material'
+import { LiveTv, Subtitles, AllInbox, AttachMoney, Class, Save, Close } from '@mui/icons-material'
+import { Box, Button, Grid, Paper } from '@mui/material'
 import { LoadingButton } from '@mui/lab';
 import { CustomTextField, ErrorMessage, ImagesInputs } from './ProductsFormComponents';
 import useUpdateProduct from '../../hooks/useUpdateProduct';
 import { ActionAlert, ElementWithLoadingState, IllustrationCard, P } from '@abdulrhmangoni/am-store-library';
 import pageSpaces from '../../CONSTANTS/pageSpaces';
 
-export default function EditProductForm({ productId }: { productId: string }) {
+export default function EditProductForm({ productId, close }: { productId: string, close: () => void }) {
 
     const formRef = useRef<HTMLFormElement | null>(null);
 
@@ -156,7 +156,23 @@ export default function EditProductForm({ productId }: { productId: string }) {
                         />
                     </Grid>
                 </Grid>
-                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                <Box className="flex-row-center-between">
+                    <ElementWithLoadingState
+                        height={30}
+                        width={150}
+                        isLoading={isLoading}
+                        element={
+                            <Button
+                                endIcon={<Close />}
+                                size='small'
+                                variant='contained'
+                                color="error"
+                                onClick={close}
+                            >
+                                Cancel
+                            </Button>
+                        }
+                    />
                     <ElementWithLoadingState
                         height={30}
                         width={150}
@@ -173,7 +189,6 @@ export default function EditProductForm({ productId }: { productId: string }) {
                                     loadingPosition='start'
                                     size='small'
                                     variant='contained'
-                                    aria-label='Submit Changes'
                                 >
                                     Save Changes
                                 </LoadingButton>

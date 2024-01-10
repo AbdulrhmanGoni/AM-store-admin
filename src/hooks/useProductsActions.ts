@@ -8,30 +8,30 @@ export default function useProductsActions() {
 
     const { api } = useApiRequest();
 
-    const path = (type: string) => `${host_admin}/products?type=${type}`;
+    const path = (additionalPath: string) => `${host_admin}/products/${additionalPath}`;
 
     async function addNewProduct(theProduct: productData) {
-        return (await api.post(path("add-new-product"), theProduct)).data
+        return (await api.put(path("?type=add-new-product"), theProduct)).data
     }
 
     async function updateProduct(changes: findTheChangesReturnType, productId: string) {
-        return (await api.post(`${host_admin}/products/${productId}`, { changes })).data
+        return (await api.put(path(productId), { changes })).data
     }
 
     async function getProduct(productId: string, signal?: GenericAbortSignal) {
-        return (await api.get(`${host_admin}/products/${productId}`, { signal })).data
+        return (await api.get(path(productId), { signal })).data
     }
 
     async function deleteProduct(productId: string) {
-        return (await api.delete(`${host_admin}/products/${productId}`, { data: productId })).data
+        return (await api.delete(path(productId), { data: productId })).data
     }
 
     async function addDiscountToProducts(productsIds: (string | number)[], discount: number) {
-        return (await api.post(`${host_admin}/products/discounts`, { productsIds, discount })).data
+        return (await api.put(path("discounts"), { productsIds, discount })).data
     }
 
     async function removeDiscountFromProducts(productsIds: (string | number)[]) {
-        return (await api.delete(`${host_admin}/products/discounts`, { data: { productsIds } })).data
+        return (await api.delete(path("discounts"), { data: { productsIds } })).data
     }
 
     return {
