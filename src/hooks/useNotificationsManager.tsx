@@ -36,26 +36,33 @@ export default function useNotificationsManager() {
         setAnchorEl(event.currentTarget);
         setIsOpen(!isOpen);
     };
+    const getServerNotfications = () => {
+        const notificationsList = notifications.filter(({ read, data }) => { !read && data });
+        return notificationsList.map(({ id }) => id);
+    };
 
     const markNotificationsAsRead: MarkNotificationsAsReadType = async (notificationsIds, markAll) => {
-        return await api.post(`${host}/notifications`, { notificationsIds })
-            .then(() => {
-                if (markAll) markAllAsRead();
-                else markAsRead(notificationsIds);
-            })
-            .catch(() => { message("Failed to set the notifications as read", "error") })
+        function done() {
+            if (markAll) markAllAsRead();
+            else markAsRead(notificationsIds);
+        }
+        if (notificationsIds.length) {
+            return await api.post(`${host}/notifications`, { notificationsIds })
+                .then(done)
+                .catch(() => { message("Failed to set the notifications as read", "error") })
+        }
+        else done()
     };
 
     const markAllNotificationsAsRead = async () => {
-        const notificationsIds = notifications.map(notifications => notifications.id);
+        const notificationsIds = getServerNotfications();
         markNotificationsAsRead(notificationsIds, true)
             .catch(() => { message("Failed to set all notifications as read", "error") })
     };
 
     const clearNotifications = () => {
-        const unreadNotifications = notifications.filter(({ read }) => !read);
-        if (unreadNotifications.length) {
-            const notificationsIds = unreadNotifications.map(({ id }) => id);
+        const notificationsIds = getServerNotfications();
+        if (notificationsIds.length) {
             markNotificationsAsRead(notificationsIds)
                 .then(clear)
                 .catch(() => { message("Failed to clear all notifications", "error") })

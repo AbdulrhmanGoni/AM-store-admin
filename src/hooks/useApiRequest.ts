@@ -6,7 +6,7 @@ export default function useApiRequest() {
     const { ["admin-access-token"]: adminAccessToken, adminId } = cookiesParser();
 
     const headers = {
-        'access-token': adminAccessToken,
+        'authorization': `Bearer ${adminAccessToken}`,
         'token-id': adminId,
         'Content-Type': 'application/json',
     }

@@ -8,10 +8,10 @@ export default function useProductsActions() {
 
     const { api } = useApiRequest();
 
-    const path = (additionalPath: string) => `${host_admin}/products/${additionalPath}`;
+    const path = (additionalPath: string = "") => `${host_admin}/products/${additionalPath}`;
 
     async function addNewProduct(theProduct: productData) {
-        return (await api.put(path("?type=add-new-product"), theProduct)).data
+        return (await api.post(path("?type=add-new-product"), theProduct)).data
     }
 
     async function updateProduct(changes: findTheChangesReturnType, productId: string) {
@@ -23,11 +23,11 @@ export default function useProductsActions() {
     }
 
     async function deleteProduct(productId: string) {
-        return (await api.delete(path(productId), { data: productId })).data
+        return (await api.delete(path(), { data: { productsIds: [productId] } })).data
     }
 
     async function addDiscountToProducts(productsIds: (string | number)[], discount: number) {
-        return (await api.put(path("discounts"), { productsIds, discount })).data
+        return (await api.post(path("discounts"), { productsIds, discount })).data
     }
 
     async function removeDiscountFromProducts(productsIds: (string | number)[]) {

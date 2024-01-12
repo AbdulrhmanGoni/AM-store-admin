@@ -10,7 +10,7 @@ interface NotificationsCardProps {
 }
 
 export default function NotificationsCard({ notification, markNotificationsAsRead }: NotificationsCardProps) {
-    const { id, type, read, data } = notification
+    const { id, type, read, data, createdAt, content } = notification
 
     return (
         <Alert
@@ -34,7 +34,7 @@ export default function NotificationsCard({ notification, markNotificationsAsRea
                     )
             }
         >
-            {data?.title} - {data && timeAgo(data.createdAt)}
+            {data?.title || content?.toString()} - {timeAgo(data?.createdAt || new Date(createdAt).toISOString())}
         </Alert>
     )
 }

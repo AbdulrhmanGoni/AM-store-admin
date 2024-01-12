@@ -18,13 +18,13 @@ export default function FeedbacksList() {
         <Box className="flex-column gap1">
             {
                 feedbacks.length ?
-                    feedbacks.map((feedback) => (
-                        <FeedbackCard
-                            key={feedback._id}
-                            feedback={feedback}
+                    feedbacks.map((_, i) => {
+                        return <FeedbackCard
+                            key={feedbacks[feedbacks.length - (i + 1)]._id}
+                            feedback={feedbacks[feedbacks.length - (i + 1)]}
                             deleteFeedback={deleteFeedback}
                         />
-                    ))
+                    })
                     : (!isError && !isLoading) &&
                     <Alert severity="info">No Feedbacks</Alert>
             }

@@ -32,7 +32,7 @@ export default function FeedbackCard({ feedback, deleteFeedback }: FeedbackCardP
         >
             <P>{feedback.body}</P>
             <OptionsMenu>
-                <OptionsMenu.MenuOption
+                <OptionsMenu.Option
                     optionIcon={<Delete />}
                     optionText="Delete"
                     asyncAction={deleteTheFeedback}
