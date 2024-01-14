@@ -14,17 +14,18 @@ export default function useProductsDisplayer() {
         container.id = "product-displayer-container";
         const app = document.querySelector("#app");
         app?.appendChild(container);
+        const root = ReactDom.createRoot(container)
         const toRender = <ProductsDisplayer
             productId={productId}
             theme={theme}
-            close={close}
+            close={() => { close(); root.unmount() }}
             navigate={() => { navigate(`/products/edit-product/${productId}`) }}
         />
-        ReactDom.createRoot(container).render(toRender);
+        root.render(toRender);
     }
 
     function close() {
-        const container = document.querySelector("#product-displayer")
+        const container = document.querySelector("#product-displayer-container")
         container?.remove()
     }
 

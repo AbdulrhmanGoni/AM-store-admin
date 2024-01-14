@@ -53,7 +53,7 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
 
             return () => { controller.abort() }
         }
-    }, [getProduct, productId, product]);
+    }, [productId]);
 
     useEffect(() => { setCardsOpacity(1) }, [productId]);
 

@@ -68,9 +68,9 @@ export default function App() {
                             : isUnexpected ? <UnexpectedError />
                               : null
             }
+            <LoadingCircle staticCircle darkBg />
+            <ToastContainer limit={4} position="bottom-left" theme="colored" />
           </Box>
-          <LoadingCircle staticCircle darkBg />
-          <ToastContainer limit={4} position="bottom-left" theme="colored" />
         </QueryClientProvider>
       </AdminDataContext.Provider>
     </CustomThemeProvider>
