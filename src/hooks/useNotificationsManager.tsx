@@ -5,6 +5,7 @@ import { Id, TypeOptions } from 'react-toastify';
 import useApiRequest from './useApiRequest';
 import host from '../CONSTANTS/API_hostName';
 import useNotifications from './useNotifications';
+import notificationSound from '../functions/notificationSound';
 
 export interface Notification {
     _id: string,
@@ -36,8 +37,9 @@ export default function useNotificationsManager() {
         setAnchorEl(event.currentTarget);
         setIsOpen(!isOpen);
     };
+
     const getServerNotfications = () => {
-        const notificationsList = notifications.filter(({ read, data }) => { !read && data });
+        const notificationsList = notifications.filter(({ read, data }) => !read && data);
         return notificationsList.map(({ id }) => id);
     };
 
@@ -91,6 +93,7 @@ export default function useNotificationsManager() {
                     const notification = data as Notification
                     addNotification(notification)
                 }
+                notificationSound()
             }
         }
     }

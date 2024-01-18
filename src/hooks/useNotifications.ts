@@ -1,5 +1,6 @@
 import { toast, ToastOptions } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import notificationSound from '../functions/notificationSound';
 
 
 export type messageType = 'info' | 'success' | 'warning' | 'error' | 'default'
@@ -17,8 +18,12 @@ type byStepsType = {
     close: () => void,
 }
 
-
 export default function useNotifications() {
+
+    toast.onChange((notiec) => {
+        notiec.type === "success" && notificationSound()
+        notiec.type === "error" || notiec.type === "warning" && notificationSound(false)
+    })
 
     function message(message: string, type?: messageType, options?: ToastOptions) {
         toast(message, {
@@ -33,7 +38,9 @@ export default function useNotifications() {
             asyncFun,
             {
                 pending: { render: params.loadingMsg, type: "info" },
-                success: { render: params.successgMsg, type: "success" },
+                success: {
+                    render: params.successgMsg, type: "success"
+                },
                 error: { render: params.errorMsg, type: "error" }
             }
         )

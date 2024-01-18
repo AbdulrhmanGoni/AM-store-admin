@@ -26,7 +26,9 @@ export default function NotificationsCard({ notification, markNotificationsAsRea
                             <IconButton
                                 component="span"
                                 size="small"
-                                onClick={() => markNotificationsAsRead([id])}
+                                onClick={() => {
+                                    !content && markNotificationsAsRead([id])
+                                }}
                             >
                                 <MarkChatRead fontSize="small" />
                             </IconButton>

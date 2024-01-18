@@ -54,6 +54,7 @@ export default function NotificationsCenter() {
                                 <FlexBar justify="between" sx={{ borderTopColor: "divider" }}>
                                     <ActionAlert
                                         action={clearNotifications}
+                                        openingCondition={{ condition: !!notifications.length, enable: true }}
                                         title="Are you sure to clear all notifications?"
                                         message="You won't be able to see these notifications again if you clear them"
                                     >
@@ -80,7 +81,7 @@ export default function NotificationsCenter() {
                     )
                 }}
             </Popper>
-        </Box >
+        </Box>
     );
 }
 
