@@ -52,7 +52,7 @@ export default function TopUsers() {
                                     <TableCell sx={{ minWidth: "160px" }}>User Name</TableCell>
                                     <TableCell sx={{ minWidth: "180px" }}>User Email</TableCell>
                                     <TableCell sx={{ width: "75px" }}>Orders</TableCell>
-                                    <TableCell sx={{ width: "100px" }}>Spending</TableCell>
+                                    <TableCell sx={{ width: "100px", textWrap: "nowrap" }}>Spending $</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>

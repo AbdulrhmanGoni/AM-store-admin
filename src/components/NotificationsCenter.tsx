@@ -25,7 +25,7 @@ export default function NotificationsCenter() {
         <Box>
             <IconButton size="large" onClick={toggleNotificationsCenter}>
                 <Badge badgeContent={unreadNotificationsCount} color="primary">
-                    <Notifications color="action" />
+                    <Notifications sx={{ color: "text.primary" }} />
                 </Badge>
             </IconButton>
             <Popper
@@ -40,7 +40,7 @@ export default function NotificationsCenter() {
                         <Fade {...TransitionProps} timeout={350}>
                             <Box sx={{ p: "10px" }}>
                                 <FlexBar gap={1} justify="start" sx={{ borderBottomColor: "divider" }}>
-                                    <P variant="h6" color="#fff">Notifications</P>
+                                    <P variant="h6">Notifications</P>
                                     <img
                                         src="/icons/notifications.svg"
                                         alt="Notifications icon"

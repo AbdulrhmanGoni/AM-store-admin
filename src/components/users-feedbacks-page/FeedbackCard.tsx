@@ -12,12 +12,12 @@ interface FeedbackCardProps {
 
 export default function FeedbackCard({ feedback, deleteFeedback }: FeedbackCardProps) {
 
-    const url = `${host}/feedbacks?feedbackId=${feedback._id}`;
+    const url = `${host}/feedbacks`;
     const { api } = useApiRequest();
     const { message } = useNotifications();
 
     async function deleteTheFeedback() {
-        return await api.delete(url)
+        return await api.delete(url, { data: { feedbackId: feedback._id } })
             .then(() => { deleteFeedback(feedback._id, "_id") })
             .catch(() => message("Failed to delete the feedback !", "error"))
     }

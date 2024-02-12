@@ -15,7 +15,7 @@ export interface Notification {
     createdAt: string
 }
 
-export type MarkNotificationsAsReadType = (id: Id[], markAll?: boolean) => Promise<void>
+export type MarkNotificationsAsReadType = (id: Id[], options?: { markAll?: boolean, isServerNote?: boolean }) => Promise<void>
 
 export default function useNotificationsManager() {
 
@@ -39,16 +39,16 @@ export default function useNotificationsManager() {
     };
 
     const getServerNotfications = () => {
-        const notificationsList = notifications.filter(({ read, data }) => !read && data);
+        const notificationsList = notifications.filter(({ read, data }) => !read && data?.title);
         return notificationsList.map(({ id }) => id);
     };
 
-    const markNotificationsAsRead: MarkNotificationsAsReadType = async (notificationsIds, markAll) => {
+    const markNotificationsAsRead: MarkNotificationsAsReadType = async (notificationsIds, options) => {
         function done() {
-            if (markAll) markAllAsRead();
+            if (options?.markAll) markAllAsRead();
             else markAsRead(notificationsIds);
         }
-        if (notificationsIds.length) {
+        if (options?.isServerNote && notificationsIds.length) {
             return await api.post(`${host}/notifications`, { notificationsIds })
                 .then(done)
                 .catch(() => { message("Failed to set the notifications as read", "error") })
@@ -58,14 +58,14 @@ export default function useNotificationsManager() {
 
     const markAllNotificationsAsRead = async () => {
         const notificationsIds = getServerNotfications();
-        markNotificationsAsRead(notificationsIds, true)
+        markNotificationsAsRead(notificationsIds, { isServerNote: true, markAll: true })
             .catch(() => { message("Failed to set all notifications as read", "error") })
     };
 
     const clearNotifications = () => {
         const notificationsIds = getServerNotfications();
         if (notificationsIds.length) {
-            markNotificationsAsRead(notificationsIds)
+            markNotificationsAsRead(notificationsIds, { isServerNote: true })
                 .then(clear)
                 .catch(() => { message("Failed to clear all notifications", "error") })
         }

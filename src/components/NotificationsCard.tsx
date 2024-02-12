@@ -17,7 +17,6 @@ export default function NotificationsCard({ notification, markNotificationsAsRea
             severity={(type as AlertColor) || "info"}
             key={id}
             variant={read ? "standard" : "filled"}
-            sx={{ color: "white" }}
             className="flex-row-center"
             action={
                 read ? <Check fontSize="small" />
@@ -26,9 +25,7 @@ export default function NotificationsCard({ notification, markNotificationsAsRea
                             <IconButton
                                 component="span"
                                 size="small"
-                                onClick={() => {
-                                    !content && markNotificationsAsRead([id])
-                                }}
+                                onClick={() => { markNotificationsAsRead([id], { isServerNote: !!data?.title }) }}
                             >
                                 <MarkChatRead fontSize="small" />
                             </IconButton>

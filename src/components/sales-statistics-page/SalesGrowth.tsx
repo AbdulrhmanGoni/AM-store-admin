@@ -50,7 +50,7 @@ export default function SalesGrowth() {
                 titleEndIcon: (
                     <Box color={growthRete < 0 ? "error.main" : "success.main"} className="flex-row-center-start">
                         <P variant="h6" color="inherit">
-                            ${nDecorator((lastMonthEarnings - beforeLastMonthEarnings).toFixed(2))}
+                            $ {nDecorator((lastMonthEarnings - beforeLastMonthEarnings).toFixed(2))}
                         </P>
                         {stateArrow}
                     </Box>
