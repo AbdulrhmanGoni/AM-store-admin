@@ -18,22 +18,22 @@ interface SalesGrowthType {
         month: string,
         earnings: number
     },
-    growthRete: number
+    growthRate: number
 }
 
 export default function SalesGrowth() {
 
     const query = "sales-growth"
-    const { data: growthReteData, isFetching: isLoading, isError } = useGetApi<SalesGrowthType>({
+    const { data: growthRateData, isFetching: isLoading, isError } = useGetApi<SalesGrowthType>({
         path: `statistics?queryKey=${query}`,
         key: [query]
     });
 
-    const lastMonthEarnings = growthReteData?.lastMonth.earnings || 0;
-    const beforeLastMonthEarnings = growthReteData?.beforeLastMonth.earnings || 0;
-    const growthRete = growthReteData?.growthRete || 0
+    const lastMonthEarnings = growthRateData?.lastMonth.earnings || 0;
+    const beforeLastMonthEarnings = growthRateData?.beforeLastMonth.earnings || 0;
+    const growthRate = growthRateData?.growthRate || 0
 
-    const stateArrow = growthRete < 0 ? <SouthEast /> : <NorthEast />
+    const stateArrow = growthRate < 0 ? <SouthEast /> : <NorthEast />
 
     return (
         <CustomChartBox
@@ -41,14 +41,19 @@ export default function SalesGrowth() {
             titleIcon={<SvgIcon svgElementAsString={growChartIcon2} />}
             isLoading={isLoading}
             isError={isError}
+            customMainValue={
+                <Box className="flex-column">
+                    <P variant="subtitle1" color="inherit">Last Month</P>
+                    <P className="flex-row-center-start" variant="h5" color={growthRate < 0 ? "error" : "success"}>
+                        {growthRate}% {stateArrow}
+                    </P>
+                </Box>
+            }
             smallChart={<SmalLine data={[beforeLastMonthEarnings, lastMonthEarnings]} tooltipIsMony />}
-            mainValue={`${growthRete}%`}
-            mainValueColor={growthRete < 0 ? "error" : "success"}
-            mainValueEndIcon={stateArrow}
             chartDescription={{
                 title: ``,
                 titleEndIcon: (
-                    <Box color={growthRete < 0 ? "error.main" : "success.main"} className="flex-row-center-start">
+                    <Box color={growthRate < 0 ? "error.main" : "success.main"} className="flex-row-center-start">
                         <P variant="h6" color="inherit">
                             $ {nDecorator((lastMonthEarnings - beforeLastMonthEarnings).toFixed(2))}
                         </P>
@@ -56,11 +61,11 @@ export default function SalesGrowth() {
                     </Box>
                 ),
                 subTitle: `
-                ${growthReteData?.beforeLastMonth.month}
-                ${growthReteData?.beforeLastMonth.year} 
+                ${growthRateData?.beforeLastMonth.month}
+                ${growthRateData?.beforeLastMonth.year} 
                 - 
-                ${growthReteData?.lastMonth.month}
-                ${growthReteData?.lastMonth.year}
+                ${growthRateData?.lastMonth.month}
+                ${growthRateData?.lastMonth.year}
                 `
             }}
         />

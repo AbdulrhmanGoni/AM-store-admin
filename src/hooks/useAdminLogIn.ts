@@ -38,6 +38,8 @@ export default function useAdminLogIn() {
                     else setServerError(true);
                 })
                 .finally(() => setIsLoading(false))
+        } else {
+            setIsUnauthorized(true);
         }
     }, [adminId, accessToken])
 
