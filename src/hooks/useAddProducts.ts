@@ -2,7 +2,7 @@ import clearForm from "../functions/clearForm";
 import useFormValidationState from "./useFormValidationState";
 import { FormEvent, useState } from "react";
 import useNotifications, { updateTostProps } from "./useNotifications";
-import useAsyncActions from "./useProductsActions";
+import useProductsActions from "./useProductsActions";
 import useProductImagesUploader from "./useProductImagesUploader";
 import { productData } from "../types/dataTypes";
 
@@ -15,7 +15,7 @@ export default function useAddProducts() {
     } = useFormValidationState();
     const { uploadImages } = useProductImagesUploader();
     const { bySteps } = useNotifications();
-    const { addNewProduct } = useAsyncActions();
+    const { addNewProduct } = useProductsActions();
     const [isLoading, setIsLoading] = useState(false);
     const [addingDone, setAddingDone] = useState(false);
 

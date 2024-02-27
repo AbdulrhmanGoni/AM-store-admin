@@ -11,7 +11,7 @@ export default function useProductsActions() {
     const path = (additionalPath: string = "") => `${host_admin}/products/${additionalPath}`;
 
     async function addNewProduct(theProduct: productData) {
-        return (await api.post(path("?type=add-new-product"), theProduct)).data
+        return (await api.post(path(""), theProduct)).data
     }
 
     async function updateProduct(changes: findTheChangesReturnType, productId: string) {

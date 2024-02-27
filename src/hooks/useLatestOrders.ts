@@ -25,7 +25,7 @@ export default function useLatestOrders() {
     })
     const queryClient = useQueryClient()
 
-    const latestOrders = useEventSource("orders/watch-new-orders");
+    const latestOrders = useEventSource("orders/watch-orders");
 
     function handleNewOrder(event: MessageEvent<string>) {
         if (event.data) {
