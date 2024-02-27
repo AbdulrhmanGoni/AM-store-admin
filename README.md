@@ -10,6 +10,7 @@ And tracking store's status by viewing statistics for sales, earnings, orders, p
 - JavaScript <img src="./icons_readme/javascript.svg" style="width: 15px;height: 15px; transform: translate(6px, 3px)">
 - TypeScript <img src="./icons_readme/typescript.svg" style="width: 15px;height: 15px; transform: translate(6px, 3px)">
 - React.js <img src="./icons_readme/react.svg" style="width: 20px;height: 16px; transform: translate(4px, 3px)">
-- Vite <img src="./icons_readme/vite.svg" style="width: 20px;height: 15px; transform: translate(3px, 3px)">
+- Vite <img src="./icons_readme/vite.svg" style="width: 20px; height: 15px; transform: translate(0px, 3px)">
+- Apexcharts.js <img src="./icons_readme/apexcharts.png" style="width: 20px;height: 18px; transform: translate(2px, 4px)">
 - Material UI <img src="./icons_readme/Material-UI.svg" style="width: 20px;height: 15px; transform: translate(3px, 3px)">
-- React Query <img src="./icons_readme/react-query.svg" style="width: 17px;height: 17px; transform: translate(3px, 6px)">
+- React Query <img src="./icons_readme/react-query.svg" style="width: 17px;height: 17px; transform: translate(3px, 4px)">
