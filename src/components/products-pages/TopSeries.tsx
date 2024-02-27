@@ -1,25 +1,25 @@
 import { JSX } from 'react'
 import { nDecorator, P } from '@abdulrhmangoni/am-store-library'
 import { Alert, Box, Chip, Divider, List, ListItem, ListItemText, Paper, Skeleton, IconButton } from '@mui/material'
-import { SeriesType, TopSeriesesType } from '../../hooks/useTopSerieses'
-import useTopSerieses from '../../hooks/useTopSerieses'
+import { SeriesType, TopSeriesType } from '../../hooks/useTopSeries'
+import useTopSeries from '../../hooks/useTopSeries'
 import { Refresh } from '@mui/icons-material'
 
 
-interface TopSeriesesProps {
+interface TopSeriesProps {
     sortType: "topSold" | "topEarnings",
     title: string,
     icon: JSX.Element,
     isMoney?: boolean
 }
 
-export default function TopSerieses({ title, icon, isMoney, sortType }: TopSeriesesProps) {
+export default function TopSeries({ title, icon, isMoney, sortType }: TopSeriesProps) {
 
     const
         rankingColors = ["#AF9500", "#c0c0c0", "#6A3805"],
         money = isMoney ? "$" : ""
 
-    const { data, isLoading, isError, refetch } = useTopSerieses();
+    const { data, isLoading, isError, refetch } = useTopSeries();
 
     return (
         <Paper>
@@ -45,7 +45,7 @@ export default function TopSerieses({ title, icon, isMoney, sortType }: TopSerie
                             return <Skeleton key={index} variant="rounded" width="100%" height={32} />
                         })
                         : data ?
-                            data[sortType as keyof TopSeriesesType]?.map(({ series, value }: SeriesType, index: number) => {
+                            data[sortType as keyof TopSeriesType]?.map(({ series, value }: SeriesType, index: number) => {
                                 return (
                                     <ListItem
                                         sx={{ pr: "6px", bgcolor: "background.default" }}
@@ -70,7 +70,7 @@ export default function TopSerieses({ title, icon, isMoney, sortType }: TopSerie
                                         </IconButton>
                                     }
                                 >
-                                    Failed to fetch serieses statistics
+                                    Failed to fetch series statistics
                                 </Alert>
                                 : null
                 }

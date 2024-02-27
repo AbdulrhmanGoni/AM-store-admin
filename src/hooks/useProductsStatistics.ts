@@ -7,7 +7,7 @@ export interface ProductsStatistics {
     productsOutOfStock: number,
     totalProductsSold: number,
     categoriesCount: number,
-    seriesesCount: number
+    seriesCount: number
 }
 
 const ProductsStatisticsDefault = {
@@ -16,7 +16,7 @@ const ProductsStatisticsDefault = {
     productsOutOfStock: 0,
     totalProductsSold: 0,
     categoriesCount: 0,
-    seriesesCount: 0
+    seriesCount: 0
 }
 
 interface UseProductsStatisticsType extends PromiseState {

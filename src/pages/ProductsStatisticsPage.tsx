@@ -6,7 +6,7 @@ import SvgIcon from "../components/SvgIcon";
 import { inStockIcon, orderIcon } from "../components/svgIconsAsString";
 import { stockIcon } from "../components/stockIcon";
 import { nDecorator } from "@abdulrhmangoni/am-store-library";
-import TopSerieses from "../components/products-pages/TopSerieses";
+import TopSeries from "../components/products-pages/TopSeries";
 import useProductsStatisticsPageContent from "../hooks/useProductsStatisticsPageContent";
 import DisplayInfoBox from "../components/DisplayInfoBox";
 import PageTitle from "../components/PageTitle";
@@ -29,7 +29,7 @@ export default function ProductsStatisticsPage() {
             totalProducts,
             productsOutOfStock,
             totalProductsSold,
-            seriesesCount,
+            seriesCount,
             categoriesCount
         },
         productsStatisticsLoading
@@ -44,7 +44,7 @@ export default function ProductsStatisticsPage() {
         <Box className="flex-column" id="products-statistics-page" gap={pageSpaces}>
             <PageTitle
                 title="Products Statistics"
-                description="View statistics and information about products & categories & serieses"
+                description="View statistics and information about products & categories & series"
                 icon={<SvgIcon svgElementAsString={orderIcon} />}
             />
             <Grid container spacing={pageSpaces}>
@@ -116,8 +116,8 @@ export default function ProductsStatisticsPage() {
                     <DisplayInfoBox
                         type={sec2infoBoxType}
                         isLoading={productsStatisticsLoading}
-                        title="Serieses"
-                        body={nDecorator(String(seriesesCount))}
+                        title="Series"
+                        body={nDecorator(String(seriesCount))}
                         iconColor={randomColorsArr[5]}
                         icon={<img src="/icons/televisionIcon.svg" />}
                         boxStyle={sec2InfoBoxStyle}
@@ -145,13 +145,13 @@ export default function ProductsStatisticsPage() {
                     section={<TopProductsContainer />}
                 />
             </Grid>
-            <Grid id="top-serieses-section" sx={{ minHeight: "300px" }} container spacing={pageSpaces}>
+            <Grid id="top-series-section" sx={{ minHeight: "300px" }} container spacing={pageSpaces}>
                 <RenderSectionWhenSpecificElementAppears
-                    sectionIdToAbserve="top-serieses-section"
+                    sectionIdToAbserve="top-series-section"
                     section={
                         <>
                             <Grid item xs={12} sm={6}>
-                                <TopSerieses
+                                <TopSeries
                                     title="Best Selling"
                                     icon={<SvgIcon svgElementAsString={rankingIconCup} width={30} height={30} />}
                                     sortType="topEarnings"
@@ -159,7 +159,7 @@ export default function ProductsStatisticsPage() {
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
-                                <TopSerieses
+                                <TopSeries
                                     title="Top Selling"
                                     icon={<SvgIcon svgElementAsString={rankingIconMedal} width={30} height={30} />}
                                     sortType="topSold"

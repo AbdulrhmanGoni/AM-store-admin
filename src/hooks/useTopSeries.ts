@@ -5,16 +5,16 @@ export interface SeriesType {
     value: number
 }
 
-export interface TopSeriesesType {
+export interface TopSeriesType {
     topEarnings: SeriesType[],
     topSold: SeriesType[]
 }
 
-export default function useTopSerieses() {
+export default function useTopSeries() {
 
-    const query = "top-serieses";
+    const query = "top-series";
 
-    return useGetApi<TopSeriesesType>({
+    return useGetApi<TopSeriesType>({
         key: [query],
         path: `statistics/?queryKey=${query}&limit=5`
     })
