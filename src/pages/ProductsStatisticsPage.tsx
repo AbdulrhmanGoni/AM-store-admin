@@ -139,12 +139,22 @@ export default function ProductsStatisticsPage() {
                     }
                 />
             </Grid>
+            <PageTitle
+                title="Top Products"
+                description="Display the best products in AM Store"
+                containerSX={{ mt: 1 }}
+            />
             <Grid sx={{ minHeight: "300px" }} id="top-products-section" container spacing={pageSpaces}>
                 <RenderSectionWhenSpecificElementAppears
                     sectionIdToAbserve="top-products-section"
                     section={<TopProductsContainer />}
                 />
             </Grid>
+            <PageTitle
+                title="Top Series"
+                description="Display the most popular series in AM Store"
+                containerSX={{ mt: 1 }}
+            />
             <Grid id="top-series-section" sx={{ minHeight: "300px" }} container spacing={pageSpaces}>
                 <RenderSectionWhenSpecificElementAppears
                     sectionIdToAbserve="top-series-section"

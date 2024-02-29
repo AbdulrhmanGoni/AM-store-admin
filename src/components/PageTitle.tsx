@@ -1,5 +1,5 @@
 import { JSX } from 'react'
-import { Box } from '@mui/material'
+import { Box, SxProps } from '@mui/material'
 import SmallIconBox from './SmallIconBox'
 import { P } from '@abdulrhmangoni/am-store-library'
 
@@ -7,10 +7,11 @@ interface PageTitleProps {
     title: string,
     description: string,
     icon?: JSX.Element
+    containerSX?: SxProps
 }
-export default function PageTitle({ title, description, icon }: PageTitleProps) {
+export default function PageTitle({ title, description, icon, containerSX }: PageTitleProps) {
     return (
-        <Box>
+        <Box sx={containerSX}>
             <P
                 variant='h5'
                 className='flex-row-center-start'
