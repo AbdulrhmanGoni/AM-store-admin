@@ -44,7 +44,7 @@ export default function SalesGrowth() {
             customMainValue={
                 <Box className="flex-column">
                     <P variant="subtitle1" color="inherit">Last Month</P>
-                    <P className="flex-row-center-start" variant="h5" color={growthRate < 0 ? "error" : "success"}>
+                    <P className="flex-row-center-start" variant="h5" color={growthRate < 0 ? "error.main" : "success.main"}>
                         {growthRate}% {stateArrow}
                     </P>
                 </Box>

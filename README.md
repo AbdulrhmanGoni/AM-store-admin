@@ -14,3 +14,13 @@ And tracking store's status by viewing statistics for sales, earnings, orders, p
 - Apexcharts.js <img src="./icons_readme/apexcharts.png" style="width: 20px;height: 18px; transform: translate(2px, 4px)">
 - Material UI <img src="./icons_readme/Material-UI.svg" style="width: 20px;height: 15px; transform: translate(3px, 3px)">
 - React Query <img src="./icons_readme/react-query.svg" style="width: 17px;height: 17px; transform: translate(3px, 4px)">
+
+## Feedbacks
+
+I welcome any feedback or suggestions you might have! <br>
+if you faced any problem in the project or you have any suggestion improves it,
+or even you have some advices to improve me and my skils, <br>
+Please feel free to open an issue and discuss it with me or contact me directly on [my LinkedIn account](https://www.linkedin.com/in/abdulrhman-goni-857a36275/)
+or throuth my email abdulrhmangoni@gmail.com
+
+Thank you for stopping by! 🌟
