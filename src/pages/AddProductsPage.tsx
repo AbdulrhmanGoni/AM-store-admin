@@ -1,5 +1,5 @@
 import { Add, LiveTv, Subtitles, AllInbox, AttachMoney, Class } from '@mui/icons-material'
-import { Box, Grid, Paper, LinearProgress } from '@mui/material'
+import { Box, Grid, Paper, LinearProgress, Container } from '@mui/material'
 import { LoadingButton } from '@mui/lab';
 import { CustomTextField, ErrorMessage, ImagesInputs } from '../components/products-pages/ProductsFormComponents';
 import useAddProducts from '../hooks/useAddProducts';
@@ -23,8 +23,11 @@ export default function AddProductPage() {
     } = useAddProducts();
 
     return (
-        <Box
-            component="form" onSubmit={handleSubmit} id='addProductForm'
+        <Container
+            maxWidth="md"
+            component="form"
+            onSubmit={handleSubmit}
+            id='addProductForm'
             sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -32,7 +35,7 @@ export default function AddProductPage() {
                 "& input": { pl: 1.5 }
             }}
         >
-            <Paper sx={{ p: pageSpaces, maxWidth: 1000, position: "relative" }}>
+            <Paper sx={{ p: pageSpaces, position: "relative" }}>
                 <LinearProgress sx={{
                     display: isLoading ? "block" : "none",
                     position: "absolute",
@@ -127,6 +130,6 @@ export default function AddProductPage() {
                     </LoadingButton>
                 </Box>
             </Paper>
-        </Box>
+        </Container>
     )
 }

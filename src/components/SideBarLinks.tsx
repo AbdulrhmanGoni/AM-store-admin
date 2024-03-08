@@ -17,7 +17,7 @@ export interface LinkProps {
     nestedLinks?: LinkProps[]
 }
 
-const drawerLinks: LinkProps[] = [
+const sideBarLinks: LinkProps[] = [
     {
         path: "/",
         text: "Sales Analytics",
@@ -30,7 +30,7 @@ const drawerLinks: LinkProps[] = [
         nestedLinks: [
             {
                 path: "products-management",
-                text: " Products Management",
+                text: "Products Management",
                 icon: <Store />
             },
             {
@@ -72,4 +72,4 @@ const drawerLinks: LinkProps[] = [
     }
 ]
 
-export default drawerLinks
+export default sideBarLinks
