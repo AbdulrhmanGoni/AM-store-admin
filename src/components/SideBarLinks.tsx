@@ -4,7 +4,8 @@ import {
     AnalyticsSharp,
     Discount, Inbox,
     EditAttributes,
-    Feedback, Groups, Store
+    Feedback, Groups, Store,
+    Settings
 } from "@mui/icons-material";
 import Icon from "./SvgIcon";
 import { productsIcon } from "./svgIconsAsString";
@@ -69,6 +70,11 @@ const sideBarLinks: LinkProps[] = [
         path: "/users-feedbacks",
         text: "Users Feedbacks",
         icon: <Feedback />
+    },
+    {
+        path: "/settings",
+        text: "Settings",
+        icon: <Settings />
     }
 ]
 

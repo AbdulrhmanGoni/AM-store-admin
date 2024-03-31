@@ -35,5 +35,6 @@ const pagesSize: { [path: string]: "md" } = {
     "/users-feedbacks": "md",
     "/products/edit-product": "md",
     "/products/add-products": "md",
+    "/settings": "md",
     "/products/cobones-and-discounts": "md"
 }

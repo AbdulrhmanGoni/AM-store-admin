@@ -19,6 +19,7 @@ import UsersPage from './pages/UsersPage.tsx';
 import UsersFeedbacksPage from './pages/UsersFeedbacksPage.tsx';
 import NotFoundPage from './pages/NotFoundPage.tsx';
 import DiscountsCobonsPage from './pages/DiscountsCobonsPage.tsx';
+import SettingsPage from "./pages/SettingsPage.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
       </Route>
       <Route path='users' element={<UsersPage />} />
       <Route path='users-feedbacks' element={<UsersFeedbacksPage />} />
+      <Route path='settings' element={<SettingsPage />} />
       <Route path='*' element={<NotFoundPage />} />
     </Route>
   )
