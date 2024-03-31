@@ -28,6 +28,7 @@ export default function App() {
       },
     }
   });
+
   const {
     adminData,
     isLoading, isError,

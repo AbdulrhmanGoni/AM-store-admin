@@ -28,7 +28,7 @@ export default function useAdminLogIn() {
                     setIsLogged(true);
                     isNetworkError && setIsNetworkError(false);
                     isError && setIsError(false);
-                    isUnauthorized && setIsUnauthorized(true);
+                    isUnauthorized && setIsUnauthorized(false);
                 })
                 .catch((error: AxiosError) => {
                     if (error.response?.status === 401) setIsUnauthorized(true);

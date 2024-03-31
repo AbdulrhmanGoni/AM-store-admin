@@ -1,15 +1,13 @@
-import {
-    Avatar, Button, CssBaseline,
-    TextField, Grid, Box,
-    Container
-} from '@mui/material';
+import { Avatar, Button, CssBaseline, TextField, Grid, Box, Container } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import useLogInLogic from '../hooks/useLogInLogic';
 import { P, useGoogleAuth } from '@abdulrhmangoni/am-store-library';
 
 
 export default function LogInForm() {
-    const { AuthButton } = useGoogleAuth()
+
+    const { AuthButton } = useGoogleAuth({ clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID })
+
     const {
         logInFailed,
         handleSubmit,
@@ -20,13 +18,7 @@ export default function LogInForm() {
         <Box sx={containerStyle}>
             <Container className='customForm' maxWidth="xs">
                 <CssBaseline />
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
-                >
+                <Box className="flex-column-center">
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}><LockOutlinedIcon /></Avatar>
                     <P component="h1" variant="h5">Log In</P>
                     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
@@ -36,6 +28,7 @@ export default function LogInForm() {
                                     fullWidth
                                     name="email"
                                     id="email"
+                                    type='email'
                                     label="Email Address"
                                 />
                             </Grid>
@@ -66,13 +59,6 @@ export default function LogInForm() {
                             Log In
                         </Button>
                     </Box>
-                    <Grid container justifyContent="flex-end">
-                        <Grid item>
-                            <P style={{ textDecoration: "underline" }}>
-                                you dont`t have an account? Sign up
-                            </P>
-                        </Grid>
-                    </Grid>
                     <Grid container justifyContent="flex-end">
                         <AuthButton
                             text='Log in with Google'

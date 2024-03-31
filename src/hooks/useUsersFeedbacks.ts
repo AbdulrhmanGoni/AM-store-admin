@@ -18,7 +18,8 @@ export default function useUsersFeedbacks() {
 
     const useSlicedFetchOptions = {
         autoFetchingFirstSlice: true,
-        itemsIdPropertyName: "_id"
+        itemsIdPropertyName: "_id",
+        isAdminsRequest: true
     }
     const url = `${host}/feedbacks`
     const {
