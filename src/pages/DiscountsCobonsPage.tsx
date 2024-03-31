@@ -1,6 +1,6 @@
-import { Alert, Box, Button, Collapse, Container, IconButton, Paper } from "@mui/material";
+import { Alert, Box, Button, Collapse, Container, Divider, IconButton, Paper } from "@mui/material";
 import PageTitle from "../components/PageTitle";
-import { Add, Refresh } from "@mui/icons-material";
+import { Add, Discount, Refresh } from "@mui/icons-material";
 import { P } from "@abdulrhmangoni/am-store-library";
 import { useState } from "react";
 import AddCoboneForm from "../components/cobones-and-discounts/AddCoboneForm";
@@ -9,7 +9,7 @@ import CoboneCardsLoading from "../components/cobones-and-discounts/CoboneCardsL
 import useDiscountCobones from "../hooks/useDiscountCobones";
 
 
-export default function CobonsAndDiscountsPage() {
+export default function DiscountsCobonsPage() {
 
     const { cobones, isLoading, isError, refetch } = useDiscountCobones();
     const [openAddCoboneField, setOpenAddCoboneField] = useState<boolean>(false);
@@ -23,25 +23,26 @@ export default function CobonsAndDiscountsPage() {
         <Container maxWidth="md" sx={{ px: 1 }}>
             <PageTitle
                 title="Cobones & Discounts"
+                icon={<Discount />}
                 description="Discount cobones management, View and manage the products that has discount"
             />
-            <Box className="flex-row-center-end" sx={{ my: 4 }}>
-                <Button
-                    variant="contained"
-                    onClick={toggleAddCoboneField}
-                    startIcon={
-                        <Add
-                            sx={{
-                                transition: ".3s",
-                                transform: openAddCoboneField ? "rotate(-45deg)" : "rotate(0deg)"
-                            }}
-                        />
-                    }
-                >
-                    Add Cobone
-                </Button>
-            </Box>
-            <Collapse in={openAddCoboneField}>
+            <Divider sx={{ my: 3 }} />
+            <Button
+                variant="contained"
+                onClick={toggleAddCoboneField}
+                sx={{ mx: "auto" }}
+                startIcon={
+                    <Add
+                        sx={{
+                            transition: ".3s",
+                            transform: openAddCoboneField ? "rotate(-45deg)" : "rotate(0deg)"
+                        }}
+                    />
+                }
+            >
+                Add Cobone
+            </Button>
+            <Collapse in={openAddCoboneField} sx={{ mt: 1 }}>
                 <AddCoboneForm />
             </Collapse>
             <Box className="flex-column gap1" sx={{ my: 4 }}>
