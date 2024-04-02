@@ -1,8 +1,15 @@
-import { Settings } from "@mui/icons-material";
+import { BarChart, LocalShipping, ManageAccounts, Settings } from "@mui/icons-material";
 import PageTitle from "../components/PageTitle";
-import { Container, Divider } from "@mui/material";
+import { Container, Divider, Grid } from "@mui/material";
+import pageSpaces from "../CONSTANTS/pageSpaces";
+import DefaultMonthlyTargetSetting from "../components/settings-page/DefaultMonthlyTargetSetting";
+import ChangingUsersPasswordsSetting from "../components/settings-page/ChangingUsersPasswordsSetting";
+import DeliveryPriceSetting from "../components/settings-page/DeliveryPriceSetting";
+import FreeDeliveryEntitlementSetting from "../components/settings-page/FreeDeliveryEntitlementSetting";
+import SettingsSectionTitle from "../components/settings-page/SettingsSectionTitle";
 
 export default function SettingsPage() {
+
     return (
         <Container maxWidth="md" sx={{ px: 1 }}>
             <PageTitle
@@ -11,6 +18,30 @@ export default function SettingsPage() {
                 icon={<Settings />}
             />
             <Divider sx={{ my: 3 }} />
+            <Grid container spacing={pageSpaces}>
+                <Grid xs={12} item>
+                    <SettingsSectionTitle
+                        title="Statistics"
+                        icon={<BarChart />}
+                    />
+                </Grid>
+                <Grid xs={12} md={6} item><DefaultMonthlyTargetSetting /></Grid>
+                <Grid xs={12} item>
+                    <SettingsSectionTitle
+                        title="Delivery"
+                        icon={<LocalShipping />}
+                    />
+                </Grid>
+                <Grid xs={12} md={6} item><DeliveryPriceSetting /></Grid>
+                <Grid xs={12} md={6} item><FreeDeliveryEntitlementSetting /></Grid>
+                <Grid xs={12} item>
+                    <SettingsSectionTitle
+                        title="Users"
+                        icon={<ManageAccounts />}
+                    />
+                </Grid>
+                <Grid xs={12} md={6} item><ChangingUsersPasswordsSetting /></Grid>
+            </Grid>
         </Container>
     )
 }
