@@ -20,7 +20,7 @@ export default function AdminAppBar() {
                     maxWidth={pagesSize[pathname] || false}
                 >
                     <Toolbar sx={{ px: "0px !important" }}>
-                        <IconButton onClick={() => { setDrawerState(true) }}><Menu /></IconButton>
+                        <IconButton onClick={() => { setDrawerState(true) }}><Menu sx={{ color: "text.primary" }} /></IconButton>
                         <AMLogo />
                         <Box sx={{ flexGrow: 1 }} />
                         <NotificationsCenter />
