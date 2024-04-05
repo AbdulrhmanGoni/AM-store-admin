@@ -2,40 +2,44 @@ import "normalize.css/normalize.css";
 import 'react-toastify/dist/ReactToastify.minimal.css';
 import { createContext, useState } from "react";
 import AdminAppBar from "./components/AdminBar";
-import { Box, Button } from "@mui/material";
+import Box from "@mui/material/Box";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from 'react-toastify';
 import useAdminLogIn from "./hooks/useAdminLogIn";
-import {
-  IllustrationCard,
-  LoadingCircle,
-  LoadingPage,
-  CustomThemeProvider
-} from "@abdulrhmangoni/am-store-library";
+import { LoadingCircle, LoadingPage, CustomThemeProvider } from "@abdulrhmangoni/am-store-library";
 import { Outlet } from "react-router-dom";
 import { AdminData } from "./types/dataTypes";
 import LogInForm from "./components/LogInForm";
+import Unauthorized from "./components/errors/Unauthorized";
+import NetworkError from "./components/errors/NetworkError";
+import BadRequest from "./components/errors/BadRequest";
+import ServerError from "./components/errors/ServerError";
+import UnexpectedError from "./components/errors/UnexpectedError";
 
 export const AdminDataContext = createContext<AdminData | null>(null);
 
-export default function App() {
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false
+    },
+  }
+});
 
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        refetchOnWindowFocus: false,
-        refetchOnMount: false
-      },
-    }
-  });
+export default function App() {
 
   const {
     adminData,
-    isLoading, isError,
-    isNetworkError, isLogged,
-    isUnauthorized, isServerError,
+    isLoading,
+    isError,
+    isNetworkError,
+    isLogged,
+    isUnauthorized,
+    isServerError,
     isUnexpected
   } = useAdminLogIn();
+
   const [logInPage, setLogInPage] = useState<boolean>(false);
 
   return (
@@ -60,7 +64,12 @@ export default function App() {
           >
             {
               isLoading ? <LoadingPage />
-                : isLogged ? <AppContent />
+                : isLogged ? <>
+                  <AdminAppBar />
+                  <Box sx={{ p: { xs: 1, md: 2 } }}>
+                    <Outlet />
+                  </Box>
+                </>
                   : logInPage ? <LogInForm />
                     : isUnauthorized ? <Unauthorized action={() => setLogInPage(true)} />
                       : isNetworkError ? <NetworkError />
@@ -75,72 +84,5 @@ export default function App() {
         </QueryClientProvider>
       </AdminDataContext.Provider>
     </CustomThemeProvider>
-  )
-}
-
-function AppContent() {
-  return (
-    <>
-      <AdminAppBar />
-      <Box sx={{ p: { xs: 1, md: 2 } }}>
-        <Outlet />
-      </Box>
-    </>
-  )
-}
-
-function ServerError() {
-  return (
-    <IllustrationCard
-      title="Server Error"
-      illustratorType="server"
-      message="There is unexpected error happends in our server"
-      fullPage withRefreshButton
-    />
-  )
-}
-
-function NetworkError() {
-  return (
-    <IllustrationCard
-      title="Network Error"
-      illustratorType="network"
-      message="There is problem in your network, please check your internet"
-      withRefreshButton fullPage
-    />
-  )
-}
-
-function BadRequest() {
-  return (
-    <IllustrationCard
-      title="Bad Request"
-      illustratorType="unexpected"
-      message="This Error happends may because of your network or because the server recived unexpected input"
-      fullPage withRefreshButton
-    />
-  )
-}
-
-function UnexpectedError() {
-  return (
-    <IllustrationCard
-      title="Unexpected Error"
-      illustratorType="unexpected"
-      message="There is unexpected happends, refrech the page and try again"
-      fullPage withRefreshButton
-    />
-  )
-}
-
-function Unauthorized({ action }: { action: () => void }) {
-  return (
-    <IllustrationCard
-      title="You are not authorized"
-      illustratorType="unauthorized"
-      hideAlertMsg fullPage
-    >
-      <Button onClick={action} variant="contained">log In</Button>
-    </IllustrationCard>
   )
 }
