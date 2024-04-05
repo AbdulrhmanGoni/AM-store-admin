@@ -7,6 +7,7 @@ import ChangingUsersPasswordsSetting from "../components/settings-page/ChangingU
 import DeliveryPriceSetting from "../components/settings-page/DeliveryPriceSetting";
 import FreeDeliveryEntitlementSetting from "../components/settings-page/FreeDeliveryEntitlementSetting";
 import SettingsSectionTitle from "../components/settings-page/SettingsSectionTitle";
+import SetMonthlyTargetsSetting from "../components/settings-page/SetMonthlyTargetsSetting";
 
 export default function SettingsPage() {
 
@@ -26,6 +27,7 @@ export default function SettingsPage() {
                     />
                 </Grid>
                 <Grid xs={12} md={6} item><DefaultMonthlyTargetSetting /></Grid>
+                <Grid xs={12} md={6} item><SetMonthlyTargetsSetting /></Grid>
                 <Grid xs={12} item>
                     <SettingsSectionTitle
                         title="Delivery"
