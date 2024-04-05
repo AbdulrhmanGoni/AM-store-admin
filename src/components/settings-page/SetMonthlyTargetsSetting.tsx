@@ -57,7 +57,7 @@ export default function SetMonthlyTargetsSetting() {
     return (
         isLoading ? <SettingBoxLoading />
             : <SettingBox
-                title="Edit monthes monthly targets"
+                title="Edit monthes targets of earnings"
                 description="Edit the target of the current month or the future monthes"
                 actionsSection={
                     <SettingActionsButtons

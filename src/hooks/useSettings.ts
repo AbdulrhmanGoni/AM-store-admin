@@ -13,15 +13,14 @@ interface Settings {
     productsCategories: string[],
     allowUsersChangePasswordEveryNDays: number,
     defaultMonthlyTarget: number,
-    deliveryPrice: {
-        value: number,
-        limit: number
-    }
+    deliveryPrice: number,
+    minFreeDeliveryEntitlementPrice: number
 }
 
 type SettingsValues = Settings[
     "allowUsersChangePasswordEveryNDays" |
     "deliveryPrice" |
+    "minFreeDeliveryEntitlementPrice" |
     "defaultMonthlyTarget" |
     "productsCategories" |
     "discountCobones"

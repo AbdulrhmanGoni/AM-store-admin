@@ -1,5 +1,5 @@
 import useSettings from "../../hooks/useSettings";
-import SettingBox from "./SettingBox";
+import NumberSettingBox from "./NumberSettingBox";
 import SettingBoxLoading from "./SettingBoxLoading";
 
 export default function FreeDeliveryEntitlementSetting() {
@@ -7,16 +7,16 @@ export default function FreeDeliveryEntitlementSetting() {
     const { data, isLoading, updateSetting } = useSettings();
 
     async function onSaveChanges(newValue: number) {
-        await updateSetting("deliveryPrice", { limit: newValue, value: data?.deliveryPrice.value as number })
+        await updateSetting("minFreeDeliveryEntitlementPrice", newValue)
             .then((res) => { console.log(res) })
     }
 
     return (
         isLoading ? <SettingBoxLoading />
-            : <SettingBox<number>
+            : <NumberSettingBox<number>
                 title="Free delevery entitlement"
                 description="The minimum total price that worthes a free delevery"
-                initialValue={data?.deliveryPrice.limit}
+                initialValue={data?.minFreeDeliveryEntitlementPrice}
                 inputStartIcon="$"
                 onSaveChanges={onSaveChanges}
             />

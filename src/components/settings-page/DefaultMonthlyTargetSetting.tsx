@@ -1,5 +1,5 @@
 import useSettings from "../../hooks/useSettings";
-import SettingBox from "./SettingBox";
+import NumberSettingBox from "./NumberSettingBox";
 import SettingBoxLoading from "./SettingBoxLoading";
 
 export default function DefaultMonthlyTargetSetting() {
@@ -15,7 +15,7 @@ export default function DefaultMonthlyTargetSetting() {
 
     return (
         isLoading ? <SettingBoxLoading />
-            : <SettingBox<number>
+            : <NumberSettingBox<number>
                 title="Default monthly target"
                 description="The value which will set automaticly as target of the monthes that don't have target"
                 initialValue={data?.defaultMonthlyTarget}

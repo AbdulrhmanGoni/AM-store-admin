@@ -1,5 +1,5 @@
 import useSettings from "../../hooks/useSettings";
-import SettingBox from "./SettingBox";
+import NumberSettingBox from "./NumberSettingBox";
 import SettingBoxLoading from "./SettingBoxLoading";
 
 export default function ChangingUsersPasswordsSetting() {
@@ -15,7 +15,7 @@ export default function ChangingUsersPasswordsSetting() {
 
     return (
         isLoading ? <SettingBoxLoading />
-            : <SettingBox<number>
+            : <NumberSettingBox<number>
                 title="Users passwords life time"
                 description="The number of the days that if have passed after password changing users can change their passwords again"
                 initialValue={data?.allowUsersChangePasswordEveryNDays}
