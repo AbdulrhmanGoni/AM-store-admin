@@ -1,4 +1,4 @@
-import { Box, InputAdornment, TextField } from "@mui/material";
+import { Box, InputAdornment, TextField, useMediaQuery } from "@mui/material";
 import MONTHES from "../../CONSTANTS/MONTHES";
 import SelectBox from "../SelectBox";
 import SettingBox from "./SettingBox";
@@ -10,11 +10,12 @@ import useStatisticsActions, { UpdateMonthTargetDetails } from "../../hooks/useS
 
 export default function SetMonthlyTargetsSetting() {
 
-    const { data, isLoading, currentYear, updateMonthlySalesStatistics } = useMonthlySalesStatistics();
+    const { data, currentYear, setYear, isLoading, updateMonthlySalesStatistics } = useMonthlySalesStatistics();
     const { updateMonthTarget } = useStatisticsActions()
     const [selectedMonthIndex, setSelectedMonthIndex] = useState<number>(new Date().getMonth());
     const [newTarget, setNewTarget] = useState<number>();
     const [changeLoading, setChangeLoading] = useState<boolean>();
+    const xxSmallScreens = useMediaQuery("(max-width: 400px)");
 
     const currentMonthTarget = newTarget || data?.[selectedMonthIndex].earningsTarget
 
@@ -68,19 +69,33 @@ export default function SetMonthlyTargetsSetting() {
                     />
                 }
             >
-                <Box sx={{ display: "flex", gap: 1 }}>
+                <Box sx={{ display: "flex", gap: 1, flexWrap: xxSmallScreens ? "wrap" : "nowrap" }}>
                     <SelectBox
-                        onSelect={(_value, index) => {
-                            setSelectedMonthIndex(index + new Date().getMonth())
-                            setNewTarget(undefined)
+                        values={[new Date().getFullYear(), new Date().getFullYear() + 1]}
+                        onSelect={(value) => {
+                            setYear(+value)
+                            setSelectedMonthIndex(+value > new Date().getFullYear() ? 0 : new Date().getMonth())
+                            cancelChanges()
                         }}
-                        values={MONTHES.filter((_month, index) => index >= new Date().getMonth())}
+                        defaultValue={currentYear}
                         size="small"
-                        sx={{ minWidth: "80px", "& .MuiSelect-select": undefined }}
+                        sx={{ flexBasis: "100%", "& .MuiSelect-select": undefined }}
+                    />
+                    <SelectBox
+                        values={MONTHES.filter((_month, index) => {
+                            return currentYear > new Date().getFullYear() ? true : index >= new Date().getMonth()
+                        })}
+                        defaultValue={MONTHES[selectedMonthIndex]}
+                        onSelect={(_value, index) => {
+                            setSelectedMonthIndex(currentYear > new Date().getFullYear() ? index : index + new Date().getMonth())
+                            cancelChanges()
+                        }}
+                        size="small"
+                        sx={{ flexBasis: "100%", "& .MuiSelect-select": undefined }}
                     />
                     <TextField
                         size="small"
-                        sx={{ width: "100%" }}
+                        sx={{ flexBasis: "100%" }}
                         type="number"
                         onChange={({ target: { value } }) => {
                             setNewTarget(+value)
