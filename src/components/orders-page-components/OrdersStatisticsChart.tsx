@@ -1,14 +1,13 @@
 import Chart from "react-apexcharts";
 import ApexchartsContainer from "../ApexchartsContainer";
 import { Skeleton, useTheme } from "@mui/material";
-import { FetchFailedAlert, PromiseState, nDecorator } from "@abdulrhmangoni/am-store-library";
+import { FetchFailedAlert, PromiseState, nDecorator, yearsArray } from "@abdulrhmangoni/am-store-library";
 import { ApexOptions } from "apexcharts";
 import Icon from "../SvgIcon";
 import { averageOrdersIcon } from "../svgIconsAsString";
 import ChartTitle from "../ChartTitle";
 import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
 import SelectBox from "../SelectBox";
-import yearsArray from "../../functions/yearsArray";
 
 interface OrdersStatisticsChartProps extends PromiseState {
     data: number[],

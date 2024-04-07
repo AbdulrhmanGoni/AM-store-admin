@@ -1,6 +1,6 @@
 import { useTheme } from "@mui/material";
 import Chart from "react-apexcharts";
-import { nDecorator } from "@abdulrhmangoni/am-store-library";
+import { nDecorator, yearsArray } from "@abdulrhmangoni/am-store-library";
 import ApexchartsContainer from "../ApexchartsContainer";
 import { ApexOptions } from "apexcharts";
 import ChartTitle from "../ChartTitle";
@@ -9,7 +9,6 @@ import Icon from "../SvgIcon";
 import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
 import useMonthlyCategoriesStatistics from "../../hooks/useMonthlyCategoriesStatistics";
 import SelectBox from "../SelectBox";
-import yearsArray from "../../functions/yearsArray";
 
 
 export default function CategoriesMonthlyEarnings() {
