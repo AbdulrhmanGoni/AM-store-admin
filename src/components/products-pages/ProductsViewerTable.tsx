@@ -1,8 +1,8 @@
 import { Box, LinearProgress } from '@mui/material';
-import { DataGrid, GridPaginationModel, GridRowParams } from '@mui/x-data-grid';
+import { DataGrid, GridRowParams } from '@mui/x-data-grid';
 import columns from './ProductsGridColumnsConfig';
-import ToolBar from './ProducsTableToolbar';
-import Footer from './ProducsTableFooter';
+import ProducsTableToolbar from './ProducsTableToolbar';
+import ProducsTableFooter from './ProducsTableFooter';
 import { IllustrationCard } from '@abdulrhmangoni/am-store-library';
 import useProductsTableLogic, { UpdateCelEvent } from '../../hooks/useProductsTableLogic';
 import useProductsDisplayer from '../../hooks/useProductsDisplayer';
@@ -13,15 +13,15 @@ export default function ProductsViewerTable() {
     const { display } = useProductsDisplayer()
     const {
         products,
+        thereIsMore,
         paginationModel,
         setPaginationModel,
+        loadedPages,
         isLoading,
         updateCell,
         deleteProducs,
-        tablesMassages,
         goingToDelete,
         apiRef,
-        productsLength,
         selectedRows,
         setSelectedRows
     } = useProductsTableLogic();
@@ -34,12 +34,13 @@ export default function ProductsViewerTable() {
                 getRowId={(row) => row._id}
                 rows={products}
                 columns={columns}
-                rowCount={productsLength}
+                rowCount={products.length + 1}
                 loading={isLoading}
-                initialState={{ pagination: { paginationModel } }}
+                paginationModel={paginationModel}
                 pageSizeOptions={[20]}
                 paginationMode='client'
                 density='comfortable'
+                disableDensitySelector
                 checkboxSelection
                 onCellDoubleClick={(event) => {
                     if (event.field === "images") {
@@ -51,12 +52,23 @@ export default function ProductsViewerTable() {
                 isRowSelectable={(params: GridRowParams) => !goingToDelete.includes(params.row._id)}
                 onRowSelectionModelChange={(rows) => setSelectedRows(rows)}
                 onCellEditStop={(params, event) => { updateCell(params, event as UpdateCelEvent) }}
-                onPaginationModelChange={(model: GridPaginationModel) => { setPaginationModel(model); }}
-                localeText={{ noRowsLabel: tablesMassages, noResultsOverlayLabel: 'No products found.' }}
+                localeText={{ noRowsLabel: "No products", noResultsOverlayLabel: 'No products found.' }}
                 slotProps={{ toolbar: { quickFilterProps: { debounceMs: 500 } } }}
                 slots={{
-                    toolbar: () => <ToolBar />,
-                    footer: () => <Footer delelteFun={deleteProducs} selectedRows={selectedRows} tableApiRef={apiRef} />,
+                    toolbar: () => <ProducsTableToolbar />,
+                    footer: () => (
+                        <ProducsTableFooter
+                            delelteFun={deleteProducs}
+                            selectedRows={selectedRows}
+                            tableApiRef={apiRef}
+                            pagination={{
+                                model: paginationModel,
+                                setModel: setPaginationModel,
+                                thereIsMore,
+                                loadedPages
+                            }}
+                        />
+                    ),
                     noRowsOverlay: () => (
                         <IllustrationCard
                             title='No Products'

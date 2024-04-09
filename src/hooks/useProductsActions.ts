@@ -1,8 +1,10 @@
-import { host_admin } from "../CONSTANTS/API_hostName";
+import host, { host_admin } from "../CONSTANTS/API_hostName";
 import useApiRequest from "./useApiRequest";
 import { productData } from "../types/dataTypes";
 import { findTheChangesReturnType } from "../functions/findUpdateFormChanges";
 import { GenericAbortSignal } from "axios";
+
+export type PaginateProductsModel = { pageSize: number, page: number, categories: string[] }
 
 export default function useProductsActions() {
 
@@ -22,6 +24,12 @@ export default function useProductsActions() {
         return (await api.get(path(productId), { signal })).data
     }
 
+    async function paginateProducts({ pageSize, page, categories }: PaginateProductsModel) {
+        const returnType = "_rate,_comments,_updatedAt,_createdAt"
+        const query = `pageSize=${pageSize}&page=${++page}&returnType=${returnType}&categories=${categories.join(",")}`
+        return (await api.get(`${host}/products/pagination?${query}`)).data
+    }
+
     async function deleteProduct(productId: string) {
         return (await api.delete(path(), { data: { productsIds: [productId] } })).data
     }
@@ -38,6 +46,7 @@ export default function useProductsActions() {
         addNewProduct,
         updateProduct,
         getProduct,
+        paginateProducts,
         deleteProduct,
         addDiscountToProducts,
         removeDiscountFromProducts

@@ -1,20 +1,28 @@
 import useProductsDisplayer from "../../hooks/useProductsDisplayer";
-import { Delete, Edit, ReadMore } from "@mui/icons-material";
-import { Box, Button } from "@mui/material";
-import { GridFooter, GridRowSelectionModel } from "@mui/x-data-grid";
+import { ArrowLeft, ArrowRight, Delete, Edit, ReadMore } from "@mui/icons-material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
+import { GridPaginationModel, GridRowSelectionModel } from "@mui/x-data-grid";
 import { ActionAlert } from '@abdulrhmangoni/am-store-library';
 import { useNavigate } from "react-router-dom";
 import DiscountsApplyer from "./DiscountsApplyer";
-import { MutableRefObject } from "react";
+import { Dispatch, MutableRefObject } from "react";
 import { GridApiCommunity } from "@mui/x-data-grid/internals";
 
 interface TableFooterProps {
     tableApiRef: MutableRefObject<GridApiCommunity>,
     delelteFun: () => void,
-    selectedRows: GridRowSelectionModel
+    pagination: {
+        setModel: Dispatch<React.SetStateAction<GridPaginationModel>>
+        model: GridPaginationModel,
+        thereIsMore: boolean,
+        loadedPages: number[],
+    }
+    selectedRows: GridRowSelectionModel,
 }
 
-export default function Footer({ delelteFun, selectedRows, tableApiRef }: TableFooterProps) {
+type NavigationDirection = "next" | "prev"
+
+export default function Footer({ delelteFun, selectedRows, tableApiRef, pagination }: TableFooterProps) {
 
     const { display } = useProductsDisplayer();
     const navigate = useNavigate();
@@ -27,14 +35,25 @@ export default function Footer({ delelteFun, selectedRows, tableApiRef }: TableF
 
     function unselectAllRows() { tableApiRef.current.setRowSelectionModel([]) }
 
+    function paginate(dir: NavigationDirection) {
+        pagination.setModel(state => {
+            return {
+                ...state,
+                page: dir === "next" ? state.page + 1
+                    : state.page - 1
+            }
+        })
+    }
+
     return (
         <Box
             className="flex-row-center-start"
             sx={{
-                p: "16px 12px",
+                px: 1.5,
                 borderTop: "solid 1px",
                 borderColor: "divider",
                 width: "100%",
+                minHeight: "53px",
                 overflowX: "auto"
             }}
         >
@@ -88,14 +107,45 @@ export default function Footer({ delelteFun, selectedRows, tableApiRef }: TableF
                     </Button>
                 </>
             }
-            <GridFooter
-                sx={{
-                    flexGrow: 1,
-                    borderTop: "none",
-                    minHeight: "initial",
-                    ".MuiTablePagination-root": { overflow: "initial" }
-                }}
-            />
+            <Box className="flex-row a-center gap1" sx={{ ml: "auto" }}>
+                <NavigationButton
+                    paginateFunction={paginate}
+                    navigationDir="prev"
+                    disabled={pagination.model.page < 1}
+                />
+                <Typography width="fit-content">page: {pagination.model.page + 1}</Typography>
+                <NavigationButton
+                    paginateFunction={paginate}
+                    navigationDir="next"
+                    disabled={
+                        !pagination.thereIsMore &&
+                        pagination.model.page === pagination.loadedPages[pagination.loadedPages.length - 1]
+                    }
+                />
+            </Box>
         </Box>
+    )
+}
+
+interface NavigationButtonProps {
+    disabled: boolean,
+    navigationDir: NavigationDirection,
+    paginateFunction: (dir: NavigationDirection) => void
+}
+
+function NavigationButton({ disabled, navigationDir, paginateFunction }: NavigationButtonProps) {
+    return (
+        <IconButton
+            size="small"
+            sx={{
+                bgcolor: "primary.main",
+                "&:hover": { bgcolor: "primary.dark" },
+                p: { xs: .3, md: .5 }
+            }}
+            onClick={() => { paginateFunction(navigationDir) }}
+            disabled={disabled}
+        >
+            {navigationDir === "prev" ? <ArrowLeft /> : <ArrowRight />}
+        </IconButton>
     )
 }

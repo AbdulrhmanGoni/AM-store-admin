@@ -8,6 +8,7 @@ import SvgIcon from "../components/SvgIcon";
 import { productsManagementIcon } from "../components/svgIconsAsString";
 import host from "../CONSTANTS/API_hostName";
 import pageSpaces from "../CONSTANTS/pageSpaces";
+import ProductsCategoriesFilterProvider from "../components/products-pages/ProductsCategoriesFilterProvider";
 
 
 export default function ProductsManagementPage() {
@@ -21,19 +22,22 @@ export default function ProductsManagementPage() {
         description="Add, Update and Delete Products"
         icon={<SvgIcon disableIconColor svgElementAsString={productsManagementIcon} />}
       />
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Card sx={{ p: 2, overflow: "visible" }}>
+      <Grid container spacing={pageSpaces}>
+        <Grid item xs={12} sm>
+          <Card sx={{ p: pageSpaces, overflow: "visible" }}>
             <SearchForProductsField
               hostName={host}
+              fieldSize="small"
               actionWithProductId={(id) => display(id)}
               endItemIcon={<ReadMore />}
             />
           </Card>
         </Grid>
         <Grid item xs={12}>
-          <Card sx={{ p: 2 }}>
-            <ProductsViewerTable />
+          <Card sx={{ p: pageSpaces }}>
+            <ProductsCategoriesFilterProvider>
+              <ProductsViewerTable />
+            </ProductsCategoriesFilterProvider>
           </Card>
         </Grid>
       </Grid>

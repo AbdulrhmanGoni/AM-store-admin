@@ -1,51 +1,60 @@
-import { useEffect, useState } from 'react'
-import useApiRequest from './useApiRequest';
-import host from '../CONSTANTS/API_hostName';
+import { useContext, useEffect, useState } from 'react';
 import { productData } from '../types/dataTypes';
+import { ProductsCategoriesFilterContext } from '../components/products-pages/ProductsCategoriesFilterProvider';
+import useProductsActions from './useProductsActions';
 
-export default function useProductsPagination({ productsLength }: { productsLength: number }) {
-    
-    const { api } = useApiRequest();
+export default function useProductsPagination() {
+
+    const [rendered, setRendered] = useState(false);
     const [products, setProducts] = useState<productData[]>([]);
     const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 20 });
     const [loadedPages, setLoadedPages] = useState<number[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [isError, setIsError] = useState<boolean>(true);
-    const [thereIsMore, setThereIsMore] = useState<boolean>(true);
-
-    async function getProducts({ pageSize, page }: { pageSize: number, page: number }) {
-        const returnType = "_rate,_comments,_updatedAt,_createdAt"
-        const query = `pageSize=${pageSize}&page=${++page}&returnType=${returnType}`
-        try { return (await api.get(`${host}/products/pagination?${query}`)).data }
-        catch { return null }
-    }
+    const [isLoading, setIsLoading] = useState(true);
+    const [isError, setIsError] = useState(true);
+    const [thereIsMore, setThereIsMore] = useState(true);
+    const [triggerFetch, setTriggerFetch] = useState(0);
+    const { paginateProducts } = useProductsActions();
+    const { categories } = useContext(ProductsCategoriesFilterContext);
 
     useEffect(() => {
         if (!loadedPages.includes(paginationModel.page) && thereIsMore) {
-            setIsLoading(true)
-            getProducts(paginationModel)
+            setIsLoading(true);
+            paginateProducts({ ...paginationModel, categories })
                 .then(data => {
                     if (data) {
-                        setProducts(state => state.concat(data))
-                        setLoadedPages(state => [...state, paginationModel.page])
+                        if (paginationModel.page === 0) {
+                            setProducts(data.products)
+                            setLoadedPages([paginationModel.page])
+                        } else {
+                            setProducts(state => state.concat(data.products))
+                            setLoadedPages(state => [...state, paginationModel.page])
+                        }
+                        !data.thereIsNextPage && setThereIsMore(false)
                         isError && setIsError(false)
                     } else setIsError(true)
                 })
                 .finally(() => setIsLoading(false))
         }
-    }, [paginationModel.page])
+    }, [triggerFetch, paginationModel.page]);
 
-    useEffect(() => { 
-        productsLength && products.length >= productsLength && setThereIsMore(false) 
-    }, [products, productsLength])
+    useEffect(() => {
+        if (rendered) {
+            setThereIsMore(true);
+            setLoadedPages([]);
+            setPaginationModel({ page: 0, pageSize: 20 });
+            setTriggerFetch(n => ++n);
+        }
+    }, [categories])
+
+    useEffect(() => { setRendered(true) }, []);
 
     return {
         products,
-        productsLength,
         paginationModel,
         setPaginationModel,
         isLoading,
         isError,
-        thereIsMore
+        thereIsMore,
+        loadedPages
     }
 }

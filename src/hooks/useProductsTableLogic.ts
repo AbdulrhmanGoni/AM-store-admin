@@ -1,7 +1,6 @@
 import { GridCellParams, GridRowSelectionModel, useGridApiRef } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useProductsPagination from "./useProductsPagination";
-import useGetApi from "./useGetApi";
 import useNotifications from "./useNotifications";
 import useMutateApi from "./useMutateApi";
 import useProductsActions from "./useProductsActions";
@@ -16,19 +15,19 @@ export default function useProductsTableLogic() {
     const apiRef = useGridApiRef();
     const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
     const [goingToDelete, setGoingToDelete] = useState<GridRowSelectionModel>([]);
-    const [tablesMassages, setTablesMassages] = useState<string>("No products");
     const { updateProduct } = useProductsActions();
 
     const { bySteps, promised } = useNotifications();
-    const { data: productsLength = 0, isError } = useGetApi<number>({ key: ["products-length"], path: "products/length" });
     const { mutateAsync: deleteProducts } = useMutateApi({ key: ["delete-products"], path: "admin/products" });
 
     const {
         products,
         paginationModel,
         setPaginationModel,
-        isLoading
-    } = useProductsPagination({ productsLength })
+        isLoading,
+        thereIsMore,
+        loadedPages
+    } = useProductsPagination()
 
     function deleteProducs() {
         setGoingToDelete(selectedRows)
@@ -75,21 +74,16 @@ export default function useProductsTableLogic() {
         }
     }
 
-    useEffect(() => {
-        isError && setTablesMassages("Failed to fetch products")
-    }, [isError, productsLength])
-
-
     return {
         products,
+        thereIsMore,
         paginationModel,
         setPaginationModel,
+        loadedPages,
         isLoading,
         updateCell,
         deleteProducs,
-        tablesMassages,
         goingToDelete,
-        productsLength,
         apiRef,
         selectedRows,
         setSelectedRows
