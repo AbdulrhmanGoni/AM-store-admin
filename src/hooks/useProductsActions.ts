@@ -34,6 +34,10 @@ export default function useProductsActions() {
         return (await api.delete(path(), { data: { productsIds: [productId] } })).data
     }
 
+    async function createCategory(categoryName: string) {
+        return (await api.post(path(`create-category?category=${categoryName}`))).data
+    }
+
     async function addDiscountToProducts(productsIds: (string | number)[], discount: number) {
         return (await api.post(path("discounts"), { productsIds, discount })).data
     }
@@ -48,6 +52,7 @@ export default function useProductsActions() {
         getProduct,
         paginateProducts,
         deleteProduct,
+        createCategory,
         addDiscountToProducts,
         removeDiscountFromProducts
     }

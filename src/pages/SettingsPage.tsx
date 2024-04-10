@@ -34,8 +34,8 @@ export default function SettingsPage() {
                         icon={<LocalShipping />}
                     />
                 </Grid>
-                <Grid xs={12} md={6} item><DeliveryPriceSetting /></Grid>
-                <Grid xs={12} md={6} item><FreeDeliveryEntitlementSetting /></Grid>
+                <Grid xs={12} sm={6} item><DeliveryPriceSetting /></Grid>
+                <Grid xs={12} sm={6} item><FreeDeliveryEntitlementSetting /></Grid>
                 <Grid xs={12} item>
                     <SettingsSectionTitle
                         title="Users"

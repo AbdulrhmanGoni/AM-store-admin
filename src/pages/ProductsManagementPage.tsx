@@ -8,6 +8,7 @@ import SvgIcon from "../components/SvgIcon";
 import { productsManagementIcon } from "../components/svgIconsAsString";
 import host from "../CONSTANTS/API_hostName";
 import pageSpaces from "../CONSTANTS/pageSpaces";
+import AddCategoryForm from "../components/products-pages/AddCategoryForm";
 import ProductsCategoriesFilterProvider from "../components/products-pages/ProductsCategoriesFilterProvider";
 
 
@@ -24,7 +25,10 @@ export default function ProductsManagementPage() {
       />
       <Grid container spacing={pageSpaces}>
         <Grid item xs={12} sm>
-          <Card sx={{ p: pageSpaces, overflow: "visible" }}>
+          <Card
+            className="flex-row-center"
+            sx={{ p: pageSpaces, overflow: "visible", height: "100%" }}
+          >
             <SearchForProductsField
               hostName={host}
               fieldSize="small"
@@ -32,6 +36,9 @@ export default function ProductsManagementPage() {
               endItemIcon={<ReadMore />}
             />
           </Card>
+        </Grid>
+        <Grid item xs={12} sm="auto">
+          <AddCategoryForm />
         </Grid>
         <Grid item xs={12}>
           <Card sx={{ p: pageSpaces }}>
