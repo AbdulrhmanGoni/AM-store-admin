@@ -10,11 +10,12 @@ interface NotificationsCardProps {
 }
 
 export default function NotificationsCard({ notification, markNotificationsAsRead }: NotificationsCardProps) {
+
     const { id, type, read, data, createdAt, content } = notification
 
     return (
         <Alert
-            severity={(type as AlertColor) || "info"}
+            severity={type === "default" ? "info" : (type as AlertColor) || "info"}
             key={id}
             variant={read ? "standard" : "filled"}
             className="flex-row-center"
