@@ -13,7 +13,7 @@ export default function useAddCategoryFormLogic() {
 
     function validateCategoryName(category: FormDataEntryValue | null): false | string {
         if (typeof category !== "string" || isNumber(category)) {
-            setError({ isError: true, message: "Invalid Category" });
+            setError({ isError: true, message: "Invalid Category Name" });
             return false;
         } else {
             if (category.length > 2) {
@@ -26,20 +26,6 @@ export default function useAddCategoryFormLogic() {
         }
     }
 
-    function addCategory(category: string) {
-        if (validateCategoryName(category)) {
-            setIsLoading(true)
-            createCategory(category)
-                .then(() => {
-
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-                .finally(() => setIsLoading(false))
-        }
-    }
-
     function handleFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -48,19 +34,18 @@ export default function useAddCategoryFormLogic() {
             setIsLoading(true);
             createCategory(category)
                 .then(() => {
-                    message(`The category "${category}" successfully`);
+                    message(`The category "${category}" successfully`, "success");
                     setOpenField(false);
                 })
                 .catch((error) => {
-                    console.log(error);
-                    message(`failed to add "${category}" category`);
+                    const errorMessage = error.response?.data?.message || `failed to add "${category}" category`
+                    message(errorMessage, "error");
                 })
                 .finally(() => setIsLoading(false))
         }
     }
 
     return {
-        addCategory,
         handleFormSubmit,
         isLoading,
         error,

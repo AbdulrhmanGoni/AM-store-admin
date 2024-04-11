@@ -2,6 +2,7 @@ import { AddBox } from "@mui/icons-material";
 import { Button, Card, IconButton, TextField } from "@mui/material";
 import pageSpaces from "../../CONSTANTS/pageSpaces";
 import useAddCategoryFormLogic from "../../hooks/useAddCategoryFormLogic";
+import LoadingLine from "../LoadingLine";
 
 export default function AddCategoryForm() {
 
@@ -21,6 +22,7 @@ export default function AddCategoryForm() {
                 height: "100%",
                 p: pageSpaces,
                 display: "flex",
+                position: "relative"
             }}
         >
             {
@@ -29,7 +31,7 @@ export default function AddCategoryForm() {
                     size="small"
                     label="Category Name"
                     name="category"
-                    sx={{ mr: 1, flex: 1, "& .MuiFormHelperText-root": { ml: 0 } }}
+                    sx={{ mr: 1, flex: 1, "& .MuiFormHelperText-root": { mx: 0 } }}
                     disabled={isLoading}
                     error={error.isError}
                     helperText={error.isError && error.message}
@@ -43,6 +45,7 @@ export default function AddCategoryForm() {
                             "&:hover": { bgcolor: "primary.dark" },
                             height: "fit-content"
                         }}
+                        disabled={isLoading}
                         type="submit"
                     >
                         <AddBox />
@@ -57,7 +60,7 @@ export default function AddCategoryForm() {
                         Add Category
                     </Button>
             }
-
+            <LoadingLine isLoading={isLoading} place="bottom" />
         </Card>
     )
 }

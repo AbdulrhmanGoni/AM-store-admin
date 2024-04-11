@@ -1,4 +1,5 @@
-import { Box, Button, LinearProgress } from '@mui/material'
+import { Box, Button } from '@mui/material';
+import LoadingLine from '../LoadingLine';
 
 interface SettingActionsButtonsProps {
     open?: boolean,
@@ -30,7 +31,7 @@ export default function SettingActionsButtons({ open, cancelAction, saveAction, 
                     >
                         Save
                     </Button>
-                    {isLoading && <LinearProgress sx={{ position: "absolute", bottom: 0, left: 0, width: "100%" }} />}
+                    <LoadingLine isLoading={isLoading} place="bottom" />
                 </>
             }
         </Box>
