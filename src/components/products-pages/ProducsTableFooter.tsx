@@ -1,14 +1,13 @@
-import useProductsDisplayer from "../../hooks/useProductsDisplayer";
 import { ArrowLeft, ArrowRight, Delete, Edit, ReadMore } from "@mui/icons-material";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import { GridPaginationModel, GridRowSelectionModel } from "@mui/x-data-grid";
 import { ActionAlert } from '@abdulrhmangoni/am-store-library';
-import { useNavigate } from "react-router-dom";
 import DiscountsApplyer from "./DiscountsApplyer";
 import { Dispatch, MutableRefObject } from "react";
 import { GridApiCommunity } from "@mui/x-data-grid/internals";
+import useProductsTableFooterLogic, { NavigationDirection } from "../../hooks/useProductsTableFooterLogic";
 
-interface TableFooterProps {
+export interface TableFooterProps {
     tableApiRef: MutableRefObject<GridApiCommunity>,
     delelteFun: () => void,
     pagination: {
@@ -20,30 +19,16 @@ interface TableFooterProps {
     selectedRows: GridRowSelectionModel,
 }
 
-type NavigationDirection = "next" | "prev"
+export default function ProducsTableFooter({ delelteFun, selectedRows, tableApiRef, pagination }: TableFooterProps) {
 
-export default function Footer({ delelteFun, selectedRows, tableApiRef, pagination }: TableFooterProps) {
-
-    const { display } = useProductsDisplayer();
-    const navigate = useNavigate();
-    const selectedRowsCount = selectedRows.length;
-
-    const warningMessage = `
-    Are you sure you want to delete ${selectedRowsCount > 1 ? "these products" : "this product"}, 
-    note that you can't undo this procces if you continue
-    `;
-
-    function unselectAllRows() { tableApiRef.current.setRowSelectionModel([]) }
-
-    function paginate(dir: NavigationDirection) {
-        pagination.setModel(state => {
-            return {
-                ...state,
-                page: dir === "next" ? state.page + 1
-                    : state.page - 1
-            }
-        })
-    }
+    const {
+        display,
+        navigate,
+        paginate,
+        unselectAllRows,
+        warningMessage,
+        selectedRowsCount
+    } = useProductsTableFooterLogic({ delelteFun, selectedRows, tableApiRef, pagination })
 
     return (
         <Box
@@ -66,7 +51,7 @@ export default function Footer({ delelteFun, selectedRows, tableApiRef, paginati
                         title={`You are going to detete (${selectedRowsCount}) product${selectedRowsCount > 1 ? "s" : ""}`}
                     >
                         <Button
-                            endIcon={<Box fontSize={"13px!important"}>{selectedRowsCount}</Box>}
+                            endIcon={<Box fontSize="13px!important">{selectedRowsCount}</Box>}
                             startIcon={<Delete />}
                             variant="contained"
                             color='error'

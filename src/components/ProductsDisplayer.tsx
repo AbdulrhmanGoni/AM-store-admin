@@ -1,6 +1,5 @@
-import { useEffect, useState, JSX } from "react"
+import { JSX } from "react"
 import { Card, Box, IconButton, Rating, Button, ThemeProvider, Theme } from "@mui/material"
-import { productFullType } from "../types/dataTypes"
 import { Close, Delete, Edit, Remove } from "@mui/icons-material"
 import {
     ActionAlert,
@@ -11,15 +10,13 @@ import {
     ProductAvailabationState,
     PriceDisplayer,
     AlertTooltip,
-    loadingControl,
     HighlightedWord,
     P
 } from "@abdulrhmangoni/am-store-library"
-import useProductsActions from "../hooks/useProductsActions"
 import { CSSProperties } from "@mui/material/styles/createMixins"
 import DiscountsApplyer from "./products-pages/DiscountsApplyer"
-import useNotifications from "../hooks/useNotifications"
 import pageSpaces from "../CONSTANTS/pageSpaces"
+import useProduct from "../hooks/useProduct"
 
 interface ProductsDisplayerProps {
     productId: string,
@@ -30,35 +27,20 @@ interface ProductsDisplayerProps {
 
 export default function ProductsDisplayer({ productId, close, navigate, theme }: ProductsDisplayerProps) {
 
-    const { getProduct, deleteProduct, removeDiscountFromProducts } = useProductsActions();
-    const { message } = useNotifications();
-    const [product, setProduct] = useState<productFullType>();
-    const [productDiscount, setProductDiscount] = useState<number>();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isError, setIsError] = useState<boolean>(false);
-    const [cardsOpacity, setCardsOpacity] = useState<number>(0);
+    const {
+        product,
+        isLoading,
+        isError,
+        productDiscount,
+        deleteTheProduct,
+        actionAlertMessage,
+        removeDiscount,
+        setProductDiscount,
+        cardsOpacity,
+        setCardsOpacity
+    } = useProduct({ productId, closeFn: close });
 
-    useEffect(() => {
-        if (!product) {
-            const controller = new AbortController();
-            const signal = controller.signal;
-            setIsLoading(true)
-            getProduct(productId, signal)
-                .then((data) => {
-                    setProduct(data);
-                    setProductDiscount(data?.discount)
-                })
-                .catch(() => { setIsError(true) })
-                .finally(() => { setIsLoading(false) })
-
-            return () => { controller.abort() }
-        }
-    }, [productId]);
-
-    useEffect(() => { setCardsOpacity(1) }, [productId]);
-
-    const { title, price, description, series, images, sold, earnings, _id, amount, rating } = product ?? {}
-    const actionAlertMessage = "Make sure if you continue, You will not be able to undo this process after that"
+    const { title, price, description, series, images, sold, earnings, _id, amount, rating } = product || {};
 
     function CloseIcon() {
         return (
@@ -69,17 +51,6 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
                 <Close />
             </IconButton>
         )
-    }
-
-    function removeDiscount() {
-        loadingControl(true)
-        _id && removeDiscountFromProducts([_id])
-            .then(() => { setProductDiscount(0) })
-            .catch((error) => {
-                const errorMessage = error.response?.data?.message || "Unexpected error happened";
-                message(errorMessage, "error")
-            })
-            .finally(() => loadingControl(false))
     }
 
     return (
@@ -198,7 +169,7 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
                                     element={
                                         <Box className="flex-row-center-start gap1" sx={{ mt: 1, flexFlow: "wrap" }}>
                                             <ActionAlert
-                                                action={() => { _id ? deleteProduct(_id) : null }}
+                                                action={deleteTheProduct}
                                                 title={"You are going to delete this product"}
                                                 message={actionAlertMessage}                                >
                                                 <Button
