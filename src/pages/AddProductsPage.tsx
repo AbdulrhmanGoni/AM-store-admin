@@ -1,11 +1,12 @@
 import { Add, LiveTv, Subtitles, AllInbox, AttachMoney, Class } from '@mui/icons-material'
 import { Box, Grid, Paper, LinearProgress, Container } from '@mui/material'
 import { LoadingButton } from '@mui/lab';
-import { CustomTextField, ErrorMessage, ImagesInputs } from '../components/products-pages/ProductsFormComponents';
+import ProductCustomTextField, { ErrorMessage } from '../components/products-pages/ProductCustomTextField';
 import useAddProducts from '../hooks/useAddProducts';
 import DarkOverlay from '../components/DarkOverlay';
 import pageSpaces from '../CONSTANTS/pageSpaces';
 import { P } from '@abdulrhmangoni/am-store-library';
+import ProductsImagesInputs from '../components/products-pages/ProductsImagesInputs';
 
 export default function AddProductPage() {
 
@@ -54,7 +55,7 @@ export default function AddProductPage() {
                 <P sx={{ p: "8px 4px", pb: pageSpaces }} variant='h5'>Add Product</P>
                 <Grid container spacing={pageSpaces}>
                     <Grid item xs={12} md={6}>
-                        <CustomTextField name="title"
+                        <ProductCustomTextField name="title"
                             error={titleState}
                             errorMsg="The title should consists of 6 letters at least"
                             label="Product Title"
@@ -68,7 +69,7 @@ export default function AddProductPage() {
                             "&>*": { flexBasis: "50%" }
                         }}>
                         <Box>
-                            <CustomTextField name="price"
+                            <ProductCustomTextField name="price"
                                 error={priceState}
                                 errorMsg="The price should be positive number"
                                 label="Price"
@@ -76,7 +77,7 @@ export default function AddProductPage() {
                             />
                         </Box>
                         <Box>
-                            <CustomTextField name="amount"
+                            <ProductCustomTextField name="amount"
                                 error={amountState}
                                 errorMsg="amount of this product should be positive number"
                                 label="Amount"
@@ -86,11 +87,11 @@ export default function AddProductPage() {
                         </Box>
                     </Grid>
                     <Grid item xs={12}>
-                        <ImagesInputs error={!imageState} clearInputs={addingDone} />
+                        <ProductsImagesInputs error={!imageState} clearInputs={addingDone} />
                         <ErrorMessage error={!imageState && "You should add one image at least"} />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <CustomTextField name="series"
+                        <ProductCustomTextField name="series"
                             error={seriesState}
                             errorMsg="Series name should consists of 2 letters at least"
                             label="Series"
@@ -98,7 +99,7 @@ export default function AddProductPage() {
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <CustomTextField name="category"
+                        <ProductCustomTextField name="category"
                             label="Category"
                             error={categoryState}
                             errorMsg='You have to select category of product'
@@ -107,7 +108,7 @@ export default function AddProductPage() {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <CustomTextField name="description"
+                        <ProductCustomTextField name="description"
                             sx={{ alignItems: 'flex-start' }}
                             error={descriptionState}
                             errorMsg="You have to describe this product by 20 letters at least"

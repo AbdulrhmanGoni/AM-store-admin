@@ -2,10 +2,11 @@ import { useRef } from 'react';
 import { LiveTv, Subtitles, AllInbox, AttachMoney, Class, Save, Close } from '@mui/icons-material'
 import { Box, Button, Grid, Paper } from '@mui/material'
 import { LoadingButton } from '@mui/lab';
-import { CustomTextField, ErrorMessage, ImagesInputs } from './ProductsFormComponents';
+import ProductCustomTextField, { ErrorMessage } from './ProductCustomTextField';
 import useUpdateProduct from '../../hooks/useUpdateProduct';
 import { ActionAlert, ElementWithLoadingState, IllustrationCard, P } from '@abdulrhmangoni/am-store-library';
 import pageSpaces from '../../CONSTANTS/pageSpaces';
+import ProductsImagesInputs from './ProductsImagesInputs';
 
 export default function EditProductForm({ productId, close }: { productId: string, close: () => void }) {
 
@@ -56,7 +57,7 @@ export default function EditProductForm({ productId, close }: { productId: strin
                         <ElementWithLoadingState
                             height={55} isLoading={isLoading}
                             element={
-                                <CustomTextField name="title"
+                                <ProductCustomTextField name="title"
                                     defaultValue={theProduct?.title}
                                     error={titleState}
                                     errorMsg="The title should consists of 6 letters at least"
@@ -76,7 +77,7 @@ export default function EditProductForm({ productId, close }: { productId: strin
                             <ElementWithLoadingState
                                 height={55} isLoading={isLoading}
                                 element={
-                                    <CustomTextField name="price"
+                                    <ProductCustomTextField name="price"
                                         label="Price"
                                         error={priceState}
                                         defaultValue={String(theProduct?.price)}
@@ -90,7 +91,7 @@ export default function EditProductForm({ productId, close }: { productId: strin
                             <ElementWithLoadingState
                                 height={55} isLoading={isLoading}
                                 element={
-                                    <CustomTextField name="amount"
+                                    <ProductCustomTextField name="amount"
                                         error={amountState}
                                         errorMsg="amount of this product should be positive number"
                                         defaultValue={String(theProduct?.amount)}
@@ -103,7 +104,7 @@ export default function EditProductForm({ productId, close }: { productId: strin
                         </Box>
                     </Grid>
                     <Grid item xs={12}>
-                        <ImagesInputs
+                        <ProductsImagesInputs
                             error={!imageState}
                             isLoading={isLoading}
                             defaultValue={theProduct?.images}
@@ -114,7 +115,7 @@ export default function EditProductForm({ productId, close }: { productId: strin
                         <ElementWithLoadingState
                             height={55} isLoading={isLoading}
                             element={
-                                <CustomTextField name="series"
+                                <ProductCustomTextField name="series"
                                     error={seriesState}
                                     defaultValue={theProduct?.series}
                                     errorMsg="Series name should consists of 2 letters at least"
@@ -128,7 +129,7 @@ export default function EditProductForm({ productId, close }: { productId: strin
                         <ElementWithLoadingState
                             height={55} isLoading={isLoading}
                             element={
-                                <CustomTextField name="category"
+                                <ProductCustomTextField name="category"
                                     label="Category"
                                     defaultValue={theProduct?.category}
                                     error={categoryState}
@@ -143,7 +144,7 @@ export default function EditProductForm({ productId, close }: { productId: strin
                         <ElementWithLoadingState
                             height={125} isLoading={isLoading}
                             element={
-                                <CustomTextField name="description"
+                                <ProductCustomTextField name="description"
                                     sx={{ alignItems: 'flex-start' }}
                                     error={descriptionState}
                                     defaultValue={theProduct?.description}
