@@ -1,9 +1,10 @@
 import { useState } from "react";
-import CATEGORIES from "../CONSTANTS/CATEGORIES";
 import getFormData, { ProductformData } from "../functions/getFormData";
+import useSettings from "./useSettings";
 
 export default function useFormValidationState() {
 
+    const { data: settingsData } = useSettings();
     const [titleState, setTitleState] = useState<boolean>(true);
     const [priceState, setPriceState] = useState<boolean>(true);
     const [seriesState, setSeriesState] = useState<boolean>(true);
@@ -32,7 +33,7 @@ export default function useFormValidationState() {
             validTitle = Checker("title", title.length > 6),
             validPrice = Checker("price", (price > 0)),
             validSeries = Checker("series", series.length > 1),
-            validCategory = Checker("category", CATEGORIES.some(cat => cat === category)),
+            validCategory = Checker("category", !!(settingsData?.productsCategories?.some(cat => cat === category))),
             validImage = Checker("images", !!files.length),
             validAmount = Checker("amount", amount > 0),
             validDescription = Checker("description", description.length > 10)
