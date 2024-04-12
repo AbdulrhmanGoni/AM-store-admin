@@ -4,7 +4,7 @@ import ReactDom from "react-dom/client"
 import { useNavigate } from "react-router-dom"
 
 
-export default function useProductsDisplayer() {
+export default function useProductsDisplayer(options?: { onDelete?: (productId: string) => void }) {
 
     const navigate = useNavigate();
     const theme = useTheme();
@@ -20,6 +20,7 @@ export default function useProductsDisplayer() {
             theme={theme}
             close={() => { close(); root.unmount() }}
             navigate={() => { navigate(`/products/edit-product/${productId}`) }}
+            onDelete={() => options?.onDelete?.(productId)}
         />
         root.render(toRender);
     }

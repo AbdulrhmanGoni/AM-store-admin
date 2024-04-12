@@ -22,10 +22,11 @@ interface ProductsDisplayerProps {
     productId: string,
     close: () => void,
     navigate: () => void,
-    theme: Theme
+    theme: Theme,
+    onDelete?: () => void
 }
 
-export default function ProductsDisplayer({ productId, close, navigate, theme }: ProductsDisplayerProps) {
+export default function ProductsDisplayer({ productId, close, navigate, theme, onDelete }: ProductsDisplayerProps) {
 
     const {
         product,
@@ -38,7 +39,7 @@ export default function ProductsDisplayer({ productId, close, navigate, theme }:
         setProductDiscount,
         cardsOpacity,
         setCardsOpacity
-    } = useProduct({ productId, closeFn: close });
+    } = useProduct({ productId, closeFn: close, onDelete });
 
     const { title, price, description, series, images, sold, earnings, _id, amount, rating } = product || {};
 

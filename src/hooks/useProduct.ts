@@ -4,7 +4,13 @@ import { loadingControl } from "@abdulrhmangoni/am-store-library";
 import useProductsActions from "./useProductsActions";
 import { productFullType } from "../types/dataTypes";
 
-export default function useProduct({ productId, closeFn }: { productId: string, closeFn: () => void }) {
+interface UseProductProps {
+    productId: string,
+    closeFn: () => void,
+    onDelete?: () => void
+}
+
+export default function useProduct({ productId, closeFn, onDelete }: UseProductProps) {
 
     const { getProduct, deleteProduct, removeDiscountFromProducts } = useProductsActions();
     const { message } = useNotifications();
@@ -38,6 +44,7 @@ export default function useProduct({ productId, closeFn }: { productId: string, 
             return deleteProduct(product?._id)
                 .then(() => {
                     message("The product deleted successully", "success");
+                    onDelete?.()
                     closeFn();
                     return true
                 })

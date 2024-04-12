@@ -10,7 +10,6 @@ import useProductsDisplayer from '../../hooks/useProductsDisplayer';
 
 export default function ProductsViewerTable() {
 
-    const { display } = useProductsDisplayer()
     const {
         products,
         thereIsMore,
@@ -20,11 +19,13 @@ export default function ProductsViewerTable() {
         isLoading,
         updateCell,
         deleteProducs,
+        deleteProductFromTable,
         goingToDelete,
         apiRef,
         selectedRows,
         setSelectedRows
     } = useProductsTableLogic();
+    const { display } = useProductsDisplayer({ onDelete: deleteProductFromTable });
 
     return (
         <Box>

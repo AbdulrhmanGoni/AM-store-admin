@@ -1,4 +1,4 @@
-import { GridCellParams, GridRowSelectionModel, useGridApiRef } from "@mui/x-data-grid";
+import { GridCellParams, GridRowId, GridRowSelectionModel, useGridApiRef } from "@mui/x-data-grid";
 import { useState } from "react";
 import useProductsPagination from "./useProductsPagination";
 import useNotifications from "./useNotifications";
@@ -29,6 +29,10 @@ export default function useProductsTableLogic() {
         loadedPages
     } = useProductsPagination()
 
+    function deleteProductFromTable(id: GridRowId) {
+        apiRef.current.updateRows([{ _id: id, _action: "delete" }])
+    }
+
     function deleteProducs() {
         setGoingToDelete(selectedRows)
         promised(deleteProducts({ method: "delete", body: { productsIds: selectedRows } }),
@@ -39,9 +43,7 @@ export default function useProductsTableLogic() {
             }
         ).then(res => {
             if (res) {
-                selectedRows.forEach(id => {
-                    apiRef.current.updateRows([{ _id: id, _action: "delete" }])
-                })
+                selectedRows.forEach(deleteProductFromTable)
             }
         })
             .catch(() => { })
@@ -83,6 +85,7 @@ export default function useProductsTableLogic() {
         isLoading,
         updateCell,
         deleteProducs,
+        deleteProductFromTable,
         goingToDelete,
         apiRef,
         selectedRows,
