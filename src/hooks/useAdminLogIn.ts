@@ -41,7 +41,7 @@ export default function useAdminLogIn() {
         } else {
             appRendred && setIsUnauthorized(true);
         }
-    }, [adminId, accessToken])
+    }, [adminId, accessToken, appRendred])
 
     useEffect(() => setAppRendred(true), []);
 
