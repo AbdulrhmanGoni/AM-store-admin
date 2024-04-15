@@ -31,7 +31,7 @@ export default function SettingActionsButtons({ open, cancelAction, saveAction, 
                     >
                         Save
                     </Button>
-                    <LoadingLine isLoading={isLoading} place="bottom" />
+                    <LoadingLine isLoading={!!isLoading} place="bottom" />
                 </>
             }
         </Box>
