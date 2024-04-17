@@ -4,7 +4,6 @@ import columns from "../components/orders-page-components/OrdersGridColumnsConfi
 import useEventSource from "./useEventSource"
 import { useEffect } from "react"
 import { useQueryClient } from "@tanstack/react-query"
-import notificationSound from "../functions/notificationSound"
 
 interface LatestOrdersType {
     totalPrice: number,
@@ -32,7 +31,6 @@ export default function useLatestOrders() {
             queryClient.setQueryData<readonly LatestOrdersType[]>([query], (state) => {
                 return [JSON.parse(event.data) as LatestOrdersType, ...state!]
             })
-            notificationSound()
         }
     }
 
