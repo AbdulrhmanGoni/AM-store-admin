@@ -10,7 +10,6 @@ interface SubmitEventProps {
     preventDefault: () => void;
     currentTarget: HTMLFormElement | undefined;
 }
-type ErrorStateProps = { state: boolean, message: string }
 type requestPath = string
 type requestBody = {
     adminEmail?: FormDataEntryValue,
@@ -25,7 +24,7 @@ export default function useLogInLogic() {
 
     const { api } = useApiRequest();
     const { addCookie } = useCookies();
-    const [logInFailed, setFailed] = useState<ErrorStateProps>({ state: true, message: "" });
+    const [logInFailed, setFailed] = useState({ isError: false, message: "" });
     const { message } = useNotifications();
 
     function complateLog({ accessToken, adminData }: { accessToken: string, adminData: AdminData }) {
@@ -43,7 +42,7 @@ export default function useLogInLogic() {
                 else {
                     const errorMessage = data.message || "Unexpected error happened !"
                     if (errorOptions?.setFailedError) {
-                        setFailed({ state: false, message: errorMessage })
+                        setFailed({ isError: true, message: errorMessage })
                     } else {
                         message(errorMessage, "warning")
                     }
@@ -52,7 +51,7 @@ export default function useLogInLogic() {
             .catch((error) => {
                 const errorMessage = error.response?.data?.message || "Unexpected error happened !"
                 if (errorOptions?.setFailedError) {
-                    setFailed({ state: false, message: errorMessage })
+                    setFailed({ isError: true, message: errorMessage })
                 } else {
                     message(errorMessage, "error")
                 }

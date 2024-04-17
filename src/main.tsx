@@ -1,6 +1,5 @@
 import "normalize.css/normalize.css";
 import "@abdulrhmangoni/am-store-library/dist/cjs/global.css";
-// import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import {
   createBrowserRouter,
@@ -41,8 +40,4 @@ const router = createBrowserRouter(
   )
 );
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  // <StrictMode>
-  <RouterProvider router={router} />
-  // </StrictMode>
-)
+ReactDOM.createRoot(document.getElementById('root')!).render(<RouterProvider router={router} />)
