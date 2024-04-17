@@ -31,13 +31,13 @@ export default function FeedbackCard({ feedback, deleteFeedback }: FeedbackCardP
             cardStyle={{ position: "relative" }}
         >
             <P>{feedback.body}</P>
-            <OptionsMenu>
+            <OptionsMenu.Menu>
                 <OptionsMenu.Option
                     optionIcon={<Delete />}
                     optionText="Delete"
                     asyncAction={deleteTheFeedback}
                 />
-            </OptionsMenu>
+            </OptionsMenu.Menu>
         </MessageCard>
     )
 }
