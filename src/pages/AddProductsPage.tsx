@@ -1,12 +1,12 @@
 import { Add, LiveTv, Subtitles, AllInbox, AttachMoney, Class } from '@mui/icons-material'
-import { Box, Grid, Paper, LinearProgress, Container } from '@mui/material'
+import { Box, Grid, Paper, Container } from '@mui/material'
 import { LoadingButton } from '@mui/lab';
 import ProductCustomTextField, { ErrorMessage } from '../components/products-pages/ProductCustomTextField';
 import useAddProducts from '../hooks/useAddProducts';
-import DarkOverlay from '../components/DarkOverlay';
 import pageSpaces from '../CONSTANTS/pageSpaces';
 import { P } from '@abdulrhmangoni/am-store-library';
 import ProductsImagesInputs from '../components/products-pages/ProductsImagesInputs';
+import ProductsFormLoadingOverlay from '../components/products-pages/ProductsFormLoadingOverlay';
 
 export default function AddProductPage() {
 
@@ -37,21 +37,7 @@ export default function AddProductPage() {
             }}
         >
             <Paper sx={{ p: pageSpaces, position: "relative" }}>
-                <LinearProgress sx={{
-                    display: isLoading ? "block" : "none",
-                    position: "absolute",
-                    width: "100%",
-                    left: 0,
-                    top: 0
-                }}
-                />
-                <DarkOverlay
-                    style={{
-                        zIndex: isLoading ? 10 : 0,
-                        display: isLoading ? "flex" : "none",
-                        borderRadius: .5
-                    }}
-                />
+                <ProductsFormLoadingOverlay isLoading={isLoading} />
                 <P sx={{ p: "8px 4px", pb: pageSpaces }} variant='h5'>Add Product</P>
                 <Grid container spacing={pageSpaces}>
                     <Grid item xs={12} md={6}>

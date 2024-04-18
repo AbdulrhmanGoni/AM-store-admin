@@ -7,6 +7,7 @@ import useUpdateProduct from '../../hooks/useUpdateProduct';
 import { ActionAlert, ElementWithLoadingState, IllustrationCard, P } from '@abdulrhmangoni/am-store-library';
 import pageSpaces from '../../CONSTANTS/pageSpaces';
 import ProductsImagesInputs from './ProductsImagesInputs';
+import ProductsFormLoadingOverlay from './ProductsFormLoadingOverlay';
 
 export default function EditProductForm({ productId, close }: { productId: string, close: () => void }) {
 
@@ -42,9 +43,11 @@ export default function EditProductForm({ productId, close }: { productId: strin
                     "& .css-1nylpq2": { alignItems: "center" },
                     display: "flex",
                     flexDirection: "column",
-                    gap: 2
+                    gap: 2,
+                    position: "relative"
                 }}
             >
+                <ProductsFormLoadingOverlay isLoading={updatingLoading} />
                 <ElementWithLoadingState height={24} width={280} isLoading={isLoading}
                     element={
                         <P sx={{ pb: pageSpaces }} variant='subtitle1'>
