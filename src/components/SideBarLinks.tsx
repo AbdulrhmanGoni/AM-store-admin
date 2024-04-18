@@ -3,9 +3,9 @@ import {
     AnalyticsOutlined,
     AnalyticsSharp,
     Discount, Inbox,
-    EditAttributes,
-    Feedback, Groups, Store,
-    Settings
+    Feedback, Groups,
+    Store, Settings,
+    Edit
 } from "@mui/icons-material";
 import Icon from "./SvgIcon";
 import { productsIcon } from "./svgIconsAsString";
@@ -47,7 +47,7 @@ const sideBarLinks: LinkProps[] = [
             {
                 path: "edit-product",
                 text: "Edit Product",
-                icon: <EditAttributes />
+                icon: <Edit />
             },
             {
                 path: "cobones-and-discounts",

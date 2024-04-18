@@ -18,9 +18,8 @@ export default function useProductImagesUploader() {
                     payload.append("file", theFile);
                     payload.append("upload_preset", UPLOAD_PRESET);
                     await axios.post(UPLOAD_IMAGE_API, payload)
-                        .then((res) => res.data)
-                        .then((data) => {
-                            const imageUrl = data.url ?? data.secure_url;
+                        .then(({ data }) => {
+                            const imageUrl = data.secure_url || data.url;
                             imageUrl && uploadedImagesList.push(imageUrl);
                         })
                         .catch(() => {

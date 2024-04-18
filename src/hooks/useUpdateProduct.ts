@@ -25,11 +25,8 @@ export default function useUpdateProduct({ productId }: { productId: string }) {
     const { bySteps } = useNotifications();
 
     function copmlateUpload(changes: findTheChangesReturnType, productId: string, update: updateTostProps, updateLoading: updateLoadingTostProps) {
-        setUpdatingLoading(true);
         updateLoading("Saving changes...");
         updateProduct(changes, productId)
-            .catch(() => { update("error", "Opse! The Product Fieled update") })
-            .finally(() => { setUpdatingLoading(false) })
             .then((res) => {
                 if (res) {
                     update("success", "The Product Updated successfully");
@@ -37,6 +34,8 @@ export default function useUpdateProduct({ productId }: { productId: string }) {
                 }
                 !res && update("warning", "There is Unexpected issue");
             })
+            .catch(() => { update("error", "Opse! The Product Fieled update") })
+            .finally(() => { setUpdatingLoading(false) })
     }
 
     function handleSubmit(FormElement: HTMLFormElement) {
@@ -46,13 +45,15 @@ export default function useUpdateProduct({ productId }: { productId: string }) {
             const { update, updateLoading } = bySteps("Updating images...");
             const changes = findTheChanges(theProduct, formData)
             if (changes) {
+                setUpdatingLoading(true);
                 uploadImages(changes.files)
                     .then((images) => {
                         if (changes.files?.length === images?.length) {
                             const finalChanges = { ...changes, images, files: undefined }
                             copmlateUpload(finalChanges, productId, update, updateLoading);
                         } else {
-                            update("error", "There is one image or mere failed to upload");
+                            setUpdatingLoading(false);
+                            update("error", "There is one image or more failed to upload");
                         }
                     })
             } else {
