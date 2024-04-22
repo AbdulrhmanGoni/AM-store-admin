@@ -7,7 +7,7 @@ export default function DeliveryPriceSetting() {
     const { data, isLoading, updateSetting } = useSettings()
 
     async function onSaveChanges(newValue: number) {
-        await updateSetting("deliveryPrice", newValue)
+        await updateSetting("deliveryPrice", +newValue)
             .then((res) => { console.log(res) })
     }
 
