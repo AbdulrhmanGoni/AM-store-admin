@@ -61,11 +61,11 @@ export default function SalesGrowth() {
                     </Box>
                 ),
                 subTitle: `
-                ${growthRateData?.beforeLastMonth.month}
-                ${growthRateData?.beforeLastMonth.year} 
+                ${growthRateData?.beforeLastMonth.month || ""}
+                ${growthRateData?.beforeLastMonth.year || ""} 
                 - 
-                ${growthRateData?.lastMonth.month}
-                ${growthRateData?.lastMonth.year}
+                ${growthRateData?.lastMonth.month || ""}
+                ${growthRateData?.lastMonth.year || ""}
                 `
             }}
         />
