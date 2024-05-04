@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import useGetApi from "./useGetApi"
 import useSettingsActions from "./useSettingsActions"
 
-interface Settings {
+export interface Settings {
     discountCobones: [
         {
             id: string,
@@ -14,7 +14,8 @@ interface Settings {
     allowUsersChangePasswordEveryNDays: number,
     defaultMonthlyTarget: number,
     deliveryPrice: number,
-    minFreeDeliveryEntitlementPrice: number
+    minFreeDeliveryEntitlementPrice: number,
+    foundingYear: number
 }
 
 type SettingsValues = Settings[
@@ -52,11 +53,18 @@ export default function useSettings() {
             .catch(() => false)
     }
 
+    function updateSettingState(updateFun: (currentSetting: Settings) => Settings) {
+        queryClient.setQueryData<Settings | undefined>(["settings"], (data) => {
+            return data && updateFun(data)
+        })
+    }
+
     return {
         data,
         isLoading,
         isError,
         refetch,
-        updateSetting
+        updateSetting,
+        updateSettingState
     }
 }
