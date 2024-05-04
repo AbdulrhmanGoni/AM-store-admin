@@ -8,8 +8,18 @@ interface Params {
 }
 
 export default function useGetApi<ReturnedDataType>(props: Params): UseQueryResult<ReturnedDataType> {
+
     const { api } = useApiRequest();
     const { key, path } = props;
+
     async function theFunc() { return (await api.get(`${host}/${path}`)).data }
-    return useQuery({ queryKey: key, queryFn: theFunc })
+
+    const query = useQuery({ queryKey: key, queryFn: theFunc });
+
+    return {
+        ...query,
+        refetch: async () => {
+            return await query.refetch();
+        }
+    }
 }
