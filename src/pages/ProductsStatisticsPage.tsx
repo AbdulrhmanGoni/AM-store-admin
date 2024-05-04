@@ -40,6 +40,39 @@ export default function ProductsStatisticsPage() {
     const sec2InfoBoxStyle = { ...infoBoxStyle, justifyContent: "center" };
     const sec2infoBoxType = useBetweenDevices("sm", "md") ? "horizontally" : "columnly";
 
+    const totalsBoxesData = [
+        {
+            title: 'Products',
+            icon: <SvgIcon svgElementAsString={stockIcon} />,
+            body: totalProducts
+        },
+        {
+            title: 'Products Sold',
+            icon: <img src="/icons/salesShop.svg" />,
+            body: totalProductsSold
+        },
+        {
+            title: 'In Stock',
+            icon: <SvgIcon svgElementAsString={inStockIcon} />,
+            body: totalInStock
+        },
+        {
+            title: 'Out of Stock',
+            icon: <img src="/icons/emptyBox.svg" />,
+            body: productsOutOfStock
+        },
+        {
+            title: 'Categories',
+            icon: <img src="/icons/categoriesIcon.svg" />,
+            body: categoriesCount
+        },
+        {
+            title: 'Series',
+            icon: <img src="/icons/televisionIcon.svg" />,
+            body: seriesCount
+        }
+    ]
+
     return (
         <Box className="flex-column" id="products-statistics-page" gap={pageSpaces}>
             <PageTitle
@@ -48,81 +81,44 @@ export default function ProductsStatisticsPage() {
                 icon={<SvgIcon svgElementAsString={orderIcon} />}
             />
             <Grid container spacing={pageSpaces}>
-                <Grid item xs={6} sm={3} md={3}>
-                    <DisplayInfoBox
-                        type={infoBoxType}
-                        isLoading={productsStatisticsLoading}
-                        title="Products"
-                        body={nDecorator(String(totalProducts))}
-                        iconColor={randomColorsArr[0]}
-                        icon={<SvgIcon svgElementAsString={stockIcon} />}
-                        disableIconColor
-                        boxStyle={infoBoxStyle}
-                    />
-                </Grid>
-                <Grid item xs={6} sm={3} md={3}>
-                    <DisplayInfoBox
-                        type={infoBoxType}
-                        isLoading={productsStatisticsLoading}
-                        title="Products Sold"
-                        body={nDecorator(String(totalProductsSold))}
-                        iconColor={randomColorsArr[1]}
-                        icon={<img src="/icons/salesShop.svg" />}
-                        disableIconColor
-                        boxStyle={infoBoxStyle}
-                    />
-                </Grid>
-                <Grid item xs={6} sm={3} md={3}>
-                    <DisplayInfoBox
-                        type={infoBoxType}
-                        isLoading={productsStatisticsLoading}
-                        title="In Stock"
-                        body={nDecorator(String(totalInStock))}
-                        iconColor={randomColorsArr[2]}
-                        icon={<SvgIcon svgElementAsString={inStockIcon} />}
-                        disableIconColor
-                        boxStyle={infoBoxStyle}
-                    />
-                </Grid>
-                <Grid item xs={6} sm={3} md={3}>
-                    <DisplayInfoBox
-                        type={infoBoxType}
-                        isLoading={productsStatisticsLoading}
-                        title="Out of Stock"
-                        body={nDecorator(String(productsOutOfStock))}
-                        iconColor={randomColorsArr[3]}
-                        icon={<img src="/icons/emptyBox.svg" />}
-                        disableIconColor
-                        boxStyle={infoBoxStyle}
-                    />
-                </Grid>
+                {
+                    totalsBoxesData.map(({ title, icon, body }, index) => (
+                        index < 4 &&
+                        <Grid item xs={6} sm={3} md={3} key={title}>
+                            <DisplayInfoBox
+                                title={title}
+                                body={body ? nDecorator(String(body)) : 0}
+                                icon={icon}
+                                type={infoBoxType}
+                                isLoading={productsStatisticsLoading}
+                                iconColor={randomColorsArr[index]}
+                                disableIconColor
+                                boxStyle={infoBoxStyle}
+                            />
+                        </Grid>
+                    ))
+                }
             </Grid>
             <Grid container spacing={pageSpaces}>
                 <Grid item xs={12} md={6} order={{ xs: 3, md: 1 }}>
                     <CategoriesStatistics />
                 </Grid>
-                <Grid item xs={6} md={3} order={{ xs: 1, md: 2 }}>
-                    <DisplayInfoBox
-                        type={sec2infoBoxType}
-                        isLoading={productsStatisticsLoading}
-                        title="Categories"
-                        body={nDecorator(String(categoriesCount))}
-                        iconColor={randomColorsArr[4]}
-                        icon={<img src="/icons/categoriesIcon.svg" />}
-                        boxStyle={sec2InfoBoxStyle}
-                    />
-                </Grid>
-                <Grid item xs={6} md={3} order={{ xs: 2, md: 3 }}>
-                    <DisplayInfoBox
-                        type={sec2infoBoxType}
-                        isLoading={productsStatisticsLoading}
-                        title="Series"
-                        body={nDecorator(String(seriesCount))}
-                        iconColor={randomColorsArr[5]}
-                        icon={<img src="/icons/televisionIcon.svg" />}
-                        boxStyle={sec2InfoBoxStyle}
-                    />
-                </Grid>
+                {
+                    totalsBoxesData.map(({ title, icon, body }, index) => (
+                        index > 3 &&
+                        <Grid item xs={6} md={3} order={{ xs: 1, md: 2 }} key={title}>
+                            <DisplayInfoBox
+                                title={title}
+                                type={sec2infoBoxType}
+                                isLoading={productsStatisticsLoading}
+                                body={body ? nDecorator(String(body)) : 0}
+                                iconColor={randomColorsArr[index]}
+                                icon={icon}
+                                boxStyle={sec2InfoBoxStyle}
+                            />
+                        </Grid>
+                    ))
+                }
             </Grid>
             <Grid sx={{ minHeight: "300px" }} id="charts-section" container spacing={pageSpaces}>
                 <RenderSectionWhenSpecificElementAppears
