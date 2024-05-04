@@ -26,7 +26,8 @@ export default function TopProductsContainer() {
     const {
         data: topProducts,
         isLoading: topProductsLoading,
-        isError: topProductsError
+        isError: topProductsError,
+        refetch
     } = useGetApi<TopProductsType>({ key: [queryKey], path: `statistics/?queryKey=${queryKey}&limit=5` })
 
     return (
@@ -37,6 +38,7 @@ export default function TopProductsContainer() {
                         isLoading={topProductsLoading}
                         isError={topProductsError}
                         productsList={topProducts?.topSales}
+                        refetch={refetch}
                     />
                 </Paper>
             </Grid>
@@ -46,6 +48,7 @@ export default function TopProductsContainer() {
                         isLoading={topProductsLoading}
                         isError={topProductsError}
                         productsList={topProducts?.topEarnings}
+                        refetch={refetch}
                     />
                 </Paper>
             </Grid>

@@ -1,13 +1,20 @@
 import { Chip } from '@mui/material'
 import { AttachMoney } from '@mui/icons-material';
-import { nDecorator } from '@abdulrhmangoni/am-store-library'
-import { ListTitle, ProductsListDisplayer, TopProductsList } from './ProductsListComponents';
+import { nDecorator, PromiseState } from '@abdulrhmangoni/am-store-library'
+import ProductsListTitle from './ProductsListTitle';
+import { ProductData } from "./TopProductsContainer";
+import ProductsListDisplayer from './ProductsListDisplayer';
 
-export default function ProductsTopEarnings({ productsList, isLoading, isError }: TopProductsList) {
+interface ProductsTopEarningsProps extends PromiseState {
+    productsList?: ProductData[],
+    refetch?: () => void
+}
+
+export default function ProductsTopEarnings({ productsList, isLoading, isError, refetch }: ProductsTopEarningsProps) {
 
     return (
         <>
-            <ListTitle
+            <ProductsListTitle
                 title='Top Earnings'
                 subTitle='The top products that achieve earnings'
                 icon={<AttachMoney />}
@@ -16,6 +23,7 @@ export default function ProductsTopEarnings({ productsList, isLoading, isError }
                 productsList={productsList}
                 isLoading={isLoading}
                 isError={isError}
+                refetch={refetch}
                 onRightElement={(product: { earnings: number }) => {
                     return <Chip sx={{ borderRadius: 1 }} label={`$${nDecorator(product.earnings?.toFixed(2))}`} />
                 }}
