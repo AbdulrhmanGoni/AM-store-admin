@@ -1,5 +1,5 @@
 import { Alert, Box, Paper } from "@mui/material";
-import { P, nDecorator } from "@abdulrhmangoni/am-store-library";
+import { P, nDecorator, FetchFailedAlert } from "@abdulrhmangoni/am-store-library";
 import { SmalDonut } from "../SmallChart";
 import useCategoriesStatistics, { CategoryStatistics } from "../../hooks/useCategoriesStatistics";
 import randomColorsArr from "../../CONSTANTS/randomColorsArr";
@@ -33,6 +33,11 @@ export default function CategoriesStatistics() {
             }
         }
     }
+    const donutStyle = !isLoading && !categoriesStatistics.length && {
+        borderRadius: "50%",
+        border: "solid 2px",
+        borderColor: `${isError ? "error" : "info"}.main`
+    }
 
     return (
         <Paper
@@ -53,14 +58,22 @@ export default function CategoriesStatistics() {
             >
                 {
                     isLoading ? <LoadingCategoryCard />
-                        : isError ? <Alert className="flex-row-center" severity="error">Error !</Alert>
+                        : isError ? <FetchFailedAlert message="Error in fetching statistics!"></FetchFailedAlert>
                             : categoriesStatistics.length ?
                                 categoriesStatistics.map((cat: CategoryStatistics, index) => (
-                                    <CategoryStatisticsCard key={cat.category} category={cat} cardColor={chartColors[index]} total={totalEarnings} />
-                                )) : null
+                                    <CategoryStatisticsCard
+                                        key={cat.category}
+                                        category={cat}
+                                        cardColor={chartColors[index]}
+                                        total={totalEarnings}
+                                    />
+                                )) :
+                                <Alert severity="info" style={{ width: "100%", justifyContent: "center" }}>
+                                    No Categories Statistics
+                                </Alert>
                 }
             </Box>
-            <Box position="relative">
+            <Box sx={{ position: "relative", ...donutStyle }} >
                 <SmalDonut
                     data={chartData}
                     tooltipIsMony
