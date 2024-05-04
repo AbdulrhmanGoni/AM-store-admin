@@ -1,13 +1,14 @@
 import Chart from "react-apexcharts";
 import ApexchartsContainer from "../ApexchartsContainer";
 import { Skeleton, useTheme } from "@mui/material";
-import { FetchFailedAlert, PromiseState, nDecorator, yearsArray } from "@abdulrhmangoni/am-store-library";
+import { FetchFailedAlert, PromiseState, nDecorator } from "@abdulrhmangoni/am-store-library";
 import { ApexOptions } from "apexcharts";
 import Icon from "../SvgIcon";
 import { averageOrdersIcon } from "../svgIconsAsString";
 import ChartTitle from "../ChartTitle";
 import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
 import SelectBox from "../SelectBox";
+import useYearsArray from "../../hooks/useYearsArray";
 
 interface OrdersStatisticsChartProps extends PromiseState {
     data: number[],
@@ -20,7 +21,7 @@ interface OrdersStatisticsChartProps extends PromiseState {
 export default function OrdersStatisticsChart({ data, currentYear, setYear, isLoading, isError, refetch }: OrdersStatisticsChartProps) {
 
     const { palette: { mode, primary } } = useTheme();
-
+    const { yearsArray } = useYearsArray();
     const options: ApexOptions = {
         chart: { type: 'bar', stacked: true },
         plotOptions: {
@@ -68,7 +69,7 @@ export default function OrdersStatisticsChart({ data, currentYear, setYear, isLo
                 endItem={
                     <SelectBox
                         defaultValue={currentYear}
-                        values={yearsArray()}
+                        values={yearsArray}
                         onSelect={(value) => setYear(+value)}
                     />
                 }

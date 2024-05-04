@@ -4,7 +4,7 @@ import SalesGrowth from "../components/sales-statistics-page/SalesGrowth";
 import SvgIcon from "../components/SvgIcon";
 import MonthlyTargets from "../components/sales-statistics-page/MonthlyTargets";
 import CardInfoWithChart from "../components/CardInfoWithChart";
-import { nDecorator, yearsArray } from "@abdulrhmangoni/am-store-library";
+import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import { SmalLine } from "../components/SmallChart";
 import { averageOrdersIcon } from "../components/svgIconsAsString";
 import DisplayInfoBox from "../components/DisplayInfoBox";
@@ -14,6 +14,7 @@ import useMonthlySalesStatistics, { MonthSalesStatistics } from "../hooks/useMon
 import pageSpaces from "../CONSTANTS/pageSpaces";
 import PageTitle from "../components/PageTitle";
 import SelectBox from "../components/SelectBox";
+import useYearsArray from "../hooks/useYearsArray";
 
 export default function SalesStatisticsPage() {
 
@@ -24,6 +25,7 @@ export default function SalesStatisticsPage() {
     setYear,
     refetch
   } = useMonthlySalesStatistics();
+  const { yearsArray } = useYearsArray();
 
   const monthlyEarnings: number[] = monthesData?.map((mon: MonthSalesStatistics) => mon.totalEarnings) ?? [0];
 
@@ -39,7 +41,7 @@ export default function SalesStatisticsPage() {
         />
         <SelectBox
           defaultValue={currentYear}
-          values={yearsArray()}
+          values={yearsArray}
           onSelect={(value) => setYear(+value)}
         />
       </Box>

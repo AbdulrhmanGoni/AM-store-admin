@@ -1,6 +1,6 @@
 import { useTheme } from "@mui/material";
 import Chart from "react-apexcharts";
-import { nDecorator, yearsArray } from "@abdulrhmangoni/am-store-library";
+import { nDecorator } from "@abdulrhmangoni/am-store-library";
 import ApexchartsContainer from "../ApexchartsContainer";
 import { ApexOptions } from "apexcharts";
 import ChartTitle from "../ChartTitle";
@@ -9,13 +9,14 @@ import Icon from "../SvgIcon";
 import MONTHES, { MONTHES_FULL_NAME } from "../../CONSTANTS/MONTHES";
 import useMonthlyCategoriesStatistics from "../../hooks/useMonthlyCategoriesStatistics";
 import SelectBox from "../SelectBox";
-
+import useYearsArray from "../../hooks/useYearsArray";
 
 export default function CategoriesMonthlyEarnings() {
 
     const { chartData: { earningsChartData }, currentYear, setYear } = useMonthlyCategoriesStatistics();
 
     const { palette: { mode } } = useTheme();
+    const { yearsArray } = useYearsArray();
     const options: ApexOptions = {
         chart: { type: "area" },
         dataLabels: { enabled: false },
@@ -43,7 +44,7 @@ export default function CategoriesMonthlyEarnings() {
                 endItem={
                     <SelectBox
                         defaultValue={currentYear}
-                        values={yearsArray()}
+                        values={yearsArray}
                         onSelect={(value) => setYear(+value)}
                     />
                 }

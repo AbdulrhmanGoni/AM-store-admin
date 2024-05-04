@@ -1,7 +1,7 @@
 import { Box, Grid, IconButton } from "@mui/material";
 import pageSpaces from "../../CONSTANTS/pageSpaces";
 import DisplayInfoBox from "../DisplayInfoBox";
-import { PromiseState, nDecorator, yearsArray } from "@abdulrhmangoni/am-store-library";
+import { PromiseState, nDecorator } from "@abdulrhmangoni/am-store-library";
 import SvgIcon from "../SvgIcon";
 import { orderIcon, totalIcon } from "../svgIconsAsString";
 import randomColorsArr from "../../CONSTANTS/randomColorsArr";
@@ -10,6 +10,7 @@ import { Refresh } from "@mui/icons-material";
 import PageTitle from "../PageTitle";
 import SelectBox from "../SelectBox";
 import useOrdersStatistics from "../../hooks/useOrdersStatistics";
+import useYearsArray from "../../hooks/useYearsArray";
 
 export default function TitleAndStatisticsBoxesSections() {
 
@@ -28,6 +29,8 @@ export default function TitleAndStatisticsBoxesSections() {
         completedOrders,
         pendingOrders
     } = ordersStatistics;
+
+    const { yearsArray } = useYearsArray();
 
     const sharedProps: { boxStyle: CSSProperties, type: "columnly" } & PromiseState = {
         isLoading: statisticsAreLoading,
@@ -74,7 +77,7 @@ export default function TitleAndStatisticsBoxesSections() {
                 />
                 <SelectBox
                     defaultValue={currentYear}
-                    values={yearsArray()}
+                    values={yearsArray}
                     onSelect={(value) => setYear(+value)}
                 />
             </Box>
