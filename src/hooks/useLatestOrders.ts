@@ -18,7 +18,7 @@ interface LatestOrdersType {
 export default function useLatestOrders() {
 
     const query = "latest-orders"
-    const { data: orders = [], isLoading } = useGetApi<readonly LatestOrdersType[]>({
+    const { data: orders = [], isLoading, isError } = useGetApi<readonly LatestOrdersType[]>({
         key: [query],
         path: `orders/${query}?limit=10`
     })
@@ -42,6 +42,7 @@ export default function useLatestOrders() {
     return {
         orders,
         columns,
-        isLoading
+        isLoading,
+        isError
     }
 }

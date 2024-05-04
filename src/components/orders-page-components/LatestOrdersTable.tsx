@@ -1,6 +1,6 @@
 import { Paper, useMediaQuery, LinearProgress } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import { IllustrationCard } from '@abdulrhmangoni/am-store-library';
+import { FetchFailedAlert, IllustrationCard } from '@abdulrhmangoni/am-store-library';
 import useLatestOrders from '../../hooks/useLatestOrders';
 
 export default function LatestOrdersTable() {
@@ -10,14 +10,15 @@ export default function LatestOrdersTable() {
     const {
         orders,
         columns,
-        isLoading
+        isLoading,
+        isError
     } = useLatestOrders();
 
     return (
         <Paper sx={{ width: `calc(100vw - ${paddingSpace}px)` }}>
             <DataGrid
                 sx={{ height: "796px" }}
-                getRowId={(row) => { return row._id }}
+                getRowId={(row) => row._id}
                 rows={orders}
                 columns={columns}
                 loading={isLoading}
@@ -25,15 +26,28 @@ export default function LatestOrdersTable() {
                 disableColumnFilter
                 hideFooterSelectedRowCount
                 hideFooterPagination
-                localeText={{ noRowsLabel: "No orders", noResultsOverlayLabel: 'No products found.' }}
-                slotProps={{ toolbar: { quickFilterProps: { debounceMs: 500 } } }}
+                slotProps={{ toolbar: { quickFilterProps: { debounceMs: 300 } } }}
                 slots={{
-                    noRowsOverlay: () => <IllustrationCard
-                        title='No Orders'
-                        message='There is error hapends when orders fetching'
-                        disableHeight
-                        illustratorType="empty"
-                    />,
+                    noRowsOverlay: () => (
+                        <IllustrationCard
+                            title={isError ? "Unexpected Error" : 'No Orders'}
+                            hideAlertMsg
+                            disableHeight
+                            illustratorType={isError ? "unexpected" : "empty"}
+                            paperStyle={{ boxShadow: "none" }}
+                        >
+                            <>
+                                {
+                                    isError &&
+                                    <FetchFailedAlert
+                                        message='There is an error hapends when fetching orders'
+                                        style={{ mx: "auto", mt: 1, width: "fit-content" }}
+                                        refetch={() => { }}
+                                    />
+                                }
+                            </>
+                        </IllustrationCard>
+                    ),
                     loadingOverlay: LinearProgress
                 }}
             />
