@@ -1,15 +1,18 @@
-import { FormEvent, useState } from "react";
+import { useRef, useState } from "react";
 import useProductsActions from "./useProductsActions";
 import useNotifications from "./useNotifications";
 import { isNumber } from "@abdulrhmangoni/am-store-library";
+import useSettings from "./useSettings";
 
-export default function useAddCategoryFormLogic() {
+export default function useAddCategoryFormLogic({ initialOpen }: { initialOpen?: boolean }) {
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState({ isError: false, message: "" });
+    const [openFiled, setOpenField] = useState(!!initialOpen);
     const { createCategory } = useProductsActions();
-    const [openFiled, setOpenField] = useState(false);
+    const { updateSettingState } = useSettings()
     const { message } = useNotifications();
+    const categoryInputRef = useRef<HTMLInputElement>(null);
 
     function validateCategoryName(category: FormDataEntryValue | null): false | string {
         if (typeof category !== "string" || isNumber(category)) {
@@ -26,19 +29,28 @@ export default function useAddCategoryFormLogic() {
         }
     }
 
-    function handleFormSubmit(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const category = validateCategoryName(data.get("category"));
+    function updateCategoriesState(newCategory: string) {
+        updateSettingState((currentSetting) => {
+            return {
+                ...currentSetting,
+                productsCategories: [...currentSetting.productsCategories, newCategory]
+            }
+        })
+    }
+
+    function handleFormSubmit() {
+        const data = categoryInputRef.current?.value;
+        const category = validateCategoryName(data as string);
         if (category) {
             setIsLoading(true);
             createCategory(category)
                 .then(() => {
+                    updateCategoriesState(category);
                     message(`The category "${category}" successfully`, "success");
                     setOpenField(false);
                 })
                 .catch((error) => {
-                    const errorMessage = error.response?.data?.message || `failed to add "${category}" category`
+                    const errorMessage = error.response?.data?.message || `failed to add "${category}" category`;
                     message(errorMessage, "error");
                 })
                 .finally(() => setIsLoading(false))
@@ -50,6 +62,7 @@ export default function useAddCategoryFormLogic() {
         isLoading,
         error,
         openFiled,
-        setOpenField
+        setOpenField,
+        categoryInputRef
     }
 }

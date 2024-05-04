@@ -1,33 +1,35 @@
 import { AddBox } from "@mui/icons-material";
-import { Button, Card, IconButton, TextField } from "@mui/material";
+import { Button, Card, IconButton, SxProps, TextField } from "@mui/material";
 import pageSpaces from "../../CONSTANTS/pageSpaces";
 import useAddCategoryFormLogic from "../../hooks/useAddCategoryFormLogic";
 import LoadingLine from "../LoadingLine";
 
-export default function AddCategoryForm() {
+export default function AddCategoryForm({ sx, open }: { sx?: SxProps, open: boolean }) {
 
     const {
         handleFormSubmit,
         isLoading,
         error,
         openFiled,
-        setOpenField
-    } = useAddCategoryFormLogic()
+        setOpenField,
+        categoryInputRef
+    } = useAddCategoryFormLogic({ initialOpen: open })
 
     return (
         <Card
             component="form"
-            onSubmit={handleFormSubmit}
             sx={{
                 height: "100%",
                 p: pageSpaces,
                 display: "flex",
-                position: "relative"
+                position: "relative",
+                ...sx
             }}
         >
             {
                 openFiled &&
                 <TextField
+                    inputRef={categoryInputRef}
                     size="small"
                     label="Category Name"
                     name="category"
@@ -45,8 +47,8 @@ export default function AddCategoryForm() {
                             "&:hover": { bgcolor: "primary.dark" },
                             height: "fit-content"
                         }}
+                        onClick={handleFormSubmit}
                         disabled={isLoading}
-                        type="submit"
                     >
                         <AddBox />
                     </IconButton>
