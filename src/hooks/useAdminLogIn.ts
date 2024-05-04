@@ -28,6 +28,8 @@ export default function useAdminLogIn() {
                     if (res.data) {
                         setAdminData(res.data);
                         setIsLogged(true);
+                    } else {
+                        setIsUnauthorized(true);
                     }
                 })
                 .catch((error: AxiosError) => {
