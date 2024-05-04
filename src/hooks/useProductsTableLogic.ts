@@ -25,6 +25,7 @@ export default function useProductsTableLogic() {
         paginationModel,
         setPaginationModel,
         isLoading,
+        isError,
         thereIsMore,
         loadedPages
     } = useProductsPagination()
@@ -83,6 +84,7 @@ export default function useProductsTableLogic() {
         setPaginationModel,
         loadedPages,
         isLoading,
+        isError,
         updateCell,
         deleteProducs,
         deleteProductFromTable,

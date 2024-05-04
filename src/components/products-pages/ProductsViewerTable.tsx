@@ -3,7 +3,7 @@ import { DataGrid, GridRowParams } from '@mui/x-data-grid';
 import columns from './ProductsGridColumnsConfig';
 import ProducsTableToolbar from './ProducsTableToolbar';
 import ProducsTableFooter from './ProducsTableFooter';
-import { IllustrationCard } from '@abdulrhmangoni/am-store-library';
+import { FetchFailedAlert, IllustrationCard } from '@abdulrhmangoni/am-store-library';
 import useProductsTableLogic, { UpdateCelEvent } from '../../hooks/useProductsTableLogic';
 import useProductsDisplayer from '../../hooks/useProductsDisplayer';
 
@@ -17,6 +17,7 @@ export default function ProductsViewerTable() {
         setPaginationModel,
         loadedPages,
         isLoading,
+        isError,
         updateCell,
         deleteProducs,
         deleteProductFromTable,
@@ -35,11 +36,9 @@ export default function ProductsViewerTable() {
                 getRowId={(row) => row._id}
                 rows={products}
                 columns={columns}
-                rowCount={products.length + 1}
                 loading={isLoading}
                 paginationModel={paginationModel}
                 pageSizeOptions={[20]}
-                paginationMode='client'
                 density='comfortable'
                 disableDensitySelector
                 checkboxSelection
@@ -53,8 +52,7 @@ export default function ProductsViewerTable() {
                 isRowSelectable={(params: GridRowParams) => !goingToDelete.includes(params.row._id)}
                 onRowSelectionModelChange={(rows) => setSelectedRows(rows)}
                 onCellEditStop={(params, event) => { updateCell(params, event as UpdateCelEvent) }}
-                localeText={{ noRowsLabel: "No products", noResultsOverlayLabel: 'No products found.' }}
-                slotProps={{ toolbar: { quickFilterProps: { debounceMs: 500 } } }}
+                slotProps={{ toolbar: { quickFilterProps: { debounceMs: 300 } } }}
                 slots={{
                     toolbar: () => <ProducsTableToolbar />,
                     footer: () => (
@@ -72,12 +70,23 @@ export default function ProductsViewerTable() {
                     ),
                     noRowsOverlay: () => (
                         <IllustrationCard
-                            title='No Products'
-                            message='There is error hapends when products fetching'
+                            title={isError ? "Unexpected Error" : 'No Products'}
+                            hideAlertMsg
                             disableHeight
-                            illustratorType="empty"
-                            style={{ height: "100%" }}
-                        />
+                            illustratorType={isError ? "unexpected" : "empty"}
+                            paperStyle={{ boxShadow: "none" }}
+                        >
+                            <>
+                                {
+                                    isError &&
+                                    <FetchFailedAlert
+                                        message='There is an error hapends when fetching products'
+                                        style={{ mx: "auto", mt: 1, width: "fit-content" }}
+                                        refetch={() => { }}
+                                    />
+                                }
+                            </>
+                        </IllustrationCard>
                     ),
                     loadingOverlay: LinearProgress,
                 }}
