@@ -38,7 +38,7 @@ export default function ProductCustomTextField(props: TextFieldProps & FieldProp
 
     return (
         <>
-            <Box sx={{ display: 'flex', alignItems: 'flex-end', ...sx }}>
+            <Box sx={{ display: 'flex', alignItems: 'flex-end', ...sx, position: "relative" }}>
                 {
                     isSelectBox ?
                         <CategoriesSelectBox
