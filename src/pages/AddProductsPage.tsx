@@ -38,7 +38,7 @@ export default function AddProductPage() {
         >
             <Paper sx={{ p: pageSpaces, position: "relative" }}>
                 <ProductsFormLoadingOverlay isLoading={isLoading} />
-                <P sx={{ p: "8px 4px", pb: pageSpaces }} variant='h5'>Add Product</P>
+                <P sx={{ mb: pageSpaces }} variant='h5'>Add Product</P>
                 <Grid container spacing={pageSpaces}>
                     <Grid item xs={12} md={6}>
                         <ProductCustomTextField name="title"
@@ -85,12 +85,19 @@ export default function AddProductPage() {
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <ProductCustomTextField name="category"
+                        <ProductCustomTextField
+                            name="category"
                             label="Category"
                             error={categoryState}
                             errorMsg='You have to select category of product'
                             isSelectBox
                             Icon={Class}
+                            sx={{
+                                flex: 1,
+                                "& svg.MuiSelect-icon": {
+                                    display: "none"
+                                }
+                            }}
                         />
                     </Grid>
                     <Grid item xs={12}>
