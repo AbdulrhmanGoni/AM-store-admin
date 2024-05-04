@@ -4,7 +4,7 @@ import pageSpaces from "../../CONSTANTS/pageSpaces";
 import useAddCategoryFormLogic from "../../hooks/useAddCategoryFormLogic";
 import LoadingLine from "../LoadingLine";
 
-export default function AddCategoryForm({ sx, open }: { sx?: SxProps, open: boolean }) {
+export default function AddCategoryForm(props: { sx?: SxProps, open?: boolean }) {
 
     const {
         handleFormSubmit,
@@ -13,7 +13,7 @@ export default function AddCategoryForm({ sx, open }: { sx?: SxProps, open: bool
         openFiled,
         setOpenField,
         categoryInputRef
-    } = useAddCategoryFormLogic({ initialOpen: open })
+    } = useAddCategoryFormLogic({ initialOpen: props.open })
 
     return (
         <Card
@@ -23,7 +23,7 @@ export default function AddCategoryForm({ sx, open }: { sx?: SxProps, open: bool
                 p: pageSpaces,
                 display: "flex",
                 position: "relative",
-                ...sx
+                ...props.sx
             }}
         >
             {
