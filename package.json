@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@abdulrhmangoni/am-store-library": "^1.3.4",
+    "@abdulrhmangoni/am-store-library": "^1.5.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^4.5.8",
