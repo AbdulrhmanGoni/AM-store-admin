@@ -12,10 +12,10 @@ export interface TopSeriesType {
 
 export default function useTopSeries() {
 
-    const query = "top-series";
+    const queryKey = "top-series";
 
     return useGetApi<TopSeriesType>({
-        key: [query],
-        path: `statistics/?queryKey=${query}&limit=5`
+        key: [queryKey],
+        path: `statistics/?queryKey=${queryKey}&limit=5`
     })
 }
