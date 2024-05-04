@@ -29,8 +29,10 @@ export default function TopUsers() {
         refetch
     } = useGetApi<UserDataType[]>({ path, key: [queryKey] })
 
+    const displayTableAlert = !isLoading && (isError || !usersList?.length);
+
     return (
-        <Paper sx={{ width: "100%", height: "100%" }}>
+        <Paper className='flex-column full-width full-height'>
             <Box className="flex-row-center-start gap1" sx={{ p: 1.5, height: "56.5px" }}>
                 <img src='/icons/stars.svg' style={{ width: "35px", height: "35px" }} />
                 <P variant="h6">Top Customers</P>
@@ -43,38 +45,37 @@ export default function TopUsers() {
                     borderTop: "0px"
                 }}
             >
-                {
-                    isLoading || usersList ?
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell sx={{ width: "75px" }}>Avatar</TableCell>
-                                    <TableCell sx={{ minWidth: "160px" }}>User Name</TableCell>
-                                    <TableCell sx={{ minWidth: "180px" }}>User Email</TableCell>
-                                    <TableCell sx={{ width: "75px" }}>Orders</TableCell>
-                                    <TableCell sx={{ width: "100px", textWrap: "nowrap" }}>Spending $</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {
-                                    isLoading ?
-                                        <UsersTableLoadingState itemsCount={5} addAnotherCell hideEmailState /> :
-                                        usersList?.length ?
-                                            usersList.map(({ userData: { userName, userEmail, avatar }, totalOrders, totalSpending }, index: number) => (
-                                                <TableRow key={index}>
-                                                    <AvatarCell avatar={avatar} />
-                                                    <TableCell>{userName}</TableCell>
-                                                    <TableCell>{userEmail}</TableCell>
-                                                    <TableCell>{nDecorator(totalOrders)}</TableCell>
-                                                    <TableCell>${nDecorator(totalSpending.toFixed(2))}</TableCell>
-                                                </TableRow>
-                                            )) : <ErrorUsersTable isError={isError} />
-                                }
-                            </TableBody>
-                        </Table>
-                        : <ErrorUsersTable isError={isError} refetch={refetch} />
-                }
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell sx={{ width: "75px" }}>Avatar</TableCell>
+                            <TableCell sx={{ minWidth: "160px" }}>User Name</TableCell>
+                            <TableCell sx={{ minWidth: "180px" }}>User Email</TableCell>
+                            <TableCell sx={{ width: "75px" }}>Orders</TableCell>
+                            <TableCell sx={{ width: "100px", textWrap: "nowrap" }}>Spending $</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {
+                            isLoading ?
+                                <UsersTableLoadingState itemsCount={5} addAnotherCell hideEmailState /> :
+                                usersList?.map(({ userData: { userName, userEmail, avatar }, totalOrders, totalSpending }, index: number) => (
+                                    <TableRow key={index}>
+                                        <AvatarCell avatar={avatar} />
+                                        <TableCell>{userName}</TableCell>
+                                        <TableCell>{userEmail}</TableCell>
+                                        <TableCell>{nDecorator(totalOrders)}</TableCell>
+                                        <TableCell>${nDecorator(totalSpending.toFixed(2))}</TableCell>
+                                    </TableRow>
+                                ))
+                        }
+                    </TableBody>
+                </Table>
             </TableContainer>
+            {
+                displayTableAlert &&
+                <ErrorUsersTable isError={isError} refetch={isError ? refetch : undefined} />
+            }
         </Paper>
     );
 }

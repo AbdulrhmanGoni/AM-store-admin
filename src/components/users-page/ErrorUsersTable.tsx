@@ -12,8 +12,9 @@ export default function ErrorUsersTable({ isError, refetch }: ErrorUsersTablePro
             severity={isError ? "error" : "info"}
             className='flex-row-center'
             sx={{
-                width: "100%", height: "100%",
-                "& .MuiAlert-action": { ml: 0, pl: 1 }
+                width: "100%",
+                "& .MuiAlert-action": { ml: 0, pl: 1 },
+                flex: 1
             }}
             action={
                 isError &&

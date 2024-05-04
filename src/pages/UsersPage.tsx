@@ -9,7 +9,6 @@ import randomColorsArr from '../CONSTANTS/randomColorsArr';
 import useBreakPoints from '../hooks/useBreakPoints';
 import useUsersPageContent from '../hooks/useUsersPageContent';
 
-
 export default function UsersPage() {
 
     const {
@@ -25,6 +24,29 @@ export default function UsersPage() {
     const infoBoxStyle = { height: "100%", p: 1.5 };
     const infoBoxType = largeScreen ? "horizontally" : "columnly";
 
+    const infoBoxes = [
+        {
+            title: 'Users Count',
+            icon: <Groups />,
+            body: usersCount
+        },
+        {
+            title: 'Customers',
+            icon: <img src='/icons/customers.svg' />,
+            body: customersCount
+        },
+        {
+            title: 'Verified Users',
+            icon: <img src='/icons/users-group-verification.svg' />,
+            body: verifiedUsers
+        },
+        {
+            title: 'Unverified Users',
+            icon: <img src='/icons/usersWarning.svg' />,
+            body: usersCount - verifiedUsers
+        }
+    ]
+
     return (
         <Box className="flex-column" gap={pageSpaces}>
             <PageTitle
@@ -33,48 +55,22 @@ export default function UsersPage() {
                 icon={<Groups />}
             />
             <Grid container spacing={pageSpaces}>
-                <Grid item xs={6} sm={3}>
-                    <DisplayInfoBox
-                        isLoading={isLoading}
-                        isError={isError}
-                        title='Users Count'
-                        icon={<Groups />}
-                        body={usersCount}
-                        iconColor={randomColorsArr[0]}
-                        type={infoBoxType}
-                        boxStyle={infoBoxStyle}
-                    />
-                </Grid>
-                <Grid item xs={6} sm={3}>
-                    <DisplayInfoBox
-                        title='Customers'
-                        icon={<img src='/icons/customers.svg' />}
-                        body={customersCount}
-                        iconColor={randomColorsArr[1]}
-                        type={infoBoxType}
-                        boxStyle={infoBoxStyle}
-                    />
-                </Grid>
-                <Grid item xs={6} sm={3}>
-                    <DisplayInfoBox
-                        title='Verified Users'
-                        icon={<img src='/icons/users-group-verification.svg' />}
-                        body={verifiedUsers}
-                        iconColor={randomColorsArr[2]}
-                        type={infoBoxType}
-                        boxStyle={infoBoxStyle}
-                    />
-                </Grid>
-                <Grid item xs={6} sm={3}>
-                    <DisplayInfoBox
-                        title='Unverified Users'
-                        icon={<img src='/icons/usersWarning.svg' />}
-                        body={usersCount - verifiedUsers}
-                        iconColor={randomColorsArr[3]}
-                        type={infoBoxType}
-                        boxStyle={infoBoxStyle}
-                    />
-                </Grid>
+                {
+                    infoBoxes.map(({ title, icon, body }, index) => (
+                        <Grid item xs={6} sm={3} key={title}>
+                            <DisplayInfoBox
+                                isLoading={isLoading}
+                                isError={isError}
+                                title={title}
+                                icon={icon}
+                                body={body || 0}
+                                iconColor={randomColorsArr[index]}
+                                type={infoBoxType}
+                                boxStyle={infoBoxStyle}
+                            />
+                        </Grid>
+                    ))
+                }
             </Grid>
             <Grid container spacing={pageSpaces}>
                 <Grid item xs={12} lg={6}>

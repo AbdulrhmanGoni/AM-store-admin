@@ -24,44 +24,45 @@ export default function UsersOverviewTable() {
         isThereNextPage
     } = useUsersOverview();
 
+    const displayTableAlert = !isLoading && (isError || !usersData?.length);
+
     return (
         <Paper className='flex-column full-width full-height'>
-            <TableContainer sx={{ width: "100%", flex: 1 }}>
-                {
-                    isLoading || usersData ?
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell sx={{ width: "75px" }}>Avatar</TableCell>
-                                    <TableCell sx={{ minWidth: "160px" }}>User Name</TableCell>
-                                    <TableCell sx={{ minWidth: "180px" }}>User Email</TableCell>
-                                    <TableCell sx={{ width: "75px" }}>Orders</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {
-                                    isLoading ?
-                                        <UsersTableLoadingState itemsCount={pageSize} /> :
-                                        usersData?.length ?
-                                            usersData.map(({ avatar, userName, userEmail, userOrders, hisEmailVerified }, index: number) => (
-                                                <TableRow key={index}>
-                                                    <AvatarCell avatar={avatar} />
-                                                    <TableCell>{userName}</TableCell>
-                                                    <TableCell>
-                                                        <P variant='body2' className='flex-row-center-start'>
-                                                            <EmailCellIcon isVerified={hisEmailVerified} />
-                                                            {userEmail}
-                                                        </P>
-                                                    </TableCell>
-                                                    <TableCell>{userOrders}</TableCell>
-                                                </TableRow>
-                                            )) : <ErrorUsersTable isError={isError} />
-                                }
-                            </TableBody>
-                        </Table>
-                        : <ErrorUsersTable isError={isError} refetch={refetch} />
-                }
+            <TableContainer sx={{ width: "100%", flex: displayTableAlert ? undefined : 1 }}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell sx={{ width: "75px" }}>Avatar</TableCell>
+                            <TableCell sx={{ minWidth: "160px" }}>User Name</TableCell>
+                            <TableCell sx={{ minWidth: "180px" }}>User Email</TableCell>
+                            <TableCell sx={{ width: "75px" }}>Orders</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {
+                            isLoading ?
+                                <UsersTableLoadingState itemsCount={pageSize} /> :
+                                usersData?.map(({ avatar, userName, userEmail, userOrders, hisEmailVerified }, index: number) => (
+                                    <TableRow key={index}>
+                                        <AvatarCell avatar={avatar} />
+                                        <TableCell>{userName}</TableCell>
+                                        <TableCell>
+                                            <P variant='body2' className='flex-row-center-start'>
+                                                <EmailCellIcon isVerified={hisEmailVerified} />
+                                                {userEmail}
+                                            </P>
+                                        </TableCell>
+                                        <TableCell>{userOrders}</TableCell>
+                                    </TableRow>
+                                ))
+                        }
+                    </TableBody>
+                </Table>
             </TableContainer>
+            {
+                displayTableAlert &&
+                <ErrorUsersTable isError={isError} refetch={isError ? refetch : undefined} />
+            }
             <Box
                 className="flex-row-center-end"
                 sx={{ p: 1.5, gap: 1.5 }}
